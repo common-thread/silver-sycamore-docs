@@ -94,14 +94,22 @@
     }
     .markdown-body table {
       border-collapse: collapse;
+      width: 100%;
     }
-    .markdown-body table th,
+    .markdown-body table th {
+      border: 1px solid #e1e4e8;
+      padding: 6px 13px;
+      background-color: #f6f8fa !important;
+      color: #24292e !important;
+    }
     .markdown-body table td {
       border: 1px solid #e1e4e8;
       padding: 6px 13px;
+      background-color: white !important;
+      color: #24292e !important;
     }
-    .markdown-body table tr:nth-child(2n) {
-      background-color: #f6f8fa;
+    .markdown-body table tr:nth-child(2n) td {
+      background-color: #f6f8fa !important;
     }
     .site-footer {
       background: #f6f8fa;
