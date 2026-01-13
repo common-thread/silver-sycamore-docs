@@ -17,9 +17,16 @@ Operational documentation for Silver Sycamore Venue and Pine Street Cafe.
 
 | Initiative | Status | Next Action |
 |------------|--------|-------------|
-| Document Library Reorganization | In Progress | Management review |
-| Recipe App | Live (Piloting) | Gather feedback |
-| Employee Handbook | Planned | Review training docs |
+| Employee SOPs / Onboarding / Training Manuals | In Progress | Document procedures |
+| Marketing Department Transition | In Progress | Wednesday sessions |
+| Catering Menu Refinement | In Progress | Better images needed |
+| Bridal Contract Package | In Progress | Streamline demo → close |
+
+### Upcoming
+
+| Initiative | Status | Dependency |
+|------------|--------|------------|
+| CRM Integration | Planned | After marketing transition |
 
 ---
 
