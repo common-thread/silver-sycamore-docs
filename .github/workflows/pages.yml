@@ -53,14 +53,7 @@ jobs:
             # Skip if markdown already exists
             if [ ! -f "$dir/$base.md" ]; then
               echo "Creating wrapper for: $file"
-              cat > "$dir/$base.md" << WRAPPER
----
-layout: default
-title: "${base}"
----
-
-{% include_relative ${htmlfile} %}
-WRAPPER
+              printf '%s\n' "---" "layout: default" "title: \"${base}\"" "---" "" "{% include_relative ${htmlfile} %}" > "$dir/$base.md"
             fi
           done
 
