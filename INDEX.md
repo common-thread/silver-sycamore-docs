@@ -1,231 +1,242 @@
 # Silver Sycamore Document Library
 
-Comprehensive operational documentation for Silver Sycamore Venue and Pine Street Café.
+Operational documentation for Silver Sycamore Venue and Pine Street Cafe.
 
+**Status:** Under Review
 **Last Updated:** January 12, 2026
-**Total Documents:** 87 (25 markdown + 62 templates)
+**Total Documents:** 68
 
 ---
 
 ## Quick Navigation
 
-- [Booking & Contracts](#booking--contracts)
-- [Wedding Packages](#wedding-packages)
-- [Reception Hall & Party Packages](#reception-hall--party-packages)
-- [Catering Menu](#catering-menu)
-- [Add-On Services](#add-on-services)
-- [Training Materials](#training-materials)
-- [Operational Procedures](#operational-procedures)
-- [HR Forms](#hr-forms)
-- [Facilities Management](#facilities-management)
-- [Templates & Working Documents](#templates--working-documents)
-- [Recipe Database](#recipe-database)
+| Category | Documents | Status |
+|----------|-----------|--------|
+| [Services](#services) | 10 | Needs management review |
+| [Clients](#clients) | 33 | Needs management review |
+| [Staff](#staff) | 8 | Needs management review |
+| [Operations](#operations) | 9 | Needs management review |
+| [Deliverables](#deliverables) | 1 | Live |
+
+See [INITIATIVES.md](INITIATIVES.md) for current priorities and action items.
 
 ---
 
-## Booking & Contracts
+## Services
 
-Client booking forms and contract packages for weddings, corporate events, and parties.
+What we provide: wedding packages, event packages, catering menus, and add-ons.
 
-| Document | Type | Description |
-|----------|------|-------------|
-| [Wedding Booking Form](markdown-docs/booking-forms/booking-form-wedding.md) | Form | Wedding event booking form |
-| [Corporate Booking Form](markdown-docs/booking-forms/booking-form-corporate.md) | Form | Corporate event booking form |
-| [Shower/Small Party Booking Form](markdown-docs/booking-forms/booking-form-shower.md) | Form | Shower and small party booking form |
-| [Shower/Small Party Contract Package](markdown-docs/booking-forms/contract-package-shower.md) | Contract | Complete contract package with terms |
-
----
-
-## Wedding Packages
-
-Five wedding package options with pricing and inclusions.
-
-| Package Name | File | Duration | Description |
-|--------------|------|----------|-------------|
-| **Salon & Town Merry Package** | [View](markdown-docs/packages/wedding/package-salon-town-merry.md) | — | Classic wedding package |
-| **Simple Elegance Package** | [View](markdown-docs/packages/wedding/package-simple-elegance.md) | 3.5 hours | Ceremony and reception |
-| **Food Truck Fun Package** | [View](markdown-docs/packages/wedding/package-food-truck.md) | 4 hours | Wedding with food truck catering |
-| **Dream Package** | [View](markdown-docs/packages/wedding/package-dream.md) | 5 hours | Premium ceremony and reception |
-| **Reception Only Package** | [View](markdown-docs/packages/wedding/package-reception-only.md) | 4 hours | Reception without ceremony |
-
----
-
-## Reception Hall & Party Packages
-
-Packages for showers, parties, corporate events, and receptions.
-
-| Document | Type | Description |
-|----------|------|-------------|
-| [Reception Hall Party Packages](markdown-docs/packages/reception-hall/packages-reception-hall.md) | Pricing | 3-hour rental packages with pricing tiers |
-| [Salon Banquet Package](markdown-docs/packages/reception-hall/package-salon-banquet.md) | Package | Salon banquet event package |
-| [Salon Party Packages](markdown-docs/packages/salon-party-packages.md) | Pricing | Salon party packages with pricing (pages 3-4) |
-| [Company Picnic Proposal](markdown-docs/packages/proposal-company-picnic.md) | Template | Corporate event proposal template |
-
----
-
-## Catering Menu
-
-Wedding and event catering menu with entrees, sides, and pricing.
+### Wedding Packages (5 docs)
 
 | Document | Description |
 |----------|-------------|
-| [Wedding Catering Menu](markdown-docs/catering/catering-menu.md) | Complete catering menu (7 pages): entrees, buffet options, desserts, beverages, pricing |
+| [Dream Package](services/wedding-packages/package-dream.md) | Premium 5-hour ceremony and reception |
+| [Simple Elegance Package](services/wedding-packages/package-simple-elegance.md) | 3.5-hour ceremony and reception |
+| [Food Truck Fun Package](services/wedding-packages/package-food-truck.md) | 4-hour wedding with food truck |
+| [Reception Only Package](services/wedding-packages/package-reception-only.md) | 4-hour reception without ceremony |
+| [Salon & Town Merry Package](services/wedding-packages/package-salon-town-merry.md) | Classic wedding package |
 
----
-
-## Add-On Services
-
-Additional services to enhance wedding and event packages.
-
-| Document | Type | Description |
-|----------|------|-------------|
-| [Wedding Add-Ons](markdown-docs/add-ons/addons-wedding.md) | Pricing | Additional services for weddings (decorations, bar packages, photography, etc.) |
-| [Salon Party Add-Ons](markdown-docs/add-ons/packages-salon-parties.md) | Pricing | Additional items for salon parties and bridal showers |
-
----
-
-## Training Materials
-
-Employee training programs, schedules, and sales resources.
-
-| Document | Type | Description |
-|----------|------|-------------|
-| [Waitstaff Training Program](markdown-docs/training/training-program.md) | Program | 5-day comprehensive training for new waitstaff (onboarding through Day 4) |
-| [Admin Training Manual](markdown-docs/training/training-manual.md) | Manual | Administrative assistant training manual |
-| [Training Schedule](markdown-docs/training/training-schedule.md) | Schedule | Admin training schedule and milestones |
-| [Phone Sales Script](markdown-docs/training/sales-script.md) | Script | Phone sales script for booking inquiries |
-
----
-
-## Operational Procedures
-
-Service standards, closing procedures, and daily operations.
-
-| Document | Type | Description |
-|----------|------|-------------|
-| [Points of Service (23 Steps)](markdown-docs/operations/service-protocols.md) | Protocol | Master service protocol from guest arrival to table reset |
-| [Daily Closing Procedures](markdown-docs/operations/closing-procedures.md) | Procedure | 1:30pm and 2:00pm closing routines, kitchen station operations, event cleanup |
-| [Phone System Guide](markdown-docs/operations/phone-system-guide.md) | Guide | CX340 phone system quick reference and instructions |
-
----
-
-## HR Forms
-
-Human resources forms for employee management.
-
-| Document | Forms Included |
-|----------|----------------|
-| [HR Forms](markdown-docs/hr-forms/hr-forms.md) | Employee Time-Off Request Form, Employee Warning Form |
-
----
-
-## Facilities Management
-
-Property maintenance and groundskeeping schedules.
+### Event Packages (4 docs)
 
 | Document | Description |
 |----------|-------------|
-| [Maintenance Schedule](markdown-docs/facilities/maintenance-schedule.md) | Weekly groundskeeping routine (Monday-Friday) with zone focus |
+| [Reception Hall Packages](services/event-packages/packages-reception-hall.md) | 3-hour rental packages with pricing tiers |
+| [Salon Banquet Package](services/event-packages/package-salon-banquet.md) | Salon banquet events |
+| [Salon Party Packages](services/event-packages/salon-party-packages.md) | Salon party pricing |
+| [Company Picnic Proposal](services/event-packages/proposal-company-picnic.md) | Corporate event template |
+
+### Catering (2 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Wedding Catering Menu](services/catering/catering-menu.md) | Full menu with entrees, buffet, desserts, beverages |
+| [Off-Premise Catering Menu](services/catering/off-premise-menu.docx) | Corporate and off-site catering |
+
+### Add-Ons (2 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Wedding Add-Ons](services/add-ons/addons-wedding.md) | Decorations, bar packages, photography |
+| [Salon Party Add-Ons](services/add-ons/packages-salon-parties.md) | Bridal shower enhancements |
 
 ---
 
-## Templates & Working Documents
+## Clients
 
-DOCX, XLSX, and PDF templates for client planning and operations.
+Client-facing materials: booking forms, planning checklists, day-of documents, and room layouts.
 
-### Bridal Planning
-- [2023 Bridal Online Planning Documents](templates/2023%20Bridal%20Online%20Planning%20Documents_.xlsx)
-- [Bridal Planning Sheets](templates/Temps%20+%20Docs/Bridal%20Planning%20Sheet/) (4 examples + micro wedding form)
-- [New Bride Folder Template](templates/Temps%20+%20Docs/New%20Bride%20Folder%20Template/) (Complete folder with all planning docs)
+### Booking (4 docs)
 
-### Event Setup & Planning
-- [Music Lists](templates/Temps%20+%20Docs/) (Wedding music list, standard music list)
-- [Decor Appointment Form](templates/Temps%20+%20Docs/Decor%20Appointment%20Form.docx)
-- [Processional Templates](templates/Temps%20+%20Docs/Processional%20Template/) (Wedding and Quinceanera)
-- [Tasting Appointment Form](templates/Temps%20+%20Docs/Tasting%20Appt%20Form/)
+| Document | Description |
+|----------|-------------|
+| [Wedding Booking Form](clients/booking/booking-form-wedding.md) | Wedding event booking |
+| [Corporate Booking Form](clients/booking/booking-form-corporate.md) | Corporate event booking |
+| [Shower/Small Party Booking Form](clients/booking/booking-form-shower.md) | Shower and party booking |
+| [Shower Contract Package](clients/booking/contract-package-shower.md) | Contract with terms |
 
-### Timeline Templates
-- [Basic Timeline (6-11pm)](templates/Temps%20+%20Docs/Timeline%20Templates/6-11pm%20Basic%20Timeline.docx)
-- [First Look Timeline](templates/Temps%20+%20Docs/Timeline%20Templates/First%20Look%20Timeline_.docx)
-- [Micro Wedding Timeline](templates/Temps%20+%20Docs/Timeline%20Templates/Basic%20Micro%20Timeline_.docx)
-- [First Dance After Dinner Timeline](templates/Temps%20+%20Docs/Timeline%20Templates/First%20Dance%20After%20Dinner.docx)
+### Planning (7 docs)
 
-### Layout Templates
-- **[Hall Layouts](templates/Temps%20+%20Docs/Layout%20Templates/Hall/)** (3 templates: reset, head table, rounds for 120)
-- **[Saloon Layouts](templates/Temps%20+%20Docs/Layout%20Templates/Saloon/)** (2 templates: reset, rounds for 20)
-- **[Town Layouts](templates/Temps%20+%20Docs/Layout%20Templates/Town/)** (7 templates: various capacities and styles)
-- **[Tea Room Layouts](templates/Temps%20+%20Docs/Layout%20Templates/Tea%20Room/)** (2 templates: standard, Valentine's Day)
-- **[Open House Layouts](templates/Temps%20+%20Docs/Layout%20Templates/Open%20House/)** (4 templates: Hall, Saloon, Town, standard)
+| Document | Description |
+|----------|-------------|
+| [Bridal Planning Sheet 2024](clients/planning/bridal-planning-2024.xlsx) | Main planning spreadsheet |
+| [Micro Wedding Planning](clients/planning/micro-wedding-planning.xlsx) | Micro wedding planning form |
+| [Checklist: 9-12 Months Out](clients/planning/checklist-9-12-months.docx) | Early planning checklist |
+| [Checklist: 7-8 Months Out](clients/planning/checklist-7-8-months.docx) | Mid planning checklist |
+| [Checklist: 4-6 Months Out](clients/planning/checklist-4-6-months.docx) | Detail planning checklist |
+| [Checklist: 1-3 Months Out](clients/planning/checklist-1-3-months.docx) | Final planning checklist |
+| [Pre-Wedding To Do List](clients/planning/pre-wedding-todo.docx) | Week-of tasks |
 
-### Final Appointment Documents
-- [Final Appointment Form 2024](templates/Temps%20+%20Docs/Final%20Appointment/2024%20Final%20Appt%20Form%20.docx)
-- [To Do List Before Wedding](templates/Temps%20+%20Docs/Final%20Appointment/To%20do%20list%20before%20wedding.docx)
-- [Vendor Event Set Up](templates/Temps%20+%20Docs/Final%20Appointment/Vendor%20Event%20Set%20Up.docx)
-- Event-specific examples (3 files)
+### Day-Of (8 docs)
 
-### Timeline Documents (Month-by-Month)
-- [9-12 Months Out](templates/Temps%20+%20Docs/Month%20Out%20Docs/9-12%20months%20out.docx)
-- [7-8 Months Out](templates/Temps%20+%20Docs/Month%20Out%20Docs/7-8%20Months%20Out.docx)
-- [4-6 Months Out](templates/Temps%20+%20Docs/Month%20Out%20Docs/4-6%20Months%20Out.docx)
-- [1-3 Months Out](templates/Temps%20+%20Docs/Month%20Out%20Docs/1-3%20Months%20Out.docx)
+| Document | Description |
+|----------|-------------|
+| [Timeline: Evening 6-11pm](clients/day-of/timeline-evening-6-11pm.docx) | Standard evening timeline |
+| [Timeline: First Look](clients/day-of/timeline-first-look.docx) | First look ceremony timeline |
+| [Timeline: First Dance After Dinner](clients/day-of/timeline-first-dance-after-dinner.docx) | Alternative reception flow |
+| [Timeline: Micro Wedding](clients/day-of/timeline-micro-wedding.docx) | Micro wedding timeline |
+| [Wedding Processional](clients/day-of/wedding-processional.docx) | Ceremony order template |
+| [Quinceanera Processional](clients/day-of/quinceanera-processional.docx) | Quinceanera ceremony order |
+| [Music List](clients/day-of/music-list.docx) | Music selection form |
+| [Shoe Game Questions](clients/day-of/shoe-game-questions.docx) | Reception game questions |
 
-### Bar & Catering
-- [Bar Event List Template](templates/Temps%20+%20Docs/Bar%20Info%20Template/Bar%20Event%20List.docx)
-- [Alcohol Pull Tracker](templates/Temps%20+%20Docs/Bar%20Info%20Template/ALCOHOL%20PULL.xlsx)
-- [Catering Sign Up Sheet](templates/Catering%20Sign%20Up%20Sheet.xlsx)
-- [Corporate Catering Menu](templates/Corporate%20and%20Off-Premise%20Catering%20Menu%20Final.docx)
+### Room Layouts (14 docs)
 
-### Other Resources
-- [Venue Layout](templates/Temps%20+%20Docs/Silver%20Sycamore%20Venue%20Layout.xlsx)
-- [Wedding Shoe Game Questions](templates/Temps%20+%20Docs/Wedding%20Shoe%20Game%20Questions.docx)
+Organized by venue space:
+
+**Hall** (3 docs)
+| Document | Description |
+|----------|-------------|
+| [Hall: Head Table](clients/layouts/hall/head-table.docx) | Head table configuration |
+| [Hall: Rounds for 120](clients/layouts/hall/rounds-120.docx) | Round tables for 120 guests |
+| [Hall: Reset Checklist](clients/layouts/hall/reset-checklist.docx) | Post-event reset |
+
+**Saloon** (2 docs)
+| Document | Description |
+|----------|-------------|
+| [Saloon: Rounds for 20](clients/layouts/saloon/rounds-20.docx) | Round tables for 20 guests |
+| [Saloon: Reset Checklist](clients/layouts/saloon/reset-checklist.docx) | Post-event reset |
+
+**Town** (4 docs)
+| Document | Description |
+|----------|-------------|
+| [Town: Aubrey 75](clients/layouts/town/aubrey-75.docx) | Aubrey style for 75 guests |
+| [Town: Aubrey 100](clients/layouts/town/aubrey-100.docx) | Aubrey style for 100 guests |
+| [Town: Head Table](clients/layouts/town/head-table.docx) | Head table configuration |
+| [Town: Round Tables](clients/layouts/town/round-tables.docx) | Round table configuration |
+
+**Tea Room** (2 docs)
+| Document | Description |
+|----------|-------------|
+| [Tea Room: Standard](clients/layouts/tea-room/standard.docx) | Standard layout |
+| [Tea Room: Valentine's Day](clients/layouts/tea-room/valentines-day.docx) | Valentine's event layout |
+
+**Open House** (4 docs)
+| Document | Description |
+|----------|-------------|
+| [Open House: General](clients/layouts/open-house/general.docx) | General open house |
+| [Open House: Hall](clients/layouts/open-house/hall.docx) | Hall configuration |
+| [Open House: Saloon](clients/layouts/open-house/saloon.docx) | Saloon configuration |
+| [Open House: Town](clients/layouts/open-house/town.docx) | Town configuration |
 
 ---
 
-## Recipe Database
+## Staff
 
-**278 Pine Street Café recipes** digitized and available via web application:
+Employee materials: training programs, procedures, and HR forms.
 
-- **Recipe App:** [https://pine-street-cafe-recipes.vercel.app](https://pine-street-cafe-recipes.vercel.app)
-- **Categories:** 9 categories (appetizers, entrees, desserts, sides, sauces, etc.)
-- **Database:** Convex `recipes` table with full ingredient lists and instructions
+### Training (4 docs)
 
-Recipes are NOT duplicated in this document library to avoid redundancy - use the recipe app for searching and viewing.
+| Document | Description |
+|----------|-------------|
+| [Waitstaff Training Program](staff/training/training-program.md) | 5-day comprehensive onboarding |
+| [Admin Training Manual](staff/training/training-manual.md) | Administrative assistant training |
+| [Training Schedule](staff/training/training-schedule.md) | Training milestones |
+| [Phone Sales Script](staff/training/sales-script.md) | Booking inquiry script |
+
+### Procedures (3 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Points of Service (23 Steps)](staff/procedures/service-protocols.md) | Master service protocol |
+| [Daily Closing Procedures](staff/procedures/closing-procedures.md) | Closing routines, event cleanup |
+| [Phone System Guide](staff/procedures/phone-system-guide.md) | CX340 phone quick reference |
+
+### HR (1 doc)
+
+| Document | Description |
+|----------|-------------|
+| [HR Forms](staff/hr/hr-forms.md) | Time-off request, warning forms |
+
+---
+
+## Operations
+
+Running the business: operational forms, bar tracking, catering coordination, facilities.
+
+### Forms (4 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Final Appointment Form](operations/forms/final-appointment.docx) | Pre-wedding final meeting |
+| [Decor Appointment Form](operations/forms/decor-appointment.docx) | Decoration planning meeting |
+| [Vendor Setup Form](operations/forms/vendor-setup.docx) | Vendor coordination |
+| [Tasting Form](operations/forms/tasting-form.pdf) | Menu tasting appointment |
+
+### Bar (2 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Alcohol Pull Tracker](operations/bar/alcohol-pull-tracker.xlsx) | Inventory tracking |
+| [Bar Event List](operations/bar/bar-event-list.docx) | Event bar setup |
+
+### Catering (1 doc)
+
+| Document | Description |
+|----------|-------------|
+| [Catering Sign-Up Sheet](operations/catering/catering-sign-up.xlsx) | Staff catering assignments |
+
+### Facilities (2 docs)
+
+| Document | Description |
+|----------|-------------|
+| [Maintenance Schedule](operations/facilities/maintenance-schedule.md) | Weekly groundskeeping |
+| [Venue Layout](operations/facilities/venue-layout.xlsx) | Master venue layout |
+
+---
+
+## Deliverables
+
+Projects built during this engagement.
+
+| Project | Status | Link |
+|---------|--------|------|
+| [Pine Street Cafe Recipe App](deliverables/recipe-app/README.md) | Live (Piloting) | [pine-street-cafe-recipes.vercel.app](https://pine-street-cafe-recipes.vercel.app) |
 
 ---
 
 ## Document Statistics
 
-| Category | Markdown Docs | Templates | Total |
-|----------|--------------|-----------|-------|
-| Booking & Contracts | 4 | — | 4 |
-| Wedding Packages | 5 | — | 5 |
-| Reception Hall Packages | 3 | — | 3 |
-| Catering | 1 | 2 | 3 |
-| Add-Ons | 2 | — | 2 |
-| Training | 4 | — | 4 |
-| Operations | 3 | — | 3 |
-| HR Forms | 1 | — | 1 |
-| Facilities | 1 | — | 1 |
-| Templates | — | 62 | 62 |
-| **TOTAL** | **25** | **62** | **87** |
+| Category | Count |
+|----------|-------|
+| Services | 10 |
+| Clients | 33 |
+| Staff | 8 |
+| Operations | 9 |
+| Deliverables | 1 |
+| **Total** | **68** |
 
 ---
 
 ## About This Library
 
-This repository contains operational documentation captured during a consulting engagement in January 2026. Documents were sourced from:
+Documentation captured during January 2026 consulting engagement. Sources:
 
-- **2026-01-02:** Google Drive templates and planning documents (62 files)
-- **2026-01-05:** Physical binder photos - packages, forms, training materials (20 documents extracted)
-- **2026-01-12:** Operational procedures - HR, service protocols, facilities (5 documents)
+- **2026-01-02:** Google Drive templates and planning documents
+- **2026-01-05:** Physical binder photos - packages, forms, training materials
+- **2026-01-12:** Operational procedures - HR, service protocols, facilities
 
-**Excluded Content:**
-- Vendor contact lists with login credentials (security)
-- Service passwords and system logins (security)
-- Recipe database (available via dedicated Recipe App)
+**Not included here:**
+- Vendor contact lists and credentials (stored in Convex `logins` table)
+- Recipe database (278 recipes in [Recipe App](https://pine-street-cafe-recipes.vercel.app))
 
 **For Questions:** Contact Derek Yellin or Uncle Michael
-
----
-
-**Navigation Tip:** Use your browser's search (Ctrl+F / Cmd+F) to quickly find specific documents by keyword.
