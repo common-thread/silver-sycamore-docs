@@ -58,14 +58,6 @@ Recipe app and other tools
 
 ---
 
-## Master Catalog
-
-**[View MASTER Spreadsheet](MASTER/)** — The complete business data matrix with clickable links to all documents, packages, forms, and operational data across 18 sheets.
-
-Includes: Logins, People, Vendors, Venues, Systems, Wedding Packages, Event Packages, Catering, Bar, Add-Ons, Forms, Documents, and more.
-
----
-
 ## Full Document Catalog
 
-See [CATALOG](CATALOG) for the markdown version with descriptions.
+See [CATALOG](CATALOG) for the complete list with descriptions.
