@@ -1,0 +1,26 @@
+title: Silver Sycamore Document Library
+description: Operational documentation for Silver Sycamore Venue and Pine Street Cafe
+baseurl: "/silver-sycamore-docs"
+url: "https://splurfa.github.io"
+
+# Theme - clean GitHub primer theme
+remote_theme: pages-themes/primer@v0.6.0
+plugins:
+  - jekyll-remote-theme
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Exclude source Office files from Jekyll processing
+# (they get converted to HTML in the build step)
+exclude:
+  - "*.docx"
+  - "*.xlsx"
+  - "*.pdf"
+  - Gemfile.lock
+  - README.md
+
+# Include the converted directory
+include:
+  - _converted

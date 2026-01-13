@@ -1,0 +1,110 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install LibreOffice
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice --no-install-recommends
+
+      - name: Convert Office docs to HTML
+        run: |
+          echo "Converting DOCX files..."
+          find . -name "*.docx" -type f | while read file; do
+            dir=$(dirname "$file")
+            echo "Converting: $file"
+            libreoffice --headless --convert-to html --outdir "$dir" "$file" || true
+          done
+
+          echo "Converting XLSX files..."
+          find . -name "*.xlsx" -type f | while read file; do
+            dir=$(dirname "$file")
+            echo "Converting: $file"
+            libreoffice --headless --convert-to html --outdir "$dir" "$file" || true
+          done
+
+      - name: Generate wrapper pages for converted files
+        run: |
+          # Create wrapper markdown files for HTML conversions
+          find . -name "*.html" -not -path "./_layouts/*" -not -path "./_site/*" | while read file; do
+            dir=$(dirname "$file")
+            base=$(basename "$file" .html)
+
+            # Skip if markdown already exists
+            if [ ! -f "$dir/$base.md" ]; then
+              echo "Creating wrapper for: $file"
+              cat > "$dir/$base.md" << EOF
+          ---
+          layout: default
+          title: $base
+          ---
+
+          {% include_relative $(basename "$file") %}
+          EOF
+            fi
+          done
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build with Jekyll
+        run: |
+          bundle install
+          bundle exec jekyll build --baseurl "/silver-sycamore-docs"
+        env:
+          JEKYLL_ENV: production
+
+      - name: Copy converted HTML to site
+        run: |
+          # Copy all HTML files to the built site
+          find . -name "*.html" -not -path "./_site/*" -not -path "./_layouts/*" -not -path "./_includes/*" | while read file; do
+            dest="_site/${file#./}"
+            mkdir -p "$(dirname "$dest")"
+            cp "$file" "$dest" 2>/dev/null || true
+          done
+
+          # Copy PDF files for embedding
+          find . -name "*.pdf" -not -path "./_site/*" | while read file; do
+            dest="_site/${file#./}"
+            mkdir -p "$(dirname "$dest")"
+            cp "$file" "$dest" 2>/dev/null || true
+          done
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

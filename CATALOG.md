@@ -1,6 +1,11 @@
-# Silver Sycamore Document Library
+---
+layout: default
+title: Document Catalog
+---
 
-Operational documentation for Silver Sycamore Venue and Pine Street Cafe.
+# Document Catalog
+
+Complete list of all documents in the Silver Sycamore Document Library.
 
 **Status:** Under Review
 **Last Updated:** January 12, 2026
