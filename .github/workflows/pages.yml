@@ -45,21 +45,22 @@ jobs:
       - name: Generate wrapper pages for converted files
         run: |
           # Create wrapper markdown files for HTML conversions
-          find . -name "*.html" -not -path "./_layouts/*" -not -path "./_site/*" | while read file; do
+          find . -name "*.html" -not -path "./_layouts/*" -not -path "./_site/*" -not -path "./_includes/*" | while read file; do
             dir=$(dirname "$file")
             base=$(basename "$file" .html)
+            htmlfile=$(basename "$file")
 
             # Skip if markdown already exists
             if [ ! -f "$dir/$base.md" ]; then
               echo "Creating wrapper for: $file"
-              cat > "$dir/$base.md" << EOF
-          ---
-          layout: default
-          title: $base
-          ---
+              cat > "$dir/$base.md" << WRAPPER
+---
+layout: default
+title: "${base}"
+---
 
-          {% include_relative $(basename "$file") %}
-          EOF
+{% include_relative ${htmlfile} %}
+WRAPPER
             fi
           done
 
