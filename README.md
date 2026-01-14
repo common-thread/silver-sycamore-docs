@@ -94,6 +94,58 @@ silver-sycamore-docs/
 
 ---
 
+## Development
+
+This repo contains **two systems**:
+
+| System | Purpose | Location | Deployment |
+|--------|---------|----------|------------|
+| **Jekyll** | Static docs site | Root (`/`) | GitHub Pages |
+| **Next.js** | Dynamic app with Convex | `app/` | Vercel |
+
+### Repo Structure
+
+```
+silver-sycamore-docs/
+├── _config.yml, _layouts/, Gemfile    # Jekyll (GitHub Pages)
+├── docs/                               # Shared markdown content
+├── app/                                # Next.js application
+│   ├── src/                           # React components & pages
+│   ├── convex/                        # Backend (database, queries)
+│   ├── e2e/                           # Playwright tests
+│   └── package.json                   # Dependencies
+└── .github/workflows/pages.yml        # Deploys Jekyll to GitHub Pages
+```
+
+### Commands
+
+```bash
+# Next.js development (from app/)
+cd app
+bun install          # Install dependencies
+bun dev              # Run dev server (localhost:3001)
+bun run build        # Production build
+bun run import-docs  # Import docs/ into Convex database
+
+# Jekyll (from root)
+bundle install       # Install Ruby dependencies
+bundle exec jekyll serve  # Local preview (localhost:4000)
+```
+
+### Deployments
+
+- **GitHub Pages** (Jekyll): Auto-deploys on push to `main` via GitHub Actions
+- **Vercel** (Next.js): Configured with `app/` as root directory
+
+### Environment Variables
+
+For Next.js development, create `app/.env.local`:
+```
+NEXT_PUBLIC_CONVEX_URL=https://calculating-vole-961.convex.cloud
+```
+
+---
+
 ## About
 
 Documentation captured during January 2026 consulting engagement.
@@ -104,4 +156,4 @@ Documentation captured during January 2026 consulting engagement.
 
 ---
 
-**Last Updated:** January 12, 2026
+**Last Updated:** January 14, 2026
