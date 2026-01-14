@@ -56,3 +56,14 @@ export const update = mutation({
     });
   },
 });
+
+// Delete all initiatives (for re-seeding)
+export const deleteAll = mutation({
+  handler: async (ctx) => {
+    const initiatives = await ctx.db.query("initiatives").collect();
+    for (const init of initiatives) {
+      await ctx.db.delete(init._id);
+    }
+    return { deleted: initiatives.length };
+  },
+});

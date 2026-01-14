@@ -51,27 +51,53 @@ export const seedCategories = mutation({
 
 export const seedInitiatives = mutation({
   handler: async (ctx) => {
-    // Check if initiatives already exist
-    const existing = await ctx.db.query("initiatives").first();
-    if (existing) {
-      return { message: "Initiatives already seeded", inserted: 0 };
+    // Clear existing initiatives first
+    const existing = await ctx.db.query("initiatives").collect();
+    for (const init of existing) {
+      await ctx.db.delete(init._id);
     }
 
     const initiatives = [
+      // Active initiatives
       {
-        title: "Silver Sycamore Hub",
+        title: "Pine Street Cafe Recipe Book",
         status: "active",
-        phase: "Development",
-        nextActions: "Complete frontend, deploy to Vercel",
+        phase: "Build Finalization",
+        nextActions: "Migrate to Next.js, implement image/video upload, build filtering system",
         order: 1,
         updatedAt: Date.now(),
       },
       {
-        title: "Recipe App",
+        title: "Wedding Package Contract Generator",
         status: "active",
-        phase: "Planning",
-        nextActions: "Finalize requirements with client",
+        phase: "Schema Validation & Testing",
+        nextActions: "Validate Convex schema, build PDF UI, integrate e-signature",
         order: 2,
+        updatedAt: Date.now(),
+      },
+      {
+        title: "Document Library Dashboard",
+        status: "active",
+        phase: "Quality Verification",
+        nextActions: "Audit element attribution, reformat Markdown files, run E2E tests",
+        order: 3,
+        updatedAt: Date.now(),
+      },
+      // Completed deliverables
+      {
+        title: "Pine Street Cafe Recipe App - Initial Prototype",
+        status: "completed",
+        completedDate: "Jan 2026",
+        notes: "Prototype approved, entering build finalization phase",
+        order: 10,
+        updatedAt: Date.now(),
+      },
+      {
+        title: "Document Intake & Cataloging",
+        status: "completed",
+        completedDate: "Jan 2026",
+        notes: "87 documents captured from Google Drive and physical binders",
+        order: 11,
         updatedAt: Date.now(),
       },
     ];

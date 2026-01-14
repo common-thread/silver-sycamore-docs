@@ -13,7 +13,11 @@ export function DocumentList({
   const docs = useQuery(api.documents.byCategory, { category });
 
   if (!docs) {
-    return <div className="text-[#586069]">Loading documents...</div>;
+    return (
+      <div style={{ color: "var(--color-ink-muted)" }}>
+        Loading documents...
+      </div>
+    );
   }
 
   const filtered = subcategory
@@ -21,7 +25,9 @@ export function DocumentList({
     : docs;
 
   if (filtered.length === 0) {
-    return <div className="text-[#586069]">No documents found.</div>;
+    return (
+      <div style={{ color: "var(--color-ink-muted)" }}>No documents found.</div>
+    );
   }
 
   return (
@@ -29,18 +35,18 @@ export function DocumentList({
       <thead>
         <tr>
           <th>Document</th>
-          <th>Type</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
         {filtered.map((d) => (
           <tr key={d._id}>
             <td>
-              <Link href={`/${category}/${d.slug}`} className="text-[#0366d6]">
-                {d.title}
-              </Link>
+              <Link href={`/${category}/${d.slug}`}>{d.title}</Link>
             </td>
-            <td className="text-[#586069]">{d.sourceType || "md"}</td>
+            <td style={{ color: "var(--color-ink-muted)" }}>
+              {d.description || "—"}
+            </td>
           </tr>
         ))}
       </tbody>

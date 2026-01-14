@@ -35,10 +35,28 @@ export function CategoryGrid() {
         <Link
           key={c.slug}
           href={`/${c.slug}`}
-          className="block p-4 border border-[#e1e4e8] rounded-md hover:border-[#0366d6] no-underline bg-white"
+          className="block p-5 rounded no-underline transition-all duration-150"
+          style={{
+            background: "var(--color-white)",
+            border: "1px solid var(--color-border)",
+          }}
         >
-          <h3 className="font-semibold text-[#0366d6]">{c.name}</h3>
-          <p className="text-sm text-[#586069] mt-1">{c.desc}</p>
+          <h3
+            className="font-semibold mb-1"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-ink)",
+              fontSize: "1.1rem",
+            }}
+          >
+            {c.name}
+          </h3>
+          <p
+            className="text-sm m-0"
+            style={{ color: "var(--color-ink-muted)" }}
+          >
+            {c.desc}
+          </p>
         </Link>
       ))}
     </div>

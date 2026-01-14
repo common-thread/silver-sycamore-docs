@@ -45,8 +45,10 @@ export default defineSchema({
     status: v.string(),
     phase: v.optional(v.string()),
     nextActions: v.optional(v.string()),
+    dependency: v.optional(v.string()),
     completedDate: v.optional(v.string()),
     notes: v.optional(v.string()),
+    link: v.optional(v.string()),
     order: v.number(),
     updatedAt: v.number(),
   })

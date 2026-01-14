@@ -95,3 +95,14 @@ export const update = mutation({
     });
   },
 });
+
+// Delete all documents (for re-import)
+export const deleteAll = mutation({
+  handler: async (ctx) => {
+    const docs = await ctx.db.query("documents").collect();
+    for (const doc of docs) {
+      await ctx.db.delete(doc._id);
+    }
+    return { deleted: docs.length };
+  },
+});

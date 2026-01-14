@@ -22,17 +22,68 @@ function slugify(name: string): string {
     .replace(/[^a-z0-9-]/g, "");
 }
 
+// Prefixes to move to the end of the title
+const TITLE_PREFIXES = [
+  "package-",
+  "packages-",
+  "booking-form-",
+  "contract-",
+  "checklist-",
+  "timeline-",
+  "proposal-",
+  "addons-",
+];
+
 function titleFromFilename(filename: string): string {
-  return filename
-    .replace(/\.(md|docx|xlsx|pdf)$/i, "")
+  let name = filename.replace(/\.(md|docx|xlsx|pdf)$/i, "");
+
+  // Check for prefixes to move to end
+  for (const prefix of TITLE_PREFIXES) {
+    if (name.toLowerCase().startsWith(prefix)) {
+      const suffix = prefix.replace(/-$/, "").replace(/-/g, " ");
+      name = name.slice(prefix.length) + "-" + suffix;
+      break;
+    }
+  }
+
+  return name
     .replace(/-/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function extractDescription(content: string): string | undefined {
+  // Skip frontmatter if present
+  let text = content;
+  if (text.startsWith("---")) {
+    const endFrontmatter = text.indexOf("---", 3);
+    if (endFrontmatter > 0) {
+      text = text.slice(endFrontmatter + 3).trim();
+    }
+  }
+
+  // Skip headers and find first paragraph
+  const lines = text.split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    // Skip empty lines, headers, and horizontal rules
+    if (!trimmed || trimmed.startsWith("#") || trimmed === "---") continue;
+    // Found a paragraph - return first ~100 chars
+    const clean = trimmed.replace(/\*+/g, "").replace(/\[.*?\]/g, "").trim();
+    if (clean.length > 10) {
+      return clean.length > 120 ? clean.slice(0, 117) + "..." : clean;
+    }
+  }
+  return undefined;
 }
 
 async function importDocuments() {
   const categories = ["services", "clients", "staff", "operations", "deliverables"];
   let imported = 0;
   let skipped = 0;
+
+  console.log("Clearing existing documents...");
+  const deleteResult = await client.mutation(api.documents.deleteAll, {});
+  console.log(`Deleted ${deleteResult.deleted} existing documents\n`);
 
   console.log("Starting document import...\n");
 
@@ -74,13 +125,16 @@ async function importDocuments() {
         }
 
         let content = "";
+        let description: string | undefined;
 
         if (ext === "md") {
           content = fs.readFileSync(fullPath, "utf-8");
+          description = extractDescription(content);
         } else {
           // For binary files, store metadata placeholder
           const stats = fs.statSync(fullPath);
           content = `[Binary file: ${entry.name}]\nSize: ${(stats.size / 1024).toFixed(1)} KB\nType: ${ext.toUpperCase()}`;
+          description = `${ext.toUpperCase()} document`;
         }
 
         const slug = slugify(path.basename(entry.name, path.extname(entry.name)));
@@ -93,6 +147,7 @@ async function importDocuments() {
             category,
             subcategory,
             content,
+            description,
             sourceFile: entry.name,
             sourceType: ext,
           });
