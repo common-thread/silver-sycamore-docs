@@ -1,6 +1,6 @@
 # Silver Sycamore - Priority Initiatives
 
-Last updated: 2026-01-12
+Last updated: 2026-01-13
 
 ## Current Focus
 
@@ -8,26 +8,17 @@ This document tracks active work, upcoming initiatives, and completed deliverabl
 
 ### Active Initiatives
 
-| Initiative | Status | Owner | Next Action |
-|------------|--------|-------|-------------|
-| Document Library Reorganization | In Progress | Consulting | Complete categorization, management review |
-| Recipe App | Live (Piloting) | Consulting | Gather pilot feedback from kitchen staff |
-| Employee Handbook | Planned | TBD | Review training docs with management |
-
-### On the Table
-
-Items identified but awaiting management review/decision:
-
-- [ ] Staff training video library
-- [ ] Client-facing wedding planning portal
-- [ ] Inventory management system integration
-- [ ] Event day coordination app
+| Initiative | Status | Current Phase | Next Actions |
+|------------|--------|---------------|--------------|
+| Pine Street Cafe Recipe Book | 🟡 In Development | Build Finalization | Migrate to Next.js + dedicated Convex project, implement image/video upload for recipes and steps, build enhanced filtering system, add user favorites/pinning |
+| Wedding Package Contract Generator | 🟡 In Development | Schema Validation & Testing | Validate Convex schema, build UI for accessing drafted/signed PDFs, integrate e-signature plugin for iPad, run end-to-end tests |
+| Document Library Dashboard | 🟡 In Development | Quality Verification | Audit element attribution and formatting, reformat inconsistent Markdown files, run end-to-end test package |
 
 ### Recently Completed
 
 | Deliverable | Date | Notes |
 |-------------|------|-------|
-| Pine Street Cafe Recipe App | Jan 2026 | 278 recipes, live at [pine-street-cafe-recipes.vercel.app](https://pine-street-cafe-recipes.vercel.app) |
+| Pine Street Cafe Recipe App - Initial Prototype | Jan 2026 | Prototype approved, entering build finalization phase |
 | Document Intake & Cataloging | Jan 2026 | 87 documents captured from Google Drive and physical binders |
 
 ---
@@ -55,3 +46,14 @@ Items identified but awaiting management review/decision:
 | Operations | -- | Needs management review |
 
 *Document counts to be updated after reorganization completes.*
+
+---
+
+## Status Sync Architecture
+
+Future enhancement: Each project repo will maintain a STATUS.md file that serves as source-of-truth for current progress. The dashboard (this repo) will pull from those status files to keep INITIATIVES.md synchronized.
+
+**Planned STATUS.md locations:**
+- `wedding-package-contract-generator/STATUS.md`
+- `pine-street-cafe-recipes/STATUS.md`
+- `silver-sycamore-docs/STATUS.md`

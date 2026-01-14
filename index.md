@@ -32,19 +32,19 @@ Operational documentation for Silver Sycamore Venue and Pine Street Cafe.
 
 ## Browse Documents
 
-### [Services](services/) — What We Provide
+### [Services](docs/services/) — What We Provide
 Wedding packages, event packages, catering menus, add-ons
 
-### [Clients](clients/) — Client-Facing Materials
+### [Clients](docs/clients/) — Client-Facing Materials
 Booking forms, planning checklists, day-of documents, room layouts
 
-### [Staff](staff/) — Employee Materials
+### [Staff](docs/staff/) — Employee Materials
 Training programs, procedures, HR forms
 
-### [Operations](operations/) — Running the Business
+### [Operations](docs/operations/) — Running the Business
 Appointment forms, bar tracking, facilities management
 
-### [Deliverables](deliverables/) — Projects We're Building
+### [Deliverables](docs/deliverables/) — Projects We're Building
 Recipe app and other tools
 
 ---
