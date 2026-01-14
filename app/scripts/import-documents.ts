@@ -13,7 +13,7 @@ if (!CONVEX_URL) {
 }
 
 const client = new ConvexHttpClient(CONVEX_URL);
-const DOCS_DIR = "./docs";
+const DOCS_DIR = "../docs";  // docs/ is at repo root, script runs from app/
 
 function slugify(name: string): string {
   return name
@@ -51,7 +51,25 @@ function titleFromFilename(filename: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function extractDescription(content: string): string | undefined {
+// Default descriptions by subcategory for better fallbacks
+const defaultDescriptions: Record<string, string> = {
+  "wedding-packages": "Wedding ceremony and reception package details",
+  "event-packages": "Event venue rental and catering options",
+  "catering": "Menu options and pricing",
+  "add-ons": "Additional services and enhancements",
+  "booking": "Client intake and booking forms",
+  "planning": "Wedding planning checklists and timelines",
+  "day-of": "Day-of coordination documents",
+  "layouts": "Room layout and seating diagrams",
+  "training": "Staff training materials",
+  "procedures": "Operational procedures and protocols",
+  "hr": "Human resources forms",
+  "forms": "Appointment and coordination forms",
+  "bar": "Bar inventory and event tracking",
+  "facilities": "Facility maintenance and layouts",
+};
+
+function extractDescription(content: string, subcategory?: string): string | undefined {
   // Skip frontmatter if present
   let text = content;
   if (text.startsWith("---")) {
@@ -61,18 +79,44 @@ function extractDescription(content: string): string | undefined {
     }
   }
 
-  // Skip headers and find first paragraph
+  // Skip headers and find first usable paragraph
   const lines = text.split("\n");
   for (const line of lines) {
     const trimmed = line.trim();
-    // Skip empty lines, headers, and horizontal rules
+
+    // Skip empty lines, headers, horizontal rules
     if (!trimmed || trimmed.startsWith("#") || trimmed === "---") continue;
-    // Found a paragraph - return first ~100 chars
-    const clean = trimmed.replace(/\*+/g, "").replace(/\[.*?\]/g, "").trim();
-    if (clean.length > 10) {
+
+    // Skip table lines (start with |)
+    if (trimmed.startsWith("|")) continue;
+
+    // Skip lines with image references
+    if (/IMG_\d+|\.jpg|\.png|\.jpeg/i.test(trimmed)) continue;
+
+    // Skip lines that are just "Source:" metadata
+    if (trimmed.toLowerCase().startsWith("source:")) continue;
+
+    // Skip lines that look like raw markdown artifacts
+    if (/^\*+[^*]+\*+:?$/.test(trimmed)) continue;
+
+    // Clean up the line
+    const clean = trimmed
+      .replace(/\*+/g, "")
+      .replace(/\[.*?\]/g, "")
+      .replace(/!\[.*?\]\(.*?\)/g, "")
+      .trim();
+
+    // Need meaningful content (more than just a few words)
+    if (clean.length > 15 && !clean.startsWith("-")) {
       return clean.length > 120 ? clean.slice(0, 117) + "..." : clean;
     }
   }
+
+  // Fall back to subcategory-based default
+  if (subcategory && defaultDescriptions[subcategory]) {
+    return defaultDescriptions[subcategory];
+  }
+
   return undefined;
 }
 
@@ -129,12 +173,15 @@ async function importDocuments() {
 
         if (ext === "md") {
           content = fs.readFileSync(fullPath, "utf-8");
-          description = extractDescription(content);
+          description = extractDescription(content, subcategory);
         } else {
           // For binary files, store metadata placeholder
           const stats = fs.statSync(fullPath);
           content = `[Binary file: ${entry.name}]\nSize: ${(stats.size / 1024).toFixed(1)} KB\nType: ${ext.toUpperCase()}`;
-          description = `${ext.toUpperCase()} document`;
+          // Use subcategory-based default or file type
+          description = (subcategory && defaultDescriptions[subcategory])
+            ? defaultDescriptions[subcategory]
+            : `${ext.toUpperCase()} document`;
         }
 
         const slug = slugify(path.basename(entry.name, path.extname(entry.name)));

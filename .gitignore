@@ -3,7 +3,7 @@
 .DS_Store
 *.tmp
 
-# dependencies
+# dependencies (root - legacy)
 /node_modules
 /.pnp
 .pnp.*
@@ -13,13 +13,23 @@
 !.yarn/releases
 !.yarn/versions
 
+# Next.js app (in app/ subdirectory)
+app/node_modules/
+app/.next/
+app/out/
+app/coverage/
+app/test-results/
+app/playwright-report/
+app/playwright/.cache/
+app/build/
+
 # testing
 /coverage
 test-results/
 playwright-report/
 playwright/.cache/
 
-# next.js
+# next.js (root - legacy)
 /.next/
 /out/
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { LogoPlaceholder } from "@/components/LogoPlaceholder";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,14 +43,7 @@ export default function RootLayout({
                 className="flex items-center gap-4 no-underline hover:no-underline"
                 style={{ color: "var(--color-ink)" }}
               >
-                <Image
-                  src="/logo.png"
-                  alt="Silver Sycamore"
-                  width={140}
-                  height={70}
-                  className="object-contain"
-                  priority
-                />
+                <LogoPlaceholder />
               </a>
             </header>
 
