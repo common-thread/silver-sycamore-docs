@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 
 const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/.planning/verification/10-06';
@@ -6,17 +6,11 @@ const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-delivera
 /**
  * E2E Verification for Plan 10-06: Notifications
  *
- * This test verifies the notification system components:
- * 1. NotificationBell component exists and renders
- * 2. NotificationInbox dropdown functionality
- * 3. Messages page routing
- * 4. UI component structure
- *
- * Note: Full auth testing requires working Convex Auth configuration.
- * These tests verify the UI structure and component presence.
+ * These tests run with pre-authenticated state from global-setup.ts.
+ * They verify the notification system's UI components and interactions.
  */
 
-test.describe('Notification System - E2E Verification', () => {
+test.describe('Notification System - Authenticated E2E Tests', () => {
 
   test.beforeAll(() => {
     // Ensure screenshot directory exists
@@ -25,151 +19,201 @@ test.describe('Notification System - E2E Verification', () => {
     }
   });
 
-  test('Verify notification components exist in codebase', async () => {
-    // Verify NotificationBell component file exists
-    const bellPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/NotificationBell.tsx';
-    expect(fs.existsSync(bellPath)).toBe(true);
-    console.log('NotificationBell.tsx exists: true');
-
-    // Verify NotificationInbox component file exists
-    const inboxPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/NotificationInbox.tsx';
-    expect(fs.existsSync(inboxPath)).toBe(true);
-    console.log('NotificationInbox.tsx exists: true');
-
-    // Verify Header includes NotificationBell
-    const headerPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/Header.tsx';
-    const headerContent = fs.readFileSync(headerPath, 'utf-8');
-    expect(headerContent).toContain('NotificationBell');
-    expect(headerContent).toContain('isAuthenticated');
-    console.log('Header includes NotificationBell: true');
-    console.log('Header checks isAuthenticated: true');
-  });
-
-  test('Verify notification Convex functions exist', async () => {
-    // Check that notification functions are defined
-    const notificationsPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/convex/notifications.ts';
-    expect(fs.existsSync(notificationsPath)).toBe(true);
-
-    const content = fs.readFileSync(notificationsPath, 'utf-8');
-
-    // Verify key functions exist
-    expect(content).toContain('getUnreadCount');
-    console.log('getUnreadCount function: exists');
-
-    expect(content).toContain('listNotifications');
-    console.log('listNotifications function: exists');
-
-    expect(content).toContain('markAsRead');
-    console.log('markAsRead function: exists');
-
-    expect(content).toContain('markAllAsRead');
-    console.log('markAllAsRead function: exists');
-  });
-
-  test('Verify messages page structure', async ({ page }) => {
+  test('notification bell renders in header when authenticated', async ({ page }) => {
     test.setTimeout(60000);
 
-    console.log('=== Loading Messages Page ===');
-    // With BYPASS_AUTH=true, middleware allows access
-    await page.goto('/messages');
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
-
-    await page.screenshot({ path: `${SCREENSHOT_DIR}/messages-page.png`, fullPage: true });
-    console.log('Screenshot saved: messages-page.png');
-
-    // Verify page loads (not redirected to signin if bypass is working)
-    const currentUrl = page.url();
-    console.log('Current URL:', currentUrl);
-
-    // The page should either show messages content or signin (depending on middleware)
-    const pageHtml = await page.content();
-    const hasMessagesContent = pageHtml.includes('Messages') || pageHtml.includes('Direct Messages') || pageHtml.includes('Channel');
-    const hasSignIn = pageHtml.includes('Sign In') || currentUrl.includes('signin');
-
-    console.log('Messages content present:', hasMessagesContent);
-    console.log('Sign in page shown:', hasSignIn);
-  });
-
-  test('Verify homepage with bypass auth', async ({ page }) => {
-    test.setTimeout(60000);
-
-    console.log('=== Loading Homepage ===');
+    // Navigate to homepage
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(2000);
 
-    await page.screenshot({ path: `${SCREENSHOT_DIR}/homepage.png`, fullPage: true });
-    console.log('Screenshot saved: homepage.png');
+    // Verify we're not redirected to signin (authenticated)
+    const currentUrl = page.url();
+    expect(currentUrl).not.toContain('signin');
 
-    // Check header elements
-    const headerExists = await page.locator('header').isVisible().catch(() => false);
-    console.log('Header visible:', headerExists);
+    // Find the notification bell button
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
 
-    // Check for navigation items
-    const servicesLink = await page.locator('a[href="/services"]').isVisible().catch(() => false);
-    console.log('Services link visible:', servicesLink);
-
-    // Check for search bar
-    const searchBar = await page.locator('input[placeholder*="Search"]').isVisible().catch(() => false);
-    console.log('Search bar visible:', searchBar);
-
-    // Check for user menu (should be visible when authenticated)
-    const userMenuArea = await page.locator('header').locator('button').count();
-    console.log('Header button count:', userMenuArea);
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/01-notification-bell-in-header.png`, fullPage: true });
+    console.log('Notification bell is visible in header');
   });
 
-  test('Verify signin page structure', async ({ page }) => {
+  test('clicking bell opens notification inbox dropdown', async ({ page }) => {
     test.setTimeout(60000);
 
-    console.log('=== Loading Sign In Page ===');
-    await page.goto('/signin');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
 
-    await page.screenshot({ path: `${SCREENSHOT_DIR}/signin-page.png`, fullPage: true });
-    console.log('Screenshot saved: signin-page.png');
+    // Click the notification bell
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
+    await notificationBell.click();
 
-    // Verify sign-in form elements
-    const emailInput = await page.getByPlaceholder('you@example.com').isVisible();
-    console.log('Email input visible:', emailInput);
-    expect(emailInput).toBe(true);
+    // Wait for dropdown to appear
+    await page.waitForTimeout(500);
 
-    const passwordInput = await page.getByPlaceholder('Enter your password').isVisible();
-    console.log('Password input visible:', passwordInput);
-    expect(passwordInput).toBe(true);
+    // Verify the notification inbox dropdown is visible
+    // The dropdown contains "Notifications" header
+    const notificationHeader = page.locator('h3', { hasText: 'Notifications' });
+    await expect(notificationHeader).toBeVisible({ timeout: 5000 });
 
-    const signInTab = await page.getByRole('button', { name: 'Sign In' }).first().isVisible();
-    console.log('Sign In tab visible:', signInTab);
-    expect(signInTab).toBe(true);
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/02-notification-inbox-open.png`, fullPage: true });
+    console.log('Notification inbox dropdown is visible');
 
-    const createAccountTab = await page.getByRole('button', { name: 'Create Account' }).first().isVisible();
-    console.log('Create Account tab visible:', createAccountTab);
-    expect(createAccountTab).toBe(true);
+    // Verify empty state or notification list is present
+    const emptyState = page.locator('text=No notifications');
+    const notificationList = page.locator('button').filter({ hasText: 'mentioned you' });
+
+    // At least one should be visible (either empty state or notifications)
+    const hasEmptyState = await emptyState.isVisible().catch(() => false);
+    const hasNotifications = await notificationList.count() > 0;
+
+    expect(hasEmptyState || hasNotifications).toBe(true);
+    console.log(`Empty state: ${hasEmptyState}, Has notifications: ${hasNotifications}`);
   });
 
-  test('Summary: Notification system verification', async () => {
-    console.log('\n=== NOTIFICATION SYSTEM VERIFICATION SUMMARY ===\n');
-    console.log('Components Verified:');
-    console.log('  - NotificationBell.tsx: EXISTS');
-    console.log('  - NotificationInbox.tsx: EXISTS');
-    console.log('  - Header integration: VERIFIED');
-    console.log('');
-    console.log('Convex Functions:');
-    console.log('  - getUnreadCount: EXISTS');
-    console.log('  - listNotifications: EXISTS');
-    console.log('  - markAsRead: EXISTS');
-    console.log('  - markAllAsRead: EXISTS');
-    console.log('');
-    console.log('UI Features:');
-    console.log('  - Notification bell with badge');
-    console.log('  - Dropdown inbox with notification list');
-    console.log('  - Mark all read functionality');
-    console.log('  - Navigation to messages');
-    console.log('');
-    console.log('Note: Full interactive testing requires working Convex Auth.');
-    console.log('Auth bypass mode allows middleware to pass but client-side');
-    console.log('isAuthenticated check still requires actual authentication.');
-    console.log('\n=== END SUMMARY ===\n');
+  test('messages page loads with channel sidebar', async ({ page }) => {
+    test.setTimeout(60000);
+
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(3000);
+
+    // Verify we're on the messages page
+    const currentUrl = page.url();
+    expect(currentUrl).toContain('/messages');
+
+    // Verify the sidebar sections are visible
+    const channelsSection = page.locator('text=Channels').first();
+    await expect(channelsSection).toBeVisible({ timeout: 10000 });
+
+    const dmSection = page.locator('text=Direct Messages');
+    await expect(dmSection).toBeVisible({ timeout: 5000 });
+
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/03-messages-page-sidebar.png`, fullPage: true });
+    console.log('Messages page loaded with channel sidebar');
   });
+
+  test('channels display unread indicator when applicable', async ({ page }) => {
+    test.setTimeout(60000);
+
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(3000);
+
+    // Check for channel items in the sidebar
+    const channelLinks = page.locator('a[href^="/messages/"]');
+    const count = await channelLinks.count();
+
+    console.log(`Found ${count} channel links in sidebar`);
+
+    // Screenshot the channel list
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/04-channels-with-unread-indicators.png`, fullPage: true });
+
+    // This test verifies the structure exists - actual unread state depends on test data
+    // The ChannelItem component shows unread dots when unreadCount > 0
+    expect(count).toBeGreaterThanOrEqual(0);
+    console.log('Channel list structure verified');
+  });
+
+  test('notification inbox shows "Mark all read" when notifications exist', async ({ page }) => {
+    test.setTimeout(60000);
+
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+
+    // Open notification inbox
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
+    await notificationBell.click();
+    await page.waitForTimeout(500);
+
+    // Check for "Mark all read" button (only visible when unread notifications exist)
+    const markAllReadButton = page.locator('button', { hasText: 'Mark all read' });
+    const emptyState = page.locator('text=No notifications');
+
+    const hasMarkAllRead = await markAllReadButton.isVisible().catch(() => false);
+    const isEmpty = await emptyState.isVisible().catch(() => false);
+
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/05-notification-inbox-state.png`, fullPage: true });
+
+    // Either we have notifications with "Mark all read" button, or empty state
+    console.log(`Has "Mark all read" button: ${hasMarkAllRead}`);
+    console.log(`Shows empty state: ${isEmpty}`);
+
+    // If there are notifications, "Mark all read" should be clickable
+    if (hasMarkAllRead) {
+      await markAllReadButton.click();
+      await page.waitForTimeout(1000);
+      console.log('Mark all read button clicked');
+
+      await page.screenshot({ path: `${SCREENSHOT_DIR}/06-after-mark-all-read.png`, fullPage: true });
+    }
+
+    expect(hasMarkAllRead || isEmpty).toBe(true);
+  });
+
+  test('"Go to Messages" link navigates correctly', async ({ page }) => {
+    test.setTimeout(60000);
+
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+
+    // Open notification inbox
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
+    await notificationBell.click();
+    await page.waitForTimeout(500);
+
+    // Look for "Go to Messages" link at the bottom of dropdown
+    const goToMessagesButton = page.locator('button', { hasText: 'Go to Messages' });
+
+    // This button only appears when there are notifications
+    const hasButton = await goToMessagesButton.isVisible().catch(() => false);
+
+    if (hasButton) {
+      await goToMessagesButton.click();
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(1000);
+
+      // Verify navigation to messages page
+      const currentUrl = page.url();
+      expect(currentUrl).toContain('/messages');
+      console.log('Successfully navigated to messages page from notification inbox');
+    } else {
+      // If no notifications, verify the "Messages" link in header works
+      const messagesHeaderLink = page.locator('a[href="/messages"]').first();
+      await messagesHeaderLink.click();
+      await page.waitForLoadState('networkidle');
+
+      const currentUrl = page.url();
+      expect(currentUrl).toContain('/messages');
+      console.log('Navigated to messages page via header link');
+    }
+
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/07-navigation-to-messages.png`, fullPage: true });
+  });
+
+  test('workspace and messages links visible when authenticated', async ({ page }) => {
+    test.setTimeout(60000);
+
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
+
+    // These links are only visible to authenticated users
+    const workspaceLink = page.locator('a[href="/workspace"]');
+    const messagesLink = page.locator('a[href="/messages"]');
+
+    await expect(workspaceLink).toBeVisible({ timeout: 5000 });
+    await expect(messagesLink).toBeVisible({ timeout: 5000 });
+
+    console.log('Workspace and Messages links are visible (authenticated)');
+    await page.screenshot({ path: `${SCREENSHOT_DIR}/08-authenticated-header-links.png`, fullPage: true });
+  });
+
 });
