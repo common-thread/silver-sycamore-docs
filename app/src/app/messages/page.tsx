@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { CreateChannelDialog } from "@/components/CreateChannelDialog";
+import { StartDMDialog } from "@/components/StartDMDialog";
 
 export default function MessagesPage() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isDMDialogOpen, setIsDMDialogOpen] = useState(false);
 
   return (
     <div
@@ -124,6 +126,7 @@ export default function MessagesPage() {
         </button>
 
         <button
+          onClick={() => setIsDMDialogOpen(true)}
           style={{
             display: "flex",
             alignItems: "center",
@@ -160,6 +163,12 @@ export default function MessagesPage() {
       <CreateChannelDialog
         isOpen={isCreateDialogOpen}
         onClose={() => setIsCreateDialogOpen(false)}
+      />
+
+      {/* Start DM dialog */}
+      <StartDMDialog
+        isOpen={isDMDialogOpen}
+        onClose={() => setIsDMDialogOpen(false)}
       />
     </div>
   );

@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { StartDMDialog } from "./StartDMDialog";
 
 interface ChannelListProps {
   currentChannelId?: string;
 }
 
 export function ChannelList({ currentChannelId }: ChannelListProps) {
+  const [isDMDialogOpen, setIsDMDialogOpen] = useState(false);
   const channels = useQuery(api.channels.listUserChannels);
 
   if (channels === undefined) {
@@ -90,16 +93,53 @@ export function ChannelList({ currentChannelId }: ChannelListProps) {
       <div>
         <div
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             padding: "0.5rem 1rem",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.6875rem",
-            fontWeight: 600,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            color: "var(--color-ink-muted)",
           }}
         >
-          Direct Messages
+          <span
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.6875rem",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              color: "var(--color-ink-muted)",
+            }}
+          >
+            Direct Messages
+          </span>
+          <button
+            onClick={() => setIsDMDialogOpen(true)}
+            title="Start a direct message"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "20px",
+              height: "20px",
+              padding: 0,
+              fontFamily: "var(--font-body)",
+              fontSize: "1rem",
+              fontWeight: 400,
+              color: "var(--color-ink-muted)",
+              background: "transparent",
+              border: "none",
+              borderRadius: 0,
+              cursor: "pointer",
+              transition: "color 150ms ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--color-accent)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--color-ink-muted)";
+            }}
+          >
+            +
+          </button>
         </div>
 
         {hasDMs ? (
@@ -121,12 +161,21 @@ export function ChannelList({ currentChannelId }: ChannelListProps) {
             }}
           >
             No direct messages.{" "}
-            <span style={{ color: "var(--color-accent)", cursor: "pointer" }}>
+            <span
+              style={{ color: "var(--color-accent)", cursor: "pointer" }}
+              onClick={() => setIsDMDialogOpen(true)}
+            >
               Start a conversation
             </span>
           </div>
         )}
       </div>
+
+      {/* Start DM dialog */}
+      <StartDMDialog
+        isOpen={isDMDialogOpen}
+        onClose={() => setIsDMDialogOpen(false)}
+      />
     </div>
   );
 }
@@ -137,6 +186,13 @@ interface ChannelItemProps {
     name: string;
     type: string;
     description?: string;
+    dmPartner?: {
+      id: string;
+      email?: string;
+      name?: string;
+      displayName?: string;
+      avatarUrl?: string;
+    } | null;
     membership: {
       lastReadAt?: number;
     };
@@ -151,6 +207,26 @@ function ChannelItem({ channel, isActive }: ChannelItemProps) {
   });
 
   const hasUnread = unreadCount !== undefined && unreadCount > 0;
+
+  // For DMs, display the partner's name; otherwise use channel name
+  const displayName =
+    channel.type === "dm" && channel.dmPartner
+      ? channel.dmPartner.displayName ||
+        channel.dmPartner.name ||
+        channel.dmPartner.email ||
+        "Unknown User"
+      : channel.name;
+
+  // For DMs, get the partner's initial for avatar
+  const dmInitial =
+    channel.type === "dm" && channel.dmPartner
+      ? (
+          channel.dmPartner.displayName ||
+          channel.dmPartner.name ||
+          channel.dmPartner.email ||
+          "?"
+        ).charAt(0)
+      : "";
 
   return (
     <Link
@@ -187,23 +263,28 @@ function ChannelItem({ channel, isActive }: ChannelItemProps) {
         }
       }}
     >
-      {/* Channel icon */}
+      {/* Channel/DM icon */}
       {channel.type === "dm" ? (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          style={{ flexShrink: 0 }}
+        // DM: Show avatar circle with initial
+        <div
+          style={{
+            width: "20px",
+            height: "20px",
+            borderRadius: "50%",
+            background: "var(--color-accent)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.6875rem",
+            fontWeight: 600,
+            color: "var(--color-surface)",
+            textTransform: "uppercase",
+            flexShrink: 0,
+          }}
         >
-          <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.2" />
-          <path
-            d="M3 14C3 11 5 9 8 9C11 9 13 11 13 14"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
+          {dmInitial}
+        </div>
       ) : channel.type === "private" ? (
         <svg
           width="16"
@@ -241,9 +322,9 @@ function ChannelItem({ channel, isActive }: ChannelItemProps) {
         </span>
       )}
 
-      {/* Channel name */}
+      {/* Channel/DM name */}
       <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis" }}>
-        {channel.name}
+        {displayName}
       </span>
 
       {/* Unread indicator */}

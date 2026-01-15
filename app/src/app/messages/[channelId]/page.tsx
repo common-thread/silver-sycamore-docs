@@ -17,6 +17,12 @@ export default function ChannelPage() {
   const currentUser = useQuery(api.users.getCurrentUser);
   const updateLastRead = useMutation(api.channels.updateLastRead);
 
+  // For DM channels, get the other user's info
+  const dmPartner = useQuery(
+    api.channels.getDMPartner,
+    channel?.type === "dm" ? { channelId } : "skip"
+  );
+
   // Mark channel as read when viewing
   useEffect(() => {
     if (channel && channelId) {
@@ -113,6 +119,17 @@ export default function ChannelPage() {
 
   const memberCount = members?.length ?? 0;
   const membershipRole = channel.membership?.role;
+  const isDM = channel.type === "dm";
+
+  // For DMs, show partner's name; otherwise show channel name
+  const displayName = isDM && dmPartner
+    ? dmPartner.displayName || dmPartner.name || dmPartner.email || "Unknown User"
+    : channel.name;
+
+  // Get DM partner's initial for avatar
+  const dmInitial = isDM && dmPartner
+    ? (dmPartner.displayName || dmPartner.name || dmPartner.email || "?").charAt(0)
+    : "";
 
   return (
     <div
@@ -134,23 +151,28 @@ export default function ChannelPage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          {/* Channel icon */}
-          {channel.type === "dm" ? (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle
-                cx="10"
-                cy="8"
-                r="3.5"
-                stroke="var(--color-ink-light)"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M4 18C4 14 6 12 10 12C14 12 16 14 16 18"
-                stroke="var(--color-ink-light)"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-            </svg>
+          {/* Channel/DM icon */}
+          {isDM ? (
+            // DM: Show avatar circle with initial
+            <div
+              style={{
+                width: "28px",
+                height: "28px",
+                borderRadius: "50%",
+                background: "var(--color-accent)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                color: "var(--color-surface)",
+                textTransform: "uppercase",
+                flexShrink: 0,
+              }}
+            >
+              {dmInitial}
+            </div>
           ) : channel.type === "private" ? (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <rect
@@ -192,9 +214,9 @@ export default function ChannelPage() {
                 margin: 0,
               }}
             >
-              {channel.name}
+              {displayName}
             </h1>
-            {channel.description && (
+            {!isDM && channel.description && (
               <p
                 style={{
                   fontFamily: "var(--font-body)",
@@ -209,78 +231,82 @@ export default function ChannelPage() {
             )}
           </div>
 
-          {/* Member count */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.375rem",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.8125rem",
-              color: "var(--color-ink-muted)",
-              cursor: "pointer",
-            }}
-            title="View members"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="6" cy="5" r="2" stroke="currentColor" strokeWidth="1.2" />
-              <path
-                d="M2 13C2 10.5 3.5 9 6 9C8.5 9 10 10.5 10 13"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-              <circle cx="11" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.2" />
-              <path
-                d="M14 12C14 10.3 13 9.5 11 9.5"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-              />
-            </svg>
-            {memberCount} {memberCount === 1 ? "member" : "members"}
-          </div>
+          {/* Member count - hide for DMs (always 2) */}
+          {!isDM && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.375rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.8125rem",
+                color: "var(--color-ink-muted)",
+                cursor: "pointer",
+              }}
+              title="View members"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="6" cy="5" r="2" stroke="currentColor" strokeWidth="1.2" />
+                <path
+                  d="M2 13C2 10.5 3.5 9 6 9C8.5 9 10 10.5 10 13"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
+                <circle cx="11" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.2" />
+                <path
+                  d="M14 12C14 10.3 13 9.5 11 9.5"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+              {memberCount} {memberCount === 1 ? "member" : "members"}
+            </div>
+          )}
 
-          {/* Settings gear placeholder */}
-          <button
-            title="Channel settings"
-            style={{
-              padding: "0.375rem",
-              background: "transparent",
-              border: "1px solid transparent",
-              borderRadius: "4px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "background 0.15s ease, border-color 0.15s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "var(--color-surface-dim, #F8F8F6)";
-              e.currentTarget.style.borderColor = "var(--color-border)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = "transparent";
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path
-                d="M7.5 2.25H10.5L11.25 4.5L13.5 5.25L15.75 4.5V7.5L14.25 9L15.75 10.5V13.5L13.5 12.75L11.25 13.5L10.5 15.75H7.5L6.75 13.5L4.5 12.75L2.25 13.5V10.5L3.75 9L2.25 7.5V4.5L4.5 5.25L6.75 4.5L7.5 2.25Z"
-                stroke="var(--color-ink-muted)"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle
-                cx="9"
-                cy="9"
-                r="2.25"
-                stroke="var(--color-ink-muted)"
-                strokeWidth="1.2"
-              />
-            </svg>
-          </button>
+          {/* Settings gear - hide for DMs (can't configure) */}
+          {!isDM && (
+            <button
+              title="Channel settings"
+              style={{
+                padding: "0.375rem",
+                background: "transparent",
+                border: "1px solid transparent",
+                borderRadius: "4px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "background 0.15s ease, border-color 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--color-surface-dim, #F8F8F6)";
+                e.currentTarget.style.borderColor = "var(--color-border)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "transparent";
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path
+                  d="M7.5 2.25H10.5L11.25 4.5L13.5 5.25L15.75 4.5V7.5L14.25 9L15.75 10.5V13.5L13.5 12.75L11.25 13.5L10.5 15.75H7.5L6.75 13.5L4.5 12.75L2.25 13.5V10.5L3.75 9L2.25 7.5V4.5L4.5 5.25L6.75 4.5L7.5 2.25Z"
+                  stroke="var(--color-ink-muted)"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx="9"
+                  cy="9"
+                  r="2.25"
+                  stroke="var(--color-ink-muted)"
+                  strokeWidth="1.2"
+                />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
 
@@ -301,7 +327,7 @@ export default function ChannelPage() {
           flexShrink: 0,
         }}
       >
-        <MessageInput channelId={channelId} channelName={channel.name} />
+        <MessageInput channelId={channelId} channelName={displayName} />
       </div>
     </div>
   );
