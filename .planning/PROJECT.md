@@ -102,6 +102,7 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 | Comments read-only on official docs | Users suggest via comments/PRs, you control official content | — Pending |
 | Personal folders vs flat personal docs | Folder structure matches user mental model, enables organization | — Pending |
 | Markdown as source of truth | Enables Claude Code workflow, version control, deterministic sync | — Pending |
+| Playwright for E2E verification | Captures screenshots at checkpoints, headless CI-friendly, good Next.js integration | ✓ Good |
 
 ---
-*Last updated: 2026-01-14 after initialization*
+*Last updated: 2026-01-15 after Phase 9 completion*
