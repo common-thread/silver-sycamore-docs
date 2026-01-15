@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { setupClerkTestingToken } from '@clerk/testing/playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -9,6 +10,7 @@ const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-delivera
  *
  * These tests verify the notification system through interactive browser testing.
  * Tests run with pre-authenticated storageState from global-setup.ts.
+ * Uses @clerk/testing to bypass bot detection.
  *
  * Test coverage:
  * 1. Notification bell visibility for authenticated users
@@ -25,6 +27,11 @@ test.describe('Notification System - Interactive E2E Tests', () => {
     if (!fs.existsSync(SCREENSHOT_DIR)) {
       fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
     }
+  });
+
+  test.beforeEach(async ({ page }) => {
+    // Setup Clerk testing token to bypass bot detection
+    await setupClerkTestingToken({ page });
   });
 
   test('authenticated user sees notification bell in header', async ({ page }) => {
