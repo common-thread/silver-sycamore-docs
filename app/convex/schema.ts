@@ -184,4 +184,37 @@ export default defineSchema({
   })
     .index("by_owner", ["ownerId"])
     .index("by_owner_folder", ["ownerId", "folderId"]),
+
+  // Folder sharing - individual share grants
+  folderShares: defineTable({
+    folderId: v.id("personalFolders"),
+    sharedWithUserId: v.optional(v.id("users")), // Direct user share
+    sharedWithGroupId: v.optional(v.id("shareGroups")), // Group share
+    permission: v.string(), // "view" | "comment" | "edit"
+    sharedBy: v.id("users"),
+    createdAt: v.number(),
+  })
+    .index("by_folder", ["folderId"])
+    .index("by_user", ["sharedWithUserId"])
+    .index("by_group", ["sharedWithGroupId"])
+    .index("by_folder_user", ["folderId", "sharedWithUserId"])
+    .index("by_folder_group", ["folderId", "sharedWithGroupId"]),
+
+  // Ad-hoc groups for sharing
+  shareGroups: defineTable({
+    name: v.string(),
+    ownerId: v.id("users"),
+    createdAt: v.number(),
+  })
+    .index("by_owner", ["ownerId"]),
+
+  // User membership in share groups
+  groupMembers: defineTable({
+    groupId: v.id("shareGroups"),
+    userId: v.id("users"),
+    addedAt: v.number(),
+  })
+    .index("by_group", ["groupId"])
+    .index("by_user", ["userId"])
+    .index("by_group_user", ["groupId", "userId"]),
 });
