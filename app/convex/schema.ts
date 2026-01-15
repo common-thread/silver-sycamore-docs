@@ -5,6 +5,19 @@ import { authTables } from "@convex-dev/auth/server";
 export default defineSchema({
   ...authTables,
 
+  // User profiles with role assignments
+  userProfiles: defineTable({
+    userId: v.id("users"),
+    displayName: v.optional(v.string()),
+    role: v.string(), // "admin" | "manager" | "staff"
+    department: v.optional(v.string()),
+    avatarUrl: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_role", ["role"]),
+
   documents: defineTable({
     title: v.string(),
     slug: v.string(),
@@ -15,6 +28,7 @@ export default defineSchema({
     sourceType: v.optional(v.string()),
     description: v.optional(v.string()),
     status: v.optional(v.string()),
+    version: v.optional(v.number()), // Current version number
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -22,6 +36,22 @@ export default defineSchema({
     .index("by_slug", ["slug"])
     .index("by_category_subcategory", ["category", "subcategory"])
     .searchIndex("search_content", { searchField: "content", filterFields: ["category"] }),
+
+  // Document version history
+  documentVersions: defineTable({
+    documentId: v.id("documents"),
+    version: v.number(),
+    title: v.string(),
+    content: v.string(),
+    category: v.string(),
+    subcategory: v.optional(v.string()),
+    editedBy: v.optional(v.id("users")),
+    editedByName: v.optional(v.string()),
+    changeNote: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_document", ["documentId"])
+    .index("by_document_version", ["documentId", "version"]),
 
   categories: defineTable({
     name: v.string(),
@@ -131,4 +161,27 @@ export default defineSchema({
   })
     .index("by_category", ["category"])
     .index("by_slug", ["slug"]),
+
+  // Personal workspace folders
+  personalFolders: defineTable({
+    ownerId: v.id("users"),
+    name: v.string(),
+    parentId: v.optional(v.id("personalFolders")), // Nested folders
+    createdAt: v.number(),
+  })
+    .index("by_owner", ["ownerId"])
+    .index("by_owner_parent", ["ownerId", "parentId"]),
+
+  // Personal workspace documents
+  personalDocuments: defineTable({
+    ownerId: v.id("users"),
+    title: v.string(),
+    content: v.string(),
+    folderId: v.optional(v.id("personalFolders")), // Optional folder organization
+    sourceDocumentId: v.optional(v.id("documents")), // If copied from wiki
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_owner", ["ownerId"])
+    .index("by_owner_folder", ["ownerId", "folderId"]),
 });

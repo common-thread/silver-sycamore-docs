@@ -32,6 +32,16 @@ export const byCategorySlug = query({
   },
 });
 
+export const bySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("subcategories")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+  },
+});
+
 export const create = mutation({
   args: {
     categoryId: v.id("categories"),

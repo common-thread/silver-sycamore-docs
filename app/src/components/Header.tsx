@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useConvexAuth } from "convex/react";
 import { UserMenu } from "./UserMenu";
+import { SearchBar } from "./SearchBar";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,6 +18,7 @@ const navItems = [
 
 export default function Header() {
   const pathname = usePathname();
+  const { isAuthenticated } = useConvexAuth();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -92,7 +95,41 @@ export default function Header() {
             Staff Hub
           </span>
         </Link>
-        <UserMenu />
+
+        {/* Search, Workspace, and User Menu */}
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+          <SearchBar />
+          {isAuthenticated && (
+            <Link
+              href="/workspace"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.375rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.8125rem",
+                fontWeight: 500,
+                color: pathname.startsWith("/workspace")
+                  ? "var(--color-accent)"
+                  : "var(--color-ink-light)",
+                textDecoration: "none",
+                transition: "color 0.15s ease",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M2 4.5C2 3.67 2.67 3 3.5 3H6L7.5 5H12.5C13.33 5 14 5.67 14 6.5V11.5C14 12.33 13.33 13 12.5 13H3.5C2.67 13 2 12.33 2 11.5V4.5Z"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  fill={pathname.startsWith("/workspace") ? "currentColor" : "none"}
+                  fillOpacity={pathname.startsWith("/workspace") ? 0.1 : 0}
+                />
+              </svg>
+              My Workspace
+            </Link>
+          )}
+          <UserMenu />
+        </div>
       </div>
 
       {/* Navigation - table of contents style */}
