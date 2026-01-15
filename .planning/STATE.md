@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 (Messaging Channels) — channel UI complete, message UI next
+**Current focus:** Phase 10 (Messaging Channels) — message UI complete, DMs next
 
 ## Current Position
 
 Phase: 10 of 11 (Messaging Channels)
-Plan: 2 of 6 in current phase
+Plan: 3 of 6 in current phase
 Status: In progress
-Last activity: 2026-01-15 — Completed 10-02-PLAN.md
+Last activity: 2026-01-15 — Completed 10-03-PLAN.md
 
-Progress: █████████░ ~86%
+Progress: █████████░ ~88%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
+- Total plans completed: 30
 - Average duration: 15 min
-- Total execution time: 7.7 hours
+- Total execution time: 7.8 hours
 
 **By Phase:**
 
@@ -36,11 +36,11 @@ Progress: █████████░ ~86%
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
-| 10-messaging-channels | 2/6 | 9 min | 4.5 min |
+| 10-messaging-channels | 3/6 | 14 min | 4.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 6 min, 8 min, 5 min, 4 min
-- Trend: accelerating
+- Last 5 plans: 6 min, 8 min, 5 min, 4 min, 5 min
+- Trend: steady acceleration
 
 ## Accumulated Context
 
@@ -70,7 +70,7 @@ Recent decisions affecting current work:
 - **Share resolution**: Highest permission wins when user has multiple access paths
 - **Group management**: Only owners can modify groups, members can view
 - **Mention storage**: @[userId] format in content for database stability, resolved at render
-- **Mention batch lookup**: Top-level comment queries all mentions, passes map to children
+- **Mention batch lookup**: Top-level component queries all mentions, passes map to children
 - **Suggestion state machine**: draft -> pending -> approved|rejected with string status field
 - **Suggestion content**: Full document content stored (not diffs) for simpler comparison
 - **Suggestion permissions**: Authors control drafts, managers/admins review pending
@@ -84,6 +84,9 @@ Recent decisions affecting current work:
 - **Sidebar width**: 280px for messaging, consistent with workspace layout
 - **Channel grouping**: "Channels" for public/private, "Direct Messages" for DMs
 - **Unread indicator**: Dot indicator using getUnreadCount query per channel
+- **Message date grouping**: Dividers showing "Today", "Yesterday", or "Jan 15" format
+- **Message auto-scroll**: Scroll to bottom on new messages, not on initial page load
+- **Enter-to-send**: Enter sends message, Shift+Enter for newline, dropdown blocks send
 
 ### Deferred Issues
 
@@ -100,6 +103,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 10-02-PLAN.md (Channel browsing UI)
+Stopped at: Completed 10-03-PLAN.md (Message thread UI with real-time updates)
 Resume file: None
-Next action: Execute 10-03-PLAN.md (Message thread UI with real-time updates)
+Next action: Execute 10-04-PLAN.md (Direct messages UI)
