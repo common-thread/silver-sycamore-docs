@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-14)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 7 — Folder Sharing
+**Current focus:** Phase 8 — Comments System
 
 ## Current Position
 
-Phase: 7 of 11 (Folder Sharing)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-01-15 — Completed 07-03-PLAN.md
+Phase: 8 of 11 (Comments System)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-15 — Completed 08-01-PLAN.md
 
-Progress: ███████░░░ ~64%
+Progress: ████████░░ ~67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
-- Average duration: 19 min
-- Total execution time: 6.9 hours
+- Total plans completed: 22
+- Average duration: 18 min
+- Total execution time: 7.0 hours
 
 **By Phase:**
 
@@ -34,9 +34,10 @@ Progress: ███████░░░ ~64%
 | 05-versioning | 3/3 | 45 min | 15 min |
 | 06-personal-workspace | 3/3 | 30 min | 10 min |
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
+| 08-comments-system | 1/3 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 10 min, 10 min, 12 min, 2 min, 8 min
+- Last 5 plans: 12 min, 2 min, 8 min, 2 min
 - Trend: accelerating
 
 ## Accumulated Context
@@ -82,6 +83,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 07-03-PLAN.md (Phase 7 complete)
+Stopped at: Completed 08-01-PLAN.md
 Resume file: None
-Next action: Plan Phase 8 (Comments System)
+Next action: Execute 08-02-PLAN.md (Threaded comment UI)
