@@ -217,4 +217,19 @@ export default defineSchema({
     .index("by_group", ["groupId"])
     .index("by_user", ["userId"])
     .index("by_group_user", ["groupId", "userId"]),
+
+  // Threaded document comments
+  comments: defineTable({
+    documentId: v.optional(v.id("documents")), // Wiki document being commented on
+    personalDocumentId: v.optional(v.id("personalDocuments")), // Personal doc being commented on
+    authorId: v.id("users"), // Who wrote the comment
+    parentId: v.optional(v.id("comments")), // For threading (null = top-level, set = reply)
+    content: v.string(), // Comment text (may contain @mentions as @[userId])
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_document", ["documentId"]) // Get all comments for a wiki doc
+    .index("by_personal_document", ["personalDocumentId"]) // Get comments on personal docs
+    .index("by_parent", ["parentId"]) // Get replies to a comment
+    .index("by_author", ["authorId"]), // User's comment history
 });
