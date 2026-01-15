@@ -10,6 +10,7 @@ const navItems = [
   { href: "/staff", label: "Staff" },
   { href: "/operations", label: "Operations" },
   { href: "/deliverables", label: "Deliverables" },
+  { href: "/catalog", label: "Catalog" },
 ];
 
 export default function Header() {
