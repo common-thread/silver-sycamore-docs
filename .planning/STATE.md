@@ -90,6 +90,7 @@ Recent decisions affecting current work:
 - **DM naming**: Empty string channel name, UI shows partner's displayName
 - **DM idempotency**: findOrCreateDM returns existing channel or creates new
 - **DM header**: Shows partner avatar/name, hides member count and settings
+- **E2E auth strategy**: Test user seeding + Playwright storageState — real auth flow, cookies persisted between tests
 
 ### Deferred Issues
 
@@ -101,7 +102,7 @@ None yet.
 
 ### Blockers/Concerns
 
-None yet.
+- **[RESOLVED] Playwright auth persistence**: Convex Auth state didn't persist in Playwright browser context. Fixed with test user seeding + storageState approach — real auth flow runs once, cookies saved and reused.
 
 ## Session Continuity
 

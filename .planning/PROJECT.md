@@ -103,6 +103,8 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 | Personal folders vs flat personal docs | Folder structure matches user mental model, enables organization | — Pending |
 | Markdown as source of truth | Enables Claude Code workflow, version control, deterministic sync | — Pending |
 | Playwright for E2E verification | Captures screenshots at checkpoints, headless CI-friendly, good Next.js integration | ✓ Good |
+| Chrome MCP for auth verification | Convex Auth state doesn't persist in Playwright; Chrome MCP uses real browser sessions | ✓ Good |
+| E2E auth via storageState | Test user seeding + Playwright storageState persists real auth cookies between tests | ✓ Good |
 
 ---
 *Last updated: 2026-01-15 after Phase 9 completion*

@@ -157,10 +157,89 @@ cd app && bun dev
 cd app && bun run test:e2e
 ```
 
+## Dual Testing Strategy
+
+**Known Limitation:** Convex Auth session state does not persist properly in Playwright's browser context. Authenticated users appear logged in but queries return `null` for `ctx.auth.getUserIdentity()`. This affects tests that verify auth-dependent data.
+
+**Strategy:**
+
+| Tool | Use For | Why |
+|------|---------|-----|
+| Playwright | Bulk E2E tests, CI, non-auth flows | Fast, headless, parallelizable, good Next.js integration |
+| Chrome MCP | Auth-dependent verification, checkpoint:human-verify tasks | Real browser session, auth state persists correctly |
+
+**Playwright Tests (Primary):**
+- UI rendering and layout verification
+- Navigation flows
+- Form interactions (non-authenticated)
+- Component visibility checks
+- CI/CD pipeline integration
+- Location: `app/e2e/*.spec.ts`
+
+**Chrome MCP Tests (Auth Scenarios):**
+- Verifying data created by authenticated users
+- Testing permission-based visibility
+- Suggestion workflow verification (author vs reviewer views)
+- Personal workspace operations
+- Any test requiring `ctx.auth.getUserIdentity()` in Convex queries
+- Location: `.planning/verification/` (manual verification scripts)
+
+**Decision:** Use Playwright for ~90% of tests, Chrome MCP for auth-critical verification.
+
+## E2E Authentication Strategy
+
+**Problem:** Convex Auth session state doesn't persist properly in Playwright's browser context. Authenticated users appear logged in but `ctx.auth.getUserIdentity()` returns `null` in Convex queries.
+
+**Solution:** Test user seeding + Playwright storageState
+
+### How It Works
+
+1. **Test User Seeding** (`convex/testAuth.ts`)
+   - Dedicated test users created via Convex function
+   - Credentials known to test suite
+   - Users have appropriate roles for testing (staff, manager, admin)
+
+2. **Auth Setup Script** (`e2e/auth.setup.ts`)
+   - Runs before test suite via Playwright `globalSetup`
+   - Performs real sign-in flow through the UI
+   - Saves browser state to `.auth/user.json`
+
+3. **StorageState Reuse**
+   - Subsequent tests load saved state via `storageState` option
+   - Cookies and localStorage persisted between tests
+   - No sign-in required per test — fast and reliable
+
+### Running Authenticated Tests
+
+```bash
+# First run generates auth state
+cd app && bun run test:e2e
+
+# Auth state cached in .auth/user.json
+# Delete to force re-authentication
+rm -rf app/.auth
+```
+
+### Test User Credentials
+
+Test users are seeded by the test setup and should not be used in production:
+- See `convex/testAuth.ts` for test user definitions
+- Credentials are deterministic for CI reproducibility
+
+### When to Use Each Approach
+
+| Scenario | Approach |
+|----------|----------|
+| Standard E2E flows with auth | Playwright + storageState |
+| Complex auth state verification | Chrome MCP (real browser) |
+| CI/CD pipeline | Playwright + storageState |
+| Manual verification | Chrome MCP |
+
 ## Gaps and Recommendations
 
 **Current State:**
-- E2E tests only
+- E2E tests only (Playwright)
+- Chrome MCP for auth verification
 - No unit tests for Convex functions
 - No component tests
 
@@ -172,4 +251,4 @@ cd app && bun run test:e2e
 ---
 
 *Testing analysis: 2026-01-14*
-*Update when test patterns change*
+*Strategy updated: 2026-01-15 (Playwright + Chrome MCP dual approach)*
