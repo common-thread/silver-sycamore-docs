@@ -1,5 +1,6 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, action } from "./_generated/server";
 import { v } from "convex/values";
+import { Id } from "./_generated/dataModel";
 
 // Helper to get current user from auth context
 async function getCurrentUser(ctx: { auth: any; db: any }) {
@@ -214,15 +215,29 @@ export const getUnreadCount = query({
 // MUTATIONS
 // ============================================
 
+// Generate upload URL for file attachments
+export const generateUploadUrl = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) throw new Error("Not authenticated");
+
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
 // Send a message to a channel
 export const sendMessage = mutation({
   args: {
     channelId: v.id("channels"),
     content: v.string(),
     parentId: v.optional(v.id("messages")),
-    fileId: v.optional(v.id("files")),
+    storageId: v.optional(v.id("_storage")),
+    fileName: v.optional(v.string()),
+    fileMimeType: v.optional(v.string()),
+    fileSize: v.optional(v.number()),
   },
-  handler: async (ctx, { channelId, content, parentId, fileId }) => {
+  handler: async (ctx, { channelId, content, parentId, storageId, fileName, fileMimeType, fileSize }) => {
     const currentUser = await getCurrentUser(ctx);
     if (!currentUser) throw new Error("Not authenticated");
 
@@ -234,9 +249,9 @@ export const sendMessage = mutation({
     );
     if (!membership) throw new Error("Not a member of this channel");
 
-    // Validate content is not empty
-    if (!content.trim()) {
-      throw new Error("Message content cannot be empty");
+    // Validate content is not empty (unless there's a file)
+    if (!content.trim() && !storageId) {
+      throw new Error("Message must have content or a file attachment");
     }
 
     // If parentId provided, verify it exists and is in the same channel
@@ -249,6 +264,19 @@ export const sendMessage = mutation({
     }
 
     const now = Date.now();
+    let fileId: Id<"files"> | undefined;
+
+    // If storageId provided, create a file record
+    if (storageId && fileName && fileMimeType && fileSize !== undefined) {
+      fileId = await ctx.db.insert("files", {
+        documentId: undefined, // Not linked to a document
+        name: fileName,
+        storageId,
+        mimeType: fileMimeType,
+        size: fileSize,
+        uploadedAt: now,
+      });
+    }
 
     const messageId = await ctx.db.insert("messages", {
       channelId,
@@ -349,5 +377,54 @@ export const deleteMessage = mutation({
     }
 
     return { success: true };
+  },
+});
+
+// Get file URL for a file ID
+export const getFileUrl = query({
+  args: { fileId: v.id("files") },
+  handler: async (ctx, { fileId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return null;
+
+    const file = await ctx.db.get(fileId);
+    if (!file) return null;
+
+    const url = await ctx.storage.getUrl(file.storageId);
+
+    return {
+      ...file,
+      url,
+    };
+  },
+});
+
+// Get file info and URL for a message (used by MessageItem)
+export const getMessageFile = query({
+  args: { messageId: v.id("messages") },
+  handler: async (ctx, { messageId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return null;
+
+    const message = await ctx.db.get(messageId);
+    if (!message || !message.fileId) return null;
+
+    // Check membership
+    const membership = await getMembership(
+      ctx,
+      message.channelId,
+      currentUser.user._id
+    );
+    if (!membership) return null;
+
+    const file = await ctx.db.get(message.fileId);
+    if (!file) return null;
+
+    const url = await ctx.storage.getUrl(file.storageId);
+
+    return {
+      ...file,
+      url,
+    };
   },
 });
