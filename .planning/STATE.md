@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-14)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 8 — Comments System
+**Current focus:** Phase 8 complete, ready for Phase 9
 
 ## Current Position
 
 Phase: 8 of 11 (Comments System)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-01-15 — Completed 08-02-PLAN.md
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-01-15 — Completed 08-03-PLAN.md
 
-Progress: ████████░░ ~70%
+Progress: ████████░░ ~73%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
+- Total plans completed: 24
 - Average duration: 18 min
-- Total execution time: 7.1 hours
+- Total execution time: 7.2 hours
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: ████████░░ ~70%
 | 05-versioning | 3/3 | 45 min | 15 min |
 | 06-personal-workspace | 3/3 | 30 min | 10 min |
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
-| 08-comments-system | 2/3 | 7 min | 3.5 min |
+| 08-comments-system | 3/3 | 12 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 8 min, 2 min, 5 min
+- Last 5 plans: 8 min, 2 min, 5 min, 2 min, 5 min
 - Trend: accelerating
 
 ## Accumulated Context
@@ -67,6 +67,8 @@ Recent decisions affecting current work:
 - **Sharing permissions**: view/comment/edit as strings for extensibility
 - **Share resolution**: Highest permission wins when user has multiple access paths
 - **Group management**: Only owners can modify groups, members can view
+- **Mention storage**: @[userId] format in content for database stability, resolved at render
+- **Mention batch lookup**: Top-level comment queries all mentions, passes map to children
 
 ### Deferred Issues
 
@@ -83,6 +85,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 08-02-PLAN.md
+Stopped at: Completed 08-03-PLAN.md (Phase 8 complete)
 Resume file: None
-Next action: Execute 08-03-PLAN.md (@mention autocomplete and linking)
+Next action: Plan Phase 9 (Suggestion Workflow)
