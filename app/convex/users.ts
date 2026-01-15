@@ -226,6 +226,52 @@ export const setUserRole = mutation({
   },
 });
 
+// Search users by name or email (for user picker)
+export const searchUsers = query({
+  args: {
+    query: v.string(),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) return [];
+
+    const searchQuery = args.query.toLowerCase();
+    const limit = args.limit ?? 10;
+
+    // Get all users (small team, full scan is fine)
+    const allUsers = await ctx.db.query("users").collect();
+
+    // Filter by email or name containing query
+    const matches = allUsers
+      .filter((user) => {
+        const email = (user.email ?? "").toLowerCase();
+        const name = (user.name ?? "").toLowerCase();
+        return email.includes(searchQuery) || name.includes(searchQuery);
+      })
+      .slice(0, limit);
+
+    // Get profiles for display names
+    const usersWithProfiles = await Promise.all(
+      matches.map(async (user) => {
+        const profile = await ctx.db
+          .query("userProfiles")
+          .withIndex("by_userId", (q) => q.eq("userId", user._id))
+          .first();
+
+        return {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          displayName: profile?.displayName,
+        };
+      })
+    );
+
+    return usersWithProfiles;
+  },
+});
+
 // List all users (admin only)
 export const listUsers = query({
   args: {},
