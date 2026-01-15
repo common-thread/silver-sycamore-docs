@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 (Messaging Channels) — DMs complete, notifications next
+**Current focus:** Phase 10 (Messaging Channels) COMPLETE — ready for Phase 11
 
 ## Current Position
 
-Phase: 10 of 11 (Messaging Channels)
-Plan: 5 of 6 in current phase
-Status: In progress
-Last activity: 2026-01-15 — Completed 10-04-PLAN.md
+Phase: 10 of 11 (Messaging Channels) - COMPLETE
+Plan: 6 of 6 in current phase - COMPLETE
+Status: Phase complete
+Last activity: 2026-01-15 — Completed 10-06-PLAN.md (Notifications)
 
-Progress: █████████░ ~94%
+Progress: ██████████ ~97%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
-- Average duration: 15 min
-- Total execution time: 7.9 hours
+- Total plans completed: 33
+- Average duration: 14 min
+- Total execution time: 8 hours
 
 **By Phase:**
 
@@ -36,10 +36,10 @@ Progress: █████████░ ~94%
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
-| 10-messaging-channels | 5/6 | 24 min | 4.8 min |
+| 10-messaging-channels | 6/6 | 30 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 5 min, 5 min, 4 min, 6 min
+- Last 5 plans: 5 min, 5 min, 4 min, 6 min, 6 min
 - Trend: steady acceleration
 
 ## Accumulated Context
@@ -91,6 +91,9 @@ Recent decisions affecting current work:
 - **DM idempotency**: findOrCreateDM returns existing channel or creates new
 - **DM header**: Shows partner avatar/name, hides member count and settings
 - **E2E auth strategy**: Test user seeding + Playwright storageState — real auth flow, cookies persisted between tests
+- **Notification creation**: Inline in sendMessage mutation for atomic behavior
+- **Notification badge**: Count for 1-9, "9+" for overflow, hidden when 0
+- **E2E test modes**: Static verification (no credentials) vs interactive (with Clerk keys)
 
 ### Deferred Issues
 
@@ -107,6 +110,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 10-04-PLAN.md (Direct messages UI)
+Stopped at: Completed Phase 10 (Messaging Channels)
 Resume file: None
-Next action: Execute 10-06-PLAN.md (Channel notifications)
+Next action: Begin Phase 11 (final phase)
