@@ -1,6 +1,7 @@
 "use client";
 
-import { useConvexAuth, useQuery } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { api } from "../../../../convex/_generated/api";
@@ -11,7 +12,7 @@ import { ContentBox } from "@/components/ContentBox";
 import Link from "next/link";
 
 export default function NewSuggestionPage() {
-  const { isAuthenticated, isLoading: authLoading } = useConvexAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const documentId = searchParams.get("documentId") as Id<"documents"> | null;
@@ -24,13 +25,13 @@ export default function NewSuggestionPage() {
 
   // Redirect unauthenticated users
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (isLoaded && !isSignedIn) {
       router.push("/signin");
     }
-  }, [authLoading, isAuthenticated, router]);
+  }, [isLoaded, isSignedIn, router]);
 
   // Show loading while checking auth
-  if (authLoading || !isAuthenticated) {
+  if (!isLoaded || !isSignedIn) {
     return (
       <>
         <Breadcrumb />
@@ -249,6 +250,10 @@ export default function NewSuggestionPage() {
         {/* Form */}
         <SuggestionForm documentId={documentId} onSave={handleSave} />
       </ContentBox>
+    </>
+  );
+}
+entBox>
     </>
   );
 }

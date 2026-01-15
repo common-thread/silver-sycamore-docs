@@ -2,14 +2,14 @@ import { test, expect, Page } from '@playwright/test';
 
 const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/.planning/verification/09-03';
 
-// Test user credentials
+// Test user credentials - use fixed unique accounts
 const STAFF_USER = {
-  email: 'staff-e2e-test@example.com',
+  email: 'staff-pw-test-v2@example.com',
   password: 'TestPassword123!',
 };
 
 const MANAGER_USER = {
-  email: 'manager-e2e-test@example.com',
+  email: 'manager-pw-test-v2@example.com',
   password: 'TestPassword123!',
 };
 

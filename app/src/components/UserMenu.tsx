@@ -1,7 +1,6 @@
 "use client";
 
-import { useAuthActions } from "@convex-dev/auth/react";
-import { useConvexAuth } from "convex/react";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { usePermissions } from "@/hooks/usePermissions";
 
 const ROLE_COLORS: Record<string, string> = {
@@ -11,11 +10,11 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 export function UserMenu() {
-  const { isAuthenticated, isLoading: authLoading } = useConvexAuth();
-  const { signOut } = useAuthActions();
+  const { isSignedIn, isLoaded } = useAuth();
+  const { signOut } = useClerk();
   const { role, isLoading: permissionsLoading, user } = usePermissions();
 
-  const isLoading = authLoading || permissionsLoading;
+  const isLoading = !isLoaded || permissionsLoading;
 
   if (isLoading) {
     return (
@@ -31,7 +30,7 @@ export function UserMenu() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isSignedIn) {
     return null;
   }
 

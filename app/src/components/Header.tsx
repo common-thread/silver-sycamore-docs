@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useConvexAuth } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
 import { SearchBar } from "./SearchBar";
 import { NotificationBell } from "./NotificationBell";
@@ -19,7 +19,7 @@ const navItems = [
 
 export default function Header() {
   const pathname = usePathname();
-  const { isAuthenticated } = useConvexAuth();
+  const { isSignedIn } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -100,7 +100,7 @@ export default function Header() {
         {/* Search, Workspace, Notifications, and User Menu */}
         <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
           <SearchBar />
-          {isAuthenticated && (
+          {isSignedIn && (
             <>
               <Link
                 href="/workspace"

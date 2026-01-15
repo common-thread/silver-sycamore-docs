@@ -1,6 +1,6 @@
 "use client";
 
-import { useConvexAuth } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { SuggestionList } from "@/components/SuggestionList";
@@ -9,18 +9,18 @@ import { ContentBox } from "@/components/ContentBox";
 import Link from "next/link";
 
 export default function SuggestionsPage() {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
 
   // Redirect unauthenticated users
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoaded && !isSignedIn) {
       router.push("/signin");
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [isLoaded, isSignedIn, router]);
 
   // Show loading while checking auth
-  if (isLoading || !isAuthenticated) {
+  if (!isLoaded || !isSignedIn) {
     return (
       <>
         <Breadcrumb />

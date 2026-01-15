@@ -1,6 +1,7 @@
 "use client";
 
-import { useConvexAuth, useQuery } from "convex/react";
+import { useAuth } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { api } from "../../../../convex/_generated/api";
@@ -11,7 +12,7 @@ import { usePermissions } from "@/hooks/usePermissions";
 import Link from "next/link";
 
 export default function SuggestionDetailPage() {
-  const { isAuthenticated, isLoading: authLoading } = useConvexAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const { user } = usePermissions();
   const router = useRouter();
   const params = useParams();
@@ -25,10 +26,10 @@ export default function SuggestionDetailPage() {
 
   // Redirect unauthenticated users
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (isLoaded && !isSignedIn) {
       router.push("/signin");
     }
-  }, [authLoading, isAuthenticated, router]);
+  }, [isLoaded, isSignedIn, router]);
 
   // Check if current user is the author
   const isAuthor =
@@ -44,7 +45,7 @@ export default function SuggestionDetailPage() {
   }, [suggestion, user, isAuthor, router]);
 
   // Show loading while checking auth
-  if (authLoading || !isAuthenticated) {
+  if (!isLoaded || !isSignedIn) {
     return (
       <ContentBox>
         <div
@@ -210,5 +211,11 @@ export default function SuggestionDetailPage() {
         <SuggestionForm suggestionId={suggestionId} onSubmit={handleSubmit} />
       </ContentBox>
     </>
+  );
+}
+
+    </>
+  );
+}
   );
 }

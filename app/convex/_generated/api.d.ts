@@ -10,15 +10,23 @@
 
 import type * as auth from "../auth.js";
 import type * as categories from "../categories.js";
+import type * as channels from "../channels.js";
+import type * as comments from "../comments.js";
 import type * as documents from "../documents.js";
+import type * as folderShares from "../folderShares.js";
 import type * as http from "../http.js";
 import type * as initiatives from "../initiatives.js";
 import type * as lib_roles from "../lib/roles.js";
+import type * as messages from "../messages.js";
+import type * as notifications from "../notifications.js";
 import type * as permissions from "../permissions.js";
 import type * as personalDocuments from "../personalDocuments.js";
 import type * as personalFolders from "../personalFolders.js";
 import type * as seed from "../seed.js";
+import type * as shareGroups from "../shareGroups.js";
 import type * as subcategories from "../subcategories.js";
+import type * as suggestions from "../suggestions.js";
+import type * as testing from "../testing.js";
 import type * as users from "../users.js";
 import type * as versions from "../versions.js";
 
@@ -31,15 +39,23 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   categories: typeof categories;
+  channels: typeof channels;
+  comments: typeof comments;
   documents: typeof documents;
+  folderShares: typeof folderShares;
   http: typeof http;
   initiatives: typeof initiatives;
   "lib/roles": typeof lib_roles;
+  messages: typeof messages;
+  notifications: typeof notifications;
   permissions: typeof permissions;
   personalDocuments: typeof personalDocuments;
   personalFolders: typeof personalFolders;
   seed: typeof seed;
+  shareGroups: typeof shareGroups;
   subcategories: typeof subcategories;
+  suggestions: typeof suggestions;
+  testing: typeof testing;
   users: typeof users;
   versions: typeof versions;
 }>;

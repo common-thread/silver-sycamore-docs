@@ -1,6 +1,6 @@
 "use client";
+import { useAuth } from "@clerk/nextjs";
 import { useQuery, useMutation } from "convex/react";
-import { useConvexAuth } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ContentBox } from "@/components/ContentBox";
@@ -18,7 +18,7 @@ import Link from "next/link";
 export default function DocumentPage() {
   const { slug, category } = useParams();
   const router = useRouter();
-  const { isAuthenticated } = useConvexAuth();
+  const { isSignedIn } = useAuth();
   const document = useQuery(api.documents.bySlug, { slug: slug as string });
   const copyToWorkspace = useMutation(api.personalDocuments.copyFromWiki);
   const [showHistory, setShowHistory] = useState(false);
@@ -244,6 +244,10 @@ export default function DocumentPage() {
           onCancel={() => setShowFolderPicker(false)}
         />
       )}
+    </>
+  );
+}
+
     </>
   );
 }
