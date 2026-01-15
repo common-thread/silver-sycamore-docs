@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserMenu } from "./UserMenu";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -33,6 +34,9 @@ export default function Header() {
         style={{
           padding: "1.25rem 2rem",
           borderBottom: "1px solid var(--color-border)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <Link
@@ -88,6 +92,7 @@ export default function Header() {
             Staff Hub
           </span>
         </Link>
+        <UserMenu />
       </div>
 
       {/* Navigation - table of contents style */}
