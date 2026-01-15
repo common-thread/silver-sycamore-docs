@@ -28,6 +28,8 @@ app/build/
 test-results/
 playwright-report/
 playwright/.cache/
+app/e2e/.auth/*
+!app/e2e/.auth/.gitkeep
 
 # next.js (root - legacy)
 /.next/
