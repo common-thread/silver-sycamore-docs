@@ -232,4 +232,22 @@ export default defineSchema({
     .index("by_personal_document", ["personalDocumentId"]) // Get comments on personal docs
     .index("by_parent", ["parentId"]) // Get replies to a comment
     .index("by_author", ["authorId"]), // User's comment history
+
+  // PR-style document change suggestions
+  suggestions: defineTable({
+    documentId: v.id("documents"), // The official doc being modified
+    authorId: v.id("users"), // Who proposed the change
+    status: v.string(), // State machine: "draft" | "pending" | "approved" | "rejected"
+    title: v.string(), // Suggested new title
+    content: v.string(), // Suggested new content (full document, not diff)
+    changeNote: v.string(), // Description of what changed and why
+    reviewedBy: v.optional(v.id("users")), // Who approved/rejected
+    reviewNote: v.optional(v.string()), // Reviewer's feedback
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_document", ["documentId"]) // Get all suggestions for a doc
+    .index("by_author", ["authorId"]) // User's suggestions
+    .index("by_status", ["status"]) // Filter by state
+    .index("by_document_status", ["documentId", "status"]), // Pending suggestions for a doc
 });
