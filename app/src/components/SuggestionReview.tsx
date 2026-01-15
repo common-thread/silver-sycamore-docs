@@ -19,7 +19,7 @@ export function SuggestionReview({ suggestionId }: SuggestionReviewProps) {
 
   const approveMutation = useMutation(api.suggestions.approve);
   const rejectMutation = useMutation(api.suggestions.reject);
-  // Note: promote mutation will be added in Task 2
+  const promoteMutation = useMutation(api.suggestions.promote);
 
   const [viewMode, setViewMode] = useState<ViewMode>("suggestion");
   const [showApproveDialog, setShowApproveDialog] = useState(false);
@@ -104,9 +104,18 @@ export function SuggestionReview({ suggestionId }: SuggestionReviewProps) {
     }
   };
 
-  // handlePromote will be implemented when promote mutation is added in Task 2
   const handlePromote = async () => {
-    setFeedback({ type: "error", message: "Promote functionality not yet available" });
+    setIsSubmitting(true);
+    setFeedback(null);
+    try {
+      await promoteMutation({ id: suggestionId });
+      setFeedback({ type: "success", message: "Changes applied to document successfully" });
+    } catch (error) {
+      console.error("Failed to promote:", error);
+      setFeedback({ type: "error", message: "Failed to apply changes. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formatDate = (timestamp: number) => {

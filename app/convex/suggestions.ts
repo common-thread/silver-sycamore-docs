@@ -336,3 +336,77 @@ export const deleteSuggestion = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+// Promote an approved suggestion to update the official document (manager/admin only)
+export const promote = mutation({
+  args: { id: v.id("suggestions") },
+  handler: async (ctx, args): Promise<{ success: boolean; documentId: Id<"documents"> }> => {
+    const userInfo = await getCurrentUserWithProfile(ctx);
+    if (!userInfo) throw new Error("Not authenticated");
+
+    if (!isManagerOrAdmin(userInfo.profile)) {
+      throw new Error("Permission denied: only managers and admins can promote suggestions");
+    }
+
+    const suggestion = await ctx.db.get(args.id);
+    if (!suggestion) throw new Error("Suggestion not found");
+
+    if (suggestion.status !== "approved") {
+      throw new Error("Cannot promote: suggestion must be approved first");
+    }
+
+    if (suggestion.appliedAt) {
+      throw new Error("Cannot promote: changes have already been applied");
+    }
+
+    // Get the author's name for the change note
+    const author = await ctx.db.get(suggestion.authorId);
+    const authorProfile = author
+      ? await ctx.db
+          .query("userProfiles")
+          .withIndex("by_userId", (q: any) => q.eq("userId", author._id))
+          .first()
+      : null;
+    const authorName = authorProfile?.displayName || author?.name || "Unknown";
+
+    // Get current document state for versioning
+    const doc = await ctx.db.get(suggestion.documentId);
+    if (!doc) throw new Error("Document not found");
+
+    // Create version snapshot of current state before updating
+    const versions = await ctx.db
+      .query("documentVersions")
+      .withIndex("by_document", (q: any) => q.eq("documentId", suggestion.documentId))
+      .collect();
+    const nextVersion = versions.length === 0 ? 1 : Math.max(...versions.map((v: any) => v.version)) + 1;
+
+    await ctx.db.insert("documentVersions", {
+      documentId: suggestion.documentId,
+      version: nextVersion,
+      title: doc.title,
+      content: doc.content,
+      category: doc.category,
+      subcategory: doc.subcategory,
+      editedBy: userInfo.user._id,
+      editedByName: userInfo.user.name || userInfo.identity.email || undefined,
+      changeNote: `Applied suggestion from ${authorName}: ${suggestion.changeNote}`,
+      createdAt: Date.now(),
+    });
+
+    // Update the document with suggestion content
+    await ctx.db.patch(suggestion.documentId, {
+      title: suggestion.title,
+      content: suggestion.content,
+      version: nextVersion,
+      updatedAt: Date.now(),
+    });
+
+    // Mark suggestion as applied
+    await ctx.db.patch(args.id, {
+      appliedAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+
+    return { success: true, documentId: suggestion.documentId };
+  },
+});

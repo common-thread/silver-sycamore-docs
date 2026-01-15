@@ -243,6 +243,7 @@ export default defineSchema({
     changeNote: v.string(), // Description of what changed and why
     reviewedBy: v.optional(v.id("users")), // Who approved/rejected
     reviewNote: v.optional(v.string()), // Reviewer's feedback
+    appliedAt: v.optional(v.number()), // When changes were promoted to document
     createdAt: v.number(),
     updatedAt: v.number(),
   })
