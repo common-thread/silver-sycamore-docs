@@ -13,6 +13,7 @@ import { CommentSection } from "@/components/CommentSection";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Id } from "../../../../convex/_generated/dataModel";
+import Link from "next/link";
 
 export default function DocumentPage() {
   const { slug, category } = useParams();
@@ -92,42 +93,73 @@ export default function DocumentPage() {
         <Breadcrumb documentTitle={document.title} />
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           {isAuthenticated && (
-            <button
-              onClick={() => setShowFolderPicker(true)}
-              disabled={isCopying}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.375rem",
-                padding: "0.375rem 0.75rem",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.75rem",
-                fontWeight: 500,
-                color: "var(--color-ink-light)",
-                background: "transparent",
-                border: "1px solid var(--color-border)",
-                borderRadius: "2px",
-                cursor: isCopying ? "not-allowed" : "pointer",
-                opacity: isCopying ? 0.6 : 1,
-                transition: "border-color 0.15s ease",
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M5 3H3C2.44772 3 2 3.44772 2 4V11C2 11.5523 2.44772 12 3 12H10C10.5523 12 11 11.5523 11 11V9"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                />
-                <path
-                  d="M7 7L12 2M12 2H9M12 2V5"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              {isCopying ? "Copying..." : "Copy to Workspace"}
-            </button>
+            <>
+              <Link
+                href={`/suggestions/new?documentId=${document._id}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.375rem",
+                  padding: "0.375rem 0.75rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  color: "var(--color-ink-light)",
+                  background: "transparent",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "2px",
+                  textDecoration: "none",
+                  transition: "border-color 0.15s ease",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M10.5 1.5L12.5 3.5L5 11H3V9L10.5 1.5Z"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Suggest Edit
+              </Link>
+              <button
+                onClick={() => setShowFolderPicker(true)}
+                disabled={isCopying}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.375rem",
+                  padding: "0.375rem 0.75rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  color: "var(--color-ink-light)",
+                  background: "transparent",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "2px",
+                  cursor: isCopying ? "not-allowed" : "pointer",
+                  opacity: isCopying ? 0.6 : 1,
+                  transition: "border-color 0.15s ease",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M5 3H3C2.44772 3 2 3.44772 2 4V11C2 11.5523 2.44772 12 3 12H10C10.5523 12 11 11.5523 11 11V9"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                  />
+                  <path
+                    d="M7 7L12 2M12 2H9M12 2V5"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {isCopying ? "Copying..." : "Copy to Workspace"}
+              </button>
+            </>
           )}
           <VersionBadge
             version={document.version}
