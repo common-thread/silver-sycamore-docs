@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 (Messaging Channels) — message UI complete, DMs next
+**Current focus:** Phase 10 (Messaging Channels) — file sharing complete, notifications next
 
 ## Current Position
 
 Phase: 10 of 11 (Messaging Channels)
-Plan: 3 of 6 in current phase
+Plan: 4 of 6 in current phase
 Status: In progress
-Last activity: 2026-01-15 — Completed 10-03-PLAN.md
+Last activity: 2026-01-15 — Completed 10-05-PLAN.md
 
-Progress: █████████░ ~88%
+Progress: █████████░ ~91%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 30
+- Total plans completed: 31
 - Average duration: 15 min
 - Total execution time: 7.8 hours
 
@@ -36,10 +36,10 @@ Progress: █████████░ ~88%
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
-| 10-messaging-channels | 3/6 | 14 min | 4.7 min |
+| 10-messaging-channels | 4/6 | 18 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 6 min, 8 min, 5 min, 4 min, 5 min
+- Last 5 plans: 5 min, 4 min, 5 min, 5 min, 4 min
 - Trend: steady acceleration
 
 ## Accumulated Context
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - **Message date grouping**: Dividers showing "Today", "Yesterday", or "Jan 15" format
 - **Message auto-scroll**: Scroll to bottom on new messages, not on initial page load
 - **Enter-to-send**: Enter sends message, Shift+Enter for newline, dropdown blocks send
+- **File upload timing**: Upload immediately on file selection, not deferred to send
+- **File display**: Images inline (max 300px), PDFs open new tab, others download
+- **File size limit**: 10MB max (Convex storage limit)
 
 ### Deferred Issues
 
@@ -103,6 +106,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 10-03-PLAN.md (Message thread UI with real-time updates)
+Stopped at: Completed 10-05-PLAN.md (File sharing in channels)
 Resume file: None
-Next action: Execute 10-04-PLAN.md (Direct messages UI)
+Next action: Execute 10-06-PLAN.md (@mention notifications and inbox)
