@@ -4,6 +4,9 @@ import {
   nextjsMiddlewareRedirect,
 } from "@convex-dev/auth/nextjs/server";
 
+// Development bypass - set NEXT_PUBLIC_BYPASS_AUTH=true in .env.local to skip auth
+const bypassAuth = process.env.NEXT_PUBLIC_BYPASS_AUTH === "true";
+
 // Public routes that don't require authentication
 const isPublicRoute = createRouteMatcher(["/signin"]);
 
@@ -21,6 +24,11 @@ const isProtectedRoute = createRouteMatcher([
 
 export default convexAuthNextjsMiddleware(
   async (request, { convexAuth }) => {
+    // Skip auth checks in development when bypass is enabled
+    if (bypassAuth) {
+      return;
+    }
+
     const authenticated = await convexAuth.isAuthenticated();
 
     // Redirect signed-in users away from signin page
