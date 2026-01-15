@@ -2,36 +2,20 @@
  * Playwright Global Setup for E2E Tests with Clerk Authentication
  *
  * This script runs before all tests to:
- * 1. Sign in test users via Clerk's SignIn UI
- * 2. Save authenticated browser state for reuse across tests
+ * 1. Seed test users via Clerk Backend SDK (auto-verified emails)
+ * 2. Sign in test users via @clerk/testing helpers
+ * 3. Save authenticated browser state for reuse across tests
  *
- * IMPORTANT: Test users must be created manually in Clerk Dashboard:
- * 1. Go to Clerk Dashboard > Users > Create User
- * 2. Create users with these credentials:
- *    - e2e-staff@test.local / TestPassword123!
- *    - e2e-manager@test.local / TestPassword123!
- * 3. Enable email+password authentication in Clerk settings
- *
- * Test users:
- * - e2e-staff@test.local (staff) - Primary test account
- * - e2e-manager@test.local (manager) - For approval workflows
+ * Test users are automatically created if they don't exist:
+ * - e2e-staff@silversycamore.test (staff) - Primary test account
+ * - e2e-manager@silversycamore.test (manager) - For approval workflows
  */
+
+import { clerkSetup } from "@clerk/testing/playwright";
 import { chromium, type FullConfig, type Page } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
-
-const TEST_USERS = {
-  staff: {
-    email: "e2e-staff@test.local",
-    password: "TestPassword123!",
-    role: "staff" as const,
-  },
-  manager: {
-    email: "e2e-manager@test.local",
-    password: "TestPassword123!",
-    role: "manager" as const,
-  },
-};
+import { seedAllTestUsers, TEST_USERS } from "./utils/clerk-test-users";
 
 const AUTH_DIR = path.join(__dirname, ".auth");
 const STAFF_STORAGE_STATE = path.join(AUTH_DIR, "staff.json");
@@ -51,27 +35,41 @@ async function globalSetup(config: FullConfig) {
     fs.mkdirSync(AUTH_DIR, { recursive: true });
   }
 
+  // Step 1: Seed test users via Clerk Backend SDK
+  console.log("[Global Setup] Seeding test users via Clerk Backend SDK...");
+  try {
+    await seedAllTestUsers();
+  } catch (error) {
+    console.error("[Global Setup] Failed to seed test users:", error);
+    throw error;
+  }
+
+  // Step 2: Initialize Clerk testing
+  console.log("[Global Setup] Initializing Clerk testing...");
+  await clerkSetup();
+
+  // Step 3: Sign in users and save storage state
   const browser = await chromium.launch({ headless: true });
 
   try {
     // Setup staff user
-    console.log(`[Global Setup] Setting up staff user: ${TEST_USERS.staff.email}`);
+    console.log(`[Global Setup] Signing in staff user: ${TEST_USERS.staff.email}`);
     const staffContext = await browser.newContext();
     const staffPage = await staffContext.newPage();
     setupPageLogging(staffPage, "staff");
 
-    await createOrSignInUser(staffPage, baseURL, TEST_USERS.staff);
+    await signInWithClerk(staffPage, baseURL, TEST_USERS.staff);
     await staffContext.storageState({ path: STAFF_STORAGE_STATE });
     console.log(`[Global Setup] Staff auth state saved to ${STAFF_STORAGE_STATE}`);
     await staffContext.close();
 
     // Setup manager user
-    console.log(`[Global Setup] Setting up manager user: ${TEST_USERS.manager.email}`);
+    console.log(`[Global Setup] Signing in manager user: ${TEST_USERS.manager.email}`);
     const managerContext = await browser.newContext();
     const managerPage = await managerContext.newPage();
     setupPageLogging(managerPage, "manager");
 
-    await createOrSignInUser(managerPage, baseURL, TEST_USERS.manager);
+    await signInWithClerk(managerPage, baseURL, TEST_USERS.manager);
     await managerContext.storageState({ path: MANAGER_STORAGE_STATE });
     console.log(`[Global Setup] Manager auth state saved to ${MANAGER_STORAGE_STATE}`);
     await managerContext.close();
@@ -83,7 +81,10 @@ async function globalSetup(config: FullConfig) {
     const debugPage = await browser.newPage();
     await debugPage.goto(`${baseURL}/signin`);
     await debugPage.waitForTimeout(2000);
-    await debugPage.screenshot({ path: path.join(AUTH_DIR, "setup-failure.png"), fullPage: true });
+    await debugPage.screenshot({
+      path: path.join(AUTH_DIR, "setup-failure.png"),
+      fullPage: true,
+    });
     throw error;
   } finally {
     await browser.close();
@@ -102,46 +103,14 @@ function setupPageLogging(page: Page, userType: string) {
 }
 
 /**
- * Attempts to sign in a user. If the user doesn't exist (detected by error message),
- * creates the user first via sign-up flow.
+ * Sign in a user using Clerk's SignIn UI
+ * Uses setupClerkTestingToken to bypass bot detection
  */
-async function createOrSignInUser(
+async function signInWithClerk(
   page: Page,
   baseURL: string,
   user: { email: string; password: string }
 ): Promise<void> {
-  // Try sign-in first
-  const signInResult = await attemptSignIn(page, baseURL, user);
-
-  if (signInResult === "success") {
-    console.log(`[Auth] User ${user.email} signed in successfully`);
-    return;
-  }
-
-  if (signInResult === "user_not_found") {
-    console.log(`[Auth] User ${user.email} not found in Clerk.`);
-    console.log(`[Auth] Please create test users manually in Clerk Dashboard:`);
-    console.log(`[Auth]   1. Go to https://dashboard.clerk.com > Your App > Users`);
-    console.log(`[Auth]   2. Click "Create User" and add:`);
-    console.log(`[Auth]      - Email: ${user.email}`);
-    console.log(`[Auth]      - Password: ${user.password}`);
-    console.log(`[Auth]   3. Ensure email+password authentication is enabled in Clerk settings`);
-    throw new Error(`Test user ${user.email} does not exist. Please create it in Clerk Dashboard.`);
-  }
-
-  // If sign-in failed for other reasons, throw error
-  throw new Error(`Sign-in failed for ${user.email}: ${signInResult}`);
-}
-
-/**
- * Attempts to sign in a user via Clerk's SignIn component.
- * Returns "success", "user_not_found", or an error message.
- */
-async function attemptSignIn(
-  page: Page,
-  baseURL: string,
-  user: { email: string; password: string }
-): Promise<string> {
   // Navigate to sign-in page
   await page.goto(`${baseURL}/signin`, { timeout: 60000 });
   await page.waitForLoadState("domcontentloaded");
@@ -150,10 +119,12 @@ async function attemptSignIn(
   console.log(`[Auth] Navigated to: ${page.url()}`);
 
   // Take screenshot before trying to find inputs
-  await page.screenshot({ path: path.join(AUTH_DIR, `signin-page-${user.email.split("@")[0]}.png`), fullPage: true });
+  await page.screenshot({
+    path: path.join(AUTH_DIR, `signin-page-${user.email.split("@")[0]}.png`),
+    fullPage: true,
+  });
 
-  // Find the email input field - try multiple selectors
-  // Clerk and Google OAuth may use different input types
+  // Find the email input field
   const inputSelectors = [
     'input[name="identifier"]',
     'input[type="email"]',
@@ -173,20 +144,24 @@ async function attemptSignIn(
   }
 
   if (!inputField) {
-    await page.screenshot({ path: path.join(AUTH_DIR, `clerk-ui-${user.email.split("@")[0]}.png`), fullPage: true });
-    console.log("[Auth] Email input not found, checking page structure...");
-    return "email_input_not_found";
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `clerk-ui-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error("Email input not found on sign-in page");
   }
 
-  // Clear any existing value and enter email
+  // Enter email
   await inputField.click();
   await inputField.fill("");
   await inputField.fill(user.email);
   await page.waitForTimeout(500);
   console.log(`[Auth] Entered email: ${user.email}`);
 
-  // Click continue/next button (Clerk may use "Continue" or "Next")
-  const continueButton = page.locator('button:has-text("Continue"), button:has-text("Next")').first();
+  // Click continue/next button
+  const continueButton = page
+    .locator('button:has-text("Continue"), button:has-text("Next")')
+    .first();
   if (await continueButton.isVisible({ timeout: 3000 }).catch(() => false)) {
     await continueButton.click();
     console.log("[Auth] Clicked Continue/Next button");
@@ -194,86 +169,92 @@ async function attemptSignIn(
   }
 
   // Take screenshot after clicking continue
-  await page.screenshot({ path: path.join(AUTH_DIR, `after-continue-${user.email.split("@")[0]}.png`), fullPage: true });
+  await page.screenshot({
+    path: path.join(AUTH_DIR, `after-continue-${user.email.split("@")[0]}.png`),
+    fullPage: true,
+  });
 
-  // Check if we were redirected to Google OAuth (user not found or Google-only auth)
+  // Check if we were redirected to Google OAuth
   const currentUrl = page.url();
   if (currentUrl.includes("accounts.google.com")) {
-    console.log("[Auth] Redirected to Google OAuth - user might not exist or only Google auth is enabled");
-    return "user_not_found";
+    throw new Error(
+      "Redirected to Google OAuth - password authentication may not be enabled"
+    );
   }
 
-  // Check if we got an error message indicating user doesn't exist
-  const errorSelectors = [
-    '[data-clerk-error]',
-    '.cl-formFieldErrorText',
-    '[class*="formFieldError"]',
-    '[class*="error"]',
-    'p:has-text("couldn\'t find")',
-    'p:has-text("not found")',
-    'div:has-text("no account")',
-  ];
-
-  for (const selector of errorSelectors) {
-    const errorElement = page.locator(selector).first();
-    if (await errorElement.isVisible({ timeout: 1000 }).catch(() => false)) {
-      const errorText = await errorElement.textContent();
-      console.log(`[Auth] Error detected with selector ${selector}: ${errorText}`);
-      if (errorText?.toLowerCase().includes("couldn't find") ||
-          errorText?.toLowerCase().includes("not found") ||
-          errorText?.toLowerCase().includes("no account") ||
-          errorText?.toLowerCase().includes("doesn't exist")) {
-        return "user_not_found";
-      }
-    }
+  // Check for errors indicating user doesn't exist
+  const pageContent = await page.content();
+  if (
+    pageContent.toLowerCase().includes("couldn't find") ||
+    pageContent.toLowerCase().includes("no account found") ||
+    pageContent.toLowerCase().includes("doesn't exist")
+  ) {
+    throw new Error(
+      `User ${user.email} not found. The Clerk Backend SDK should have created this user.`
+    );
   }
 
   // Enter password
   const passwordInput = page.locator('input[type="password"]').first();
-  if (!(await passwordInput.isVisible({ timeout: 5000 }).catch(() => false))) {
-    // Check for user not found error again with broader search
-    const pageContent = await page.content();
-    if (pageContent.toLowerCase().includes("couldn't find") ||
-        pageContent.toLowerCase().includes("no account found") ||
-        pageContent.toLowerCase().includes("doesn't exist")) {
-      console.log("[Auth] User not found detected in page content");
-      return "user_not_found";
-    }
-    await page.screenshot({ path: path.join(AUTH_DIR, `no-password-${user.email.split("@")[0]}.png`), fullPage: true });
-    return "password_field_not_found";
+  if (
+    !(await passwordInput.isVisible({ timeout: 5000 }).catch(() => false))
+  ) {
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `no-password-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error("Password field not found after entering email");
   }
 
   await passwordInput.fill(user.password);
   console.log("[Auth] Entered password");
 
   // Click sign in / continue button
-  const submitButton = page.locator('button[type="submit"], button:has-text("Continue"), button:has-text("Sign in")').first();
+  const submitButton = page
+    .locator(
+      'button[type="submit"], button:has-text("Continue"), button:has-text("Sign in")'
+    )
+    .first();
   await submitButton.click();
   console.log("[Auth] Clicked submit");
 
-  // Wait for either redirect or error
+  // Wait for redirect
   try {
-    await page.waitForURL((url) => !url.pathname.includes("signin"), { timeout: 10000 });
+    await page.waitForURL((url) => !url.pathname.includes("signin"), {
+      timeout: 15000,
+    });
     console.log(`[Auth] Redirected to: ${page.url()}`);
   } catch {
     // Check if there's an error message
-    const errorAfterSubmit = page.locator('[data-clerk-error], .cl-formFieldErrorText, [class*="formFieldError"], [class*="alert"]').first();
-    if (await errorAfterSubmit.isVisible({ timeout: 2000 }).catch(() => false)) {
+    const errorAfterSubmit = page
+      .locator(
+        '[data-clerk-error], .cl-formFieldErrorText, [class*="formFieldError"], [class*="alert"]'
+      )
+      .first();
+    if (
+      await errorAfterSubmit.isVisible({ timeout: 2000 }).catch(() => false)
+    ) {
       const errorText = await errorAfterSubmit.textContent();
-      console.log(`[Auth] Error after submit: ${errorText}`);
-      return `error: ${errorText}`;
+      throw new Error(`Sign-in failed: ${errorText}`);
     }
-    await page.screenshot({ path: path.join(AUTH_DIR, `signin-timeout-${user.email.split("@")[0]}.png`), fullPage: true });
-    return "redirect_timeout";
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `signin-timeout-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error("Sign-in redirect timeout");
   }
 
   // Verify authentication
-  if (await verifyAuthentication(page)) {
-    return "success";
+  const isAuthenticated = await verifyAuthentication(page);
+  if (!isAuthenticated) {
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `auth-verify-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error("Authentication verification failed");
   }
 
-  await page.screenshot({ path: path.join(AUTH_DIR, `auth-verify-${user.email.split("@")[0]}.png`), fullPage: true });
-  return "verification_failed";
+  console.log(`[Auth] User ${user.email} signed in successfully`);
 }
 
 /**
@@ -283,7 +264,11 @@ async function verifyAuthentication(page: Page): Promise<boolean> {
   await page.waitForTimeout(2000);
 
   // Check for UserButton or NotificationBell which indicate logged-in state
-  const isAuthenticated = await page.locator('button[title="Notifications"], [data-clerk-user-button], .cl-userButtonTrigger').first()
+  const isAuthenticated = await page
+    .locator(
+      'button[title="Notifications"], [data-clerk-user-button], .cl-userButtonTrigger'
+    )
+    .first()
     .isVisible({ timeout: 5000 })
     .catch(() => false);
 

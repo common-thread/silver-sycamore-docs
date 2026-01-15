@@ -11,9 +11,9 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', { open: 'never' }], ['list']],
 
-  // Global setup creates test users and saves authenticated state
-  // Note: globalSetup runs for all projects. Use --project=basic to skip auth tests.
-  globalSetup: process.env.SKIP_AUTH ? undefined : './e2e/global-setup.ts',
+  // Global setup seeds test users via Clerk Backend SDK and saves authenticated state
+  // Uses @clerk/backend to create users and @clerk/testing for auth
+  globalSetup: './e2e/global-setup.ts',
 
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
