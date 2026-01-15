@@ -6,14 +6,22 @@ import { FolderTree } from "@/components/FolderTree";
 import { ContentBox } from "@/components/ContentBox";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isSharedPage = pathname === "/workspace/shared";
+
   const folders = useQuery(api.personalFolders.listAll);
   const documents = useQuery(api.personalDocuments.listAll);
+  const sharedFoldersRaw = useQuery(api.folderShares.listSharedWithMe);
+  const sharedFolderCount = sharedFoldersRaw?.filter(Boolean).length ?? 0;
+
   const createFolder = useMutation(api.personalFolders.create);
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
@@ -159,10 +167,55 @@ export default function WorkspaceLayout({
           {/* Folder tree */}
           <FolderTree folders={folders ?? []} />
 
+          {/* Shared with me link */}
+          <Link
+            href="/workspace/shared"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.5rem",
+              marginTop: "1rem",
+              color: isSharedPage ? "var(--color-accent)" : "var(--color-ink-light)",
+              textDecoration: "none",
+              fontFamily: "var(--font-body)",
+              fontSize: "0.8125rem",
+              fontWeight: isSharedPage ? 600 : 400,
+              borderTop: "1px solid var(--color-border)",
+              paddingTop: "1rem",
+              background: isSharedPage ? "var(--color-background)" : "transparent",
+              borderRadius: "2px",
+            }}
+          >
+            {/* Users/share icon */}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+              <circle cx="6" cy="5" r="2" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M2 13C2 10.5 3.5 9 6 9C8.5 9 10 10.5 10 13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+              <circle cx="11" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M14 12C14 10.3 13 9.5 11 9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            </svg>
+            Shared with me
+            {sharedFolderCount > 0 && (
+              <span
+                style={{
+                  marginLeft: "auto",
+                  padding: "0.125rem 0.375rem",
+                  background: "var(--color-background)",
+                  borderRadius: "2px",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  color: "var(--color-ink-muted)",
+                }}
+              >
+                {sharedFolderCount}
+              </span>
+            )}
+          </Link>
+
           {/* Stats */}
           <div
             style={{
-              marginTop: "1rem",
+              marginTop: "0.75rem",
               paddingTop: "0.75rem",
               borderTop: "1px solid var(--color-border)",
               fontFamily: "var(--font-body)",
