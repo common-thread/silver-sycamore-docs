@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 next (Messaging Channels)
+**Current focus:** Phase 10 (Messaging Channels) — backend complete, UI next
 
 ## Current Position
 
-Phase: 9 of 11 complete (Suggestion Workflow)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-01-15 — Completed 09-03-PLAN.md (Phase 9 complete)
+Phase: 10 of 11 (Messaging Channels)
+Plan: 1 of 6 in current phase
+Status: In progress
+Last activity: 2026-01-15 — Completed 10-01-PLAN.md
 
-Progress: █████████░ ~82%
+Progress: █████████░ ~85%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 27
-- Average duration: 16 min
-- Total execution time: 7.5 hours
+- Total plans completed: 28
+- Average duration: 15 min
+- Total execution time: 7.6 hours
 
 **By Phase:**
 
@@ -36,9 +36,10 @@ Progress: █████████░ ~82%
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
+| 10-messaging-channels | 1/6 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 2 min, 5 min, 2 min, 6 min, 8 min
+- Last 5 plans: 5 min, 2 min, 6 min, 8 min, 5 min
 - Trend: accelerating
 
 ## Accumulated Context
@@ -74,6 +75,12 @@ Recent decisions affecting current work:
 - **Suggestion content**: Full document content stored (not diffs) for simpler comparison
 - **Suggestion permissions**: Authors control drafts, managers/admins review pending
 - **E2E verification**: Playwright for checkpoint tasks with screenshot capture
+- **Auth verification**: Chrome MCP for auth-dependent tests (Convex Auth state doesn't persist in Playwright)
+- **Channel types**: String union ("public" | "private" | "dm") for extensibility
+- **DM channels**: Special private channels with 2 members, lookup via findDMChannel query
+- **Unread tracking**: lastReadAt on channelMembers, compared against message createdAt
+- **Message pagination**: Cursor-based using message ID for efficient infinite scroll
+- **Channel permissions**: owner > admin > member hierarchy
 
 ### Deferred Issues
 
@@ -90,6 +97,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed Phase 9 (Suggestion Workflow)
+Stopped at: Completed 10-01-PLAN.md (Messaging schema and backend)
 Resume file: None
-Next action: Plan Phase 10 (Messaging Channels)
+Next action: Execute 10-02-PLAN.md (Channel list and creation UI)
