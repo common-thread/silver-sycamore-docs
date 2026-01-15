@@ -251,4 +251,45 @@ export default defineSchema({
     .index("by_author", ["authorId"]) // User's suggestions
     .index("by_status", ["status"]) // Filter by state
     .index("by_document_status", ["documentId", "status"]), // Pending suggestions for a doc
+
+  // Slack-like messaging channels
+  channels: defineTable({
+    name: v.string(), // Channel display name
+    type: v.string(), // "public" | "private" | "dm" (DMs are 2-person private channels)
+    description: v.optional(v.string()), // Optional channel description
+    creatorId: v.id("users"), // Who created the channel
+    isArchived: v.boolean(), // Soft delete
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_type", ["type"])
+    .index("by_creator", ["creatorId"]),
+
+  // Channel membership tracking
+  channelMembers: defineTable({
+    channelId: v.id("channels"),
+    userId: v.id("users"),
+    role: v.string(), // "owner" | "admin" | "member"
+    joinedAt: v.number(),
+    lastReadAt: v.optional(v.number()), // For unread tracking
+  })
+    .index("by_channel", ["channelId"])
+    .index("by_user", ["userId"])
+    .index("by_channel_user", ["channelId", "userId"]),
+
+  // Channel messages with threading support
+  messages: defineTable({
+    channelId: v.id("channels"),
+    authorId: v.id("users"),
+    content: v.string(), // Message text with @[userId] mentions
+    parentId: v.optional(v.id("messages")), // For threaded replies
+    fileId: v.optional(v.id("files")), // Optional file attachment
+    isEdited: v.boolean(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_channel", ["channelId"])
+    .index("by_author", ["authorId"])
+    .index("by_parent", ["parentId"])
+    .index("by_channel_created", ["channelId", "createdAt"]),
 });
