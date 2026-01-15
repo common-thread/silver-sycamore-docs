@@ -10,6 +10,7 @@ interface MentionInputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   rows?: number;
+  onSubmit?: () => void;
 }
 
 interface UserResult {
@@ -29,6 +30,7 @@ export function MentionInput({
   onChange,
   placeholder = "Add a comment...",
   rows = 3,
+  onSubmit,
 }: MentionInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -158,6 +160,13 @@ export function MentionInput({
 
   // Handle keyboard navigation
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    // Handle Enter for submit when dropdown is not open
+    if (e.key === "Enter" && !e.shiftKey && !showDropdown && onSubmit) {
+      e.preventDefault();
+      onSubmit();
+      return;
+    }
+
     if (!showDropdown || filteredResults.length === 0) return;
 
     switch (e.key) {
