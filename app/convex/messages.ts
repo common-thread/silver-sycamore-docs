@@ -289,6 +289,49 @@ export const sendMessage = mutation({
       updatedAt: now,
     });
 
+    // Create notifications for @mentions
+    const trimmedContent = content.trim();
+    if (trimmedContent) {
+      // Parse @[userId] mentions from content
+      const mentionRegex = /@\[([^\]]+)\]/g;
+      let match;
+      while ((match = mentionRegex.exec(trimmedContent)) !== null) {
+        const mentionedUserId = match[1];
+
+        // Don't notify the author if they mention themselves
+        if (mentionedUserId === currentUser.user._id) continue;
+
+        // Check if this user exists
+        const user = await ctx.db.get(mentionedUserId as Id<"users">);
+        if (!user) continue;
+
+        // Check if user already has an unread notification for this message
+        const existingNotification = await ctx.db
+          .query("notifications")
+          .filter((q: any) =>
+            q.and(
+              q.eq(q.field("userId"), mentionedUserId),
+              q.eq(q.field("messageId"), messageId),
+              q.eq(q.field("isRead"), false)
+            )
+          )
+          .first();
+
+        if (existingNotification) continue;
+
+        // Create notification
+        await ctx.db.insert("notifications", {
+          userId: mentionedUserId as Id<"users">,
+          type: "mention",
+          channelId,
+          messageId,
+          fromUserId: currentUser.user._id,
+          isRead: false,
+          createdAt: now,
+        });
+      }
+    }
+
     // Return the new message with author info
     const newMessage = await ctx.db.get(messageId);
     return {

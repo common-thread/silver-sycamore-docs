@@ -292,4 +292,17 @@ export default defineSchema({
     .index("by_author", ["authorId"])
     .index("by_parent", ["parentId"])
     .index("by_channel_created", ["channelId", "createdAt"]),
+
+  // User notifications (@mentions, DMs, etc.)
+  notifications: defineTable({
+    userId: v.id("users"), // Recipient
+    type: v.string(), // "mention" | "dm" (extensible for future types)
+    channelId: v.id("channels"), // Where the notification originated
+    messageId: v.id("messages"), // The specific message
+    fromUserId: v.id("users"), // Who triggered it
+    isRead: v.boolean(),
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_read", ["userId", "isRead"]),
 });
