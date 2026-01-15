@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import Header from "@/components/Header";
 import "./globals.css";
@@ -14,21 +15,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body>
-        <ConvexClientProvider>
+    <ConvexAuthNextjsServerProvider>
+      <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+            rel="stylesheet"
+          />
+        </head>
+        <body>
+          <ConvexClientProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
 
@@ -60,8 +62,9 @@ export default function RootLayout({
               Silver Sycamore Staff Hub
             </footer>
           </div>
-        </ConvexClientProvider>
-      </body>
-    </html>
+          </ConvexClientProvider>
+        </body>
+      </html>
+    </ConvexAuthNextjsServerProvider>
   );
 }
