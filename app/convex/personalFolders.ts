@@ -56,7 +56,46 @@ export const listAll = query({
   },
 });
 
-// Get single folder by ID
+// Helper to check share access for a folder
+async function hasShareAccess(
+  ctx: any,
+  folderId: Id<"personalFolders">,
+  userId: Id<"users">
+): Promise<{ hasAccess: boolean; permission: string | null }> {
+  // Direct share
+  const directShare = await ctx.db
+    .query("folderShares")
+    .withIndex("by_folder_user", (q: any) =>
+      q.eq("folderId", folderId).eq("sharedWithUserId", userId)
+    )
+    .first();
+
+  if (directShare) {
+    return { hasAccess: true, permission: directShare.permission };
+  }
+
+  // Group shares
+  const userGroups = await ctx.db
+    .query("groupMembers")
+    .withIndex("by_user", (q: any) => q.eq("userId", userId))
+    .collect();
+
+  for (const membership of userGroups) {
+    const groupShare = await ctx.db
+      .query("folderShares")
+      .withIndex("by_folder_group", (q: any) =>
+        q.eq("folderId", folderId).eq("sharedWithGroupId", membership.groupId)
+      )
+      .first();
+    if (groupShare) {
+      return { hasAccess: true, permission: groupShare.permission };
+    }
+  }
+
+  return { hasAccess: false, permission: null };
+}
+
+// Get single folder by ID (owner or shared access)
 export const get = query({
   args: { id: v.id("personalFolders") },
   handler: async (ctx, args) => {
@@ -64,9 +103,18 @@ export const get = query({
     if (!userId) return null;
 
     const folder = await ctx.db.get(args.id);
-    if (!folder || folder.ownerId !== userId) return null;
+    if (!folder) return null;
 
-    return folder;
+    // Owner has full access
+    if (folder.ownerId === userId) return folder;
+
+    // Check for share access
+    const shareAccess = await hasShareAccess(ctx, args.id, userId);
+    if (shareAccess.hasAccess) {
+      return { ...folder, _permission: shareAccess.permission };
+    }
+
+    return null; // No access
   },
 });
 
