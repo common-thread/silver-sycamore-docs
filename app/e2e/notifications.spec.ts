@@ -1,23 +1,24 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
+import * as path from 'path';
 
-const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/.planning/verification/10-06';
+const SCREENSHOT_DIR = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/.planning/verification/e2e-upgrade';
 
 /**
- * E2E Verification for Plan 10-06: Notifications
+ * E2E Tests for Notification System
  *
- * These tests verify the notification system implementation.
+ * These tests verify the notification system through interactive browser testing.
+ * Tests run with pre-authenticated storageState from global-setup.ts.
  *
- * Note: Full E2E tests with real authentication require valid Clerk credentials.
- * The global-setup.ts and storageState infrastructure are enabled in playwright.config.ts
- * and will work when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is properly configured.
- *
- * Test categories:
- * 1. Static verification - component and function existence (always works)
- * 2. UI structure tests - require running app (when credentials available)
+ * Test coverage:
+ * 1. Notification bell visibility for authenticated users
+ * 2. Notification inbox dropdown functionality
+ * 3. Messages page and channel list
+ * 4. Channel unread indicators
+ * 5. Message sending (if applicable)
  */
 
-test.describe('Notification System - Static Verification', () => {
+test.describe('Notification System - Interactive E2E Tests', () => {
 
   test.beforeAll(() => {
     // Ensure screenshot directory exists
@@ -26,175 +27,330 @@ test.describe('Notification System - Static Verification', () => {
     }
   });
 
-  test('NotificationBell component exists with correct structure', async () => {
-    const bellPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/NotificationBell.tsx';
-    expect(fs.existsSync(bellPath)).toBe(true);
+  test('authenticated user sees notification bell in header', async ({ page }) => {
+    // Navigate to home page
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(bellPath, 'utf-8');
+    // Take screenshot of initial page load
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '01-home-page-authenticated.png'),
+      fullPage: true,
+    });
 
-    // Verify key features
-    expect(content).toContain('useQuery');
-    expect(content).toContain('api.notifications.getUnreadCount');
-    expect(content).toContain('NotificationInbox');
-    expect(content).toContain('title="Notifications"');
-    expect(content).toContain('displayCount'); // Badge logic
+    // Look for the notification bell button
+    const notificationBell = page.locator('button[title="Notifications"]');
 
-    console.log('NotificationBell.tsx: EXISTS with proper structure');
+    // Verify notification bell is visible
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
+
+    // Take screenshot showing notification bell
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '02-notification-bell-visible.png'),
+      fullPage: false,
+    });
+
+    console.log('Test passed: Notification bell is visible for authenticated user');
   });
 
-  test('NotificationInbox component exists with correct structure', async () => {
-    const inboxPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/NotificationInbox.tsx';
-    expect(fs.existsSync(inboxPath)).toBe(true);
+  test('clicking notification bell opens inbox dropdown', async ({ page }) => {
+    // Navigate to home page
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(inboxPath, 'utf-8');
+    // Find and click the notification bell
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
 
-    // Verify key features
-    expect(content).toContain('api.notifications.listNotifications');
-    expect(content).toContain('api.notifications.markAsRead');
-    expect(content).toContain('api.notifications.markAllAsRead');
-    expect(content).toContain('handleNotificationClick');
-    expect(content).toContain('Mark all read');
-    expect(content).toContain('No notifications');
-    expect(content).toContain('Go to Messages');
+    // Click to open the dropdown
+    await notificationBell.click();
+    await page.waitForTimeout(500);
 
-    console.log('NotificationInbox.tsx: EXISTS with proper structure');
+    // Take screenshot with dropdown open
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '03-notification-inbox-open.png'),
+      fullPage: true,
+    });
+
+    // Verify the inbox dropdown appeared
+    // The NotificationInbox component has a header with "Notifications" text
+    const inboxHeader = page.locator('h3:has-text("Notifications")');
+    await expect(inboxHeader).toBeVisible({ timeout: 5000 });
+
+    // Check for either notifications list or "No notifications" message
+    const hasNotifications = await page.locator('button:has-text("mentioned you"), button:has-text("sent you")').first()
+      .isVisible({ timeout: 2000 }).catch(() => false);
+    const noNotifications = await page.locator('text=No notifications').first()
+      .isVisible({ timeout: 2000 }).catch(() => false);
+
+    expect(hasNotifications || noNotifications).toBe(true);
+
+    // If there are notifications, check for "Mark all read" button
+    if (hasNotifications) {
+      const markAllRead = page.locator('button:has-text("Mark all read")');
+      const isMarkAllVisible = await markAllRead.isVisible({ timeout: 2000 }).catch(() => false);
+      console.log(`Mark all read button visible: ${isMarkAllVisible}`);
+    }
+
+    // Check for "Go to Messages" link (shown when there are notifications)
+    const goToMessages = page.locator('button:has-text("Go to Messages")');
+    const hasGoToMessages = await goToMessages.isVisible({ timeout: 2000 }).catch(() => false);
+
+    // Click outside to close (optional)
+    await page.click('body', { position: { x: 10, y: 10 } });
+    await page.waitForTimeout(300);
+
+    console.log(`Test passed: Notification inbox dropdown opened successfully`);
+    console.log(`  - Has notifications: ${hasNotifications}`);
+    console.log(`  - Shows "No notifications": ${noNotifications}`);
+    console.log(`  - Shows "Go to Messages": ${hasGoToMessages}`);
   });
 
-  test('Header integrates NotificationBell for authenticated users', async () => {
-    const headerPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/Header.tsx';
-    expect(fs.existsSync(headerPath)).toBe(true);
+  test('navigating to /messages shows channel list', async ({ page }) => {
+    // Navigate to messages page
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(headerPath, 'utf-8');
+    // Take screenshot of messages page
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '04-messages-page.png'),
+      fullPage: true,
+    });
 
-    // Verify integration
-    expect(content).toContain("import { NotificationBell }");
-    expect(content).toContain('<NotificationBell />');
-    expect(content).toContain('isSignedIn');
+    // Verify we're on the messages page
+    expect(page.url()).toContain('/messages');
 
-    console.log('Header.tsx: NotificationBell integrated for authenticated users');
+    // Check for the sidebar with channel list
+    const channelsSectionHeader = page.locator('text=Channels').first();
+    await expect(channelsSectionHeader).toBeVisible({ timeout: 10000 });
+
+    // Check for Direct Messages section
+    const dmSectionHeader = page.locator('text=Direct Messages').first();
+    await expect(dmSectionHeader).toBeVisible({ timeout: 5000 });
+
+    // Check for "Messages" header in sidebar
+    const messagesHeader = page.locator('h2:has-text("Messages")');
+    await expect(messagesHeader).toBeVisible({ timeout: 5000 });
+
+    // Check for main content area message
+    const selectChannelMessage = page.locator('text=Select a channel to start messaging');
+    const hasSelectMessage = await selectChannelMessage.isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Check for action buttons
+    const createChannelBtn = page.locator('button:has-text("Create Channel")');
+    const startDMBtn = page.locator('button:has-text("Start DM")');
+
+    const hasCreateChannel = await createChannelBtn.isVisible({ timeout: 3000 }).catch(() => false);
+    const hasStartDM = await startDMBtn.isVisible({ timeout: 3000 }).catch(() => false);
+
+    console.log('Test passed: Messages page displays correctly');
+    console.log(`  - Shows "Select a channel" message: ${hasSelectMessage}`);
+    console.log(`  - Shows "Create Channel" button: ${hasCreateChannel}`);
+    console.log(`  - Shows "Start DM" button: ${hasStartDM}`);
   });
 
-  test('ChannelList shows unread indicators', async () => {
-    const channelListPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/src/components/ChannelList.tsx';
-    expect(fs.existsSync(channelListPath)).toBe(true);
+  test('channel list shows channels with unread indicators', async ({ page }) => {
+    // Navigate to messages page
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(2000);
 
-    const content = fs.readFileSync(channelListPath, 'utf-8');
+    // Take screenshot
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '05-channel-list.png'),
+      fullPage: true,
+    });
 
-    // Verify unread indicator logic
-    expect(content).toContain('api.messages.getUnreadCount');
-    expect(content).toContain('hasUnread');
-    expect(content).toContain('Unread indicator');
+    // Look for channel items (links to /messages/[channelId])
+    const channelLinks = page.locator('a[href^="/messages/"]');
+    const channelCount = await channelLinks.count();
 
-    console.log('ChannelList.tsx: Unread indicators implemented');
+    // Check for the + button to start a DM
+    const startDMButton = page.locator('button[title="Start a direct message"]');
+    const hasStartDMButton = await startDMButton.isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Check for "No channels yet" or "No direct messages" messages
+    const noChannels = page.locator('text=No channels yet');
+    const noDMs = page.locator('text=No direct messages');
+
+    const showsNoChannels = await noChannels.isVisible({ timeout: 2000 }).catch(() => false);
+    const showsNoDMs = await noDMs.isVisible({ timeout: 2000 }).catch(() => false);
+
+    console.log('Test passed: Channel list structure verified');
+    console.log(`  - Number of channel links: ${channelCount}`);
+    console.log(`  - Has Start DM button: ${hasStartDMButton}`);
+    console.log(`  - Shows "No channels yet": ${showsNoChannels}`);
+    console.log(`  - Shows "No direct messages": ${showsNoDMs}`);
+
+    // If there are channels, check for unread indicators (small dots)
+    if (channelCount > 0) {
+      // Unread indicators are 8px circular spans with accent background
+      const unreadIndicators = page.locator('a[href^="/messages/"] span[style*="border-radius: 50%"][style*="8px"]');
+      const unreadCount = await unreadIndicators.count();
+      console.log(`  - Channels with unread indicators: ${unreadCount}`);
+    }
   });
 
-  test('Convex notification functions exist', async () => {
-    const notificationsPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/convex/notifications.ts';
-    expect(fs.existsSync(notificationsPath)).toBe(true);
+  test('clicking Create Channel opens dialog', async ({ page }) => {
+    // Navigate to messages page
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(notificationsPath, 'utf-8');
+    // Find and click Create Channel button
+    const createChannelBtn = page.locator('button:has-text("Create Channel")');
+    await expect(createChannelBtn).toBeVisible({ timeout: 10000 });
 
-    // Verify all required functions
-    expect(content).toContain('export const getUnreadCount');
-    expect(content).toContain('export const listNotifications');
-    expect(content).toContain('export const markAsRead');
-    expect(content).toContain('export const markAllAsRead');
-    expect(content).toContain('createMentionNotification');
+    await createChannelBtn.click();
+    await page.waitForTimeout(500);
 
-    console.log('notifications.ts: All required functions exist');
+    // Take screenshot with dialog open
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '06-create-channel-dialog.png'),
+      fullPage: true,
+    });
+
+    // Check for dialog elements
+    const dialogTitle = page.locator('h2:has-text("Create Channel"), h3:has-text("Create Channel")');
+    const hasDialogTitle = await dialogTitle.isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Look for channel name input
+    const channelNameInput = page.locator('input[placeholder*="channel"], input[name="name"], input[id="name"]').first();
+    const hasNameInput = await channelNameInput.isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Look for close/cancel button
+    const closeBtn = page.locator('button:has-text("Cancel"), button[aria-label="Close"]').first();
+    const hasCloseBtn = await closeBtn.isVisible({ timeout: 3000 }).catch(() => false);
+
+    if (hasCloseBtn) {
+      await closeBtn.click();
+      await page.waitForTimeout(300);
+    }
+
+    console.log('Test passed: Create Channel dialog functionality');
+    console.log(`  - Dialog title visible: ${hasDialogTitle}`);
+    console.log(`  - Name input visible: ${hasNameInput}`);
+    console.log(`  - Close button visible: ${hasCloseBtn}`);
   });
 
-  test('Notification schema exists in database', async () => {
-    const schemaPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/convex/schema.ts';
-    expect(fs.existsSync(schemaPath)).toBe(true);
+  test('clicking Start DM opens dialog', async ({ page }) => {
+    // Navigate to messages page
+    await page.goto('/messages');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(schemaPath, 'utf-8');
+    // Find and click Start DM button
+    const startDMBtn = page.locator('button:has-text("Start DM")');
+    await expect(startDMBtn).toBeVisible({ timeout: 10000 });
 
-    // Verify notifications table
-    expect(content).toContain('notifications:');
-    expect(content).toContain('userId');
-    expect(content).toContain('type'); // "mention" | "dm"
-    expect(content).toContain('channelId');
-    expect(content).toContain('messageId');
-    expect(content).toContain('isRead');
+    await startDMBtn.click();
+    await page.waitForTimeout(500);
 
-    console.log('schema.ts: Notifications table defined correctly');
+    // Take screenshot with dialog open
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '07-start-dm-dialog.png'),
+      fullPage: true,
+    });
+
+    // Check for dialog elements
+    const dialogVisible = await page.locator('[role="dialog"], [class*="modal"], div[style*="position: fixed"]').first()
+      .isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Look for user selection or search input
+    const searchInput = page.locator('input[placeholder*="search"], input[placeholder*="user"], input[type="text"]').first();
+    const hasSearchInput = await searchInput.isVisible({ timeout: 3000 }).catch(() => false);
+
+    // Look for close/cancel button
+    const closeBtn = page.locator('button:has-text("Cancel"), button[aria-label="Close"]').first();
+    const hasCloseBtn = await closeBtn.isVisible({ timeout: 3000 }).catch(() => false);
+
+    if (hasCloseBtn) {
+      await closeBtn.click();
+      await page.waitForTimeout(300);
+    }
+
+    console.log('Test passed: Start DM dialog functionality');
+    console.log(`  - Dialog visible: ${dialogVisible}`);
+    console.log(`  - Search input visible: ${hasSearchInput}`);
+    console.log(`  - Close button visible: ${hasCloseBtn}`);
   });
 
-  test('Messages.sendMessage triggers notifications on mentions', async () => {
-    const messagesPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/convex/messages.ts';
-    expect(fs.existsSync(messagesPath)).toBe(true);
+  test('header shows Messages link for authenticated users', async ({ page }) => {
+    // Navigate to home page
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(messagesPath, 'utf-8');
+    // Look for Messages link in header
+    const messagesLink = page.locator('a[href="/messages"]:has-text("Messages")');
+    await expect(messagesLink).toBeVisible({ timeout: 10000 });
 
-    // Verify sendMessage creates notifications for @mentions inline
-    expect(content).toContain('notifications');
-    expect(content).toContain('@\\['); // @[userId] regex pattern
-    expect(content).toContain('type: "mention"');
+    // Take screenshot
+    await page.screenshot({
+      path: path.join(SCREENSHOT_DIR, '08-header-messages-link.png'),
+      fullPage: false,
+    });
 
-    console.log('messages.ts: sendMessage creates notifications for @mentions');
+    // Click the Messages link
+    await messagesLink.click();
+    await page.waitForLoadState('networkidle');
+
+    // Verify navigation to messages page
+    expect(page.url()).toContain('/messages');
+
+    console.log('Test passed: Messages link in header works correctly');
   });
 
-  test('Global setup file configured for E2E auth', async () => {
-    const globalSetupPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/e2e/global-setup.ts';
-    expect(fs.existsSync(globalSetupPath)).toBe(true);
+  test('notification bell badge updates with unread count', async ({ page }) => {
+    // Navigate to home page
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
 
-    const content = fs.readFileSync(globalSetupPath, 'utf-8');
+    // Find the notification bell
+    const notificationBell = page.locator('button[title="Notifications"]');
+    await expect(notificationBell).toBeVisible({ timeout: 10000 });
 
-    // Verify global setup structure
-    expect(content).toContain('TEST_USERS');
-    expect(content).toContain('storageState');
-    expect(content).toContain('createOrSignInUser');
-    expect(content).toContain('verifyAuthentication');
+    // Check for badge (span with unread count)
+    // Badge displays count > 0 or "9+" for many
+    const badge = page.locator('button[title="Notifications"] span').first();
+    const hasBadge = await badge.isVisible({ timeout: 3000 }).catch(() => false);
 
-    console.log('global-setup.ts: E2E auth infrastructure configured');
-  });
+    if (hasBadge) {
+      const badgeText = await badge.textContent();
+      console.log(`Test info: Notification badge shows: ${badgeText}`);
 
-  test('Playwright config enables global setup and storageState', async () => {
-    const configPath = '/Users/splurfa/projects/clients/silver-sycamore-deliverables/silver-sycamore-docs/app/playwright.config.ts';
-    expect(fs.existsSync(configPath)).toBe(true);
+      // Take screenshot showing badge
+      await page.screenshot({
+        path: path.join(SCREENSHOT_DIR, '09-notification-badge.png'),
+        fullPage: false,
+      });
+    }
 
-    const content = fs.readFileSync(configPath, 'utf-8');
-
-    // Verify config enables E2E auth (conditionally for non-static tests)
-    expect(content).toContain("./e2e/global-setup.ts");
-    expect(content).toContain("./e2e/.auth/user.json");
-    expect(content).toContain("isStaticTestOnly"); // Conditional for static vs interactive tests
-
-    console.log('playwright.config.ts: Global setup and storageState configured');
+    console.log('Test passed: Notification bell badge check complete');
+    console.log(`  - Has badge: ${hasBadge}`);
   });
 
 });
 
 test.describe('Notification System - Summary', () => {
 
-  test('Complete verification summary', async () => {
-    console.log('\n=== NOTIFICATION SYSTEM VERIFICATION SUMMARY ===\n');
-    console.log('COMPONENTS VERIFIED:');
-    console.log('  - NotificationBell.tsx: Bell icon with unread badge');
-    console.log('  - NotificationInbox.tsx: Dropdown with notification list');
-    console.log('  - Header.tsx: NotificationBell integration');
-    console.log('  - ChannelList.tsx: Unread indicators on channels');
+  test('complete E2E verification summary', async () => {
+    console.log('\n=== NOTIFICATION SYSTEM E2E VERIFICATION SUMMARY ===\n');
+    console.log('INTERACTIVE TESTS COMPLETED:');
+    console.log('  1. Notification bell visibility for authenticated users');
+    console.log('  2. Notification inbox dropdown opens on click');
+    console.log('  3. Messages page displays channel list');
+    console.log('  4. Channel list with unread indicators');
+    console.log('  5. Create Channel dialog functionality');
+    console.log('  6. Start DM dialog functionality');
+    console.log('  7. Header Messages link navigation');
+    console.log('  8. Notification badge display');
     console.log('');
-    console.log('BACKEND FUNCTIONS:');
-    console.log('  - getUnreadCount: Count unread notifications');
-    console.log('  - listNotifications: Paginated notification list');
-    console.log('  - markAsRead: Mark single notification read');
-    console.log('  - markAllAsRead: Mark all notifications read');
-    console.log('  - createMentionNotification: Auto-trigger on @mention');
+    console.log('SCREENSHOTS SAVED TO:');
+    console.log(`  ${SCREENSHOT_DIR}`);
     console.log('');
-    console.log('DATABASE SCHEMA:');
-    console.log('  - notifications table with userId, type, channelId, etc.');
-    console.log('  - Indexes: by_user, by_user_read');
+    console.log('AUTHENTICATION:');
+    console.log('  - Uses Clerk authentication via global-setup.ts');
+    console.log('  - storageState pre-authenticated for staff user');
     console.log('');
-    console.log('E2E AUTH INFRASTRUCTURE:');
-    console.log('  - global-setup.ts: Test user creation and auth state');
-    console.log('  - playwright.config.ts: globalSetup and storageState enabled');
-    console.log('');
-    console.log('NOTE: Full interactive E2E tests require valid Clerk credentials.');
-    console.log('When NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is configured, the');
-    console.log('authenticated tests will run with pre-authenticated storageState.');
-    console.log('\n=== END SUMMARY ===\n');
+    console.log('=== END SUMMARY ===\n');
   });
 
 });

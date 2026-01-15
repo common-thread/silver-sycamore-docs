@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import path from 'path';
 
-// Check if we're running notification tests specifically (static tests don't need server)
-const isStaticTestOnly = process.argv.includes('notifications.spec.ts');
+const AUTH_DIR = path.join(__dirname, 'e2e', '.auth');
 
 export default defineConfig({
   testDir: './e2e',
@@ -12,34 +12,59 @@ export default defineConfig({
   reporter: [['html', { open: 'never' }], ['list']],
 
   // Global setup creates test users and saves authenticated state
-  // Skip for static-only tests to avoid Clerk initialization errors
-  globalSetup: isStaticTestOnly ? undefined : './e2e/global-setup.ts',
+  // Note: globalSetup runs for all projects. Use --project=basic to skip auth tests.
+  globalSetup: process.env.SKIP_AUTH ? undefined : './e2e/global-setup.ts',
 
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
     trace: 'on-first-retry',
     screenshot: 'on',
     video: 'retain-on-failure',
-    // Pre-authenticated state from global-setup.ts
-    // Only use when global setup is enabled
-    ...(isStaticTestOnly ? {} : { storageState: './e2e/.auth/user.json' }),
   },
+
   outputDir: './e2e/test-results',
+
   projects: [
+    // Basic tests - no authentication required
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'basic',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+      testMatch: /basic\.spec\.ts/,
+    },
+    // Setup project - runs global setup for authenticated tests
+    {
+      name: 'setup',
+      testMatch: /global-setup\.ts/,
+    },
+    // Staff user tests - most tests run as staff
+    {
+      name: 'staff-tests',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: path.join(AUTH_DIR, 'staff.json'),
+      },
+      dependencies: ['setup'],
+      testMatch: /.*\.spec\.ts/,
+      testIgnore: [/basic\.spec\.ts/, /.*manager.*\.spec\.ts/],
+    },
+    // Manager user tests - for approval workflows
+    {
+      name: 'manager-tests',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: path.join(AUTH_DIR, 'manager.json'),
+      },
+      dependencies: ['setup'],
+      testMatch: /.*manager.*\.spec\.ts/,
     },
   ],
-  // Skip webServer for static-only tests
-  ...(isStaticTestOnly
-    ? {}
-    : {
-        webServer: {
-          command: 'bun dev --port 3001',
-          url: 'http://localhost:3001',
-          reuseExistingServer: !process.env.CI,
-          timeout: 120000,
-        },
-      }),
+
+  webServer: {
+    command: 'bun dev --port 3001',
+    url: 'http://localhost:3001',
+    reuseExistingServer: true,
+    timeout: 120000,
+  },
 });
