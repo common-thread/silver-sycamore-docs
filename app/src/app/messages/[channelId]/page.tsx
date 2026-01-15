@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
+import { MessageList } from "../../../components/MessageList";
+import { MessageInput } from "../../../components/MessageInput";
 
 export default function ChannelPage() {
   const params = useParams();
@@ -11,9 +14,18 @@ export default function ChannelPage() {
 
   const channel = useQuery(api.channels.getChannel, { channelId });
   const members = useQuery(api.channels.getChannelMembers, { channelId });
+  const currentUser = useQuery(api.users.getCurrentUser);
+  const updateLastRead = useMutation(api.channels.updateLastRead);
+
+  // Mark channel as read when viewing
+  useEffect(() => {
+    if (channel && channelId) {
+      updateLastRead({ channelId }).catch(console.error);
+    }
+  }, [channel, channelId, updateLastRead]);
 
   // Loading state
-  if (channel === undefined || members === undefined) {
+  if (channel === undefined || members === undefined || currentUser === undefined) {
     return (
       <div
         style={{
@@ -100,6 +112,7 @@ export default function ChannelPage() {
   }
 
   const memberCount = members?.length ?? 0;
+  const membershipRole = channel.membership?.role;
 
   return (
     <div
@@ -108,6 +121,7 @@ export default function ChannelPage() {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        overflow: "hidden",
       }}
     >
       {/* Channel header */}
@@ -116,6 +130,7 @@ export default function ChannelPage() {
           padding: "1rem 1.5rem",
           borderBottom: "1px solid var(--color-border)",
           background: "var(--color-surface)",
+          flexShrink: 0,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -203,7 +218,9 @@ export default function ChannelPage() {
               fontFamily: "var(--font-body)",
               fontSize: "0.8125rem",
               color: "var(--color-ink-muted)",
+              cursor: "pointer",
             }}
+            title="View members"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <circle cx="6" cy="5" r="2" stroke="currentColor" strokeWidth="1.2" />
@@ -223,112 +240,68 @@ export default function ChannelPage() {
             </svg>
             {memberCount} {memberCount === 1 ? "member" : "members"}
           </div>
-        </div>
-      </div>
 
-      {/* Message list placeholder */}
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-          background: "var(--color-background, #FAFAF8)",
-        }}
-      >
-        <div
-          style={{
-            textAlign: "center",
-            maxWidth: "400px",
-          }}
-        >
-          <div
+          {/* Settings gear placeholder */}
+          <button
+            title="Channel settings"
             style={{
-              width: "48px",
-              height: "48px",
-              margin: "0 auto 1rem",
+              padding: "0.375rem",
+              background: "transparent",
+              border: "1px solid transparent",
+              borderRadius: "4px",
+              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "var(--color-surface)",
-              border: "1px solid var(--color-border)",
+              transition: "background 0.15s ease, border-color 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--color-surface-dim, #F8F8F6)";
+              e.currentTarget.style.borderColor = "var(--color-border)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = "transparent";
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
-                d="M4 8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V16C20 17.1046 19.1046 18 18 18H13L8 22V18H6C4.89543 18 4 17.1046 4 16V8Z"
+                d="M7.5 2.25H10.5L11.25 4.5L13.5 5.25L15.75 4.5V7.5L14.25 9L15.75 10.5V13.5L13.5 12.75L11.25 13.5L10.5 15.75H7.5L6.75 13.5L4.5 12.75L2.25 13.5V10.5L3.75 9L2.25 7.5V4.5L4.5 5.25L6.75 4.5L7.5 2.25Z"
                 stroke="var(--color-ink-muted)"
-                strokeWidth="1.5"
+                strokeWidth="1.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
+              <circle
+                cx="9"
+                cy="9"
+                r="2.25"
+                stroke="var(--color-ink-muted)"
+                strokeWidth="1.2"
+              />
             </svg>
-          </div>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
-              color: "var(--color-ink-muted)",
-              margin: 0,
-              lineHeight: 1.6,
-            }}
-          >
-            Messages will appear here
-          </p>
+          </button>
         </div>
       </div>
 
-      {/* Message input placeholder */}
+      {/* Message list */}
+      <MessageList
+        channelId={channelId}
+        currentUserId={currentUser?.id}
+        userRole={currentUser?.profile?.role}
+        membershipRole={membershipRole}
+      />
+
+      {/* Message input */}
       <div
         style={{
           padding: "1rem 1.5rem",
           borderTop: "1px solid var(--color-border)",
           background: "var(--color-surface)",
+          flexShrink: 0,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-          }}
-        >
-          <input
-            type="text"
-            placeholder={`Message #${channel.name}`}
-            disabled
-            style={{
-              flex: 1,
-              padding: "0.75rem 1rem",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
-              color: "var(--color-ink-muted)",
-              background: "var(--color-surface-dim, #F8F8F6)",
-              border: "1px solid var(--color-border)",
-              borderRadius: 0,
-              outline: "none",
-              cursor: "not-allowed",
-            }}
-          />
-          <button
-            disabled
-            style={{
-              padding: "0.75rem 1.25rem",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.875rem",
-              fontWeight: 500,
-              color: "var(--color-surface)",
-              background: "var(--color-ink-muted)",
-              border: "none",
-              borderRadius: 0,
-              cursor: "not-allowed",
-              opacity: 0.5,
-            }}
-          >
-            Send
-          </button>
-        </div>
+        <MessageInput channelId={channelId} channelName={channel.name} />
       </div>
     </div>
   );
