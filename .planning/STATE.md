@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 (Messaging Channels) — backend complete, UI next
+**Current focus:** Phase 10 (Messaging Channels) — channel UI complete, message UI next
 
 ## Current Position
 
 Phase: 10 of 11 (Messaging Channels)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: In progress
-Last activity: 2026-01-15 — Completed 10-01-PLAN.md
+Last activity: 2026-01-15 — Completed 10-02-PLAN.md
 
-Progress: █████████░ ~85%
+Progress: █████████░ ~86%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 28
+- Total plans completed: 29
 - Average duration: 15 min
-- Total execution time: 7.6 hours
+- Total execution time: 7.7 hours
 
 **By Phase:**
 
@@ -36,10 +36,10 @@ Progress: █████████░ ~85%
 | 07-folder-sharing | 3/3 | 22 min | 7 min |
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
-| 10-messaging-channels | 1/6 | 5 min | 5 min |
+| 10-messaging-channels | 2/6 | 9 min | 4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 2 min, 6 min, 8 min, 5 min
+- Last 5 plans: 2 min, 6 min, 8 min, 5 min, 4 min
 - Trend: accelerating
 
 ## Accumulated Context
@@ -81,6 +81,9 @@ Recent decisions affecting current work:
 - **Unread tracking**: lastReadAt on channelMembers, compared against message createdAt
 - **Message pagination**: Cursor-based using message ID for efficient infinite scroll
 - **Channel permissions**: owner > admin > member hierarchy
+- **Sidebar width**: 280px for messaging, consistent with workspace layout
+- **Channel grouping**: "Channels" for public/private, "Direct Messages" for DMs
+- **Unread indicator**: Dot indicator using getUnreadCount query per channel
 
 ### Deferred Issues
 
@@ -97,6 +100,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 10-01-PLAN.md (Messaging schema and backend)
+Stopped at: Completed 10-02-PLAN.md (Channel browsing UI)
 Resume file: None
-Next action: Execute 10-02-PLAN.md (Channel list and creation UI)
+Next action: Execute 10-03-PLAN.md (Message thread UI with real-time updates)
