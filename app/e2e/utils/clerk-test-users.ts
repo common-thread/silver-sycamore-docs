@@ -8,17 +8,19 @@
 import { createClerkClient } from "@clerk/backend";
 
 // Test user configuration
+// Using example.com domain which is reserved for testing (RFC 2606)
+// Password is unique and not in breach databases (Clerk rejects common/breached passwords)
 export const TEST_USERS = {
   staff: {
-    email: "e2e-staff@silversycamore.test",
-    password: "TestPassword123!",
+    email: "e2e-staff@example.com",
+    password: "SilverSycamoreE2E#2025!Staff",
     firstName: "E2E",
     lastName: "Staff",
     role: "staff" as const,
   },
   manager: {
-    email: "e2e-manager@silversycamore.test",
-    password: "TestPassword123!",
+    email: "e2e-manager@example.com",
+    password: "SilverSycamoreE2E#2025!Manager",
     firstName: "E2E",
     lastName: "Manager",
     role: "manager" as const,
@@ -62,7 +64,7 @@ export async function findUserByEmail(
 }
 
 /**
- * Create a test user if they don't already exist
+ * Create a test user if they don't already exist, or update password if they do
  * Returns the user ID
  */
 export async function createTestUser(userType: TestUserType): Promise<string> {
@@ -75,6 +77,8 @@ export async function createTestUser(userType: TestUserType): Promise<string> {
   const existingUser = await findUserByEmail(user.email);
   if (existingUser) {
     console.log(`[Clerk] User already exists: ${user.email} (${existingUser.id})`);
+    // Update password to ensure it matches current config
+    await updateUserPassword(existingUser.id, user.password);
     return existingUser.id;
   }
 
@@ -111,6 +115,25 @@ export async function createTestUser(userType: TestUserType): Promise<string> {
     }
     console.error(`[Clerk] Error creating user ${user.email}:`, error);
     throw error;
+  }
+}
+
+/**
+ * Update a user's password
+ */
+async function updateUserPassword(userId: string, password: string): Promise<void> {
+  const clerk = getClerkClient();
+
+  try {
+    await clerk.users.updateUser(userId, {
+      password,
+      skipPasswordChecks: true,
+    });
+    console.log(`[Clerk] Updated password for user: ${userId}`);
+  } catch (error) {
+    console.error(`[Clerk] Error updating password for ${userId}:`, error);
+    // Don't throw - password update failure shouldn't block tests if user exists
+    console.log(`[Clerk] Continuing despite password update failure`);
   }
 }
 

@@ -3,18 +3,31 @@
  *
  * This script runs before all tests to:
  * 1. Seed test users via Clerk Backend SDK (auto-verified emails)
- * 2. Sign in test users via @clerk/testing helpers
- * 3. Save authenticated browser state for reuse across tests
+ * 2. Initialize @clerk/testing for bot detection bypass
+ * 3. Save minimal browser state for test reuse
  *
  * Test users are automatically created if they don't exist:
- * - e2e-staff@silversycamore.test (staff) - Primary test account
- * - e2e-manager@silversycamore.test (manager) - For approval workflows
+ * - e2e-staff@example.com (staff) - Primary test account
+ * - e2e-manager@example.com (manager) - For approval workflows
+ *
+ * IMPORTANT: This setup requires Email+Password authentication to be enabled
+ * in the Clerk Dashboard for interactive sign-in to work. If only Google OAuth
+ * is enabled, the sign-in will redirect to Google and fail.
+ *
+ * To enable Email+Password in Clerk Dashboard:
+ * 1. Go to Configure > Email, Phone, Username
+ * 2. Enable "Password" under "Authentication strategies"
  */
 
 import { clerkSetup } from "@clerk/testing/playwright";
 import { chromium, type FullConfig, type Page } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
+
+// Load environment variables from .env.local
+import { config } from "dotenv";
+config({ path: path.join(__dirname, "..", ".env.local") });
+
 import { seedAllTestUsers, TEST_USERS } from "./utils/clerk-test-users";
 
 const AUTH_DIR = path.join(__dirname, ".auth");
@@ -44,7 +57,7 @@ async function globalSetup(config: FullConfig) {
     throw error;
   }
 
-  // Step 2: Initialize Clerk testing
+  // Step 2: Initialize Clerk testing (sets up testing token for bot bypass)
   console.log("[Global Setup] Initializing Clerk testing...");
   await clerkSetup();
 
@@ -103,146 +116,119 @@ function setupPageLogging(page: Page, userType: string) {
 }
 
 /**
- * Sign in a user using Clerk's SignIn UI
- * Uses setupClerkTestingToken to bypass bot detection
+ * Sign in a user using interactive Clerk SignIn UI on the hosted sign-in page
+ *
+ * This function handles the Clerk hosted sign-in flow:
+ * 1. Navigate to app (redirects to Clerk sign-in)
+ * 2. Enter email address
+ * 3. Enter password (requires Email+Password auth enabled in Clerk Dashboard)
+ * 4. Submit and wait for redirect back to app
+ *
+ * If Clerk redirects to Google OAuth, it means Email+Password auth is not enabled.
  */
 async function signInWithClerk(
   page: Page,
   baseURL: string,
   user: { email: string; password: string }
 ): Promise<void> {
-  // Navigate to sign-in page
-  await page.goto(`${baseURL}/signin`, { timeout: 60000 });
+  // Navigate to app - this will redirect to Clerk's hosted sign-in page
+  await page.goto(baseURL, { timeout: 60000 });
   await page.waitForLoadState("domcontentloaded");
   await page.waitForTimeout(3000);
 
   console.log(`[Auth] Navigated to: ${page.url()}`);
 
-  // Take screenshot before trying to find inputs
+  // Take screenshot before sign-in
   await page.screenshot({
     path: path.join(AUTH_DIR, `signin-page-${user.email.split("@")[0]}.png`),
     fullPage: true,
   });
 
-  // Find the email input field
-  const inputSelectors = [
-    'input[name="identifier"]',
-    'input[type="email"]',
-    'input[type="text"]',
-    'input[autocomplete="email"]',
-    'input[autocomplete="username"]',
-  ];
-
-  let inputField = null;
-  for (const selector of inputSelectors) {
-    const input = page.locator(selector).first();
-    if (await input.isVisible({ timeout: 2000 }).catch(() => false)) {
-      inputField = input;
-      console.log(`[Auth] Found email input using selector: ${selector}`);
-      break;
-    }
-  }
-
-  if (!inputField) {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `clerk-ui-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error("Email input not found on sign-in page");
-  }
-
-  // Enter email
-  await inputField.click();
-  await inputField.fill("");
-  await inputField.fill(user.email);
-  await page.waitForTimeout(500);
+  // Find and fill the email input
+  const emailInput = page.locator('input[name="identifier"], input[type="email"]').first();
+  await emailInput.waitFor({ timeout: 10000 });
+  await emailInput.fill(user.email);
   console.log(`[Auth] Entered email: ${user.email}`);
 
-  // Click continue/next button
-  const continueButton = page
-    .locator('button:has-text("Continue"), button:has-text("Next")')
-    .first();
-  if (await continueButton.isVisible({ timeout: 3000 }).catch(() => false)) {
-    await continueButton.click();
-    console.log("[Auth] Clicked Continue/Next button");
-    await page.waitForTimeout(3000);
-  }
+  // Click Continue
+  const continueButton = page.locator('button:has-text("Continue")').first();
+  await continueButton.click();
+  await page.waitForTimeout(3000);
 
-  // Take screenshot after clicking continue
-  await page.screenshot({
-    path: path.join(AUTH_DIR, `after-continue-${user.email.split("@")[0]}.png`),
-    fullPage: true,
-  });
-
-  // Check if we were redirected to Google OAuth
+  // Check current URL
   const currentUrl = page.url();
+  console.log(`[Auth] After Continue, URL: ${currentUrl}`);
+
+  // If redirected to Google OAuth, throw helpful error
   if (currentUrl.includes("accounts.google.com")) {
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `oauth-redirect-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
     throw new Error(
-      "Redirected to Google OAuth - password authentication may not be enabled"
+      `\n\n` +
+      `=================================================================\n` +
+      `CLERK AUTHENTICATION SETUP REQUIRED\n` +
+      `=================================================================\n` +
+      `\n` +
+      `Clerk redirected to Google OAuth instead of showing password field.\n` +
+      `This means Email+Password authentication is NOT enabled.\n` +
+      `\n` +
+      `To fix this, enable Email+Password in Clerk Dashboard:\n` +
+      `\n` +
+      `1. Go to https://dashboard.clerk.com\n` +
+      `2. Select your application (optimal-caribou-74)\n` +
+      `3. Go to Configure > Email, Phone, Username\n` +
+      `4. Under "Authentication strategies", enable "Password"\n` +
+      `5. Save changes and re-run tests\n` +
+      `\n` +
+      `Alternatively, if you only want to use Google OAuth:\n` +
+      `- E2E tests will need to be configured differently\n` +
+      `- Contact your team lead for guidance\n` +
+      `=================================================================\n`
     );
   }
 
-  // Check for errors indicating user doesn't exist
-  const pageContent = await page.content();
-  if (
-    pageContent.toLowerCase().includes("couldn't find") ||
-    pageContent.toLowerCase().includes("no account found") ||
-    pageContent.toLowerCase().includes("doesn't exist")
-  ) {
-    throw new Error(
-      `User ${user.email} not found. The Clerk Backend SDK should have created this user.`
-    );
-  }
-
-  // Enter password
+  // Wait for password field to appear
   const passwordInput = page.locator('input[type="password"]').first();
-  if (
-    !(await passwordInput.isVisible({ timeout: 5000 }).catch(() => false))
-  ) {
+  const hasPasswordField = await passwordInput.isVisible({ timeout: 10000 }).catch(() => false);
+
+  if (!hasPasswordField) {
     await page.screenshot({
       path: path.join(AUTH_DIR, `no-password-${user.email.split("@")[0]}.png`),
       fullPage: true,
     });
-    throw new Error("Password field not found after entering email");
+    throw new Error(
+      `Password field not visible after entering email. ` +
+      `Email+Password authentication may not be enabled in Clerk Dashboard.`
+    );
   }
 
+  // Enter password
   await passwordInput.fill(user.password);
-  console.log("[Auth] Entered password");
+  console.log(`[Auth] Entered password`);
 
-  // Click sign in / continue button
-  const submitButton = page
-    .locator(
-      'button[type="submit"], button:has-text("Continue"), button:has-text("Sign in")'
-    )
-    .first();
+  // Click Continue/Sign in button
+  const submitButton = page.locator('button:has-text("Continue"), button:has-text("Sign in")').first();
   await submitButton.click();
-  console.log("[Auth] Clicked submit");
 
-  // Wait for redirect
+  // Wait for redirect back to the app
   try {
-    await page.waitForURL((url) => !url.pathname.includes("signin"), {
-      timeout: 15000,
+    await page.waitForURL((url) => url.origin === new URL(baseURL).origin, {
+      timeout: 30000,
     });
-    console.log(`[Auth] Redirected to: ${page.url()}`);
+    console.log(`[Auth] Redirected to app: ${page.url()}`);
   } catch {
-    // Check if there's an error message
-    const errorAfterSubmit = page
-      .locator(
-        '[data-clerk-error], .cl-formFieldErrorText, [class*="formFieldError"], [class*="alert"]'
-      )
-      .first();
-    if (
-      await errorAfterSubmit.isVisible({ timeout: 2000 }).catch(() => false)
-    ) {
-      const errorText = await errorAfterSubmit.textContent();
-      throw new Error(`Sign-in failed: ${errorText}`);
-    }
     await page.screenshot({
       path: path.join(AUTH_DIR, `signin-timeout-${user.email.split("@")[0]}.png`),
       fullPage: true,
     });
-    throw new Error("Sign-in redirect timeout");
+    throw new Error(`Sign-in redirect timeout. Current URL: ${page.url()}`);
   }
+
+  // Wait for the app to fully load
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(2000);
 
   // Verify authentication
   const isAuthenticated = await verifyAuthentication(page);
@@ -251,7 +237,7 @@ async function signInWithClerk(
       path: path.join(AUTH_DIR, `auth-verify-${user.email.split("@")[0]}.png`),
       fullPage: true,
     });
-    throw new Error("Authentication verification failed");
+    throw new Error("Authentication verification failed after sign-in");
   }
 
   console.log(`[Auth] User ${user.email} signed in successfully`);
