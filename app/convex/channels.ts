@@ -77,8 +77,24 @@ export const listUserChannels = query({
         const channel = await ctx.db.get(membership.channelId);
         if (!channel || channel.isArchived) return null;
 
+        // For DM channels, get the other user's info
+        let dmPartner = null;
+        if (channel.type === "dm") {
+          const allMembers = await ctx.db
+            .query("channelMembers")
+            .withIndex("by_channel", (q) => q.eq("channelId", channel._id))
+            .collect();
+          const otherMember = allMembers.find(
+            (m) => m.userId !== currentUser.user._id
+          );
+          if (otherMember) {
+            dmPartner = await getMemberInfo(ctx, otherMember.userId);
+          }
+        }
+
         return {
           ...channel,
+          dmPartner,
           membership: {
             role: membership.role,
             joinedAt: membership.joinedAt,
@@ -202,6 +218,37 @@ export const findDMChannel = query({
     }
 
     return null;
+  },
+});
+
+// Get the other user's profile in a DM channel
+export const getDMPartner = query({
+  args: { channelId: v.id("channels") },
+  handler: async (ctx, { channelId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return null;
+
+    // Verify channel is a DM and user is a member
+    const channel = await ctx.db.get(channelId);
+    if (!channel || channel.type !== "dm" || channel.isArchived) return null;
+
+    const membership = await getMembership(ctx, channelId, currentUser.user._id);
+    if (!membership) return null;
+
+    // Get all members of the DM
+    const memberships = await ctx.db
+      .query("channelMembers")
+      .withIndex("by_channel", (q) => q.eq("channelId", channelId))
+      .collect();
+
+    // Find the other member (not current user)
+    const otherMembership = memberships.find(
+      (m) => m.userId !== currentUser.user._id
+    );
+    if (!otherMembership) return null;
+
+    // Get the other user's info
+    return getMemberInfo(ctx, otherMembership.userId);
   },
 });
 
@@ -482,5 +529,77 @@ export const updateLastRead = mutation({
     });
 
     return { success: true };
+  },
+});
+
+// Find or create a DM channel with another user (idempotent)
+export const findOrCreateDM = mutation({
+  args: { otherUserId: v.id("users") },
+  handler: async (ctx, { otherUserId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) throw new Error("Not authenticated");
+
+    // Cannot DM yourself
+    if (otherUserId === currentUser.user._id) {
+      throw new Error("Cannot create DM with yourself");
+    }
+
+    // Check if other user exists
+    const otherUser = await ctx.db.get(otherUserId);
+    if (!otherUser) throw new Error("User not found");
+
+    // Look for existing DM channel
+    const myMemberships = await ctx.db
+      .query("channelMembers")
+      .withIndex("by_user", (q) => q.eq("userId", currentUser.user._id))
+      .collect();
+
+    for (const membership of myMemberships) {
+      const channel = await ctx.db.get(membership.channelId);
+      if (!channel || channel.type !== "dm" || channel.isArchived) continue;
+
+      // Check if other user is also a member
+      const otherMembership = await getMembership(
+        ctx,
+        membership.channelId,
+        otherUserId
+      );
+      if (otherMembership) {
+        // Found existing DM
+        return { channelId: channel._id, created: false };
+      }
+    }
+
+    // No existing DM found, create new one
+    const now = Date.now();
+
+    const channelId = await ctx.db.insert("channels", {
+      name: "", // DMs display the other user's name, not channel name
+      type: "dm",
+      description: undefined,
+      creatorId: currentUser.user._id,
+      isArchived: false,
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    // Add both users as members
+    await ctx.db.insert("channelMembers", {
+      channelId,
+      userId: currentUser.user._id,
+      role: "member",
+      joinedAt: now,
+      lastReadAt: now,
+    });
+
+    await ctx.db.insert("channelMembers", {
+      channelId,
+      userId: otherUserId,
+      role: "member",
+      joinedAt: now,
+      lastReadAt: undefined, // Other user hasn't read it yet
+    });
+
+    return { channelId, created: true };
   },
 });
