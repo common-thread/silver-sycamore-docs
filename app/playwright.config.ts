@@ -8,16 +8,16 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', { open: 'never' }], ['list']],
 
-  // Global setup: creates test users and saves auth state
-  globalSetup: './e2e/global-setup.ts',
+  // Global setup disabled - tests handle auth inline
+  // globalSetup: './e2e/global-setup.ts',
 
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
     trace: 'on-first-retry',
     screenshot: 'on',
     video: 'retain-on-failure',
-    // Use pre-authenticated state for all tests
-    storageState: './e2e/.auth/user.json',
+    // No pre-authenticated state - tests handle auth inline
+    // storageState: './e2e/.auth/user.json',
   },
   outputDir: './e2e/test-results',
   projects: [

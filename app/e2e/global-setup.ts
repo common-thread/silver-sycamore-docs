@@ -51,11 +51,16 @@ async function globalSetup(config: FullConfig) {
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // Log auth-related console errors for debugging
+  // Log all console errors for debugging
   page.on("console", (msg) => {
-    if (msg.type() === "error" && msg.text().includes("auth")) {
-      console.log(`[Browser] ${msg.text().slice(0, 200)}`);
+    if (msg.type() === "error") {
+      console.log(`[Browser Error] ${msg.text().slice(0, 500)}`);
     }
+  });
+
+  // Log page errors
+  page.on("pageerror", (error) => {
+    console.log(`[Page Error] ${error.message}`);
   });
 
   try {
@@ -100,8 +105,11 @@ async function createOrSignInUser(
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(1000);
 
-  // Try creating account first
+  console.log(`[Auth] Current URL: ${page.url()}`);
+
+  // Try creating account first - click "Create Account" tab
   const createTab = page.getByRole("button", { name: "Create Account" }).first();
+  console.log(`[Auth] Create Account tab visible: ${await createTab.isVisible()}`);
   if (await createTab.isVisible()) {
     await createTab.click();
     await page.waitForTimeout(500);
@@ -109,16 +117,36 @@ async function createOrSignInUser(
 
   await page.getByPlaceholder("you@example.com").fill(user.email);
   await page.getByPlaceholder("Enter your password").fill(user.password);
+
+  console.log(`[Auth] Attempting to create account for ${user.email}`);
   await page.locator('button[type="submit"]').click();
 
-  // Wait for response
+  // Wait for response and check for errors
   await page.waitForTimeout(5000);
 
-  if (!page.url().includes("signin")) {
-    return; // Account created successfully
+  // Check for error messages
+  const errorText = await page.locator('div[style*="rgba(185, 74, 72"]').textContent().catch(() => null);
+  if (errorText) {
+    console.log(`[Auth] Create account error: ${errorText}`);
+  }
+
+  // Navigate to homepage and check for auth state
+  await page.goto(`${baseURL}/`);
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(3000);
+
+  // Check for notification bell which indicates authenticated state
+  const notificationBell = page.locator('button[title="Notifications"]');
+  let isAuthenticated = await notificationBell.isVisible({ timeout: 5000 }).catch(() => false);
+  console.log(`[Auth] After create attempt, authenticated: ${isAuthenticated}`);
+
+  if (isAuthenticated) {
+    console.log(`[Auth] Account created successfully`);
+    return;
   }
 
   // Try signing in (account may exist from previous run)
+  console.log(`[Auth] Account creation failed, trying sign in...`);
   await page.goto(`${baseURL}/signin`);
   await page.waitForLoadState("networkidle");
 
@@ -130,11 +158,29 @@ async function createOrSignInUser(
 
   await page.getByPlaceholder("you@example.com").fill(user.email);
   await page.getByPlaceholder("Enter your password").fill(user.password);
+
+  console.log(`[Auth] Attempting sign in for ${user.email}`);
   await page.locator('button[type="submit"]').click();
 
   await page.waitForTimeout(5000);
 
-  if (page.url().includes("signin")) {
+  // Check for error messages
+  const signInError = await page.locator('div[style*="rgba(185, 74, 72"]').textContent().catch(() => null);
+  if (signInError) {
+    console.log(`[Auth] Sign in error: ${signInError}`);
+  }
+
+  // Navigate to homepage and check for auth state
+  await page.goto(`${baseURL}/`);
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(3000);
+
+  isAuthenticated = await notificationBell.isVisible({ timeout: 5000 }).catch(() => false);
+  console.log(`[Auth] After sign in attempt, authenticated: ${isAuthenticated}`);
+
+  if (!isAuthenticated) {
+    // Take screenshot for debugging
+    await page.screenshot({ path: path.join(AUTH_DIR, "auth-failure.png") });
     throw new Error(`Authentication failed for ${user.email}`);
   }
 }
