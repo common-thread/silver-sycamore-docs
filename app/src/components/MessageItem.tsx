@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+import { FileAttachment } from "./FileAttachment";
 
 interface Author {
   id: string;
@@ -19,6 +20,7 @@ interface Message {
   updatedAt: number;
   isEdited: boolean;
   parentId?: Id<"messages">;
+  fileId?: Id<"files">;
   author: Author;
 }
 
@@ -120,6 +122,12 @@ export function MessageItem({
     parentId: message._id,
   });
   const replyCount = threadReplies?.length ?? 0;
+
+  // Get file info if message has attachment
+  const fileInfo = useQuery(
+    api.messages.getMessageFile,
+    message.fileId ? { messageId: message._id } : "skip"
+  );
 
   // Build mention map from prop or empty
   const userDisplayMap = useMemo(() => {
@@ -330,19 +338,29 @@ export function MessageItem({
             </div>
           </div>
         ) : (
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
-              color: "var(--color-ink)",
-              lineHeight: 1.5,
-              margin: 0,
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-            }}
-          >
-            {renderContent(message.content)}
-          </p>
+          <>
+            {/* Message text content */}
+            {message.content && (
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.9375rem",
+                  color: "var(--color-ink)",
+                  lineHeight: 1.5,
+                  margin: 0,
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                }}
+              >
+                {renderContent(message.content)}
+              </p>
+            )}
+
+            {/* File attachment */}
+            {fileInfo && (
+              <FileAttachment file={fileInfo} />
+            )}
+          </>
         )}
 
         {/* Thread reply indicator */}
