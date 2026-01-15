@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
-import { LogoPlaceholder } from "@/components/LogoPlaceholder";
+import Header from "@/components/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,122 +30,34 @@ export default function RootLayout({
       <body>
         <ConvexClientProvider>
           <div className="min-h-screen flex flex-col">
-            {/* Header with logo */}
-            <header
-              className="px-8 py-5"
-              style={{
-                background: "var(--color-white)",
-                borderBottom: "1px solid var(--color-border)",
-              }}
-            >
-              <a
-                href="/"
-                className="flex items-center gap-4 no-underline hover:no-underline"
-                style={{ color: "var(--color-ink)" }}
-              >
-                <LogoPlaceholder />
-              </a>
-            </header>
-
-            {/* Navigation */}
-            <nav
-              className="px-8 py-3"
-              style={{
-                background: "var(--color-cream-dark)",
-                borderBottom: "1px solid var(--color-border)",
-              }}
-            >
-              <ul className="flex gap-8 list-none m-0 p-0">
-                <li>
-                  <a
-                    href="/"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/services"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/clients"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Clients
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/staff"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Staff
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/operations"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Operations
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/deliverables"
-                    className="text-sm font-medium tracking-wide"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    Deliverables
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Header />
 
             {/* Main content */}
-            <main className="flex-1 px-8 py-6">{children}</main>
-
-            {/* Footer */}
-            <footer
-              className="px-8 py-4 text-sm"
+            <main
+              className="flex-1"
               style={{
-                background: "var(--color-cream-dark)",
+                padding: "2rem",
+                maxWidth: "1200px",
+                width: "100%",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              {children}
+            </main>
+
+            {/* Footer - minimal */}
+            <footer
+              style={{
+                padding: "1rem 2rem",
                 borderTop: "1px solid var(--color-border)",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.75rem",
                 color: "var(--color-ink-muted)",
-                fontFamily: "var(--font-display)",
                 letterSpacing: "0.02em",
               }}
             >
-              Silver Sycamore &middot; Staff Portal
+              Silver Sycamore Staff Hub
             </footer>
           </div>
         </ConvexClientProvider>
