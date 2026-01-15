@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { CommentItem } from "./CommentItem";
+import { MentionInput } from "./MentionInput";
 import { usePermissions } from "@/hooks/usePermissions";
 
 interface CommentSectionProps {
@@ -178,30 +179,11 @@ export function CommentSection({
           border: "1px solid var(--color-border)",
         }}
       >
-        <textarea
+        <MentionInput
           value={newCommentContent}
-          onChange={(e) => setNewCommentContent(e.target.value)}
-          placeholder="Add a comment..."
-          style={{
-            width: "100%",
-            minHeight: "100px",
-            padding: "0.75rem",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.875rem",
-            color: "var(--color-ink)",
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "4px",
-            resize: "vertical",
-            lineHeight: 1.6,
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = "var(--color-accent)";
-            e.currentTarget.style.outline = "none";
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = "var(--color-border)";
-          }}
+          onChange={setNewCommentContent}
+          placeholder="Add a comment... Use @ to mention someone"
+          rows={4}
         />
         <div
           style={{

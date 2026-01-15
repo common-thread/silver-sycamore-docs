@@ -272,6 +272,39 @@ export const searchUsers = query({
   },
 });
 
+// Get users by IDs (for mention rendering)
+export const getUsersById = query({
+  args: {
+    userIds: v.array(v.id("users")),
+  },
+  handler: async (ctx, { userIds }) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) return [];
+
+    const users = await Promise.all(
+      userIds.map(async (userId) => {
+        const user = await ctx.db.get(userId);
+        if (!user) return null;
+
+        const profile = await ctx.db
+          .query("userProfiles")
+          .withIndex("by_userId", (q) => q.eq("userId", userId))
+          .first();
+
+        return {
+          id: userId,
+          email: user.email,
+          name: user.name,
+          displayName: profile?.displayName,
+        };
+      })
+    );
+
+    // Filter out nulls (deleted users)
+    return users.filter((u): u is NonNullable<typeof u> => u !== null);
+  },
+});
+
 // List all users (admin only)
 export const listUsers = query({
   args: {},

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useMutation } from "convex/react";
+import { useState, useMemo } from "react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+import { MentionInput } from "./MentionInput";
 
 interface Author {
   id: string;
@@ -33,6 +34,7 @@ interface CommentItemProps {
   onCancelReply: () => void;
   isSubmitting: boolean;
   depth?: number;
+  parentUserDisplayMap?: Map<string, string>;
 }
 
 function formatRelativeTime(timestamp: number): string {
@@ -65,6 +67,44 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
+// Parse @[userId] patterns from content
+type ContentPart = string | { type: "mention"; userId: string };
+
+function parseMentions(content: string): ContentPart[] {
+  const parts: ContentPart[] = [];
+  const mentionRegex = /@\[([^\]]+)\]/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = mentionRegex.exec(content)) !== null) {
+    // Add text before the mention
+    if (match.index > lastIndex) {
+      parts.push(content.substring(lastIndex, match.index));
+    }
+    // Add the mention
+    parts.push({ type: "mention", userId: match[1] });
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (lastIndex < content.length) {
+    parts.push(content.substring(lastIndex));
+  }
+
+  return parts;
+}
+
+// Extract all user IDs from content for batch lookup
+function extractMentionIds(content: string): string[] {
+  const mentionRegex = /@\[([^\]]+)\]/g;
+  const ids: string[] = [];
+  let match;
+  while ((match = mentionRegex.exec(content)) !== null) {
+    ids.push(match[1]);
+  }
+  return ids;
+}
+
 export function CommentItem({
   comment,
   allComments,
@@ -78,6 +118,7 @@ export function CommentItem({
   onCancelReply,
   isSubmitting,
   depth = 0,
+  parentUserDisplayMap,
 }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -87,6 +128,64 @@ export function CommentItem({
 
   const updateComment = useMutation(api.comments.update);
   const deleteComment = useMutation(api.comments.remove);
+
+  // Extract mention IDs from this comment and all visible replies for batch lookup
+  const mentionIds = useMemo(() => {
+    const ids = new Set<string>();
+    const addIds = (content: string) => {
+      extractMentionIds(content).forEach((id) => ids.add(id));
+    };
+    addIds(comment.content);
+    // Include mentions from replies at depth 0 only to avoid redundant queries
+    if (depth === 0) {
+      allComments.forEach((c) => addIds(c.content));
+    }
+    return Array.from(ids);
+  }, [comment.content, allComments, depth]);
+
+  // Batch lookup mentioned users (only at depth 0 to avoid duplicate queries)
+  const mentionedUsers = useQuery(
+    api.users.getUsersById,
+    depth === 0 && mentionIds.length > 0
+      ? { userIds: mentionIds as Id<"users">[] }
+      : "skip"
+  );
+
+  // Create lookup map for display names (use parent's map if nested, otherwise build from query)
+  const userDisplayMap = useMemo(() => {
+    if (parentUserDisplayMap) {
+      return parentUserDisplayMap;
+    }
+    const map = new Map<string, string>();
+    mentionedUsers?.forEach((user) => {
+      map.set(user.id, user.displayName || user.name || user.email || "Unknown User");
+    });
+    return map;
+  }, [mentionedUsers, parentUserDisplayMap]);
+
+  // Render comment content with mentions highlighted
+  const renderContent = (content: string) => {
+    const parts = parseMentions(content);
+    return parts.map((part, index) => {
+      if (typeof part === "string") {
+        return <span key={index}>{part}</span>;
+      }
+      // It's a mention
+      const displayName = userDisplayMap.get(part.userId) || "Unknown User";
+      return (
+        <span
+          key={index}
+          style={{
+            color: "var(--color-accent)",
+            fontWeight: 500,
+            cursor: "default",
+          }}
+        >
+          @{displayName}
+        </span>
+      );
+    });
+  };
 
   const isAuthor = currentUserId === comment.author.id;
   const isPrivileged = userRole === "admin" || userRole === "manager";
@@ -214,22 +313,10 @@ export function CommentItem({
           {/* Comment body */}
           {isEditing ? (
             <div style={{ marginBottom: "0.5rem" }}>
-              <textarea
+              <MentionInput
                 value={editContent}
-                onChange={(e) => setEditContent(e.target.value)}
-                style={{
-                  width: "100%",
-                  minHeight: "80px",
-                  padding: "0.5rem 0.75rem",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.875rem",
-                  color: "var(--color-ink)",
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "4px",
-                  resize: "vertical",
-                  lineHeight: 1.5,
-                }}
+                onChange={setEditContent}
+                rows={3}
               />
               <div
                 style={{
@@ -291,7 +378,7 @@ export function CommentItem({
                 wordBreak: "break-word",
               }}
             >
-              {comment.content}
+              {renderContent(comment.content)}
             </p>
           )}
 
@@ -389,23 +476,11 @@ export function CommentItem({
                 borderRadius: "4px",
               }}
             >
-              <textarea
+              <MentionInput
                 value={replyContent}
-                onChange={(e) => onReplyContentChange(e.target.value)}
-                placeholder={`Reply to ${comment.author.displayName}...`}
-                style={{
-                  width: "100%",
-                  minHeight: "60px",
-                  padding: "0.5rem 0.75rem",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.875rem",
-                  color: "var(--color-ink)",
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "4px",
-                  resize: "vertical",
-                  lineHeight: 1.5,
-                }}
+                onChange={onReplyContentChange}
+                placeholder={`Reply to ${comment.author.displayName}... Use @ to mention someone`}
+                rows={2}
               />
               <div
                 style={{
@@ -510,6 +585,7 @@ export function CommentItem({
                   onCancelReply={onCancelReply}
                   isSubmitting={isSubmitting}
                   depth={depth + 1}
+                  parentUserDisplayMap={userDisplayMap}
                 />
               ))}
             </div>
