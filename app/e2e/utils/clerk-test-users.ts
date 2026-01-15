@@ -187,3 +187,53 @@ export async function cleanupAllTestUsers(): Promise<void> {
 
   console.log("[Clerk] All test users cleaned up");
 }
+
+/**
+ * Create a sign-in token for a user that can be used to authenticate
+ * via URL. This is useful for hosted Clerk pages where clerk.signIn()
+ * doesn't work directly.
+ */
+export async function createSignInToken(userId: string): Promise<string> {
+  const clerk = getClerkClient();
+
+  try {
+    const token = await clerk.signInTokens.createSignInToken({
+      userId,
+      expiresInSeconds: 300, // 5 minutes
+    });
+
+    console.log(`[Clerk] Created sign-in token for user: ${userId}`);
+    return token.token;
+  } catch (error) {
+    console.error(`[Clerk] Error creating sign-in token for ${userId}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Get the sign-in token URL for a user
+ */
+export async function getSignInTokenUrl(
+  userType: TestUserType,
+  redirectUrl: string
+): Promise<string> {
+  const userId = await createTestUser(userType);
+  const token = await createSignInToken(userId);
+
+  // Construct the sign-in token URL
+  // Format: https://<your-clerk-frontend-api>/v1/tickets/accept?ticket=<token>&redirect_url=<url>
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  if (!publishableKey) {
+    throw new Error("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required");
+  }
+
+  // Extract the frontend API domain from the publishable key
+  // pk_test_b3B0aW1hbC1jYXJpYm91LTc0LmNsZXJrLmFjY291bnRzLmRldiQ -> optimal-caribou-74.clerk.accounts.dev
+  const base64Part = publishableKey.replace("pk_test_", "").replace("pk_live_", "");
+  const frontendApi = Buffer.from(base64Part, "base64").toString("utf-8").replace("$", "");
+
+  const signInUrl = `https://${frontendApi}/v1/tickets/accept?ticket=${token}&redirect_url=${encodeURIComponent(redirectUrl)}`;
+
+  console.log(`[Clerk] Sign-in token URL created for ${TEST_USERS[userType].email}`);
+  return signInUrl;
+}

@@ -28,7 +28,7 @@ import * as path from "path";
 import { config } from "dotenv";
 config({ path: path.join(__dirname, "..", ".env.local") });
 
-import { seedAllTestUsers, TEST_USERS } from "./utils/clerk-test-users";
+import { seedAllTestUsers, TEST_USERS, findUserByEmail, createSignInToken, type TestUserType } from "./utils/clerk-test-users";
 
 const AUTH_DIR = path.join(__dirname, ".auth");
 const STAFF_STORAGE_STATE = path.join(AUTH_DIR, "staff.json");
@@ -71,7 +71,7 @@ async function globalSetup(config: FullConfig) {
     const staffPage = await staffContext.newPage();
     setupPageLogging(staffPage, "staff");
 
-    await signInWithClerk(staffPage, baseURL, TEST_USERS.staff);
+    await signInWithClerk(staffPage, baseURL, "staff");
     await staffContext.storageState({ path: STAFF_STORAGE_STATE });
     console.log(`[Global Setup] Staff auth state saved to ${STAFF_STORAGE_STATE}`);
     await staffContext.close();
@@ -82,7 +82,7 @@ async function globalSetup(config: FullConfig) {
     const managerPage = await managerContext.newPage();
     setupPageLogging(managerPage, "manager");
 
-    await signInWithClerk(managerPage, baseURL, TEST_USERS.manager);
+    await signInWithClerk(managerPage, baseURL, "manager");
     await managerContext.storageState({ path: MANAGER_STORAGE_STATE });
     console.log(`[Global Setup] Manager auth state saved to ${MANAGER_STORAGE_STATE}`);
     await managerContext.close();
@@ -116,119 +116,129 @@ function setupPageLogging(page: Page, userType: string) {
 }
 
 /**
- * Sign in a user using interactive Clerk SignIn UI on the hosted sign-in page
+ * Sign in a user using Clerk's sign-in token via JavaScript execution
  *
- * This function handles the Clerk hosted sign-in flow:
- * 1. Navigate to app (redirects to Clerk sign-in)
- * 2. Enter email address
- * 3. Enter password (requires Email+Password auth enabled in Clerk Dashboard)
- * 4. Submit and wait for redirect back to app
+ * Uses Clerk Backend SDK to create a sign-in token, then executes JavaScript
+ * on the page to use Clerk's frontend SDK with the ticket strategy.
  *
- * If Clerk redirects to Google OAuth, it means Email+Password auth is not enabled.
+ * This approach works with Clerk's hosted sign-in pages where the embedded
+ * clerk.signIn() helper doesn't work directly.
  */
 async function signInWithClerk(
   page: Page,
   baseURL: string,
-  user: { email: string; password: string }
+  userType: TestUserType
 ): Promise<void> {
-  // Navigate to app - this will redirect to Clerk's hosted sign-in page
+  const user = TEST_USERS[userType];
+
+  console.log(`[Auth] Creating sign-in token for ${user.email}...`);
+
+  // Get user ID (user should already exist from seeding)
+  const existingUser = await findUserByEmail(user.email);
+  if (!existingUser) {
+    throw new Error(`Test user ${user.email} not found - run seeding first`);
+  }
+  const token = await createSignInToken(existingUser.id);
+
+  console.log(`[Auth] Navigating to app to load Clerk...`);
+
+  // Navigate to app to load Clerk SDK
   await page.goto(baseURL, { timeout: 60000 });
   await page.waitForLoadState("domcontentloaded");
   await page.waitForTimeout(3000);
 
-  console.log(`[Auth] Navigated to: ${page.url()}`);
+  console.log(`[Auth] Page URL: ${page.url()}`);
 
   // Take screenshot before sign-in
   await page.screenshot({
-    path: path.join(AUTH_DIR, `signin-page-${user.email.split("@")[0]}.png`),
+    path: path.join(AUTH_DIR, `before-signin-${user.email.split("@")[0]}.png`),
     fullPage: true,
   });
 
-  // Find and fill the email input
-  const emailInput = page.locator('input[name="identifier"], input[type="email"]').first();
-  await emailInput.waitFor({ timeout: 10000 });
-  await emailInput.fill(user.email);
-  console.log(`[Auth] Entered email: ${user.email}`);
+  // Wait for Clerk to be available
+  console.log(`[Auth] Waiting for Clerk to load...`);
 
-  // Click Continue
-  const continueButton = page.locator('button:has-text("Continue")').first();
-  await continueButton.click();
+  const clerkLoaded = await page.evaluate(async () => {
+    // Wait up to 10 seconds for Clerk
+    for (let i = 0; i < 20; i++) {
+      if (typeof window !== "undefined" && (window as unknown as { Clerk?: unknown }).Clerk) {
+        return true;
+      }
+      await new Promise((r) => setTimeout(r, 500));
+    }
+    return false;
+  });
+
+  if (!clerkLoaded) {
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `clerk-not-loaded-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error("Clerk SDK did not load on the page");
+  }
+
+  console.log(`[Auth] Clerk loaded, signing in with ticket strategy...`);
+
+  // Use Clerk's frontend SDK to sign in with the ticket
+  const signInResult = await page.evaluate(async (ticketToken: string) => {
+    try {
+      const clerk = (window as unknown as { Clerk: { client: { signIn: { create: (params: { strategy: string; ticket: string }) => Promise<{ status: string }> } } } }).Clerk;
+      const signIn = await clerk.client.signIn.create({
+        strategy: "ticket",
+        ticket: ticketToken,
+      });
+      return { success: true, status: signIn.status };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }, token);
+
+  if (!signInResult.success) {
+    await page.screenshot({
+      path: path.join(AUTH_DIR, `signin-error-${user.email.split("@")[0]}.png`),
+      fullPage: true,
+    });
+    throw new Error(`Clerk signIn failed: ${signInResult.error}`);
+  }
+
+  console.log(`[Auth] Sign-in result: ${signInResult.status}`);
+
+  // If sign-in succeeded, set the session and wait for redirect
+  if (signInResult.status === "complete") {
+    console.log(`[Auth] Setting active session...`);
+
+    await page.evaluate(async () => {
+      const clerk = (window as unknown as { Clerk: { setActive: (params: { session: string }) => Promise<void>; client: { signIn: { createdSessionId: string } } } }).Clerk;
+      await clerk.setActive({
+        session: clerk.client.signIn.createdSessionId,
+      });
+    });
+
+    // Wait for Clerk to redirect back to app
+    console.log(`[Auth] Waiting for redirect to app...`);
+    try {
+      await page.waitForURL((url) => url.origin === new URL(baseURL).origin, {
+        timeout: 15000,
+      });
+    } catch {
+      // If redirect doesn't happen, manually navigate
+      console.log(`[Auth] Redirect timeout, manually navigating...`);
+      await page.goto(baseURL, { timeout: 60000, waitUntil: "domcontentloaded" });
+    }
+  }
+
   await page.waitForTimeout(3000);
 
-  // Check current URL
-  const currentUrl = page.url();
-  console.log(`[Auth] After Continue, URL: ${currentUrl}`);
+  console.log(`[Auth] After sign-in, URL: ${page.url()}`);
 
-  // If redirected to Google OAuth, throw helpful error
-  if (currentUrl.includes("accounts.google.com")) {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `oauth-redirect-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error(
-      `\n\n` +
-      `=================================================================\n` +
-      `CLERK AUTHENTICATION SETUP REQUIRED\n` +
-      `=================================================================\n` +
-      `\n` +
-      `Clerk redirected to Google OAuth instead of showing password field.\n` +
-      `This means Email+Password authentication is NOT enabled.\n` +
-      `\n` +
-      `To fix this, enable Email+Password in Clerk Dashboard:\n` +
-      `\n` +
-      `1. Go to https://dashboard.clerk.com\n` +
-      `2. Select your application (optimal-caribou-74)\n` +
-      `3. Go to Configure > Email, Phone, Username\n` +
-      `4. Under "Authentication strategies", enable "Password"\n` +
-      `5. Save changes and re-run tests\n` +
-      `\n` +
-      `Alternatively, if you only want to use Google OAuth:\n` +
-      `- E2E tests will need to be configured differently\n` +
-      `- Contact your team lead for guidance\n` +
-      `=================================================================\n`
-    );
-  }
-
-  // Wait for password field to appear
-  const passwordInput = page.locator('input[type="password"]').first();
-  const hasPasswordField = await passwordInput.isVisible({ timeout: 10000 }).catch(() => false);
-
-  if (!hasPasswordField) {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `no-password-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error(
-      `Password field not visible after entering email. ` +
-      `Email+Password authentication may not be enabled in Clerk Dashboard.`
-    );
-  }
-
-  // Enter password
-  await passwordInput.fill(user.password);
-  console.log(`[Auth] Entered password`);
-
-  // Click Continue/Sign in button
-  const submitButton = page.locator('button:has-text("Continue"), button:has-text("Sign in")').first();
-  await submitButton.click();
-
-  // Wait for redirect back to the app
-  try {
-    await page.waitForURL((url) => url.origin === new URL(baseURL).origin, {
-      timeout: 30000,
-    });
-    console.log(`[Auth] Redirected to app: ${page.url()}`);
-  } catch {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `signin-timeout-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error(`Sign-in redirect timeout. Current URL: ${page.url()}`);
-  }
-
-  // Wait for the app to fully load
-  await page.waitForLoadState("networkidle");
-  await page.waitForTimeout(2000);
+  // Take screenshot after sign-in
+  await page.screenshot({
+    path: path.join(AUTH_DIR, `after-signin-${user.email.split("@")[0]}.png`),
+    fullPage: true,
+  });
 
   // Verify authentication
   const isAuthenticated = await verifyAuthentication(page);
@@ -237,7 +247,7 @@ async function signInWithClerk(
       path: path.join(AUTH_DIR, `auth-verify-${user.email.split("@")[0]}.png`),
       fullPage: true,
     });
-    throw new Error("Authentication verification failed after sign-in");
+    throw new Error(`Authentication verification failed for ${user.email}`);
   }
 
   console.log(`[Auth] User ${user.email} signed in successfully`);
