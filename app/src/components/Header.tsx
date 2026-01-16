@@ -6,6 +6,7 @@ import { useAuth } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
 import { SearchBar } from "./SearchBar";
 import { NotificationBell } from "./NotificationBell";
+import { LogoFull } from "./Logo";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -47,50 +48,23 @@ export default function Header() {
           href="/"
           style={{
             display: "inline-flex",
-            alignItems: "baseline",
-            gap: "0.75rem",
+            alignItems: "center",
+            gap: "var(--space-4)",
             textDecoration: "none",
           }}
         >
-          {/* Logo mark - minimal geometric */}
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "2rem",
-              height: "2rem",
-              background: "var(--color-accent)",
-              color: "var(--color-surface)",
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "1.125rem",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            SS
-          </span>
-          {/* Brand name */}
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "1.5rem",
-              fontWeight: 700,
-              color: "var(--color-ink)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Silver Sycamore
-          </span>
-          {/* Subtitle */}
+          {/* Full logo lockup - icon + wordmark together */}
+          <LogoFull size="sm" />
           <span
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "0.8125rem",
-              color: "var(--color-ink-muted)",
-              letterSpacing: "0.02em",
+              fontSize: "var(--text-xs)",
+              fontWeight: "var(--font-semibold)",
+              color: "var(--color-champagne-deep)",
+              letterSpacing: "var(--tracking-wider)",
               textTransform: "uppercase",
-              marginLeft: "0.25rem",
+              paddingLeft: "var(--space-3)",
+              borderLeft: "1px solid var(--color-border)",
             }}
           >
             Staff Hub
