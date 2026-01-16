@@ -257,7 +257,7 @@ export const getSubmission = query({
   },
 });
 
-// Get submissions routed to current user
+// Get submissions routed to current user (with form info)
 export const getMyReceivedSubmissions = query({
   args: {},
   handler: async (ctx) => {
@@ -268,11 +268,51 @@ export const getMyReceivedSubmissions = query({
     // Note: In production, consider adding an index for this pattern
     const allSubmissions = await ctx.db.query("formSubmissions").collect();
 
-    return allSubmissions.filter(
+    const filteredSubmissions = allSubmissions.filter(
       (sub) =>
         sub.routeToUserIds &&
         sub.routeToUserIds.includes(currentUser.user._id)
     );
+
+    // Enrich with form title
+    const enrichedSubmissions = await Promise.all(
+      filteredSubmissions.map(async (sub) => {
+        const form = await ctx.db.get(sub.formSchemaId);
+        return {
+          ...sub,
+          formTitle: form?.title || "Unknown Form",
+        };
+      })
+    );
+
+    return enrichedSubmissions;
+  },
+});
+
+// Get submission counts for all forms owned by current user
+export const getSubmissionCounts = query({
+  args: {},
+  handler: async (ctx) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return {};
+
+    // Get all forms owned by user
+    const forms = await ctx.db
+      .query("formSchemas")
+      .withIndex("by_owner", (q) => q.eq("ownerId", currentUser.user._id))
+      .collect();
+
+    // Get submission counts for each form
+    const counts: Record<string, number> = {};
+    for (const form of forms) {
+      const submissions = await ctx.db
+        .query("formSubmissions")
+        .withIndex("by_schema", (q) => q.eq("formSchemaId", form._id))
+        .collect();
+      counts[form._id] = submissions.length;
+    }
+
+    return counts;
   },
 });
 

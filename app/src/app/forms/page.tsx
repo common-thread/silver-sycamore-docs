@@ -12,6 +12,7 @@ import { useState } from "react";
 export default function FormsPage() {
   const router = useRouter();
   const forms = useQuery(api.forms.list);
+  const submissionCounts = useQuery(api.forms.getSubmissionCounts);
   const publishForm = useMutation(api.forms.publish);
   const unpublishForm = useMutation(api.forms.unpublish);
   const deleteForm = useMutation(api.forms.remove);
@@ -218,6 +219,56 @@ export default function FormsPage() {
 
               {/* Actions */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                {/* Submissions button with count badge */}
+                <button
+                  onClick={() => router.push(`/forms/${form._id}/submissions`)}
+                  style={{
+                    padding: "0.5rem 0.875rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.8125rem",
+                    fontWeight: 500,
+                    color: "var(--color-ink-light)",
+                    background: "transparent",
+                    border: "1px solid var(--color-border)",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.375rem",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M2 3.5C2 2.67157 2.67157 2 3.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 11.3284 11.3284 12 10.5 12H3.5C2.67157 12 2 11.3284 2 10.5V3.5Z"
+                      stroke="currentColor"
+                      strokeWidth="1.25"
+                    />
+                    <path
+                      d="M4.5 5.5H9.5M4.5 7.5H9.5M4.5 9.5H7"
+                      stroke="currentColor"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  Submissions
+                  {submissionCounts && submissionCounts[form._id] > 0 && (
+                    <span
+                      style={{
+                        padding: "0.125rem 0.375rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "0.6875rem",
+                        fontWeight: 600,
+                        color: "var(--color-surface)",
+                        background: "var(--color-accent)",
+                        borderRadius: "10px",
+                        minWidth: "18px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {submissionCounts[form._id]}
+                    </span>
+                  )}
+                </button>
+
                 {form.isPublished ? (
                   <>
                     <button
