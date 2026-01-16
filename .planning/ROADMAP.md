@@ -7,7 +7,8 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 ## Milestones
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
-- 🚧 **v1.1 Content Pipeline & Branding** - Phases 12-16 (in progress)
+- ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
+- 📋 **v1.2 Content Architecture** — Planning
 
 ## Completed Milestones
 
@@ -47,61 +48,33 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-## 🚧 v1.1 Content Pipeline & Branding (In Progress)
+<details>
+<summary>v1.1 Content Pipeline & Branding (Phases 12-15) — SHIPPED 2026-01-16</summary>
 
-**Milestone Goal:** Fix content import reliability, establish company-wide branding standards, and apply them consistently across the UI.
+| Phase | Name | Plans | Status | Completed |
+|-------|------|-------|--------|-----------|
+| 12 | Content Pipeline | 1/1 | Complete | 2026-01-16 |
+| 13 | Brand Foundation | 1/1 | Complete | 2026-01-16 |
+| 14 | UI Cleanup | 2/2 | Complete | 2026-01-16 |
+| 15 | Custom Dropdowns | 1/1 | Complete | 2026-01-16 |
 
-**Constraints:**
-- Frontend-design skill required for all UI/design decisions
-- Wedding style guide as baseline (monochrome palette + champagne accents)
-- Logo assets from wedding project need to be copied
+**Total:** 5 plans
 
-### Phase 12: Content Pipeline - COMPLETE
+**Delivered:**
+- Index.md parser for deterministic content seeding (62/65 docs authoritative)
+- Complete brand foundation: 4 logo variants, design tokens, style guide
+- Consolidated navigation into single flat feature row
+- Cleaned document viewer and catalog (removed technical indicators)
+- Premium Select component replacing all native selects
 
-**Goal:** Deterministic content seeding - parse index.md tables for document titles/descriptions instead of heuristic extraction
-**Depends on:** v1.0 complete
-**Research:** Unlikely (internal patterns, parsing existing files)
-**Plans:** 1/1
+</details>
 
-Plans:
-- [x] 12-01: Index.md parser with import script integration
+## 📋 v1.2 Content Architecture (Planning)
 
-### Phase 13: Brand Foundation
+**Milestone Goal:** First-principles refactoring of content architecture — how documents are mapped, displayed, and navigated based on intent rather than blind markdown conversion.
 
-**Goal:** Establish the Silver Sycamore brand kit: design tokens (CSS custom properties), in-app style guide documentation, and logo integration. Foundation first, then apply.
-**Depends on:** Phase 12
-**Research:** Unlikely (wedding style guide provides baseline)
-**Plans:** TBD
-
-Plans:
-- [x] 13-01: Logo system, design tokens, style guide, brand package
-
-### Phase 14: UI Cleanup - COMPLETE
-
-**Goal:** Apply brand foundation to clean technical artifacts - consolidate navigation, remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
-**Depends on:** Phase 13
-**Research:** Unlikely (UI cleanup, applying established tokens)
-**Plans:** 2/2
-
-Plans:
-- [x] 14-01: Consolidate navigation into flat feature-based row
-- [x] 14-02: Clean document viewer and catalog page
-
-### Phase 15: Custom Dropdowns
-
-**Goal:** Replace native HTML select elements with styled dropdown components that match the brand foundation
-**Depends on:** Phase 14
-**Research:** Unlikely (component development, applying established patterns)
-**Plans:** TBD
-
-Plans:
-- [ ] 15-01: TBD
+See STATE.md for full backlog.
 
 ## Progress
 
-| Phase | Milestone | Plans | Status | Completed |
-|-------|-----------|-------|--------|-----------|
-| 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 13. Brand Foundation | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 14. UI Cleanup | v1.1 | 2/2 | Complete | 2026-01-16 |
-| 15. Custom Dropdowns | v1.1 | 0/? | Not started | - |
+_v1.1 complete. v1.2 in planning._

@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-16)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication.
-**Current focus:** v1.1 Content Pipeline & Branding
+**Current focus:** v1.2 Content Architecture (Planning)
 
 ## Current Position
 
-Phase: 15 of 15 (Custom Dropdowns) - COMPLETE
-Plan: 15-01 COMPLETE (1 of 1 in current phase)
-Status: Milestone v1.1 complete - custom Select component created and integrated
-Last activity: 2026-01-16 — Completed 15-01 custom dropdowns
+Phase: Planning v1.2
+Plan: Not started
+Status: v1.1 shipped, v1.2 backlog captured
+Last activity: 2026-01-16 — Completed v1.1 milestone
 
-Progress: ██████████ 100%
+Progress: Planning next milestone
 
 ## Performance Metrics
 
