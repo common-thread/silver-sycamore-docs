@@ -6,7 +6,8 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 ## Milestones
 
-- [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
+- ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
+- 🚧 **v1.1 Content Pipeline & Branding** - Phases 12-16 (in progress)
 
 ## Completed Milestones
 
@@ -46,11 +47,71 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-## Next Milestone
+## 🚧 v1.1 Content Pipeline & Branding (In Progress)
 
-To be planned via `/gsd:discuss-milestone`
+**Milestone Goal:** Fix content import reliability, clean up UI artifacts, and establish company-wide branding standards.
 
-Focus areas:
-- Deterministic content seeding from markdown source of truth
-- Parse index.md tables for document titles/descriptions
-- Remove technical artifacts from business wiki display
+**Constraints:**
+- Frontend-design skill required for all UI/design decisions
+- Wedding style guide as baseline (monochrome palette + champagne accents)
+- Logo assets from wedding project need to be copied
+
+### Phase 12: Content Pipeline
+
+**Goal:** Deterministic content seeding - parse index.md tables for document titles/descriptions instead of heuristic extraction
+**Depends on:** v1.0 complete
+**Research:** Unlikely (internal patterns, parsing existing files)
+**Plans:** TBD
+
+Plans:
+- [ ] 12-01: TBD (run /gsd:plan-phase 12 to break down)
+
+### Phase 13: UI Cleanup
+
+**Goal:** Remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
+**Depends on:** Phase 12
+**Research:** Unlikely (UI cleanup, internal work)
+**Plans:** TBD
+
+Plans:
+- [ ] 13-01: TBD
+
+### Phase 14: Design Tokens
+
+**Goal:** Establish design tokens file (CSS custom properties + exportable JSON) and component library foundation
+**Depends on:** Phase 13
+**Research:** Unlikely (CSS custom properties, established patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 14-01: TBD
+
+### Phase 15: Style Guide
+
+**Goal:** Create in-app style guide documentation page with logo usage guidelines (proper spacing, centering, approved/prohibited uses)
+**Depends on:** Phase 14
+**Research:** Unlikely (documentation, internal patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 15-01: TBD
+
+### Phase 16: Custom Dropdowns
+
+**Goal:** Replace native HTML select elements with styled dropdown components that match the design system
+**Depends on:** Phase 15
+**Research:** Unlikely (component development, established patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 16-01: TBD
+
+## Progress
+
+| Phase | Milestone | Plans | Status | Completed |
+|-------|-----------|-------|--------|-----------|
+| 12. Content Pipeline | v1.1 | 0/? | Not started | - |
+| 13. UI Cleanup | v1.1 | 0/? | Not started | - |
+| 14. Design Tokens | v1.1 | 0/? | Not started | - |
+| 15. Style Guide | v1.1 | 0/? | Not started | - |
+| 16. Custom Dropdowns | v1.1 | 0/? | Not started | - |

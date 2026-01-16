@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-16)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication.
-**Current focus:** v1.0 shipped. Planning v1.1 (Content Pipeline).
+**Current focus:** v1.1 Content Pipeline & Branding
 
 ## Current Position
 
-Phase: v1.0 complete
-Plan: All 37 plans complete
-Status: Milestone shipped
-Last activity: 2026-01-16 — v1.0 MVP milestone complete
+Phase: 12 of 16 (Content Pipeline)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-01-16 — Milestone v1.1 created
 
-Progress: ██████████ 100% (v1.0)
+Progress: ░░░░░░░░░░ 0%
 
 ## Performance Metrics
 
@@ -31,21 +31,25 @@ Key decisions logged in PROJECT.md.
 
 ### Deferred Issues
 
-- **Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables. Fix in v1.1.
-- **Technical indicators in UI** — File type labels, emojis need removal from document viewer.
-- **Custom dropdowns** — Replace native HTML select elements with styled components.
+- **Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables. → Phase 12
+- **Technical indicators in UI** — File type labels, emojis need removal from document viewer. → Phase 13
+- **Custom dropdowns** — Replace native HTML select elements with styled components. → Phase 16
 
 ### Pending Todos
 
-None — milestone complete.
+None — ready to plan Phase 12.
 
 ### Blockers/Concerns
 
 None active.
 
+### Roadmap Evolution
+
+- Milestone v1.1 created: Content Pipeline & Branding, 5 phases (Phase 12-16)
+
 ## Session Continuity
 
 Last session: 2026-01-16
-Stopped at: v1.0 milestone complete
+Stopped at: Milestone v1.1 initialization
 Resume file: None
-Next action: `/gsd:discuss-milestone` to plan v1.1 Content Pipeline
+Next action: `/gsd:plan-phase 12` to plan Content Pipeline phase
