@@ -51,10 +51,36 @@ Phase 15 decisions:
 - ~~**Custom dropdowns** — Replace native HTML select elements with styled components.~~ RESOLVED in Phase 15
 
 **v1.2 Backlog (captured 2026-01-16):**
+
+**CORE INITIATIVE: First-Principles Content Architecture Refactoring**
+
+The current state is blind markdown-to-app conversion without considering intent or purpose. Need a complete rethink of how content is mapped, displayed, and navigated.
+
+**Problems to solve:**
+1. **Blind markdown conversion** — Headers/hierarchy blindly followed, causing duplicate titles, confused structure
+2. **No style guide adherence** — Rendered documents don't follow established design system
+3. **No semantic formatting** — Content not formatted based on type/intent (procedures vs reference vs forms)
+4. **Missing progressive disclosure** — Need accordions, collapsible sections for long content
+5. **Misleading navigation** — "Clients" nav implies client list but contains client-related forms; many similar issues
+6. **Redundant content** — Some forms exist as BOTH markdown docs AND in form builder
+7. **No content type decisions** — Need to decide per-document: form? editable doc? static reference?
+
+**Required: Content State Tracker**
+Create structured log tracking each document's:
+- Current state (markdown, form, hybrid)
+- Intended purpose (procedure, reference, intake form, checklist, etc.)
+- Desired end state (form builder form, styled document, interactive guide)
+- Missing elements (sections, accordions, better hierarchy)
+
+**Vision reminder:** Mini Notion + Mini Slack + Mini Google Forms — unified, purpose-built for this company.
+
+---
+
+**Additional backlog items:**
 - **Folder/document creation broken** — Create folder and create document flows not working
-- **Form builder overhaul** — Current builder is clunky, too many modals. Need visual section-based builder like Google Forms with sections/stages
-- **Forms in workspace** — Allow forms to be added to a person's workspace (not just docs)
-- **Universal comments with @mentions** — Comment on anything, @mention people or documents with linking/attachment
+- **Form builder overhaul** — Visual section-based builder like Google Forms (not modal-heavy)
+- **Forms in workspace** — Allow forms to be added to workspace (not just docs)
+- **Universal comments with @mentions** — Comment on anything, @mention people/documents with linking
 
 ### Pending Todos
 
