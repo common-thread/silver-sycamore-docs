@@ -152,15 +152,19 @@ async function importDocuments() {
   console.log(`\n✅ Import complete: ${imported} documents imported, ${skipped} skipped`);
   console.log(`   Metadata source: ${usedParsedMetadata} from index.md, ${usedHeuristicMetadata} from heuristics`);
 
-  async function processDirectory(dir: string, category: string, subcategory?: string) {
+  async function processDirectory(dir: string, category: string, relativePath?: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
 
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
 
       if (entry.isDirectory()) {
-        // Recurse into subdirectory, using directory name as subcategory
-        await processDirectory(fullPath, category, entry.name);
+        // Recurse into subdirectory, building relative path from category root
+        // e.g., layouts -> layouts/hall -> layouts/hall/...
+        const newRelativePath = relativePath
+          ? `${relativePath}/${entry.name}`
+          : entry.name;
+        await processDirectory(fullPath, category, newRelativePath);
       } else if (entry.isFile()) {
         // Skip index files and hidden files
         if (entry.name.startsWith("index") || entry.name.startsWith(".")) {
@@ -178,14 +182,19 @@ async function importDocuments() {
         }
 
         // Build lookup key for index.md metadata
-        // Key format: category/subcategory/filename-without-ext or category/filename-without-ext
+        // Key format: category/relativePath/filename-without-ext or category/filename-without-ext
+        // relativePath can be nested like "layouts/hall" for proper matching
         const filenameWithoutExt = path.basename(entry.name, path.extname(entry.name));
-        const lookupKey = subcategory
-          ? `${category}/${subcategory}/${filenameWithoutExt}`
+        const lookupKey = relativePath
+          ? `${category}/${relativePath}/${filenameWithoutExt}`
           : `${category}/${filenameWithoutExt}`;
 
         // Try to get metadata from parsed index.md
         const parsedMeta = indexMetadata.get(lookupKey);
+
+        // Extract the immediate parent directory as subcategory for Convex storage
+        // e.g., "layouts/hall" -> "hall", "wedding-packages" -> "wedding-packages"
+        const subcategory = relativePath ? relativePath.split("/").pop() : undefined;
 
         let content = "";
         let title: string;
@@ -237,7 +246,7 @@ async function importDocuments() {
           });
 
           imported++;
-          const subPath = subcategory ? `${subcategory}/` : "";
+          const subPath = relativePath ? `${relativePath}/` : "";
           const sourceTag = metadataSource === "parsed" ? "[index.md]" : "[heuristic]";
           console.log(`  ✓ ${category}/${subPath}${entry.name} ${sourceTag}`);
         } catch (error: any) {
