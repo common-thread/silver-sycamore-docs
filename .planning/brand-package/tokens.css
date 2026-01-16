@@ -1,0 +1,201 @@
+/* ============================================================================
+   SILVER SYCAMORE BRAND TOKENS
+
+   Portable design tokens for implementing the Silver Sycamore visual identity.
+
+   Aesthetic: Editorial Archive - warm, scholarly, effortlessly readable
+   Typography: Playfair Display (display) + DM Sans (body)
+   Palette: Monochrome foundation + Champagne accents
+   ============================================================================ */
+
+:root {
+  /* ─────────────────────────────────────────────────────────────────────────
+     TYPOGRAPHY
+     ───────────────────────────────────────────────────────────────────────── */
+
+  /* Font Families */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Type Scale - Generous sizing for comfortable reading */
+  --text-xs: 0.8125rem;      /* 13px - Labels, metadata */
+  --text-sm: 0.9375rem;      /* 15px - Secondary text */
+  --text-base: 1.0625rem;    /* 17px - Body text (larger than typical 16px) */
+  --text-lg: 1.1875rem;      /* 19px - Lead paragraphs */
+  --text-xl: 1.375rem;       /* 22px - H4 */
+  --text-2xl: 1.625rem;      /* 26px - H3 */
+  --text-3xl: 2rem;          /* 32px - H2 */
+  --text-4xl: 2.5rem;        /* 40px - H1 */
+  --text-5xl: 3.25rem;       /* 52px - Display */
+
+  /* Line Heights */
+  --leading-tight: 1.2;      /* Headings */
+  --leading-snug: 1.35;      /* Subheadings */
+  --leading-normal: 1.5;     /* UI text */
+  --leading-relaxed: 1.7;    /* Body default */
+  --leading-loose: 1.85;     /* Long-form prose */
+
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;   /* Large headings */
+  --tracking-snug: -0.015em;    /* Medium headings */
+  --tracking-normal: 0;         /* Body text */
+  --tracking-wide: 0.05em;      /* Small caps, labels */
+  --tracking-wider: 0.1em;      /* Uppercase labels */
+
+  /* Font Weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     COLORS - Ink System (Text hierarchy with warm undertones)
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --color-ink-black: #0F0F0F;  /* Darkest text, high emphasis */
+  --color-ink: #1A1A1A;        /* Primary text color */
+  --color-ink-dark: #2D2D2D;   /* Secondary headings */
+  --color-ink-mid: #404040;    /* Body text alternative */
+  --color-ink-light: #5C5C5C;  /* Secondary body text */
+  --color-ink-muted: #7A7A7A;  /* Tertiary text, captions */
+  --color-ink-subtle: #A0A0A0; /* Placeholder text, disabled */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     COLORS - Paper System (Background layers with warm off-whites)
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --color-paper-white: #FFFFFF;  /* Cards, modals, inputs */
+  --color-paper: #FAF9F7;        /* Page background */
+  --color-paper-warm: #F5F4F2;   /* Section backgrounds, hover states */
+  --color-paper-mid: #E8E8E6;    /* Dividers, skeleton loaders */
+  --color-paper-dark: #D4D4D2;   /* Strong dividers, badges */
+
+  /* Legacy/Semantic Aliases */
+  --color-background: var(--color-paper);
+  --color-surface: var(--color-paper-white);
+  --color-surface-dim: var(--color-paper-warm);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     COLORS - Champagne Accents (Warm golden tones for emphasis)
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --color-champagne: #C9B896;        /* Primary accent (selection, focus rings) */
+  --color-champagne-light: #E5DFD1;  /* Accent backgrounds, card highlights */
+  --color-champagne-dark: #A69A7A;   /* Accent borders, list markers */
+  --color-champagne-deep: #8B7355;   /* Primary buttons, links, emphasis */
+
+  /* Accent Semantic Aliases */
+  --color-accent: var(--color-champagne-deep);
+  --color-accent-hover: #6B5740;     /* Hover state for accent buttons/links */
+  --color-accent-light: var(--color-champagne-light);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     COLORS - Status (Semantic colors for feedback)
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --color-success: #3D6B4F;       /* Success text/icons */
+  --color-success-light: #E8F0EB; /* Success backgrounds */
+  --color-success-dark: #2D5039;  /* Success emphasis */
+
+  --color-warning: #8B7355;       /* Warning text/icons */
+  --color-warning-light: #F5F0E8; /* Warning backgrounds */
+  --color-warning-dark: #6B5740;  /* Warning emphasis */
+
+  --color-error: #8B4D4D;         /* Error text/icons */
+  --color-error-light: #F5E8E8;   /* Error backgrounds */
+  --color-error-dark: #6B3939;    /* Error emphasis */
+
+  --color-info: #4A6B8A;          /* Info text/icons */
+  --color-info-light: #E8EEF5;    /* Info backgrounds */
+  --color-info-dark: #3A5570;     /* Info emphasis */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     BORDERS
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --color-border: #E5E5E3;        /* Default borders */
+  --color-border-strong: #D1D1CF; /* Emphasized borders */
+  --color-border-subtle: #EFEFED; /* Subtle dividers */
+
+  --border-width: 1px;
+  --border-width-thick: 2px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     BORDER RADIUS
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --radius-sm: 4px;    /* Small elements: badges, code */
+  --radius-md: 6px;    /* Medium elements: buttons, inputs */
+  --radius-lg: 8px;    /* Large elements: cards */
+  --radius-xl: 12px;   /* Extra large: modals, panels */
+  --radius-full: 9999px; /* Pills, avatars */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     SPACING
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --space-px: 1px;
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* Semantic Spacing Aliases */
+  --space-xs: var(--space-1);   /* Tight spacing */
+  --space-sm: var(--space-2);   /* Small gaps */
+  --space-md: var(--space-4);   /* Default gaps */
+  --space-lg: var(--space-6);   /* Section gaps */
+  --space-xl: var(--space-8);   /* Large gaps */
+  --space-2xl: var(--space-12); /* Extra large gaps */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     SHADOWS
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --shadow-xs: 0 1px 2px rgba(15, 15, 15, 0.04);
+  --shadow-sm: 0 1px 3px rgba(15, 15, 15, 0.06), 0 1px 2px rgba(15, 15, 15, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(15, 15, 15, 0.06), 0 2px 4px -1px rgba(15, 15, 15, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 15, 15, 0.08), 0 4px 6px -2px rgba(15, 15, 15, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 15, 15, 0.08), 0 10px 10px -5px rgba(15, 15, 15, 0.03);
+
+  /* Accent shadows for highlighted elements */
+  --shadow-champagne: 0 4px 14px rgba(201, 184, 150, 0.25);
+  --shadow-champagne-lg: 0 8px 24px rgba(201, 184, 150, 0.3);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     TRANSITIONS
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     Z-INDEX SCALE
+     ───────────────────────────────────────────────────────────────────────── */
+
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-popover: 500;
+  --z-toast: 600;
+  --z-tooltip: 700;
+}
