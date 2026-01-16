@@ -2,6 +2,7 @@ import { ConvexHttpClient } from "convex/browser";
 import { api } from "../convex/_generated/api";
 import * as fs from "fs";
 import * as path from "path";
+import { parseAllIndexFiles, type DocMetadata } from "./lib/indexParser";
 
 // Load environment variables
 const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL;
@@ -124,6 +125,13 @@ async function importDocuments() {
   const categories = ["services", "clients", "staff", "operations", "deliverables"];
   let imported = 0;
   let skipped = 0;
+  let usedParsedMetadata = 0;
+  let usedHeuristicMetadata = 0;
+
+  // Parse index.md files for authoritative metadata
+  console.log("Parsing index.md files for metadata...");
+  const indexMetadata = parseAllIndexFiles(DOCS_DIR);
+  console.log(`Found ${indexMetadata.size} document entries in index.md files\n`);
 
   console.log("Clearing existing documents...");
   const deleteResult = await client.mutation(api.documents.deleteAll, {});
@@ -142,6 +150,7 @@ async function importDocuments() {
   }
 
   console.log(`\n✅ Import complete: ${imported} documents imported, ${skipped} skipped`);
+  console.log(`   Metadata source: ${usedParsedMetadata} from index.md, ${usedHeuristicMetadata} from heuristics`);
 
   async function processDirectory(dir: string, category: string, subcategory?: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -168,24 +177,52 @@ async function importDocuments() {
           continue;
         }
 
+        // Build lookup key for index.md metadata
+        // Key format: category/subcategory/filename-without-ext or category/filename-without-ext
+        const filenameWithoutExt = path.basename(entry.name, path.extname(entry.name));
+        const lookupKey = subcategory
+          ? `${category}/${subcategory}/${filenameWithoutExt}`
+          : `${category}/${filenameWithoutExt}`;
+
+        // Try to get metadata from parsed index.md
+        const parsedMeta = indexMetadata.get(lookupKey);
+
         let content = "";
+        let title: string;
         let description: string | undefined;
+        let metadataSource: string;
 
         if (ext === "md") {
           content = fs.readFileSync(fullPath, "utf-8");
-          description = extractDescription(content, subcategory);
         } else {
           // For binary files, store metadata placeholder
           const stats = fs.statSync(fullPath);
           content = `[Binary file: ${entry.name}]\nSize: ${(stats.size / 1024).toFixed(1)} KB\nType: ${ext.toUpperCase()}`;
-          // Use subcategory-based default or file type
-          description = (subcategory && defaultDescriptions[subcategory])
-            ? defaultDescriptions[subcategory]
-            : `${ext.toUpperCase()} document`;
         }
 
-        const slug = slugify(path.basename(entry.name, path.extname(entry.name)));
-        const title = titleFromFilename(entry.name);
+        if (parsedMeta) {
+          // Use parsed metadata from index.md (authoritative source)
+          title = parsedMeta.title;
+          description = parsedMeta.description;
+          metadataSource = "parsed";
+          usedParsedMetadata++;
+        } else {
+          // Fallback to heuristics for files not in index.md
+          title = titleFromFilename(entry.name);
+
+          if (ext === "md") {
+            description = extractDescription(content, subcategory);
+          } else {
+            description = (subcategory && defaultDescriptions[subcategory])
+              ? defaultDescriptions[subcategory]
+              : `${ext.toUpperCase()} document`;
+          }
+
+          metadataSource = "heuristic";
+          usedHeuristicMetadata++;
+        }
+
+        const slug = slugify(filenameWithoutExt);
 
         try {
           await client.mutation(api.documents.create, {
@@ -201,7 +238,8 @@ async function importDocuments() {
 
           imported++;
           const subPath = subcategory ? `${subcategory}/` : "";
-          console.log(`  ✓ ${category}/${subPath}${entry.name}`);
+          const sourceTag = metadataSource === "parsed" ? "[index.md]" : "[heuristic]";
+          console.log(`  ✓ ${category}/${subPath}${entry.name} ${sourceTag}`);
         } catch (error: any) {
           console.error(`  ✗ Failed to import ${entry.name}: ${error.message}`);
         }
