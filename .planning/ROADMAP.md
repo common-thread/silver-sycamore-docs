@@ -76,16 +76,16 @@ Plans:
 Plans:
 - [x] 13-01: Logo system, design tokens, style guide, brand package
 
-### Phase 14: UI Cleanup
+### Phase 14: UI Cleanup - COMPLETE
 
 **Goal:** Apply brand foundation to clean technical artifacts - consolidate navigation, remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
 **Depends on:** Phase 13
 **Research:** Unlikely (UI cleanup, applying established tokens)
-**Plans:** 2
+**Plans:** 2/2
 
 Plans:
 - [x] 14-01: Consolidate navigation into flat feature-based row
-- [ ] 14-02: Clean document viewer and catalog page
+- [x] 14-02: Clean document viewer and catalog page
 
 ### Phase 15: Custom Dropdowns
 
@@ -103,5 +103,5 @@ Plans:
 |-------|-----------|-------|--------|-----------|
 | 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
 | 13. Brand Foundation | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 14. UI Cleanup | v1.1 | 1/2 | In progress | - |
+| 14. UI Cleanup | v1.1 | 2/2 | Complete | 2026-01-16 |
 | 15. Custom Dropdowns | v1.1 | 0/? | Not started | - |
