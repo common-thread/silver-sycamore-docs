@@ -1,135 +1,173 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## Tech Debt
 
-**Dual System Architecture:**
-- Issue: Two separate systems (Jekyll at root, Next.js in `app/`) serving similar purposes
-- Why: Migration from Jekyll to Next.js in progress
-- Impact: Maintenance overhead, potential content sync issues
-- Fix approach: Complete migration to Next.js + Convex, deprecate Jekyll site
+**Duplicate getCurrentUser Helper:**
+- Issue: `getCurrentUser()` function implemented identically in 5+ files
+- Files: `app/convex/forms.ts`, `app/convex/channels.ts`, `app/convex/messages.ts`, `app/convex/notifications.ts`, `app/convex/comments.ts`
+- Why: Each module needed auth, copy-pasted instead of extracted
+- Impact: Code maintenance burden; auth logic changes must be duplicated
+- Fix approach: Extract to shared utility in `app/convex/lib/auth.ts`
 
-**No Authentication:**
-- Issue: No user authentication implemented yet
-- Files: No auth files present in `app/convex/` or `app/src/`
-- Why: MVP phase, focused on core functionality first
-- Impact: All data publicly accessible, no user-specific features
-- Fix approach: Implement Convex Auth for role-based access control
+**N+1 Query Pattern in Forms:**
+- Issue: `getMyReceivedSubmissions()` fetches all submissions then loops to get form data for each
+- File: `app/convex/forms.ts` (lines 276-305)
+- Why: Quick implementation, acknowledged in code comment
+- Impact: Performance degrades linearly with submission count
+- Fix approach: Restructure query or use batch loading pattern
+
+**N+1 Query Pattern in Channels:**
+- Issue: DMPartner lookup fetches user data in loop for each channel
+- File: `app/convex/channels.ts` (lines 75-103)
+- Why: Need to enrich channel data with user info
+- Impact: Slow channel list loading with many DM channels
+- Fix approach: Batch user lookups or denormalize partner info
+
+**Submission Count Efficiency:**
+- Issue: `getSubmissionCounts()` collects all submissions just to get count
+- File: `app/convex/forms.ts` (lines 308-332)
+- Why: No count aggregation available
+- Impact: Memory usage scales with submission volume
+- Fix approach: Add count index or use aggregation pattern
 
 ## Known Bugs
 
-**No critical bugs detected**
-- Codebase is relatively new and clean
-- No TODO/FIXME comments found in source files
+**None currently documented.**
+
+Codebase appears functional based on existing E2E tests. Any runtime bugs should be added here when discovered.
 
 ## Security Considerations
 
-**Public Data Access:**
-- Risk: All Convex queries/mutations are accessible without authentication
-- Files: `app/convex/*.ts` (all functions)
-- Current mitigation: None - acceptable for internal documentation
-- Recommendations: Add Convex Auth before exposing to external users
+**Development Auth Fallback:**
+- Risk: Auth handler falls back to first database user if no identity found
+- File: `app/convex/forms.ts` (lines 130-140)
+- Current mitigation: Only activates in development mode
+- Recommendations: Add explicit environment check; fail in production if auth missing
 
-**Environment Variables:**
-- Risk: Improper env var handling
-- Current mitigation: Proper use of `.env.local` (gitignored), `NEXT_PUBLIC_` prefix
-- Recommendations: None needed - following best practices
+**Missing Form Submission Validation:**
+- Risk: Public form endpoint accepts arbitrary JSON string without validation
+- File: `app/convex/forms.ts` (lines 481-509, `submitResponse()`)
+- Current mitigation: None (data stored as-is)
+- Recommendations: Validate submission data against form schema before storing
+
+**Missing .env.example:**
+- Risk: New developers don't know required environment variables
+- File: `app/.env.example` (missing)
+- Current mitigation: Variables documented in CLAUDE.md
+- Recommendations: Create `.env.example` with template values
 
 ## Performance Bottlenecks
 
-**No significant performance issues detected**
-- Convex provides real-time sync efficiently
-- 74 documents is a small dataset
-- Indexes defined on frequently queried fields
+**Forms Module N+1 Queries:**
+- Problem: Multiple queries loop through results fetching related data
+- File: `app/convex/forms.ts`
+- Measurement: Not profiled, but O(n) DB calls per request
+- Cause: Per-item lookups in `getMyReceivedSubmissions()`, `getSubmissionCounts()`
+- Improvement path: Batch loading, denormalization, or index optimization
+
+**Messages Author Enrichment:**
+- Problem: Message list fetches author info for each message individually
+- File: `app/convex/messages.ts` (lines 106-111)
+- Measurement: Not profiled
+- Cause: Author data not denormalized on message
+- Improvement path: Store author name/avatar on message or batch lookup
 
 ## Fragile Areas
 
-**Dynamic Route Parameters:**
-- Files: `app/src/app/[category]/[slug]/page.tsx`
-- Why fragile: Relies on slug matching between URL and database
-- Common failures: 404 if slug doesn't match, null handling needed
-- Safe modification: Always check query results before rendering
-- Test coverage: E2E tests cover basic navigation
+**Large Component Files:**
+- Why fragile: Hard to understand, test, and modify
+- Files:
+  - `app/src/app/style-guide/page.tsx` (857 lines)
+  - `app/src/components/SuggestionReview.tsx` (628 lines)
+  - `app/src/components/FormBuilder.tsx` (627 lines)
+  - `app/src/components/CommentItem.tsx` (597 lines)
+  - `app/src/components/FormShareDialog.tsx` (557 lines)
+  - `app/src/components/FormRenderer.tsx` (548 lines)
+- Common failures: State management bugs, unclear data flow
+- Safe modification: Extract sub-components; add unit tests before refactoring
+- Test coverage: E2E only; no unit tests for these components
 
-**Convex Schema:**
-- Files: `app/convex/schema.ts`
-- Why fragile: Schema changes require migration consideration
-- Common failures: Breaking changes to field types
-- Safe modification: Use Convex schema migrations, add optional fields
-- Test coverage: No unit tests for schema validation
+**Weak Type Safety in Convex Helpers:**
+- Why fragile: `any` types allow runtime errors that TypeScript should catch
+- Files:
+  - `app/convex/suggestions.ts` (line 6): `ctx: any`
+  - `app/convex/channels.ts` (line 5): `ctx: { auth: any; db: any }`
+  - `app/convex/messages.ts` (line 6): `ctx: { auth: any; db: any }`
+- Common failures: Refactoring breaks without TypeScript warning
+- Safe modification: Replace with proper Convex context types
+- Test coverage: Not type-checked by unit tests
 
 ## Scaling Limits
 
-**Convex Free Tier:**
-- Current capacity: Free tier limits (check Convex pricing)
-- Limit: Unknown specific limits for calculating-vole-961 deployment
-- Symptoms at limit: Function timeouts, database query limits
-- Scaling path: Upgrade to Convex Pro tier if needed
+**Convex Tier Limits:**
+- Current capacity: Depends on Convex plan (free tier has limits)
+- Limit: Document count, function invocations, storage
+- Symptoms at limit: Rate limiting, function timeouts
+- Scaling path: Upgrade Convex plan as usage grows
 
-**Document Count:**
-- Current: 74 documents
-- Limit: Convex handles thousands of documents efficiently
-- No immediate scaling concerns
+**No Caching Layer:**
+- Current capacity: All queries hit Convex directly
+- Limit: Convex function invocation limits
+- Symptoms at limit: Slow queries, rate limits
+- Scaling path: Add client-side caching or Convex query caching
 
 ## Dependencies at Risk
 
-**Bleeding Edge Versions:**
-- React 19.2.3 - Very recent, potential undiscovered issues
-- Next.js 16.1.1 - Latest version, may have breaking changes
-- Risk: API changes, compatibility issues, community support lag
-- Impact: May need to handle deprecation warnings
-- Migration plan: Monitor changelogs, test before upgrading
+**None critical detected.**
 
-**Tailwind CSS v4:**
-- Risk: Major version upgrade from v3, syntax changes
-- Impact: Some v3 utilities may not work
-- Migration plan: Already on v4, follow official migration guide
+All major dependencies (Next.js, React, Convex, Clerk) are actively maintained.
 
 ## Missing Critical Features
 
-**Form Handling:**
-- Problem: formSchemas and formSubmissions tables exist but no UI implementation
-- Files: `app/convex/schema.ts` (schema only)
-- Current workaround: Forms tracked in documentation but not digital
-- Blocks: 15 forms need digitizing per exploration summary
-- Implementation complexity: Medium (Convex mutations + React forms)
+**No structured error logging:**
+- Problem: Errors logged to console only, no persistence
+- Current workaround: Check Vercel logs manually
+- Blocks: Debugging production issues, error monitoring
+- Implementation complexity: Low (add Sentry or similar)
 
-**Search Functionality:**
-- Problem: Search query exists (`app/convex/documents.ts`) but no UI
-- Files: `search` function defined but not used in components
-- Current workaround: Manual navigation through categories
-- Blocks: Quick document lookup
-- Implementation complexity: Low (add search input, call existing query)
-
-**File Upload:**
-- Problem: `files` table exists but no upload UI
-- Files: `app/convex/schema.ts` (schema only)
-- Current workaround: None - attachments not functional
-- Blocks: Document attachments, procedure media
-- Implementation complexity: Medium (Convex storage API + upload UI)
+**No CI/CD pipeline:**
+- Problem: No automated testing on push
+- Current workaround: Manual test runs
+- Blocks: Confidence in deployments, PR validation
+- Implementation complexity: Low (add GitHub Actions)
 
 ## Test Coverage Gaps
 
-**No Unit Tests:**
-- What's not tested: Convex functions, utility logic
-- Risk: Backend bugs undetected until E2E tests or production
-- Priority: Medium
-- Difficulty to test: Low - add Vitest for Convex function testing
+**Form Creation/Submission Flow:**
+- What's not tested: Full form builder → publish → submit → view results flow
+- Risk: Core feature could break without detection
+- Priority: High
+- Difficulty to test: Medium (needs form builder interaction)
 
-**No Component Tests:**
-- What's not tested: React components in isolation
-- Risk: UI bugs, prop handling issues
-- Priority: Low (E2E tests cover critical paths)
-- Difficulty to test: Low - add React Testing Library
-
-**Limited E2E Coverage:**
-- What's not tested: Edge cases, error states, empty states
-- Risk: User experience issues on edge cases
+**Channel/Messaging Workflows:**
+- What's not tested: Create channel, send messages, DM flows
+- Risk: Communication feature breakage
 - Priority: Medium
-- Difficulty to test: Low - expand existing Playwright tests
+- Difficulty to test: Medium (real-time aspects)
+
+**Permission Edge Cases:**
+- What's not tested: Role-based access denial scenarios
+- Risk: Unauthorized access or incorrect denials
+- Priority: High
+- Difficulty to test: Medium (need role-specific test users)
+
+**Unit Tests (Entire Codebase):**
+- What's not tested: Individual functions, components in isolation
+- Risk: Bugs in business logic not caught by E2E
+- Priority: Medium
+- Difficulty to test: Medium (need to add Jest/Vitest)
+
+## Architecture Concerns (from STATE.md)
+
+**Nav/Routing Architecture:**
+- Issue: Current navigation structure may not serve content scope well
+- File: `.planning/STATE.md` (lines 69-72)
+- Status: Deferred to Phase 13.1
+- Impact: May require restructuring before styling work
 
 ---
 
-*Concerns audit: 2026-01-14*
+*Concerns audit: 2026-01-16*
 *Update as issues are fixed or new ones discovered*

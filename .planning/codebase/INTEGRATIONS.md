@@ -1,109 +1,129 @@
 # External Integrations
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## APIs & External Services
 
-**Payment Processing:**
-- Not detected (planned: Square integration for off-premise catering)
+### Integration Map
 
-**Email/SMS:**
-- Not detected
+```mermaid
+flowchart LR
+    subgraph App["Silver Sycamore App"]
+        NextApp["Next.js 15<br/>App Router"]
+        ConvexClient["Convex React<br/>Client"]
+    end
 
-**External APIs:**
-- Recipe App integration (planned) - Convex-based recipe database
-  - Integration method: Convex cross-deployment queries (planned)
-  - Purpose: Shared ingredients between Recipe App and venue documents
+    subgraph Auth["Authentication"]
+        Clerk["Clerk<br/>optimal-caribou-74"]
+        ConvexAuth["Convex Auth<br/>Password Provider"]
+    end
+
+    subgraph Backend["Backend Services"]
+        ConvexDB["Convex BaaS<br/>calculating-vole-961"]
+        ConvexStorage["Convex<br/>File Storage"]
+    end
+
+    subgraph External["External"]
+        GoogleFonts["Google Fonts<br/>API"]
+    end
+
+    NextApp <--> ConvexClient
+    ConvexClient <--> ConvexDB
+    NextApp --> Clerk
+    Clerk <--> ConvexAuth
+    ConvexAuth <--> ConvexDB
+    ConvexDB <--> ConvexStorage
+    NextApp --> GoogleFonts
+```
 
 ## Data Storage
 
 **Databases:**
-- Convex Cloud - Primary data store for Next.js application
-  - Connection: via `NEXT_PUBLIC_CONVEX_URL` env var
-  - Client: Convex React client (`useQuery`, `useMutation` hooks)
-  - Deployment: `dev:calculating-vole-961`
-  - Schema: `app/convex/schema.ts` - 11 tables
-
-**Database Schema Tables:**
-- `documents` - Venue documentation (74 documents)
-- `categories` - Document categories (6 categories)
-- `subcategories` - Nested categorization
-- `initiatives` - Project tracking
-- `files` - File attachments
-- `venueSpaces` - Venue room definitions
-- `roomLayouts` - Space configurations
-- `packages` - Event packages
-- `formSchemas` - Dynamic form definitions (17 forms)
-- `formSubmissions` - Form submission data
-- `procedures` - Operational procedures
+- Convex Cloud Database - Primary data store
+  - Connection: `CONVEX_URL` env var (via `convex.json`)
+  - Client: Convex SDK (`convex/react`)
+  - Schema: `app/convex/schema.ts` (27+ tables)
+  - Deployment: `calculating-vole-961.convex.cloud`
 
 **File Storage:**
-- Convex file storage - Document attachments (`files` table)
-  - SDK/Client: Convex storage API
-  - Auth: Handled by Convex authentication
+- Convex File Storage - User uploads, attachments
+  - Client: `ctx.storage` in Convex functions
+  - Table: `files` with `storageId` reference to `_storage`
 
 **Caching:**
-- None detected (Convex handles real-time sync)
+- None currently (all queries hit Convex directly)
 
 ## Authentication & Identity
 
-**Auth Provider:**
-- Not implemented yet
-- Convex Auth planned for future implementation
+**Auth Provider (Primary):**
+- Clerk - OAuth/JWT authentication
+  - Implementation: `@clerk/nextjs` SDK
+  - Config: `app/convex/auth.config.ts`
+  - Environment: `optimal-caribou-74.clerk.accounts.dev`
+  - Env vars: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `CLERK_JWT_ISSUER_DOMAIN`
 
-**OAuth Integrations:**
-- None detected
+**Auth Provider (Secondary):**
+- Convex Auth - Password-based authentication
+  - Implementation: `@convex-dev/auth` ^0.0.90
+  - Config: `app/convex/auth.ts`
+  - Provider: Password authentication for staff users
+
+**Session Management:**
+- Clerk JWT tokens validated by Convex backend
+- `ConvexProviderWithClerk` wrapper in `app/src/components/ConvexClientProvider.tsx`
+- Middleware: `clerkMiddleware` in `app/src/proxy.ts`
 
 ## Monitoring & Observability
 
 **Error Tracking:**
-- None detected
+- None detected (no Sentry, Datadog, etc.)
 
 **Analytics:**
 - None detected
 
 **Logs:**
-- Console logging only (development)
+- Console logging only
+- Vercel logs for production (stdout/stderr)
 
 ## CI/CD & Deployment
 
 **Hosting:**
-- Next.js App: Vercel (implied by Next.js setup)
-  - Deployment: Automatic on main branch push (standard Vercel setup)
+- Vercel - Next.js deployment (`.vercel/project.json` present)
+  - Deployment: Automatic on git push (presumed)
   - Environment vars: Configured in Vercel dashboard
 
-- Jekyll Site: GitHub Pages
-  - Deployment: Automatic on main branch push
-  - URL: Silver Sycamore documentation site
-
 **CI Pipeline:**
-- Not detected (no `.github/workflows/` files found)
+- Not detected (no `.github/workflows/` found)
 
 ## Environment Configuration
 
 **Development:**
-- Required env vars:
-  - `NEXT_PUBLIC_CONVEX_URL` - Convex deployment URL
-  - `CONVEX_DEPLOYMENT` - Convex deployment identifier
+- Required env vars: `CONVEX_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`
 - Secrets location: `app/.env.local` (gitignored)
-- Local development: `npx convex dev` for backend, `bun dev` for frontend
-
-**Staging:**
-- Not detected (single Convex deployment)
+- Mock/stub services: Clerk test mode for E2E tests
 
 **Production:**
-- Secrets management: Vercel environment variables (Next.js), GitHub secrets (Jekyll)
-- Convex deployment: Same as development (calculating-vole-961)
+- Secrets management: Vercel environment variables
+- Convex deployment: Production instance on Convex cloud
 
 ## Webhooks & Callbacks
 
 **Incoming:**
-- None detected
+- Clerk Auth callbacks - `app/convex/http.ts`
+  - Delegates to Convex Auth HTTP router
+  - Events: User sign-up, sign-in callbacks
 
 **Outgoing:**
 - None detected
 
+## External Fonts/CDN
+
+**Google Fonts API:**
+- Loaded in: `app/src/app/layout.tsx`
+- Fonts: DM Sans (body), Playfair Display (display)
+- Preconnect: `fonts.googleapis.com`, `fonts.gstatic.com`
+
 ---
 
-*Integration audit: 2026-01-14*
+*Integration audit: 2026-01-16*
 *Update when adding/removing external services*

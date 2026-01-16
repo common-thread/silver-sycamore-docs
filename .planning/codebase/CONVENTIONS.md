@@ -1,170 +1,181 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## Naming Patterns
 
 **Files:**
-- kebab-case.ts for Convex functions (`documents.ts`, `categories.ts`)
-- PascalCase.tsx for React components (`DocumentViewer.tsx`, `CategoryGrid.tsx`)
-- page.tsx, layout.tsx for Next.js special files
-- *.spec.ts for Playwright test files
+- PascalCase for React components: `Header.tsx`, `FormBuilder.tsx`, `NotificationBell.tsx`
+- camelCase for utilities/modules: `usePermissions.ts`, `roles.ts`, `documents.ts`
+- kebab-case for route directories: `[category]/`, `[formId]/edit/`
+- `*.spec.ts` for test files: `basic.spec.ts`, `notifications.spec.ts`
 
 **Functions:**
-- camelCase for all functions
-- Convex queries: `list`, `byCategory`, `bySlug`, `search`
-- Convex mutations: `create`, `update`, `deleteAll`
-- React handlers: `onClick`, `onSubmit` (standard React patterns)
+- camelCase for all functions: `getCurrentUser`, `handleSubmit`, `fetchDocuments`
+- No special prefix for async functions
+- `handle*` for event handlers: `handleClick`, `handleChange`, `handleSubmit`
+- Convex queries: `list`, `byId`, `bySlug`, `byCategory`, `search`
+- Convex mutations: `create`, `update`, `delete`, `add`, `remove`
 
 **Variables:**
-- camelCase for variables
-- UPPER_SNAKE_CASE for constants (not observed, likely camelCase used)
+- camelCase for variables: `isSaving`, `formData`, `currentUser`
+- Boolean prefix pattern: `is*`, `has*`, `can*` (`isSaving`, `hasError`, `canEdit`)
+- CONSTANT_CASE for true constants: `SCREENSHOT_DIR`, `AUTH_DIR`
+- camelCase for object constants: `navItems`, `subcategories`
 
 **Types:**
-- PascalCase for interfaces and types
-- Convex schema uses `v.string()`, `v.number()` validators
-- Inferred types from Convex schema (no manual type definitions)
+- PascalCase for interfaces: `User`, `Document`, `FormField` (no `I` prefix)
+- PascalCase for type aliases: `ButtonVariant`, `FormFieldType`
+- Props suffix for component props: `HeaderProps`, `ButtonProps`
+
+**Database Tables:**
+- camelCase plural: `documents`, `userProfiles`, `formSchemas`, `channelMembers`
+- Indexes: `by_[field]` pattern: `by_category`, `by_slug`, `by_userId`
 
 ## Code Style
 
 **Formatting:**
-- No Prettier config detected (uses defaults or none)
-- 2 space indentation (TypeScript standard)
-- Single quotes for strings (inferred from Next.js conventions)
+- 2-space indentation
+- Double quotes for strings: `"use client"`, `import { useState } from "react"`
+- Semicolons required
+- ESLint enforced via `app/eslint.config.mjs`
 
 **Linting:**
-- ESLint 9 configured
-- Config: `app/eslint.config.mjs`
-- Extends: @typescript-eslint (implied)
+- ESLint 9.x with Next.js recommended rules
+- Extends `eslint-config-next/core-web-vitals` and `eslint-config-next/typescript`
+- Run: `bun run lint` (if script exists)
+
+**Styling:**
+- Inline styles with `style` prop preferred over className
+- CSS variables for design tokens in `globals.css`
+- Tailwind CSS available but design token approach emphasized
 
 ## Import Organization
 
-**Order (inferred from Next.js conventions):**
-1. React/Next.js imports (`"use client"`, React)
-2. External packages (convex, react-markdown)
-3. Internal modules (@/components, @/lib)
-4. Relative imports (./utils, ../types)
+**Order:**
+1. React/Next.js imports: `import { useState } from "react"`
+2. External packages: `import { useQuery } from "convex/react"`
+3. Internal modules: `import { api } from "../../convex/_generated/api"`
+4. Relative imports: `import { Button } from "./ui/Button"`
+5. Type imports: `import type { Id } from "./_generated/dataModel"`
+
+**Grouping:**
+- Blank line between groups
+- No strict alphabetical ordering observed
 
 **Path Aliases:**
-- `@/` maps to `app/src/` (Next.js standard)
+- `@/*` maps to `./src/*` (configured in `tsconfig.json`)
 
 ## Error Handling
 
 **Patterns:**
-- Minimal explicit error handling observed
-- Convex queries return null for not-found
-- Conditional rendering for null/undefined data
+- Try/catch in mutation handlers
+- Error messages displayed via console or UI alerts
+- Convex validation via `v.string()`, `v.id()`, etc.
 
 **Error Types:**
-- No custom error classes observed
-- Relies on TypeScript for type safety
+- Throw on invalid input, missing auth, not found
+- Generic catch with user-friendly message: `"Failed to save. Please try again."`
 
 ## Logging
 
 **Framework:**
-- Console logging only (console.log, console.error)
+- Console.log for debugging
 - No structured logging library
 
 **Patterns:**
-- Development debugging via console
-- No production logging strategy observed
+- Console.log in test files for progress
+- No logging in production code (minimal)
 
 ## Comments
 
 **When to Comment:**
-- Minimal comments in codebase (clean, self-documenting code)
-- JSDoc not used extensively
+- JSDoc blocks for global setup functions
+- Section comments in CSS with decorative borders
+- Inline comments for non-obvious logic
+
+**JSDoc/TSDoc:**
+- Used for global setup and complex functions
+- Not consistently applied to all public APIs
 
 **TODO Comments:**
-- None detected (clean codebase)
+- Format: `// TODO: description`
+- Some with acknowledgment: `// Note: In production, consider...`
 
 ## Function Design
 
 **Size:**
-- Small, focused functions
-- Convex functions are single-purpose (one query/mutation per export)
+- Some large functions exist (see CONCERNS.md)
+- Preference for smaller, focused functions
 
 **Parameters:**
-- Convex functions use object destructuring: `({ slug }: { slug: string })`
-- React components use typed props
+- Convex functions use `args` object with schema validation
+- React components use destructured props
 
 **Return Values:**
-- Convex queries return data or null
-- React components return JSX
+- Explicit returns preferred
+- `Promise<void>` for mutations with side effects
 
 ## Module Design
 
 **Exports:**
-- Named exports for Convex functions
-- Default exports for React components (Next.js convention)
+- Named exports for Convex functions: `export const list = query({...})`
+- Default export for React components common but not universal
+- Barrel files not commonly used
 
-**Barrel Files:**
-- Not used (direct imports to specific files)
+**Client Directive:**
+- `"use client"` at top of every client component
+- Server components are the default (no directive)
 
-## React Patterns
+## Component Patterns
 
-**Components:**
-- Functional components with TypeScript
-- `"use client"` directive for client components
-- Server components by default (Next.js App Router)
-
-**Hooks:**
-- `useQuery` for Convex reactive queries
-- `useMutation` for Convex mutations
-- Standard React hooks (useState, useEffect as needed)
-
-**Props:**
-- Inline TypeScript types
-- Destructured in function signature
-
-## Convex Patterns
-
-**Schema Definition:**
+**Structure:**
 ```typescript
-defineSchema({
-  tableName: defineTable({
-    field: v.string(),
-    optionalField: v.optional(v.string()),
-  }).index("by_field", ["field"]),
-})
+"use client";
+
+import { useState } from "react";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+
+export default function ComponentName() {
+  const data = useQuery(api.module.queryName);
+  const mutate = useMutation(api.module.mutationName);
+
+  // State
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Handlers
+  const handleSubmit = async () => {
+    // ...
+  };
+
+  // Render
+  return (
+    <div style={{ /* inline styles */ }}>
+      {/* content */}
+    </div>
+  );
+}
 ```
 
-**Query Pattern:**
-```typescript
-export const queryName = query({
-  args: { param: v.string() },
-  handler: async (ctx, { param }) => {
-    return await ctx.db.query("table")
-      .withIndex("by_field", q => q.eq("field", param))
-      .collect();
-  },
-});
+## Design Token Usage
+
+**CSS Variables (in `globals.css`):**
+- `--color-*`: Colors (`--color-ink`, `--color-accent`, `--color-surface`)
+- `--font-*`: Typography (`--font-display`, `--font-body`)
+- `--text-*`: Type scale (`--text-xs` through `--text-5xl`)
+- `--space-*`: Spacing (`--space-3`, `--space-4`)
+- `--leading-*`: Line heights
+- `--tracking-*`: Letter spacing
+
+**Usage:**
+```css
+font-family: var(--font-display);
+color: var(--color-ink);
+font-size: var(--text-lg);
 ```
-
-**Mutation Pattern:**
-```typescript
-export const mutationName = mutation({
-  args: { field: v.string() },
-  handler: async (ctx, { field }) => {
-    return await ctx.db.insert("table", { field });
-  },
-});
-```
-
-## CSS Patterns
-
-**Tailwind CSS v4:**
-- Utility classes in className
-- CSS variables for theme (`--color-ink`, `--color-cream`)
-- Custom theme in `app/src/app/globals.css`
-
-**Heritage Elegance Theme:**
-- `--color-ink: #1E1E1E` (dark text)
-- `--color-cream: #F9F5F0` (background)
-- `--font-display: 'Cormorant Garamond'` (headings)
-- `--font-body: 'Source Sans 3'` (body text)
 
 ---
 
-*Convention analysis: 2026-01-14*
+*Convention analysis: 2026-01-16*
 *Update when patterns change*

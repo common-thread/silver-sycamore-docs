@@ -1,254 +1,273 @@
 # Testing Patterns
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## Test Framework
 
 **Runner:**
-- Playwright 1.57.0 - E2E testing
+- Playwright 1.57+ (`@playwright/test`)
 - Config: `app/playwright.config.ts`
 
 **Assertion Library:**
-- Playwright built-in expect
-- Matchers: toBeVisible, toHaveURL, toContainText, etc.
+- Playwright built-in `expect`
+- Matchers: `toBeVisible`, `toHaveText`, `toHaveURL`
 
 **Run Commands:**
 ```bash
-cd app && bun run test:e2e          # Run all E2E tests
-cd app && bun run test:e2e:ui       # Interactive UI mode
-cd app && bunx playwright test      # Direct Playwright command
+cd app
+bun run test                              # Run all tests
+bun run test:ui                           # Run with Playwright UI
+bun run test -- --project=basic           # Run only basic tests
+bun run test -- path/to/file.spec.ts      # Single file
 ```
 
 ## Test File Organization
 
 **Location:**
 - `app/e2e/*.spec.ts` - All E2E tests in dedicated directory
+- Not co-located with source files
 
 **Naming:**
-- {feature}.spec.ts for test files
-- Examples: `homepage.spec.ts`, `documents.spec.ts`, `navigation.spec.ts`
+- kebab-case with `.spec.ts` suffix: `basic.spec.ts`, `notifications.spec.ts`
+- Setup files: `global-setup.ts`
+- Utilities: `utils/clerk-test-users.ts`
 
 **Structure:**
 ```
-app/
-├── e2e/
-│   ├── homepage.spec.ts     # Homepage tests
-│   ├── documents.spec.ts    # Document functionality
-│   └── navigation.spec.ts   # Navigation flows
-└── playwright.config.ts     # Playwright configuration
+app/e2e/
+  .auth/                          # Authenticated session storage (gitignored)
+    staff.json
+    manager.json
+  utils/
+    clerk-test-users.ts           # Test user seeding utilities
+  test-results/                   # Playwright artifacts
+  global-setup.ts                 # Global setup (user seeding, auth)
+  basic.spec.ts                   # Basic infrastructure tests
+  homepage.spec.ts                # Homepage tests
+  documents.spec.ts               # Document tests
+  navigation.spec.ts              # Navigation tests
+  notifications.spec.ts           # Notification system tests
+  suggestion-workflow.spec.ts     # Approval workflow tests
+  uat-verification.spec.ts        # User acceptance tests
+  README.md                       # Test documentation
 ```
 
 ## Test Structure
 
 **Suite Organization:**
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
+import { setupClerkTestingToken } from "@clerk/testing/playwright";
 
-test.describe('Feature Name', () => {
-  test('should do something specific', async ({ page }) => {
-    await page.goto('/');
+test.describe("Feature Name", () => {
+  test.beforeEach(async ({ page }) => {
+    // Setup Clerk testing token
+    await setupClerkTestingToken({ page });
+  });
+
+  test("should do expected behavior", async ({ page }) => {
+    // Navigate
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
 
     // Act
-    await page.click('button');
+    const element = page.locator("button[title='Action']");
+    await element.click();
 
     // Assert
-    await expect(page.locator('h1')).toBeVisible();
+    await expect(element).toBeVisible({ timeout: 10000 });
   });
 });
 ```
 
 **Patterns:**
-- test.describe for grouping related tests
-- Async/await for all page interactions
-- Page Object Model not used (direct selectors)
-- No shared setup files detected
+- `test.beforeEach` for per-test setup (Clerk token)
+- `test.beforeAll` for suite-level setup (directories)
+- `page.waitForLoadState("networkidle")` for page loads
+- Explicit timeouts on assertions: `{ timeout: 10000 }`
+
+## Test Projects
+
+**Configured in `playwright.config.ts`:**
+
+1. **basic** - No authentication required
+   - Test match: `/basic\.spec\.ts/`
+   - Browser: Desktop Chrome
+   - Purpose: Public pages, infrastructure validation
+
+2. **setup** - Authentication setup
+   - Test match: `global-setup.ts`
+   - Purpose: Seed users, create auth state
+
+3. **staff-tests** - Authenticated staff user
+   - Storage state: `e2e/.auth/staff.json`
+   - Dependencies: `['setup']`
+   - Purpose: Core feature tests
+
+4. **manager-tests** - Authenticated manager user
+   - Storage state: `e2e/.auth/manager.json`
+   - Dependencies: `['setup']`
+   - Purpose: Approval workflow tests
+
+## Authentication Testing
+
+**Global Setup (`global-setup.ts`):**
+```typescript
+async function globalSetup(config: FullConfig) {
+  // 1. Seed test users via Clerk Backend SDK
+  await seedAllTestUsers();
+
+  // 2. Initialize @clerk/testing
+  await clerkSetup();
+
+  // 3. Sign in each user and save browser state
+  // Creates: .auth/staff.json, .auth/manager.json
+}
+```
+
+**Test Users:**
+- Staff: `e2e-staff@example.com` (primary test account)
+- Manager: `e2e-manager@example.com` (approval workflows)
+- Created via Clerk Backend SDK with auto-verified emails
+
+**Token Setup in Tests:**
+```typescript
+import { setupClerkTestingToken } from "@clerk/testing/playwright";
+
+test.beforeEach(async ({ page }) => {
+  await setupClerkTestingToken({ page });
+});
+```
 
 ## Mocking
 
 **Framework:**
-- No mocking observed in E2E tests
-- Tests run against actual Convex backend
+- No explicit mocking framework
+- Uses real Convex backend (test database)
+- Clerk test mode for authentication
 
-**Patterns:**
-- E2E tests use real data from Convex
-- No API mocking or stubbing detected
+**What's Mocked:**
+- Clerk auth tokens via `@clerk/testing`
 
-**What to Mock:**
-- Not applicable (E2E tests use real services)
-
-## Fixtures and Factories
-
-**Test Data:**
-- No fixture files detected
-- Tests rely on seeded database data
-- `app/convex/seed.ts` provides initial data
-
-**Location:**
-- No dedicated fixtures directory
-- Seed data in Convex functions
+**What's NOT Mocked:**
+- Convex backend (real serverless functions)
+- Database operations (real data)
 
 ## Coverage
 
 **Requirements:**
-- No coverage requirements detected
-- E2E tests only (no unit test coverage)
+- No enforced coverage target
+- E2E-only approach (no unit test coverage)
 
-**Configuration:**
-- Playwright does not provide code coverage by default
-- No coverage tooling configured
+**Tracked Areas:**
+- Public page accessibility
+- Authentication flows
+- Core feature workflows (documents, notifications, suggestions)
+
+## Common Test Patterns
+
+**Page Navigation & Waiting:**
+```typescript
+await page.goto("/");
+await page.waitForLoadState("networkidle");
+await page.waitForLoadState("domcontentloaded");
+```
+
+**Element Interaction:**
+```typescript
+const button = page.locator('button[title="Notifications"]');
+await expect(button).toBeVisible({ timeout: 10000 });
+await button.click();
+```
+
+**Screenshot Capture:**
+```typescript
+const SCREENSHOT_DIR = path.join(__dirname, "screenshots");
+
+await page.screenshot({
+  path: path.join(SCREENSHOT_DIR, "test-01.png"),
+  fullPage: true,
+});
+```
+
+**Assertions with Timeout:**
+```typescript
+await expect(title.first()).toBeVisible({ timeout: 10000 });
+await expect(page).toHaveURL(/\/dashboard/);
+```
+
+## Playwright Configuration
+
+**Key Settings (`playwright.config.ts`):**
+```typescript
+{
+  testDir: './e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [['html', { open: 'never' }], ['list']],
+
+  use: {
+    baseURL: 'http://localhost:3001',
+    trace: 'on-first-retry',
+    screenshot: 'on',
+    video: 'retain-on-failure',
+  },
+
+  outputDir: './e2e/test-results',
+
+  webServer: {
+    command: 'bun dev --port 3001',
+    url: 'http://localhost:3001',
+    reuseExistingServer: true,
+    timeout: 120000,
+  }
+}
+```
 
 ## Test Types
 
+**E2E Tests (only type present):**
+- Full browser automation
+- Real backend, real database
+- Test user flows end-to-end
+
 **Unit Tests:**
-- Not detected (no unit test framework configured)
-- Vitest/Jest not in dependencies
+- Not currently implemented
+- No Jest, Vitest, or similar framework detected
 
 **Integration Tests:**
-- Not detected
+- Covered by E2E tests
+- No separate integration test layer
 
-**E2E Tests:**
-- Playwright for full browser testing
-- Tests complete user flows
-- Location: `app/e2e/`
+## Test Documentation
 
-## Common Patterns
+**README (`app/e2e/README.md`):**
+- 160+ lines of documentation
+- Covers setup, running, troubleshooting
+- Documents test user credentials
 
-**Page Navigation:**
-```typescript
-test('navigates to category page', async ({ page }) => {
-  await page.goto('/');
-  await page.click('a[href="/catalog"]');
-  await expect(page).toHaveURL('/catalog');
-});
-```
+**In-File Documentation:**
+- JSDoc comments on global setup
+- Console.log statements for test progress
 
-**Element Assertions:**
-```typescript
-test('displays document content', async ({ page }) => {
-  await page.goto('/catalog/bar-program');
-  await expect(page.locator('h1')).toContainText('Bar Program');
-  await expect(page.locator('.content')).toBeVisible();
-});
-```
+## Running Tests
 
-**Waiting for Content:**
-```typescript
-test('loads dynamic content', async ({ page }) => {
-  await page.goto('/');
-  // Playwright auto-waits for elements
-  await expect(page.getByRole('heading')).toBeVisible();
-});
-```
+**Prerequisites:**
+1. Start dev server: `cd app && bun run dev` (port 3001)
+2. Start Convex: `npx convex dev` (separate terminal)
+3. Environment: `.env.local` with Clerk credentials
+4. Clerk Dashboard: Email+Password auth enabled
 
-## Test Configuration
-
-**playwright.config.ts:**
-- Base URL: localhost:3000
-- Browser: Chromium (default)
-- Retries: Configured for CI stability
-- Screenshots/Video: On failure
-
-**Running Tests:**
+**Commands:**
 ```bash
-# Start dev server first
-cd app && bun dev
-
-# In another terminal
-cd app && bun run test:e2e
+cd app
+bun run test           # All tests
+bun run test:ui        # With Playwright UI
 ```
-
-## Dual Testing Strategy
-
-**Known Limitation:** Convex Auth session state does not persist properly in Playwright's browser context. Authenticated users appear logged in but queries return `null` for `ctx.auth.getUserIdentity()`. This affects tests that verify auth-dependent data.
-
-**Strategy:**
-
-| Tool | Use For | Why |
-|------|---------|-----|
-| Playwright | Bulk E2E tests, CI, non-auth flows | Fast, headless, parallelizable, good Next.js integration |
-| Chrome MCP | Auth-dependent verification, checkpoint:human-verify tasks | Real browser session, auth state persists correctly |
-
-**Playwright Tests (Primary):**
-- UI rendering and layout verification
-- Navigation flows
-- Form interactions (non-authenticated)
-- Component visibility checks
-- CI/CD pipeline integration
-- Location: `app/e2e/*.spec.ts`
-
-**Chrome MCP Tests (Auth Scenarios):**
-- Verifying data created by authenticated users
-- Testing permission-based visibility
-- Suggestion workflow verification (author vs reviewer views)
-- Personal workspace operations
-- Any test requiring `ctx.auth.getUserIdentity()` in Convex queries
-- Location: `.planning/verification/` (manual verification scripts)
-
-**Decision:** Use Playwright for ~90% of tests, Chrome MCP for auth-critical verification.
-
-## E2E Authentication Strategy
-
-**Problem:** Convex Auth session state doesn't persist properly in Playwright's browser context. Authenticated users appear logged in but `ctx.auth.getUserIdentity()` returns `null` in Convex queries.
-
-**Solution:** Test user seeding + Playwright storageState
-
-### How It Works
-
-1. **Test User Seeding** (`convex/testAuth.ts`)
-   - Dedicated test users created via Convex function
-   - Credentials known to test suite
-   - Users have appropriate roles for testing (staff, manager, admin)
-
-2. **Auth Setup Script** (`e2e/auth.setup.ts`)
-   - Runs before test suite via Playwright `globalSetup`
-   - Performs real sign-in flow through the UI
-   - Saves browser state to `.auth/user.json`
-
-3. **StorageState Reuse**
-   - Subsequent tests load saved state via `storageState` option
-   - Cookies and localStorage persisted between tests
-   - No sign-in required per test — fast and reliable
-
-### Running Authenticated Tests
-
-```bash
-# First run generates auth state
-cd app && bun run test:e2e
-
-# Auth state cached in .auth/user.json
-# Delete to force re-authentication
-rm -rf app/.auth
-```
-
-### Test User Credentials
-
-Test users are seeded by the test setup and should not be used in production:
-- See `convex/testAuth.ts` for test user definitions
-- Credentials are deterministic for CI reproducibility
-
-### When to Use Each Approach
-
-| Scenario | Approach |
-|----------|----------|
-| Standard E2E flows with auth | Playwright + storageState |
-| Complex auth state verification | Chrome MCP (real browser) |
-| CI/CD pipeline | Playwright + storageState |
-| Manual verification | Chrome MCP |
-
-## Gaps and Recommendations
-
-**Current State:**
-- E2E tests only (Playwright)
-- Chrome MCP for auth verification
-- No unit tests for Convex functions
-- No component tests
-
-**Potential Additions:**
-- Vitest for unit testing Convex functions
-- React Testing Library for component tests
-- Test coverage reporting
 
 ---
 
-*Testing analysis: 2026-01-14*
-*Strategy updated: 2026-01-15 (Playwright + Chrome MCP dual approach)*
+*Testing analysis: 2026-01-16*
+*Update when test patterns change*

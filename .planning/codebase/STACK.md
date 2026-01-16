@@ -1,6 +1,6 @@
 # Technology Stack
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## Languages
 
@@ -9,71 +9,74 @@
 
 **Secondary:**
 - JavaScript - Build scripts, config files
-- Markdown - Documentation and Jekyll site content (root `_posts/`, `_layouts/`)
+- CSS - Design tokens and global styles (`app/src/app/globals.css`)
 
 ## Runtime
 
 **Environment:**
-- Node.js (implied by Next.js)
-- Bun as primary runtime and package manager
+- Node.js (via Next.js runtime)
+- Bun (alternative runtime used for scripts)
 
 **Package Manager:**
-- Bun
-- Lockfile: `app/bun.lock` present
+- Bun - `app/bun.lock`, `app/package.json`
+- Lockfile: `bun.lock` present
+- Exception: Convex CLI uses `npx convex ...`
 
 ## Frameworks
 
 **Core:**
-- Next.js 16.1.1 - App Router for frontend (`app/src/app/`)
-- React 19.2.3 - UI framework (bleeding edge)
-- Convex 1.31.4 - Backend-as-a-Service (database, API, real-time sync)
+- Next.js 15 (App Router) - `app/package.json`
+- React 19 - `app/package.json`
+- Convex - Backend-as-a-Service platform
 
 **Testing:**
-- Playwright 1.57.0 - E2E testing (`app/e2e/`)
+- Playwright 1.57+ - E2E testing (`app/playwright.config.ts`)
 
 **Build/Dev:**
-- TypeScript 5.x - Type checking and compilation
-- Tailwind CSS v4 - Styling with Heritage Elegance theme
-- ESLint 9 - Linting
-
-**Legacy System:**
-- Jekyll 4.3.4 - Static site generator (GitHub Pages at root)
+- TypeScript 5.x - Compilation
+- ESLint 9.x - Linting (`app/eslint.config.mjs`)
+- PostCSS - CSS processing (`app/postcss.config.mjs`)
 
 ## Key Dependencies
 
 **Critical:**
-- convex ^1.31.4 - Backend database, queries, mutations, real-time subscriptions
-- react-markdown ^10.1.0 - Markdown rendering in document viewer
+- `convex` - Backend database and serverless functions
+- `@clerk/nextjs` ^6.36.7 - Authentication (primary)
+- `@convex-dev/auth` ^0.0.90 - Authentication (secondary, password provider)
+- `react-markdown` ^10.1.0 - Content rendering
 
 **Infrastructure:**
-- @tailwindcss/postcss - CSS processing
-- clsx - Conditional class names
+- `@clerk/backend` ^2.29.2 - Server-side auth
+- `@clerk/testing` ^1.13.28 - Test authentication
+
+**UI:**
+- `tailwindcss` 4.x - Styling via `@tailwindcss/postcss`
+- Google Fonts API - Playfair Display (display), DM Sans (body)
 
 ## Configuration
 
 **Environment:**
-- `.env.local` in `app/` directory (gitignored)
-- Required vars: `NEXT_PUBLIC_CONVEX_URL`, `CONVEX_DEPLOYMENT`
-- Convex URL: `https://calculating-vole-961.convex.cloud`
+- `.env.local` for environment variables (gitignored)
+- Key vars: `CONVEX_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`
 
 **Build:**
-- `app/tsconfig.json` - TypeScript config with strict mode
-- `app/next.config.ts` - Next.js configuration
-- `app/tailwind.config.ts` - Tailwind theme (Heritage Elegance palette)
-- `app/playwright.config.ts` - E2E test configuration
+- `tsconfig.json` - TypeScript config with `@/*` path alias to `./src/*`
+- `next.config.ts` - Next.js configuration (minimal)
+- `eslint.config.mjs` - ESLint with Next.js recommended rules
+- `postcss.config.mjs` - PostCSS with Tailwind plugin
 
 ## Platform Requirements
 
 **Development:**
-- Any platform with Node.js and Bun
-- Convex CLI for backend development (`npx convex dev`)
+- macOS/Linux/Windows (any platform with Node.js/Bun)
+- Bun runtime installed globally
+- Two terminals required: `bun run dev` + `npx convex dev`
 
 **Production:**
-- Next.js app: Vercel deployment (implied)
-- Convex backend: Convex Cloud (`calculating-vole-961`)
-- Jekyll site: GitHub Pages (root directory)
+- Vercel deployment target (`.vercel/project.json` present)
+- Convex cloud backend (`calculating-vole-961.convex.cloud`)
 
 ---
 
-*Stack analysis: 2026-01-14*
+*Stack analysis: 2026-01-16*
 *Update after major dependency changes*

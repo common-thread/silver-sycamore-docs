@@ -1,127 +1,202 @@
 # Architecture
 
-**Analysis Date:** 2026-01-14
+**Analysis Date:** 2026-01-16
 
 ## Pattern Overview
 
-**Overall:** Dual-System Repository with Migration in Progress
+**Overall:** Full-Stack BaaS (Backend-as-a-Service) Application
 
 **Key Characteristics:**
-- Jekyll static site (root) for legacy GitHub Pages documentation
-- Next.js App Router application (`app/`) for dynamic document management
-- Convex backend-as-a-service for real-time data
-- File-based routing with dynamic segments
-- Real-time reactive queries via Convex subscriptions
+- Next.js App Router for frontend with React Server Components
+- Convex serverless functions for backend (no traditional REST API)
+- RPC-style API calls via Convex React client
+- Real-time data subscriptions via `useQuery`
+- Clerk + Convex Auth for authentication
+
+## Architecture Diagram
+
+```mermaid
+flowchart TB
+    subgraph Client["Client Layer"]
+        Browser["Browser"]
+        NextApp["Next.js App Router<br/>app/src/app/"]
+        Components["React Components<br/>app/src/components/"]
+        Hooks["Custom Hooks<br/>app/src/hooks/"]
+    end
+
+    subgraph Provider["Provider Layer"]
+        ConvexProvider["ConvexClientProvider<br/>+ ClerkProvider"]
+        ConvexReact["Convex React Client<br/>useQuery/useMutation"]
+    end
+
+    subgraph Backend["Backend Layer (Convex)"]
+        Queries["Query Functions<br/>(read-only)"]
+        Mutations["Mutation Functions<br/>(write operations)"]
+        Actions["Action Functions<br/>(async tasks)"]
+    end
+
+    subgraph Data["Data Layer"]
+        Schema["Schema Definition<br/>convex/schema.ts"]
+        Database["Convex Database<br/>(27+ tables)"]
+        Storage["File Storage"]
+    end
+
+    subgraph Auth["Auth Layer"]
+        Clerk["Clerk Auth"]
+        ConvexAuth["Convex Auth"]
+        Permissions["Permission System<br/>convex/lib/roles.ts"]
+    end
+
+    Browser --> NextApp
+    NextApp --> Components
+    Components --> Hooks
+    Components --> ConvexProvider
+    ConvexProvider --> ConvexReact
+    ConvexReact --> Queries
+    ConvexReact --> Mutations
+    Queries --> Schema
+    Mutations --> Schema
+    Schema --> Database
+    Mutations --> Storage
+    Browser --> Clerk
+    Clerk --> ConvexAuth
+    ConvexAuth --> Permissions
+    Queries --> Permissions
+    Mutations --> Permissions
+```
 
 ## Layers
 
 **Presentation Layer:**
-- Purpose: React components and Next.js pages
-- Contains: Page components, UI components, layouts
-- Location: `app/src/app/`, `app/src/components/`
-- Depends on: Convex queries for data
-- Used by: Browser/end users
+- Purpose: Render UI and handle user interactions
+- Contains: React components, page routes, layouts
+- Location: `app/src/app/` (pages), `app/src/components/` (48+ components)
+- Depends on: Provider layer for data access
+- Used by: Browser (end users)
+
+**Provider Layer:**
+- Purpose: Connect frontend to backend, manage auth state
+- Contains: `ConvexClientProvider`, Clerk provider wrappers
+- Location: `app/src/components/ConvexClientProvider.tsx`
+- Depends on: Convex SDK, Clerk SDK
+- Used by: All components needing data/auth
+
+**Backend Layer (Convex Functions):**
+- Purpose: Business logic, data validation, access control
+- Contains: Query, Mutation, and Action functions (23 modules)
+- Location: `app/convex/*.ts`
+- Depends on: Data layer, Auth layer
+- Used by: Provider layer via RPC calls
 
 **Data Layer:**
-- Purpose: Backend functions and database schema
-- Contains: Queries, mutations, schema definitions, seed data
-- Location: `app/convex/`
-- Depends on: Convex runtime
-- Used by: Presentation layer via React hooks
+- Purpose: Persistent storage, schema definition
+- Contains: Table definitions, indexes, search indexes
+- Location: `app/convex/schema.ts`
+- Depends on: Convex platform
+- Used by: Backend layer
 
-**Legacy Layer:**
-- Purpose: Static documentation site
-- Contains: Jekyll templates, markdown posts, assets
-- Location: Root directory (`_posts/`, `_layouts/`, `_includes/`)
-- Depends on: Jekyll build system
-- Used by: GitHub Pages deployment
+**Auth Layer:**
+- Purpose: Identity management, permissions
+- Contains: Clerk integration, role-based access control
+- Location: `app/convex/auth.ts`, `app/convex/lib/roles.ts`, `app/convex/permissions.ts`
+- Depends on: Clerk service
+- Used by: All layers
 
 ## Data Flow
 
-**Document View Request:**
+**Client Query Flow:**
 
-1. User navigates to `/catalog/bar-program` (Next.js route)
-2. App Router renders `app/src/app/[category]/[slug]/page.tsx`
-3. Component calls `useQuery(api.documents.bySlug, { slug })`
-4. Convex client subscribes to real-time query
-5. Convex backend executes query against database
-6. Data returned and rendered via `DocumentViewer` component
-7. Real-time updates pushed automatically on data changes
+```mermaid
+sequenceDiagram
+    participant User as User (Browser)
+    participant Component as React Component
+    participant ConvexReact as Convex React Client
+    participant ConvexFn as Convex Function
+    participant DB as Convex Database
+    participant Auth as Clerk Auth
+
+    User->>Component: Page Load / Action
+    Component->>ConvexReact: useQuery(api.module.fn)
+    ConvexReact->>Auth: Get Auth Token
+    Auth-->>ConvexReact: JWT Token
+    ConvexReact->>ConvexFn: Call Query + Token
+    ConvexFn->>ConvexFn: Verify Auth (ctx.auth)
+    ConvexFn->>ConvexFn: Check Permissions
+    ConvexFn->>DB: ctx.db.query(table)
+    DB-->>ConvexFn: Results
+    ConvexFn-->>ConvexReact: Return Data
+    ConvexReact-->>Component: Update State
+    Component->>User: Render UI
+```
 
 **State Management:**
-- Server state: Convex reactive queries (real-time sync)
-- No client-side state management library (React state only)
-- URL-based routing state via Next.js App Router
+- Server state: Managed by Convex (real-time subscriptions)
+- Client state: React `useState` for local UI state
+- No external state library (Redux, Zustand, etc.)
 
 ## Key Abstractions
 
-**Convex Queries:**
-- Purpose: Read operations with real-time subscriptions
-- Examples: `app/convex/documents.ts` (list, byCategory, bySlug, search)
-- Pattern: Exported functions called via `useQuery` hook
+**Convex Module:**
+- Purpose: Encapsulate domain logic (documents, forms, messages, etc.)
+- Examples: `app/convex/documents.ts`, `app/convex/forms.ts`, `app/convex/channels.ts`
+- Pattern: Exports queries, mutations, actions per domain
+- API: `api.module.functionName` via `_generated/api`
 
-**Convex Mutations:**
-- Purpose: Write operations with optimistic updates
-- Examples: `app/convex/documents.ts` (create, update, deleteAll)
-- Pattern: Exported functions called via `useMutation` hook
+**Permission System:**
+- Purpose: Role-based access control
+- Server: `app/convex/lib/roles.ts` defines roles (staff, manager, admin)
+- Server: `app/convex/permissions.ts` provides permission checks
+- Client: `app/src/hooks/usePermissions.ts` for UI access control
+- Pattern: `canUserPerform(ctx, action)` / `usePermissions().can(action)`
 
-**React Components:**
-- Purpose: Reusable UI building blocks
-- Examples: `app/src/components/DocumentViewer.tsx`, `CategoryGrid.tsx`
-- Pattern: Functional components with TypeScript props
-
-**Page Components:**
-- Purpose: Route-specific layouts and data fetching
-- Examples: `app/src/app/page.tsx`, `app/src/app/[category]/[slug]/page.tsx`
-- Pattern: Next.js App Router conventions
+**Schema Tables:**
+- Purpose: Define data structure and indexes
+- Location: `app/convex/schema.ts`
+- Pattern: `defineTable()` with fields, indexes, search indexes
+- Tables: documents, userProfiles, formSchemas, messages, channels, etc.
 
 ## Entry Points
 
-**Next.js App:**
+**Frontend Entry:**
 - Location: `app/src/app/layout.tsx`
-- Triggers: HTTP request to app routes
-- Responsibilities: Root layout, ConvexClientProvider, global styles
+- Triggers: Browser navigation
+- Responsibilities: Set up providers, render layout shell
 
-**Convex Backend:**
-- Location: `app/convex/` (all .ts files)
-- Triggers: Client-side query/mutation calls
-- Responsibilities: Database operations, business logic
+**Page Routes:**
+- Location: `app/src/app/[route]/page.tsx`
+- Triggers: URL navigation
+- Responsibilities: Fetch data, render page content
 
-**Jekyll Site:**
-- Location: `index.html`, `_layouts/default.html`
-- Triggers: GitHub Pages deployment
-- Responsibilities: Static documentation rendering
+**Backend Entry:**
+- Location: `app/convex/*.ts` module exports
+- Triggers: `useQuery`/`useMutation` calls from client
+- Responsibilities: Validate, authorize, execute business logic
 
 ## Error Handling
 
-**Strategy:** Not explicitly implemented (minimal error handling observed)
+**Strategy:** Try/catch with user-friendly error messages
 
 **Patterns:**
-- Convex queries return null for not-found cases
-- Components handle null/undefined data with conditional rendering
-- No global error boundary detected
+- Backend: Throw errors in Convex functions, caught by client
+- Frontend: Try/catch in mutation handlers, display toast/alert
+- Validation: Convex schema validation via `v.string()`, `v.number()`, etc.
 
 ## Cross-Cutting Concerns
 
 **Logging:**
-- Console logging only (development)
+- Console.log for debugging
 - No structured logging framework
 
 **Validation:**
-- Convex schema validation (database layer)
-- TypeScript compile-time type checking
-- No runtime form validation library detected
+- Convex values (`v.string()`, `v.id()`, etc.) at function boundaries
+- No additional schema validation (Zod, Yup)
 
 **Authentication:**
-- Not implemented yet
-- Planned: Convex Auth for user access control
-
-**Styling:**
-- Tailwind CSS v4 with Heritage Elegance theme
-- CSS variables for brand colors (`--color-ink`, `--color-cream`, etc.)
-- Custom fonts: Cormorant Garamond (display), Source Sans 3 (body)
+- Clerk middleware protects routes
+- Convex functions check `ctx.auth.getUserIdentity()`
+- Permission checks via `permissions.ts` helpers
 
 ---
 
-*Architecture analysis: 2026-01-14*
+*Architecture analysis: 2026-01-16*
 *Update when major patterns change*
