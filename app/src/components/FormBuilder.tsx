@@ -7,6 +7,7 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import Select from "@/components/ui/Select";
 import { FieldEditor } from "./FieldEditor";
 
 // Type definitions matching forms.ts
@@ -312,42 +313,19 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             />
           </div>
 
-          <div>
-            <label
-              style={{
-                display: "block",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                color: "var(--color-ink-light)",
-                marginBottom: "0.375rem",
-              }}
-            >
-              Category
-            </label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "0.75rem 1rem",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
-                color: "var(--color-ink)",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: 0,
-                outline: "none",
-                cursor: "pointer",
-              }}
-            >
-              <option value="general">General</option>
-              <option value="client_intake">Client Intake</option>
-              <option value="event_planning">Event Planning</option>
-              <option value="feedback">Feedback</option>
-              <option value="internal">Internal</option>
-            </select>
-          </div>
+          <Select
+            label="Category"
+            options={[
+              { value: "general", label: "General" },
+              { value: "client_intake", label: "Client Intake" },
+              { value: "event_planning", label: "Event Planning" },
+              { value: "feedback", label: "Feedback" },
+              { value: "internal", label: "Internal" },
+            ]}
+            value={category}
+            onChange={(val) => setCategory(val)}
+            inputSize="md"
+          />
         </div>
       </div>
 

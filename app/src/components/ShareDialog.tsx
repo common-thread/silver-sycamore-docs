@@ -5,6 +5,7 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { useState } from "react";
 import { UserPicker } from "./UserPicker";
+import Select from "@/components/ui/Select";
 
 interface ShareDialogProps {
   folderId: Id<"personalFolders">;
@@ -216,27 +217,14 @@ export function ShareDialog({ folderId, folderName, onClose }: ShareDialogProps)
           )}
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-            <select
-              value={permission}
-              onChange={(e) => setPermission(e.target.value as Permission)}
-              style={{
-                flex: 1,
-                padding: "0.625rem 0.75rem",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                color: "var(--color-ink)",
-                background: "var(--color-background)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "2px",
-                cursor: "pointer",
-              }}
-            >
-              {permissionOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+            <div style={{ flex: 1 }}>
+              <Select
+                options={permissionOptions}
+                value={permission}
+                onChange={(val) => setPermission(val as Permission)}
+                inputSize="sm"
+              />
+            </div>
 
             <button
               onClick={handleShare}

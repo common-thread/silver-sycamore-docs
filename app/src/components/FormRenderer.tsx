@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import Select from "@/components/ui/Select";
 
 // Form field types matching the backend schema
 export type FormFieldType =
@@ -255,61 +256,22 @@ export function FormRenderer({
         );
 
       case "select":
+        const selectOptions = (field.options || []).map((opt) => ({
+          value: opt,
+          label: opt,
+        }));
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
-            <label
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {labelWithRequired}
-            </label>
-            <select
-              value={(value as string) || ""}
-              onChange={(e) => handleFieldChange(field.name, e.target.value)}
-              disabled={isSubmitting}
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
-                padding: "0.75rem 1rem",
-                border: `1px solid ${error ? "#C75050" : "var(--color-border)"}`,
-                borderRadius: 0,
-                background: "var(--color-surface)",
-                color: "var(--color-ink)",
-                outline: "none",
-                cursor: "pointer",
-                width: "100%",
-                appearance: "none",
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6B6B' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 1rem center",
-                paddingRight: "2.5rem",
-              }}
-            >
-              <option value="">Select an option...</option>
-              {field.options?.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            {error && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
-                  fontWeight: 500,
-                  color: "#C75050",
-                }}
-              >
-                {error}
-              </span>
-            )}
-          </div>
+          <Select
+            key={field.name}
+            label={labelWithRequired}
+            options={selectOptions}
+            value={(value as string) || ""}
+            onChange={(val) => handleFieldChange(field.name, val)}
+            placeholder="Select an option..."
+            disabled={isSubmitting}
+            error={error}
+            inputSize="md"
+          />
         );
 
       case "multiselect":

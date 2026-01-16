@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import Select from "@/components/ui/Select";
 
 // Type definitions matching forms.ts
 type FormFieldType =
@@ -295,40 +296,14 @@ export function FieldEditor({
 
           {/* Type selection */}
           <div style={{ marginBottom: "1.25rem" }}>
-            <label
-              style={{
-                display: "block",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                color: "var(--color-ink-light)",
-                marginBottom: "0.375rem",
-              }}
-            >
-              Type
-            </label>
-            <select
+            <Select
+              label="Type"
+              options={FIELD_TYPES}
               value={type}
-              onChange={(e) => setType(e.target.value as FormFieldType)}
-              style={{
-                width: "100%",
-                padding: "0.75rem 1rem",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
-                color: "var(--color-ink)",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: 0,
-                outline: "none",
-                cursor: "pointer",
-              }}
-            >
-              {FIELD_TYPES.map((ft) => (
-                <option key={ft.value} value={ft.value}>
-                  {ft.label}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setType(val as FormFieldType)}
+              inputSize="md"
+              searchable
+            />
           </div>
 
           {/* Placeholder */}
