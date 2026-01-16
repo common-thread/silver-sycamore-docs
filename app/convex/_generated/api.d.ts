@@ -14,6 +14,7 @@ import type * as channels from "../channels.js";
 import type * as comments from "../comments.js";
 import type * as documents from "../documents.js";
 import type * as folderShares from "../folderShares.js";
+import type * as forms from "../forms.js";
 import type * as http from "../http.js";
 import type * as initiatives from "../initiatives.js";
 import type * as lib_roles from "../lib/roles.js";
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   comments: typeof comments;
   documents: typeof documents;
   folderShares: typeof folderShares;
+  forms: typeof forms;
   http: typeof http;
   initiatives: typeof initiatives;
   "lib/roles": typeof lib_roles;

@@ -572,3 +572,347 @@ export const getSends = query({
       .collect();
   },
 });
+
+// ============================================
+// LEGACY FORM SEEDING
+// ============================================
+
+// Legacy form definitions from 02-form-schemas.md
+const LEGACY_FORMS = [
+  {
+    formId: "booking-wedding",
+    title: "Wedding Booking Form",
+    category: "booking",
+    fields: [
+      { name: "name", type: "text", label: "Name", required: true },
+      { name: "address", type: "text", label: "Address", required: true },
+      { name: "phone", type: "tel", label: "Phone", required: true },
+      { name: "workPhoneEmail", type: "text", label: "Work Phone/Email", required: false },
+      { name: "ceremony", type: "text", label: "Ceremony", required: false },
+      { name: "guestCount", type: "number", label: "Guest Count", required: true },
+      { name: "ceremonyLocation", type: "text", label: "Ceremony Location", required: false },
+      { name: "coordinator", type: "text", label: "Coordinator", required: false },
+      { name: "additionalNeeds", type: "textarea", label: "Additional Needs", required: false },
+      { name: "eventType", type: "text", label: "Event Type", required: true },
+      { name: "eventTime", type: "time", label: "Event Time", required: true },
+      { name: "receptionLocation", type: "text", label: "Reception Location", required: false },
+      { name: "afterHoursRental", type: "text", label: "After Hours Rental", required: false },
+      { name: "caterer", type: "text", label: "Caterer", required: false },
+      { name: "linens", type: "text", label: "Linens", required: false },
+      { name: "paymentDue", type: "date", label: "Payment Due", required: false },
+      { name: "planningApptDate", type: "date", label: "Planning Appointment Date", required: false },
+      { name: "decorApptDate", type: "date", label: "Decor Appointment Date", required: false },
+      { name: "twoWeeksOutApptDate", type: "date", label: "Two Weeks Out Appointment Date", required: false },
+      { name: "damageDeposit", type: "number", label: "Damage Deposit", required: false },
+      { name: "depositReturned", type: "checkbox", label: "Deposit Returned", required: false },
+      { name: "menuTasting", type: "text", label: "Menu Tasting", required: false },
+      { name: "flowersFlorist", type: "text", label: "Flowers/Florist", required: false },
+      { name: "anniversaryEmail", type: "email", label: "Anniversary Email", required: false },
+    ],
+    originalFile: "clients/booking/booking-form-wedding.md",
+    status: "needs_redesign",
+  },
+  {
+    formId: "booking-corporate",
+    title: "Corporate Event Booking Form",
+    category: "booking",
+    fields: [
+      { name: "responsibleParty", type: "text", label: "Responsible Party", required: true },
+      { name: "company", type: "text", label: "Company", required: true },
+      { name: "address", type: "text", label: "Address", required: true },
+      { name: "city", type: "text", label: "City", required: true },
+      { name: "cellPhone", type: "tel", label: "Cell Phone", required: true },
+      { name: "email", type: "email", label: "Email", required: true },
+      { name: "dateOfEvent", type: "date", label: "Date of Event", required: true },
+      { name: "eventTime", type: "time", label: "Event Time", required: true },
+      { name: "eventType", type: "text", label: "Event Type", required: true },
+      { name: "guestCount", type: "number", label: "Guest Count", required: true },
+      { name: "depositPaid", type: "number", label: "Deposit Paid", required: false },
+      { name: "eventLocation", type: "text", label: "Event Location", required: true },
+      { name: "additionalComments", type: "textarea", label: "Additional Comments", required: false },
+    ],
+    originalFile: "clients/booking/booking-form-corporate.md",
+    status: "needs_redesign",
+  },
+  {
+    formId: "booking-shower",
+    title: "Shower/Small Party Booking Form",
+    category: "booking",
+    fields: [
+      { name: "responsiblePartyName", type: "text", label: "Responsible Party Name", required: true },
+      { name: "guestsOfHonor", type: "text", label: "Guest(s) of Honor", required: true },
+      { name: "address", type: "text", label: "Address", required: true },
+      { name: "cityAndZip", type: "text", label: "City and Zip Code", required: true },
+      { name: "daytimePhone", type: "tel", label: "Daytime Phone", required: false },
+      { name: "cellPhone", type: "tel", label: "Cell Phone", required: true },
+      { name: "email", type: "email", label: "Email", required: true },
+      { name: "dateOfEvent", type: "date", label: "Date of Event", required: true },
+      { name: "eventTime", type: "time", label: "Event Time", required: true },
+      { name: "partyType", type: "select", label: "Party Type", required: true, options: ["Baby Shower", "Bridal Shower", "Birthday Party", "Anniversary", "Other"] },
+      { name: "guestCount", type: "number", label: "Guest Count", required: true },
+      { name: "depositPaid", type: "number", label: "Deposit Paid", required: false },
+      { name: "depositDate", type: "date", label: "Deposit Date", required: false },
+      { name: "eventLocation", type: "text", label: "Event Location", required: true },
+      { name: "cakeInfo", type: "textarea", label: "Cake Info", required: false },
+      { name: "barInfo", type: "textarea", label: "Bar Info", required: false },
+      { name: "menu", type: "textarea", label: "Menu", required: false },
+      { name: "additionalComments", type: "textarea", label: "Additional Comments", required: false },
+    ],
+    originalFile: "clients/booking/booking-form-shower.md",
+    status: "needs_redesign",
+  },
+  {
+    formId: "hr-time-off-request",
+    title: "Employee Time-Off Request Form",
+    category: "hr",
+    fields: [
+      { name: "todaysDate", type: "date", label: "Today's Date", required: true },
+      { name: "employeeName", type: "text", label: "Employee Name", required: true },
+      { name: "requestType", type: "select", label: "Request Type", required: true, options: ["Days", "Hours"] },
+      { name: "beginningOn", type: "date", label: "Beginning On", required: true },
+      { name: "endingOn", type: "date", label: "Ending On", required: true },
+      { name: "reason", type: "select", label: "Reason", required: true, options: ["Vacation", "Personal Leave", "Funeral / Bereavement", "Jury Duty", "Family Reasons", "Medical Leave", "To Vote", "Other"] },
+      { name: "reasonOther", type: "text", label: "Other Reason (if applicable)", required: false },
+      { name: "employeeSignatureDate", type: "date", label: "Employee Signature Date", required: true },
+      { name: "approvalStatus", type: "select", label: "Approval Status", required: false, options: ["Approved", "Rejected"] },
+      { name: "employerSignatureDate", type: "date", label: "Employer Signature Date", required: false },
+      { name: "employerPrintName", type: "text", label: "Employer Print Name", required: false },
+    ],
+    originalFile: "staff/hr/hr-forms.md",
+    status: "active",
+  },
+  {
+    formId: "hr-employee-warning",
+    title: "Employee Warning Form",
+    category: "hr",
+    fields: [
+      { name: "employeeName", type: "text", label: "Employee Name", required: true },
+      { name: "managerName", type: "text", label: "Manager Name", required: true },
+      { name: "warningDate", type: "date", label: "Warning Date", required: true },
+      { name: "previousDisciplineDate", type: "date", label: "Previous Discipline Date", required: false },
+      { name: "warningReasons", type: "multiselect", label: "Warning Reasons", required: true, options: ["Absenteeism", "Failure to follow procedure", "Rudeness", "Tardiness", "Failure to meet performance", "Refusal to work overtime", "Policy violation", "Fighting", "Language", "Other"] },
+      { name: "warningReasonOther", type: "text", label: "Other Reason (if applicable)", required: false },
+      { name: "warningDetails", type: "textarea", label: "Warning Details", required: true },
+      { name: "correctiveActionRequired", type: "textarea", label: "Corrective Action Required", required: true },
+      { name: "employeePrintName", type: "text", label: "Employee Print Name", required: true },
+      { name: "employeeSignatureDate", type: "date", label: "Employee Signature Date", required: true },
+      { name: "supervisorPrintName", type: "text", label: "Supervisor Print Name", required: true },
+      { name: "supervisorSignatureDate", type: "date", label: "Supervisor Signature Date", required: true },
+    ],
+    originalFile: "staff/hr/hr-forms.md",
+    status: "active",
+  },
+  {
+    formId: "operations-decor-appointment",
+    title: "Decor Appointment Form",
+    category: "operations",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "appointmentDate", type: "date", label: "Appointment Date", required: true },
+      { name: "decorSelections", type: "textarea", label: "Decor Selections", required: false },
+      { name: "notes", type: "textarea", label: "Notes", required: false },
+    ],
+    originalFile: "operations/forms/decor-appointment.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "operations-final-appointment",
+    title: "Final Appointment Form",
+    category: "operations",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "appointmentDate", type: "date", label: "Appointment Date", required: true },
+      { name: "finalDetails", type: "textarea", label: "Final Details", required: false },
+      { name: "vendorConfirmations", type: "textarea", label: "Vendor Confirmations", required: false },
+      { name: "notes", type: "textarea", label: "Notes", required: false },
+    ],
+    originalFile: "operations/forms/final-appointment.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "operations-vendor-setup",
+    title: "Vendor Setup Form",
+    category: "operations",
+    fields: [
+      { name: "eventName", type: "text", label: "Event Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "vendorName", type: "text", label: "Vendor Name", required: true },
+      { name: "vendorType", type: "text", label: "Vendor Type", required: true },
+      { name: "arrivalTime", type: "time", label: "Arrival Time", required: true },
+      { name: "setupRequirements", type: "textarea", label: "Setup Requirements", required: false },
+      { name: "notes", type: "textarea", label: "Notes", required: false },
+    ],
+    originalFile: "operations/forms/vendor-setup.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "operations-tasting",
+    title: "Menu Tasting Form",
+    category: "operations",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tastingDate", type: "date", label: "Tasting Date", required: true },
+      { name: "guestCount", type: "number", label: "Guest Count", required: true },
+      { name: "menuSelections", type: "textarea", label: "Menu Selections", required: false },
+      { name: "dietaryRestrictions", type: "textarea", label: "Dietary Restrictions", required: false },
+      { name: "notes", type: "textarea", label: "Notes", required: false },
+    ],
+    originalFile: "operations/forms/tasting-form.pdf",
+    status: "needs_redesign",
+  },
+  {
+    formId: "checklist-9-12-months",
+    title: "Planning Checklist: 9-12 Months Out",
+    category: "planning-checklist",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tasks", type: "textarea", label: "Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/planning/checklist-9-12-months.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "checklist-7-8-months",
+    title: "Planning Checklist: 7-8 Months Out",
+    category: "planning-checklist",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tasks", type: "textarea", label: "Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/planning/checklist-7-8-months.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "checklist-4-6-months",
+    title: "Planning Checklist: 4-6 Months Out",
+    category: "planning-checklist",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tasks", type: "textarea", label: "Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/planning/checklist-4-6-months.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "checklist-1-3-months",
+    title: "Planning Checklist: 1-3 Months Out",
+    category: "planning-checklist",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tasks", type: "textarea", label: "Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/planning/checklist-1-3-months.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "checklist-pre-wedding",
+    title: "Pre-Wedding To Do List",
+    category: "planning-checklist",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "tasks", type: "textarea", label: "Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/planning/pre-wedding-todo.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "reset-checklist-hall",
+    title: "Hall Reset Checklist",
+    category: "operations-checklist",
+    fields: [
+      { name: "eventName", type: "text", label: "Event Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "completedBy", type: "text", label: "Completed By", required: false },
+      { name: "tasks", type: "textarea", label: "Reset Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/layouts/hall/reset-checklist.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "reset-checklist-saloon",
+    title: "Saloon Reset Checklist",
+    category: "operations-checklist",
+    fields: [
+      { name: "eventName", type: "text", label: "Event Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "completedBy", type: "text", label: "Completed By", required: false },
+      { name: "tasks", type: "textarea", label: "Reset Tasks / Notes", required: false },
+    ],
+    originalFile: "clients/layouts/saloon/reset-checklist.docx",
+    status: "needs_redesign",
+  },
+  {
+    formId: "day-of-music-list",
+    title: "Music Selection Form",
+    category: "day-of",
+    fields: [
+      { name: "clientName", type: "text", label: "Client Name", required: true },
+      { name: "eventDate", type: "date", label: "Event Date", required: true },
+      { name: "ceremonyMusic", type: "textarea", label: "Ceremony Music", required: false },
+      { name: "receptionMusic", type: "textarea", label: "Reception Music", required: false },
+      { name: "doNotPlayList", type: "textarea", label: "Do Not Play List", required: false },
+      { name: "specialRequests", type: "textarea", label: "Special Requests", required: false },
+    ],
+    originalFile: "clients/day-of/music-list.docx",
+    status: "needs_redesign",
+  },
+];
+
+// Seed legacy forms (admin/staff runs this to pre-populate forms)
+export const seedLegacyForms = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) throw new Error("Not authenticated");
+
+    const now = Date.now();
+    const results: { created: string[]; skipped: string[] } = {
+      created: [],
+      skipped: [],
+    };
+
+    for (const legacyForm of LEGACY_FORMS) {
+      // Check if form already exists by formId
+      const existing = await ctx.db
+        .query("formSchemas")
+        .withIndex("by_formId", (q) => q.eq("formId", legacyForm.formId))
+        .first();
+
+      if (existing) {
+        results.skipped.push(legacyForm.formId);
+        continue;
+      }
+
+      // Create form as draft owned by current user
+      await ctx.db.insert("formSchemas", {
+        formId: legacyForm.formId,
+        title: legacyForm.title,
+        description: `Legacy form (status: ${legacyForm.status}). Original file: ${legacyForm.originalFile}`,
+        category: legacyForm.category,
+        fields: JSON.stringify(legacyForm.fields),
+        originalFile: legacyForm.originalFile,
+        status: "draft",
+        ownerId: currentUser.user._id,
+        isPublished: false,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      results.created.push(legacyForm.formId);
+    }
+
+    return {
+      message: `Seeded ${results.created.length} forms, skipped ${results.skipped.length} existing`,
+      created: results.created,
+      skipped: results.skipped,
+    };
+  },
+});
