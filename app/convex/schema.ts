@@ -130,26 +130,37 @@ export default defineSchema({
     .index("by_slug", ["slug"]),
 
   formSchemas: defineTable({
-    formId: v.string(),
+    formId: v.string(), // Unique identifier for public access
     title: v.string(),
+    description: v.optional(v.string()), // Form description
     category: v.string(),
-    fields: v.string(),
+    fields: v.string(), // JSON string of field definitions
     originalFile: v.optional(v.string()),
     status: v.string(),
+    ownerId: v.id("users"), // Who created/owns the form
+    isPublished: v.boolean(), // Whether form is active/accessible
+    createdAt: v.number(),
+    updatedAt: v.number(),
   })
     .index("by_formId", ["formId"])
-    .index("by_category", ["category"]),
+    .index("by_category", ["category"])
+    .index("by_owner", ["ownerId"]),
 
   formSubmissions: defineTable({
-    formSchemaId: v.id("formSchemas"),
-    formId: v.string(),
-    data: v.string(),
-    submittedBy: v.optional(v.string()),
+    formSchemaId: v.id("formSchemas"), // Reference to form schema
+    formId: v.string(), // Copy of formId for easier lookup
+    data: v.string(), // JSON string of submitted form data
+    respondentName: v.optional(v.string()), // Who filled out the form (external)
+    respondentEmail: v.optional(v.string()), // Respondent's email (external)
+    sentById: v.optional(v.id("users")), // Staff member who sent/initiated the form
+    routeToUserIds: v.optional(v.array(v.id("users"))), // Additional staff recipients
     submittedAt: v.number(),
     status: v.string(),
   })
     .index("by_formId", ["formId"])
-    .index("by_status", ["status"]),
+    .index("by_status", ["status"])
+    .index("by_schema", ["formSchemaId"])
+    .index("by_sentBy", ["sentById"]),
 
   procedures: defineTable({
     title: v.string(),
