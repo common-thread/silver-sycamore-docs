@@ -79,14 +79,8 @@ export function DocumentViewer({
     );
   }
 
-  // For binary files without fileUrl, show document info card
+  // For binary files without fileUrl, show clean pending conversion card
   if (["docx", "xlsx", "pdf"].includes(sourceType)) {
-    const typeLabels: Record<string, string> = {
-      docx: "Word Document",
-      xlsx: "Excel Spreadsheet",
-      pdf: "PDF Document",
-    };
-
     return (
       <div>
         <h1
@@ -107,47 +101,20 @@ export function DocumentViewer({
         )}
         <div
           style={{
-            background: "var(--color-cream-dark)",
+            background: "var(--color-paper-warm)",
             border: "1px solid var(--color-border)",
-            borderRadius: "4px",
-            padding: "2rem",
+            borderRadius: "var(--radius-md)",
+            padding: "var(--space-8)",
             textAlign: "center",
           }}
         >
-          <div
-            style={{
-              fontSize: "3rem",
-              marginBottom: "1rem",
-              opacity: 0.5,
-            }}
-          >
-            {sourceType === "docx" && "📄"}
-            {sourceType === "xlsx" && "📊"}
-            {sourceType === "pdf" && "📑"}
-          </div>
-          <h3
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              marginBottom: "0.5rem",
-            }}
-          >
-            {typeLabels[sourceType] || "Document"}
-          </h3>
-          {document.sourceFile && (
-            <p style={{ color: "var(--color-ink-muted)", fontSize: "0.875rem" }}>
-              {document.sourceFile}
-            </p>
-          )}
           <p
             style={{
               color: "var(--color-ink-muted)",
-              fontSize: "0.875rem",
-              marginTop: "1rem",
+              fontSize: "var(--text-sm)",
             }}
           >
-            Document preview coming soon
+            This document is pending conversion.
           </p>
         </div>
       </div>
