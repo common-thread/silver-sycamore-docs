@@ -8,51 +8,46 @@ An internal knowledge management and communication platform for Silver Sycamore 
 
 Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
 
+## Current State
+
+**Version:** v1.0 MVP (shipped 2026-01-16)
+**Codebase:** ~78,000 LOC TypeScript, Next.js 15 + Convex
+**Features:** Wiki, auth, search, versioning, workspaces, sharing, comments, suggestions, messaging, forms
+
 ## Requirements
 
 ### Validated
 
-- Document viewing with Markdown rendering — existing
-- Category/subcategory navigation — existing
-- Convex backend with documents, categories, initiatives tables — existing
-- Import script for markdown → Convex sync — existing
-- Basic E2E test coverage — existing
-- Dual deployment: Jekyll (GitHub Pages) + Next.js (Vercel) — existing
+- Design system (Typeform-style, Playfair/DM Sans, ink/paper/bronze) — v1.0
+- Authentication system (Convex Auth with Password provider) — v1.0
+- User profiles and permissions model (staff/manager/admin roles) — v1.0
+- Document versioning with controlled backend — v1.0
+- Full-text search UI with category navigation — v1.0
+- Personal folders for each user — v1.0
+- Document duplication (copy server docs to personal space) — v1.0
+- Folder sharing (user-to-user, groups) — v1.0
+- Threaded comments on documents (Notion-style) — v1.0
+- @mentions in comments — v1.0
+- Suggestion workflow for proposing changes to official docs — v1.0
+- PR-style promotion (user doc → replace official doc) — v1.0
+- Slack-like channels (public, private) — v1.0
+- Direct messages — v1.0
+- File sharing and attachments in channels — v1.0
+- @mention notifications to inbox — v1.0
+- Digitize 15+ paper-based forms — v1.0 (17 forms seeded)
+- Interactive form system with Convex storage — v1.0
 
 ### Active
 
-**Foundation**
-- [ ] Authentication system (Convex Auth)
-- [ ] User profiles and permissions model
-- [ ] New design system (Typeform-style, serif fonts, black/white archive aesthetic)
+**Content Pipeline (v1.1)**
+- [ ] Deterministic content seeding from markdown source of truth
+- [ ] Parse index.md tables for document titles/descriptions
+- [ ] Remove technical indicators from document viewer (file type labels, emojis)
+- [ ] Markdown source of truth: `/docs/` → deterministic parser → Convex
 
-**Wiki Core**
-- [ ] Document versioning with controlled backend
-- [ ] Full-text search UI (Convex query exists, needs frontend)
-- [ ] Refined document browsing and navigation
-- [ ] Markdown source of truth: `/docs/` → Jekyll + Convex → Next.js
-
-**Personal Workspace**
-- [ ] Personal folders for each user
-- [ ] Document duplication (copy server docs to personal space)
-- [ ] Folder sharing (user-to-user, groups)
-
-**Comments + Suggestions**
-- [ ] Threaded comments on documents (Notion-style)
-- [ ] @mentions in comments
-- [ ] Suggestion workflow for proposing changes to official docs
-- [ ] PR-style promotion (user doc → replace official doc)
-
-**Messaging**
-- [ ] Slack-like channels (public, private)
-- [ ] Direct messages
-- [ ] File sharing and attachments in channels
-- [ ] @mention notifications to inbox
-- [ ] Full channel features (create, archive, invite)
-
-**Forms (from existing planning)**
-- [ ] Digitize 15 paper-based forms (booking, HR, operations)
-- [ ] Interactive form system with Convex storage
+**Polish**
+- [ ] Custom dropdowns to replace native HTML select elements
+- [ ] Binary file preview (docx, xlsx, pdf viewers)
 
 ### Out of Scope
 
@@ -63,23 +58,15 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 
 ## Context
 
-**Existing Codebase:**
-- Next.js App Router application in `app/` with Convex backend
-- Jekyll static site at root for GitHub Pages deployment
-- 74 operational documents organized into 5 categories (services, clients, staff, operations, deliverables)
-- Heritage Elegance theme (Tailwind v4, custom fonts)
-- Import script syncs `/docs/` markdown to Convex database
+**Jekyll Legacy Site:**
+- GitHub Pages at splurfa.github.io/silver-sycamore-docs
+- index.md files contain authoritative document metadata (titles, descriptions in tables)
+- Individual doc files contain content only
+- This is the source of truth for initial content seeding
 
-**User Workflow:**
-- Builder/architect (you) works via Claude Code + direct markdown edits
-- Management collaborates to build out wiki content
-- Staff expands usage once handbook/onboarding docs are complete
-
-**Planning Documents:**
-- `00-exploration-summary.md` — initial exploration findings
-- `01-document-inventory.md` — 74 documents cataloged
-- `02-form-schemas.md` — JSON schemas for 17 forms
-- `03-architecture-analysis.md` — technical design and migration plan
+**Data Model:**
+- Seed data: Comes from deterministic markdown sources (to be fixed in v1.1)
+- Runtime data: Created by users directly in Convex, doesn't need markdown round-trip
 
 **Rollout Plan:**
 - Phase 1: Management + builder (<5 users)
@@ -88,23 +75,26 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 ## Constraints
 
 - **Backend**: Keep Convex — existing infrastructure, real-time capabilities needed
-- **Dual Systems**: Keep Jekyll running during transition — GitHub Pages serves legacy site
-- **Content Source**: `/docs/` markdown files are single source of truth — both systems read from here
-- **Design**: Typeform-inspired, serif bold fonts, black/white archive aesthetic — easy to read, clean
-- **Messaging**: Build custom on Convex — full control, no external dependencies
+- **Content Source**: `/docs/` markdown + index.md files are source of truth for seeding
+- **Design**: Typeform-inspired, serif bold fonts, archive aesthetic — easy to read, clean
+- **Messaging**: Built custom on Convex — full control, no external dependencies
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Use frontend-design skill for UI | Anthropic skill ensures consistent, high-quality UI implementation | ✓ Good |
-| Build custom messaging vs integrate | Full control, stay on Convex, no external service costs | — Pending |
-| Comments read-only on official docs | Users suggest via comments/PRs, you control official content | — Pending |
-| Personal folders vs flat personal docs | Folder structure matches user mental model, enables organization | — Pending |
-| Markdown as source of truth | Enables Claude Code workflow, version control, deterministic sync | — Pending |
-| Playwright for E2E verification | Captures screenshots at checkpoints, headless CI-friendly, good Next.js integration | ✓ Good |
-| Chrome MCP for auth verification | Convex Auth state doesn't persist in Playwright; Chrome MCP uses real browser sessions | ✓ Good |
-| E2E auth via storageState | Test user seeding + Playwright storageState persists real auth cookies between tests | ✓ Good |
+| Playfair Display + DM Sans fonts | Editorial character, high legibility | ✓ Good |
+| Ink/paper/bronze color system | Archival aesthetic, warm not stark | ✓ Good |
+| Convex Auth with Password provider | Simple for internal staff | ✓ Good |
+| Role hierarchy (staff/manager/admin) | Clear permission matrix | ✓ Good |
+| Personal workspace separate tables | Clean data isolation | ✓ Good |
+| @[userId] mention format | Database stability, resolved at render | ✓ Good |
+| Suggestion state machine | Clear workflow states | ✓ Good |
+| Channel types as string union | Extensibility for future types | ✓ Good |
+| Cursor-based message pagination | Efficient infinite scroll | ✓ Good |
+| Form ownership model | Clear accountability | ✓ Good |
+| Heuristic description extraction | Quick implementation | ⚠️ Revisit — need deterministic parsing |
+| Parse index.md for metadata | Deterministic, matches Jekyll | — Pending (v1.1) |
 
 ---
-*Last updated: 2026-01-15 after Phase 9 completion*
+*Last updated: 2026-01-16 after v1.0 milestone*

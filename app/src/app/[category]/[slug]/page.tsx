@@ -92,7 +92,7 @@ export default function DocumentPage() {
       >
         <Breadcrumb documentTitle={document.title} />
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          {isAuthenticated && (
+          {isSignedIn && (
             <>
               <Link
                 href={`/suggestions/new?documentId=${document._id}`}
@@ -197,7 +197,7 @@ export default function DocumentPage() {
           }}
         />
 
-        {isAuthenticated ? (
+        {isSignedIn ? (
           <div style={{ maxWidth: "65ch" }}>
             <CommentSection documentId={document._id} />
           </div>

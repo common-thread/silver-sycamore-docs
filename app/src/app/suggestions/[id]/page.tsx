@@ -213,9 +213,3 @@ export default function SuggestionDetailPage() {
     </>
   );
 }
-
-    </>
-  );
-}
-  );
-}

@@ -163,16 +163,61 @@ export async function deleteTestUser(userType: TestUserType): Promise<boolean> {
 }
 
 /**
- * Seed all test users
+ * Seed all test users (deletes existing users first for clean state)
  */
 export async function seedAllTestUsers(): Promise<void> {
-  console.log("[Clerk] Seeding all test users...");
+  console.log("[Clerk] Seeding all test users (clean slate)...");
 
   for (const userType of Object.keys(TEST_USERS) as TestUserType[]) {
-    await createTestUser(userType);
+    // Delete existing user first to clear any device verification state
+    await deleteTestUser(userType);
+    // Create fresh user
+    await createFreshTestUser(userType);
   }
 
   console.log("[Clerk] All test users seeded successfully");
+}
+
+/**
+ * Create a fresh test user (assumes user doesn't exist)
+ */
+async function createFreshTestUser(userType: TestUserType): Promise<string> {
+  const user = TEST_USERS[userType];
+  const clerk = getClerkClient();
+
+  console.log(`[Clerk] Creating fresh user: ${user.email}`);
+
+  try {
+    const newUser = await clerk.users.createUser({
+      emailAddress: [user.email],
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      skipPasswordChecks: true,
+    });
+
+    console.log(`[Clerk] Created user: ${user.email} (${newUser.id})`);
+    return newUser.id;
+  } catch (error: unknown) {
+    // Handle race condition where user was created between delete and create
+    if (
+      error &&
+      typeof error === "object" &&
+      "errors" in error &&
+      Array.isArray((error as { errors: { code: string }[] }).errors) &&
+      (error as { errors: { code: string }[] }).errors.some(
+        (e) => e.code === "form_identifier_exists"
+      )
+    ) {
+      console.log(`[Clerk] User was created concurrently, finding: ${user.email}`);
+      const foundUser = await findUserByEmail(user.email);
+      if (foundUser) {
+        return foundUser.id;
+      }
+    }
+    console.error(`[Clerk] Error creating user ${user.email}:`, error);
+    throw error;
+  }
 }
 
 /**

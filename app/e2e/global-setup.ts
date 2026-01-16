@@ -19,7 +19,7 @@
  * 2. Enable "Password" under "Authentication strategies"
  */
 
-import { clerkSetup } from "@clerk/testing/playwright";
+import { clerk, clerkSetup } from "@clerk/testing/playwright";
 import { chromium, type FullConfig, type Page } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
@@ -28,7 +28,7 @@ import * as path from "path";
 import { config } from "dotenv";
 config({ path: path.join(__dirname, "..", ".env.local") });
 
-import { seedAllTestUsers, TEST_USERS, findUserByEmail, createSignInToken, type TestUserType } from "./utils/clerk-test-users";
+import { seedAllTestUsers, TEST_USERS, type TestUserType } from "./utils/clerk-test-users";
 
 const AUTH_DIR = path.join(__dirname, ".auth");
 const STAFF_STORAGE_STATE = path.join(AUTH_DIR, "staff.json");
@@ -116,13 +116,11 @@ function setupPageLogging(page: Page, userType: string) {
 }
 
 /**
- * Sign in a user using Clerk's sign-in token via JavaScript execution
+ * Sign in a user using @clerk/testing's clerk.signIn() helper
  *
- * Uses Clerk Backend SDK to create a sign-in token, then executes JavaScript
- * on the page to use Clerk's frontend SDK with the ticket strategy.
- *
- * This approach works with Clerk's hosted sign-in pages where the embedded
- * clerk.signIn() helper doesn't work directly.
+ * This uses the official Clerk testing library which handles:
+ * - Bot detection bypass
+ * - Programmatic sign-in with the test user
  */
 async function signInWithClerk(
   page: Page,
@@ -131,106 +129,29 @@ async function signInWithClerk(
 ): Promise<void> {
   const user = TEST_USERS[userType];
 
-  console.log(`[Auth] Creating sign-in token for ${user.email}...`);
+  console.log(`[Auth] Starting sign-in for ${user.email}...`);
 
-  // Get user ID (user should already exist from seeding)
-  const existingUser = await findUserByEmail(user.email);
-  if (!existingUser) {
-    throw new Error(`Test user ${user.email} not found - run seeding first`);
-  }
-  const token = await createSignInToken(existingUser.id);
-
-  console.log(`[Auth] Navigating to app to load Clerk...`);
-
-  // Navigate to app to load Clerk SDK
-  await page.goto(baseURL, { timeout: 60000 });
-  await page.waitForLoadState("domcontentloaded");
+  // Navigate to the sign-in page to load Clerk's SignIn component
+  await page.goto(`${baseURL}/signin`, { timeout: 60000, waitUntil: "domcontentloaded" });
+  // Wait for Clerk to initialize (clerk.signIn will wait for window.Clerk.loaded)
   await page.waitForTimeout(3000);
+  console.log(`[Auth] Sign-in page loaded, signing in with clerk.signIn()...`);
 
-  console.log(`[Auth] Page URL: ${page.url()}`);
-
-  // Take screenshot before sign-in
-  await page.screenshot({
-    path: path.join(AUTH_DIR, `before-signin-${user.email.split("@")[0]}.png`),
-    fullPage: true,
+  // Use @clerk/testing's clerk.signIn() helper with email-based sign-in
+  // This finds the user by email and uses ticket-based authentication
+  await clerk.signIn({
+    page,
+    emailAddress: user.email,
   });
 
-  // Wait for Clerk to be available
-  console.log(`[Auth] Waiting for Clerk to load...`);
+  console.log(`[Auth] clerk.signIn() completed, navigating to app...`);
 
-  const clerkLoaded = await page.evaluate(async () => {
-    // Wait up to 10 seconds for Clerk
-    for (let i = 0; i < 20; i++) {
-      if (typeof window !== "undefined" && (window as unknown as { Clerk?: unknown }).Clerk) {
-        return true;
-      }
-      await new Promise((r) => setTimeout(r, 500));
-    }
-    return false;
-  });
+  // Navigate to the app after sign-in
+  await page.goto(baseURL, { timeout: 60000, waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle");
 
-  if (!clerkLoaded) {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `clerk-not-loaded-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error("Clerk SDK did not load on the page");
-  }
-
-  console.log(`[Auth] Clerk loaded, signing in with ticket strategy...`);
-
-  // Use Clerk's frontend SDK to sign in with the ticket
-  const signInResult = await page.evaluate(async (ticketToken: string) => {
-    try {
-      const clerk = (window as unknown as { Clerk: { client: { signIn: { create: (params: { strategy: string; ticket: string }) => Promise<{ status: string }> } } } }).Clerk;
-      const signIn = await clerk.client.signIn.create({
-        strategy: "ticket",
-        ticket: ticketToken,
-      });
-      return { success: true, status: signIn.status };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : String(error),
-      };
-    }
-  }, token);
-
-  if (!signInResult.success) {
-    await page.screenshot({
-      path: path.join(AUTH_DIR, `signin-error-${user.email.split("@")[0]}.png`),
-      fullPage: true,
-    });
-    throw new Error(`Clerk signIn failed: ${signInResult.error}`);
-  }
-
-  console.log(`[Auth] Sign-in result: ${signInResult.status}`);
-
-  // If sign-in succeeded, set the session and wait for redirect
-  if (signInResult.status === "complete") {
-    console.log(`[Auth] Setting active session...`);
-
-    await page.evaluate(async () => {
-      const clerk = (window as unknown as { Clerk: { setActive: (params: { session: string }) => Promise<void>; client: { signIn: { createdSessionId: string } } } }).Clerk;
-      await clerk.setActive({
-        session: clerk.client.signIn.createdSessionId,
-      });
-    });
-
-    // Wait for Clerk to redirect back to app
-    console.log(`[Auth] Waiting for redirect to app...`);
-    try {
-      await page.waitForURL((url) => url.origin === new URL(baseURL).origin, {
-        timeout: 15000,
-      });
-    } catch {
-      // If redirect doesn't happen, manually navigate
-      console.log(`[Auth] Redirect timeout, manually navigating...`);
-      await page.goto(baseURL, { timeout: 60000, waitUntil: "domcontentloaded" });
-    }
-  }
-
-  await page.waitForTimeout(3000);
+  // Wait for session to be established
+  await page.waitForTimeout(2000);
 
   console.log(`[Auth] After sign-in, URL: ${page.url()}`);
 
@@ -247,7 +168,7 @@ async function signInWithClerk(
       path: path.join(AUTH_DIR, `auth-verify-${user.email.split("@")[0]}.png`),
       fullPage: true,
     });
-    throw new Error(`Authentication verification failed for ${user.email}`);
+    throw new Error(`Authentication verification failed for ${user.email}. Current URL: ${page.url()}`);
   }
 
   console.log(`[Auth] User ${user.email} signed in successfully`);
