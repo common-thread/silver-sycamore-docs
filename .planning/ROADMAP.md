@@ -56,15 +56,15 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 - Wedding style guide as baseline (monochrome palette + champagne accents)
 - Logo assets from wedding project need to be copied
 
-### Phase 12: Content Pipeline
+### Phase 12: Content Pipeline - COMPLETE
 
 **Goal:** Deterministic content seeding - parse index.md tables for document titles/descriptions instead of heuristic extraction
 **Depends on:** v1.0 complete
 **Research:** Unlikely (internal patterns, parsing existing files)
-**Plans:** TBD
+**Plans:** 1/1
 
 Plans:
-- [ ] 12-01: TBD (run /gsd:plan-phase 12 to break down)
+- [x] 12-01: Index.md parser with import script integration
 
 ### Phase 13: UI Cleanup
 
@@ -110,7 +110,7 @@ Plans:
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 12. Content Pipeline | v1.1 | 0/? | Not started | - |
+| 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
 | 13. UI Cleanup | v1.1 | 0/? | Not started | - |
 | 14. Design Tokens | v1.1 | 0/? | Not started | - |
 | 15. Style Guide | v1.1 | 0/? | Not started | - |
