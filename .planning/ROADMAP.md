@@ -84,7 +84,7 @@ Plans:
 **Plans:** 2
 
 Plans:
-- [ ] 14-01: Consolidate navigation into flat feature-based row
+- [x] 14-01: Consolidate navigation into flat feature-based row
 - [ ] 14-02: Clean document viewer and catalog page
 
 ### Phase 15: Custom Dropdowns
@@ -103,5 +103,5 @@ Plans:
 |-------|-----------|-------|--------|-----------|
 | 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
 | 13. Brand Foundation | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 14. UI Cleanup | v1.1 | 0/2 | Planned | - |
+| 14. UI Cleanup | v1.1 | 1/2 | In progress | - |
 | 15. Custom Dropdowns | v1.1 | 0/? | Not started | - |
