@@ -150,7 +150,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-10);
+  padding: var(--space-6);
+  background: var(--color-paper-warm);
+  min-height: 180px;
+}
+
+.logoCardWide {
+  grid-column: 1 / -1;
+}
+
+.logoPreviewWide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-10);
   background: var(--color-paper-warm);
   min-height: 160px;
 }

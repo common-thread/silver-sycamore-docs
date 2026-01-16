@@ -12,6 +12,7 @@ interface LogoProps {
  * - logo-full.png: 1536 x 1024 (1.5:1 ratio)
  * - logo-icon.png: 1436 x 673 (2.13:1 ratio - tree+carriage silhouette)
  * - logo-text.png: 1511 x 256 (5.9:1 ratio - wordmark)
+ * - logo-horizontal.png: ~7:1 ratio (icon + wordmark at 89% height, bottom-aligned)
  *
  * Industry standard minimum sizes:
  * - Print: 1 inch / 25mm minimum height
@@ -24,19 +25,25 @@ const sizes = {
     // 1.5:1 aspect ratio (width:height)
     sm: { width: 72, height: 48 },   // Header usage
     md: { width: 120, height: 80 },  // Standard display
-    lg: { width: 180, height: 120 }, // Hero/splash
+    lg: { width: 225, height: 150 }, // Hero/splash - fills showcase boxes
   },
   icon: {
     // 2.13:1 aspect ratio - NOT square (tree+carriage silhouette)
     sm: { width: 64, height: 30 },   // Compact header
     md: { width: 96, height: 45 },   // Standard
-    lg: { width: 128, height: 60 },  // Large display
+    lg: { width: 256, height: 120 }, // Large display - fills showcase boxes
   },
   text: {
     // 5.9:1 aspect ratio (wordmark)
     sm: { width: 142, height: 24 },  // Minimum legible
     md: { width: 177, height: 30 },  // Standard header
-    lg: { width: 236, height: 40 },  // Large display
+    lg: { width: 295, height: 50 },  // Large display - fills showcase boxes
+  },
+  horizontal: {
+    // 6:1 aspect ratio (640x108 original)
+    sm: { width: 240, height: 40 },  // Compact headers
+    md: { width: 360, height: 60 },  // Standard display
+    lg: { width: 480, height: 80 },  // Showcase/hero usage
   },
 };
 
@@ -73,6 +80,20 @@ export function LogoText({ size = "md", className }: LogoProps) {
   return (
     <Image
       src="/logo-text.png"
+      alt="Silver Sycamore"
+      width={width}
+      height={height}
+      className={className}
+      priority
+    />
+  );
+}
+
+export function LogoHorizontal({ size = "md", className }: LogoProps) {
+  const { width, height } = sizes.horizontal[size];
+  return (
+    <Image
+      src="/logo-horizontal.png"
       alt="Silver Sycamore"
       width={width}
       height={height}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { LogoFull, LogoIcon, LogoText } from '@/components/Logo';
+import { LogoFull, LogoIcon, LogoText, LogoHorizontal } from '@/components/Logo';
 import styles from './page.module.css';
 
 export default function StyleGuidePage() {
@@ -37,7 +37,7 @@ export default function StyleGuidePage() {
             <span className={styles.eyebrow}>Identity</span>
             <h2 className={styles.sectionTitle}>Logo</h2>
             <p className={styles.sectionDescription}>
-              The Silver Sycamore logo system consists of three variants. Follow these guidelines
+              The Silver Sycamore logo system consists of four variants. Follow these guidelines
               to ensure consistent, professional brand presentation across all applications.
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function StyleGuidePage() {
           <div className={styles.logoShowcase}>
             <div className={styles.logoCard}>
               <div className={styles.logoPreview}>
-                <LogoFull size="md" />
+                <LogoFull size="lg" />
               </div>
               <div className={styles.logoInfo}>
                 <h3 className={styles.logoName}>Full Logo</h3>
@@ -60,7 +60,7 @@ export default function StyleGuidePage() {
 
             <div className={styles.logoCard}>
               <div className={styles.logoPreview}>
-                <LogoIcon size="md" />
+                <LogoIcon size="lg" />
               </div>
               <div className={styles.logoInfo}>
                 <h3 className={styles.logoName}>Icon Mark</h3>
@@ -74,7 +74,7 @@ export default function StyleGuidePage() {
 
             <div className={styles.logoCard}>
               <div className={styles.logoPreview}>
-                <LogoText size="md" />
+                <LogoText size="lg" />
               </div>
               <div className={styles.logoInfo}>
                 <h3 className={styles.logoName}>Wordmark</h3>
@@ -82,6 +82,20 @@ export default function StyleGuidePage() {
                 <div className={styles.logoMeta}>
                   <span>Aspect: 5.9:1</span>
                   <span>Min height: 24px</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={`${styles.logoCard} ${styles.logoCardWide}`}>
+              <div className={styles.logoPreviewWide}>
+                <LogoHorizontal size="lg" />
+              </div>
+              <div className={styles.logoInfo}>
+                <h3 className={styles.logoName}>Horizontal Lockup</h3>
+                <p className={styles.logoUsage}>Icon + wordmark combined. Ideal for headers, navigation bars, and wide layouts.</p>
+                <div className={styles.logoMeta}>
+                  <span>Aspect: 6:1</span>
+                  <span>Min height: 40px</span>
                 </div>
               </div>
             </div>
