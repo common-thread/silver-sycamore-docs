@@ -475,3 +475,60 @@ export const deleteSubmission = mutation({
     return { success: true };
   },
 });
+
+// ============================================
+// FORM SENDING (DELIVERY)
+// ============================================
+
+// Send form to recipient (creates send record with routing config)
+export const sendForm = mutation({
+  args: {
+    formSchemaId: v.id("formSchemas"),
+    recipientEmail: v.string(),
+    recipientName: v.optional(v.string()),
+    routeToUserIds: v.array(v.id("users")),
+  },
+  handler: async (ctx, args) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) throw new Error("Not authenticated");
+
+    // Verify form exists and user has access (owner or published)
+    const form = await ctx.db.get(args.formSchemaId);
+    if (!form) throw new Error("Form not found");
+
+    // Only owner can send forms (or staff if published)
+    if (form.ownerId !== currentUser.user._id && !form.isPublished) {
+      throw new Error("Not authorized to send this form");
+    }
+
+    // Create send record
+    const sendId = await ctx.db.insert("formSends", {
+      formSchemaId: args.formSchemaId,
+      sentById: currentUser.user._id,
+      recipientEmail: args.recipientEmail,
+      recipientName: args.recipientName,
+      routeToUserIds: args.routeToUserIds,
+      sentAt: Date.now(),
+    });
+
+    return await ctx.db.get(sendId);
+  },
+});
+
+// Get send history for a form (owner only)
+export const getSends = query({
+  args: { formSchemaId: v.id("formSchemas") },
+  handler: async (ctx, { formSchemaId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return [];
+
+    // Verify ownership
+    const form = await ctx.db.get(formSchemaId);
+    if (!form || form.ownerId !== currentUser.user._id) return [];
+
+    return await ctx.db
+      .query("formSends")
+      .withIndex("by_form", (q) => q.eq("formSchemaId", formSchemaId))
+      .collect();
+  },
+});

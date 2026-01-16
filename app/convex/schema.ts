@@ -154,13 +154,27 @@ export default defineSchema({
     respondentEmail: v.optional(v.string()), // Respondent's email (external)
     sentById: v.optional(v.id("users")), // Staff member who sent/initiated the form
     routeToUserIds: v.optional(v.array(v.id("users"))), // Additional staff recipients
+    sendId: v.optional(v.id("formSends")), // Link to specific send record
     submittedAt: v.number(),
     status: v.string(),
   })
     .index("by_formId", ["formId"])
     .index("by_status", ["status"])
     .index("by_schema", ["formSchemaId"])
-    .index("by_sentBy", ["sentById"]),
+    .index("by_sentBy", ["sentById"])
+    .index("by_send", ["sendId"]),
+
+  // Track form sends (who sent form to whom)
+  formSends: defineTable({
+    formSchemaId: v.id("formSchemas"),
+    sentById: v.id("users"), // Staff who sent it
+    recipientEmail: v.string(), // Who it was sent to
+    recipientName: v.optional(v.string()),
+    routeToUserIds: v.array(v.id("users")), // Additional recipients for responses
+    sentAt: v.number(),
+  })
+    .index("by_form", ["formSchemaId"])
+    .index("by_sender", ["sentById"]),
 
   procedures: defineTable({
     title: v.string(),
