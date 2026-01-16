@@ -15,7 +15,9 @@ const navItems = [
   { href: "/staff", label: "Staff" },
   { href: "/operations", label: "Operations" },
   { href: "/deliverables", label: "Deliverables" },
-  { href: "/catalog", label: "Catalog" },
+  { href: "/messages", label: "Messages" },
+  { href: "/forms", label: "Forms" },
+  { href: "/workspace", label: "My Workspace" },
 ];
 
 export default function Header() {
@@ -71,101 +73,10 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Search, Workspace, Notifications, and User Menu */}
+        {/* Search, Notifications, and User Menu */}
         <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
           <SearchBar />
-          {isSignedIn && (
-            <>
-              <Link
-                href="/workspace"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: pathname.startsWith("/workspace")
-                    ? "var(--color-accent)"
-                    : "var(--color-ink-light)",
-                  textDecoration: "none",
-                  transition: "color 0.15s ease",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M2 4.5C2 3.67 2.67 3 3.5 3H6L7.5 5H12.5C13.33 5 14 5.67 14 6.5V11.5C14 12.33 13.33 13 12.5 13H3.5C2.67 13 2 12.33 2 11.5V4.5Z"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    fill={pathname.startsWith("/workspace") ? "currentColor" : "none"}
-                    fillOpacity={pathname.startsWith("/workspace") ? 0.1 : 0}
-                  />
-                </svg>
-                My Workspace
-              </Link>
-              <Link
-                href="/forms"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: pathname.startsWith("/forms")
-                    ? "var(--color-accent)"
-                    : "var(--color-ink-light)",
-                  textDecoration: "none",
-                  transition: "color 0.15s ease",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M3 2.5C3 2.22386 3.22386 2 3.5 2H9.5L13 5.5V13.5C13 13.7761 12.7761 14 12.5 14H3.5C3.22386 14 3 13.7761 3 13.5V2.5Z"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    fill={pathname.startsWith("/forms") ? "currentColor" : "none"}
-                    fillOpacity={pathname.startsWith("/forms") ? 0.1 : 0}
-                  />
-                  <path
-                    d="M5.5 7.5H10.5M5.5 9.5H10.5M5.5 11.5H8"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                Forms
-              </Link>
-              <Link
-                href="/messages"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: pathname.startsWith("/messages")
-                    ? "var(--color-accent)"
-                    : "var(--color-ink-light)",
-                  textDecoration: "none",
-                  transition: "color 0.15s ease",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4V10C14 10.5523 13.5523 11 13 11H8L5 14V11H3C2.44772 11 2 10.5523 2 10V4Z"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    fill={pathname.startsWith("/messages") ? "currentColor" : "none"}
-                    fillOpacity={pathname.startsWith("/messages") ? 0.1 : 0}
-                  />
-                </svg>
-                Messages
-              </Link>
-              <NotificationBell />
-            </>
-          )}
+          {isSignedIn && <NotificationBell />}
           <UserMenu />
         </div>
       </div>
