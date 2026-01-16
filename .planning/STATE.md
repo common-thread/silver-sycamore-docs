@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 10 (Messaging Channels) COMPLETE — ready for Phase 11
+**Current focus:** Phase 11 (Forms System) — Form schema and CRUD complete
 
 ## Current Position
 
-Phase: 10 of 11 (Messaging Channels) - COMPLETE
-Plan: 6 of 6 in current phase - COMPLETE
-Status: Phase complete
-Last activity: 2026-01-15 — Completed 10-06-PLAN.md (Notifications)
+Phase: 11 of 11 (Forms System)
+Plan: 1 of 5 in current phase
+Status: In progress
+Last activity: 2026-01-16 — Completed 11-01-PLAN.md (Form Schema & CRUD)
 
-Progress: ██████████ ~97%
+Progress: ██████████ ~98%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
+- Total plans completed: 34
 - Average duration: 14 min
-- Total execution time: 8 hours
+- Total execution time: 8h 4min
 
 **By Phase:**
 
@@ -37,9 +37,10 @@ Progress: ██████████ ~97%
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
 | 10-messaging-channels | 6/6 | 30 min | 5 min |
+| 11-forms-system | 1/5 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min, 5 min, 4 min, 6 min, 6 min
+- Last 5 plans: 5 min, 4 min, 6 min, 6 min, 4 min
 - Trend: steady acceleration
 
 ## Accumulated Context
@@ -94,6 +95,9 @@ Recent decisions affecting current work:
 - **Notification creation**: Inline in sendMessage mutation for atomic behavior
 - **Notification badge**: Count for 1-9, "9+" for overflow, hidden when 0
 - **E2E test modes**: Static verification (no credentials) vs interactive (with Clerk keys)
+- **Form ownership**: Forms have ownerId, only owners can update/publish/delete
+- **Public form submission**: submitResponse mutation requires no auth for external respondents
+- **Form field storage**: Fields stored as JSON string, validated at parse time with parseFormFields helper
 
 ### Deferred Issues
 
@@ -109,7 +113,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-15
-Stopped at: Completed Phase 10 (Messaging Channels)
+Last session: 2026-01-16
+Stopped at: Completed 11-01-PLAN.md (Form Schema & CRUD)
 Resume file: None
-Next action: Begin Phase 11 (final phase)
+Next action: Execute 11-02-PLAN.md (Form Renderer)
