@@ -130,6 +130,39 @@ export default function Header() {
                 My Workspace
               </Link>
               <Link
+                href="/forms"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.375rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.8125rem",
+                  fontWeight: 500,
+                  color: pathname.startsWith("/forms")
+                    ? "var(--color-accent)"
+                    : "var(--color-ink-light)",
+                  textDecoration: "none",
+                  transition: "color 0.15s ease",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 2.5C3 2.22386 3.22386 2 3.5 2H9.5L13 5.5V13.5C13 13.7761 12.7761 14 12.5 14H3.5C3.22386 14 3 13.7761 3 13.5V2.5Z"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    fill={pathname.startsWith("/forms") ? "currentColor" : "none"}
+                    fillOpacity={pathname.startsWith("/forms") ? 0.1 : 0}
+                  />
+                  <path
+                    d="M5.5 7.5H10.5M5.5 9.5H10.5M5.5 11.5H8"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                Forms
+              </Link>
+              <Link
                 href="/messages"
                 style={{
                   display: "flex",
