@@ -1,6 +1,112 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+// ============================================
+// FORM FIELD TYPE DEFINITIONS
+// ============================================
+
+/**
+ * Supported form field types for the form builder.
+ * These types are stored as JSON string in the schema.
+ */
+export type FormFieldType =
+  | "text"
+  | "textarea"
+  | "number"
+  | "date"
+  | "time"
+  | "email"
+  | "tel"
+  | "select"
+  | "multiselect"
+  | "checkbox"
+  | "file";
+
+/**
+ * Form field definition structure.
+ * Fields are stored as a JSON string array in the formSchemas.fields column.
+ */
+export type FormField = {
+  name: string; // Unique field identifier
+  type: FormFieldType;
+  label: string; // Display label
+  required: boolean;
+  options?: string[]; // For select/multiselect types
+  placeholder?: string;
+};
+
+/**
+ * Parse and validate form fields from JSON string.
+ * Returns the parsed array or throws on invalid structure.
+ */
+export function parseFormFields(fieldsJson: string): FormField[] {
+  try {
+    const parsed = JSON.parse(fieldsJson);
+
+    if (!Array.isArray(parsed)) {
+      throw new Error("Fields must be an array");
+    }
+
+    const validTypes: FormFieldType[] = [
+      "text",
+      "textarea",
+      "number",
+      "date",
+      "time",
+      "email",
+      "tel",
+      "select",
+      "multiselect",
+      "checkbox",
+      "file",
+    ];
+
+    for (const field of parsed) {
+      if (typeof field.name !== "string" || !field.name) {
+        throw new Error("Each field must have a name string");
+      }
+      if (typeof field.type !== "string" || !validTypes.includes(field.type as FormFieldType)) {
+        throw new Error(`Invalid field type: ${field.type}`);
+      }
+      if (typeof field.label !== "string") {
+        throw new Error("Each field must have a label string");
+      }
+      if (typeof field.required !== "boolean") {
+        throw new Error("Each field must have a required boolean");
+      }
+      // Validate options for select/multiselect
+      if ((field.type === "select" || field.type === "multiselect") && field.options) {
+        if (!Array.isArray(field.options) || !field.options.every((o: unknown) => typeof o === "string")) {
+          throw new Error("Options must be an array of strings for select/multiselect fields");
+        }
+      }
+    }
+
+    return parsed as FormField[];
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      throw new Error("Invalid JSON format for fields");
+    }
+    throw error;
+  }
+}
+
+/**
+ * Safely parse form fields, returning empty array on error.
+ * Useful for display purposes where we don't want to crash on invalid data.
+ */
+export function safeParseFormFields(fieldsJson: string): FormField[] {
+  try {
+    return parseFormFields(fieldsJson);
+  } catch {
+    return [];
+  }
+}
+
+// ============================================
+// AUTH HELPERS
+// ============================================
+
 // Helper to get current user ID from auth (follows established pattern from channels.ts)
 async function getCurrentUser(ctx: { auth: any; db: any }) {
   const identity = await ctx.auth.getUserIdentity();
