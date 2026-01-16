@@ -49,7 +49,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 ## 🚧 v1.1 Content Pipeline & Branding (In Progress)
 
-**Milestone Goal:** Fix content import reliability, clean up UI artifacts, and establish company-wide branding standards.
+**Milestone Goal:** Fix content import reliability, establish company-wide branding standards, and apply them consistently across the UI.
 
 **Constraints:**
 - Frontend-design skill required for all UI/design decisions
@@ -66,52 +66,41 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 Plans:
 - [x] 12-01: Index.md parser with import script integration
 
-### Phase 13: UI Cleanup
+### Phase 13: Brand Foundation
 
-**Goal:** Remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
+**Goal:** Establish the Silver Sycamore brand kit: design tokens (CSS custom properties), in-app style guide documentation, and logo integration. Foundation first, then apply.
 **Depends on:** Phase 12
-**Research:** Unlikely (UI cleanup, internal work)
-**Plans:** 1
-
-Plans:
-- [ ] 13-01: Clean document viewer and catalog page
-
-### Phase 14: Design Tokens
-
-**Goal:** Establish design tokens file (CSS custom properties + exportable JSON) and component library foundation
-**Depends on:** Phase 13
-**Research:** Unlikely (CSS custom properties, established patterns)
+**Research:** Unlikely (wedding style guide provides baseline)
 **Plans:** TBD
 
 Plans:
-- [ ] 14-01: TBD
+- [ ] 13-01: TBD
 
-### Phase 15: Style Guide
+### Phase 14: UI Cleanup
 
-**Goal:** Create in-app style guide documentation page with logo usage guidelines (proper spacing, centering, approved/prohibited uses)
+**Goal:** Apply brand foundation to clean technical artifacts - remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
+**Depends on:** Phase 13
+**Research:** Unlikely (UI cleanup, applying established tokens)
+**Plans:** 1
+
+Plans:
+- [ ] 14-01: Clean document viewer and catalog page
+
+### Phase 15: Custom Dropdowns
+
+**Goal:** Replace native HTML select elements with styled dropdown components that match the brand foundation
 **Depends on:** Phase 14
-**Research:** Unlikely (documentation, internal patterns)
+**Research:** Unlikely (component development, applying established patterns)
 **Plans:** TBD
 
 Plans:
 - [ ] 15-01: TBD
-
-### Phase 16: Custom Dropdowns
-
-**Goal:** Replace native HTML select elements with styled dropdown components that match the design system
-**Depends on:** Phase 15
-**Research:** Unlikely (component development, established patterns)
-**Plans:** TBD
-
-Plans:
-- [ ] 16-01: TBD
 
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 13. UI Cleanup | v1.1 | 0/1 | Planned | - |
-| 14. Design Tokens | v1.1 | 0/? | Not started | - |
-| 15. Style Guide | v1.1 | 0/? | Not started | - |
-| 16. Custom Dropdowns | v1.1 | 0/? | Not started | - |
+| 13. Brand Foundation | v1.1 | 0/? | Context gathered | - |
+| 14. UI Cleanup | v1.1 | 0/1 | Planned | - |
+| 15. Custom Dropdowns | v1.1 | 0/? | Not started | - |

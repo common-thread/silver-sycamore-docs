@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 13 of 16 (UI Cleanup)
-Plan: Ready to execute
-Status: Phase planned
-Last activity: 2026-01-16 — Created 13-01-PLAN.md
+Phase: 13 of 15 (Brand Foundation)
+Plan: Needs planning
+Status: Context gathered
+Last activity: 2026-01-15 — Restructured v1.1 phases, created 13-CONTEXT.md
 
 Progress: ██░░░░░░░░ 20%
 
@@ -32,8 +32,8 @@ Key decisions logged in PROJECT.md.
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
-- **Technical indicators in UI** — File type labels, emojis need removal from document viewer. → Phase 13
-- **Custom dropdowns** — Replace native HTML select elements with styled components. → Phase 16
+- **Technical indicators in UI** — File type labels, emojis need removal from document viewer. → Phase 14
+- **Custom dropdowns** — Replace native HTML select elements with styled components. → Phase 15
 
 ### Pending Todos
 
@@ -46,10 +46,11 @@ None active.
 ### Roadmap Evolution
 
 - Milestone v1.1 created: Content Pipeline & Branding, 5 phases (Phase 12-16)
+- v1.1 restructured: Consolidated design tokens + style guide into Phase 13 (Brand Foundation), now 4 phases (12-15)
 
 ## Session Continuity
 
-Last session: 2026-01-16
-Stopped at: Planned Phase 13 (UI Cleanup)
+Last session: 2026-01-15
+Stopped at: Gathered Phase 13 context (Brand Foundation)
 Resume file: None
-Next action: `/gsd:execute-plan .planning/phases/13-ui-cleanup/13-01-PLAN.md`
+Next action: `/gsd:plan-phase 13`
