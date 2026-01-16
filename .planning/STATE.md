@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-15)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication — replacing scattered Google Drives, binders, and external tools.
-**Current focus:** Phase 11 (Forms System) — Form builder UI complete
+**Current focus:** Phase 11 (Forms System) — Form renderer and public page complete
 
 ## Current Position
 
 Phase: 11 of 11 (Forms System)
-Plan: 2 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-16 — Completed 11-02-PLAN.md (Form Builder UI)
+Last activity: 2026-01-16 — Completed 11-03-PLAN.md (Form Renderer)
 
-Progress: ██████████ ~98%
+Progress: ██████████ ~99%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 35
+- Total plans completed: 36
 - Average duration: 14 min
-- Total execution time: 8h 8min
+- Total execution time: 8h 12min
 
 **By Phase:**
 
@@ -37,10 +37,10 @@ Progress: ██████████ ~98%
 | 08-comments-system | 3/3 | 12 min | 4 min |
 | 09-suggestion-workflow | 3/3 | 16 min | 5 min |
 | 10-messaging-channels | 6/6 | 30 min | 5 min |
-| 11-forms-system | 2/5 | 8 min | 4 min |
+| 11-forms-system | 3/5 | 12 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 6 min, 6 min, 4 min, 4 min
+- Last 5 plans: 6 min, 6 min, 4 min, 4 min, 4 min
 - Trend: steady acceleration
 
 ## Accumulated Context
@@ -100,6 +100,8 @@ Recent decisions affecting current work:
 - **Form field storage**: Fields stored as JSON string, validated at parse time with parseFormFields helper
 - **Field editor as modal**: Consistent with CreateChannelDialog pattern for focused editing
 - **Auto-generate field name**: Slugify from label (lowercase, underscore-separated) reduces manual input
+- **Inline SVG icons**: Use simple inline SVG components instead of lucide-react to avoid adding dependencies
+- **Submission state machine**: idle/submitting/success/error pattern for clear flow management
 
 ### Deferred Issues
 
@@ -116,6 +118,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-16
-Stopped at: Completed 11-02-PLAN.md (Form Builder UI)
+Stopped at: Completed 11-03-PLAN.md (Form Renderer)
 Resume file: None
-Next action: Execute 11-03-PLAN.md (Form Renderer)
+Next action: Execute 11-04-PLAN.md (Form Sharing)
