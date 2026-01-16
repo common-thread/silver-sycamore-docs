@@ -71,10 +71,10 @@ Plans:
 **Goal:** Remove file type labels (.md, .pdf), technical emojis, and other developer-facing indicators from the document viewer
 **Depends on:** Phase 12
 **Research:** Unlikely (UI cleanup, internal work)
-**Plans:** TBD
+**Plans:** 1
 
 Plans:
-- [ ] 13-01: TBD
+- [ ] 13-01: Clean document viewer and catalog page
 
 ### Phase 14: Design Tokens
 
@@ -111,7 +111,7 @@ Plans:
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 12. Content Pipeline | v1.1 | 1/1 | Complete | 2026-01-16 |
-| 13. UI Cleanup | v1.1 | 0/? | Not started | - |
+| 13. UI Cleanup | v1.1 | 0/1 | Planned | - |
 | 14. Design Tokens | v1.1 | 0/? | Not started | - |
 | 15. Style Guide | v1.1 | 0/? | Not started | - |
 | 16. Custom Dropdowns | v1.1 | 0/? | Not started | - |
