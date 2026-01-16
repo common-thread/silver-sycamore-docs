@@ -2,13 +2,39 @@
 
 import { useState } from 'react';
 import { LogoFull, LogoIcon, LogoText, LogoHorizontal } from '@/components/Logo';
+import Select from '@/components/ui/Select';
 import styles from './page.module.css';
 
 export default function StyleGuidePage() {
   const [inputValue, setInputValue] = useState('');
   const [selectValue, setSelectValue] = useState('');
+  const [selectSizeValue, setSelectSizeValue] = useState('');
+  const [selectSearchValue, setSelectSearchValue] = useState('');
   const [textareaValue, setTextareaValue] = useState('');
   const [checkboxValue, setCheckboxValue] = useState(false);
+
+  // Sample options for Select demos
+  const categoryOptions = [
+    { value: 'procedures', label: 'Procedures' },
+    { value: 'policies', label: 'Policies' },
+    { value: 'training', label: 'Training Materials' },
+    { value: 'forms', label: 'Forms & Templates' },
+  ];
+
+  const searchableOptions = [
+    { value: 'accounting', label: 'Accounting & Finance' },
+    { value: 'admin', label: 'Administration' },
+    { value: 'compliance', label: 'Compliance' },
+    { value: 'events', label: 'Events & Catering' },
+    { value: 'facilities', label: 'Facilities Management' },
+    { value: 'hr', label: 'Human Resources' },
+    { value: 'it', label: 'Information Technology' },
+    { value: 'legal', label: 'Legal & Contracts' },
+    { value: 'marketing', label: 'Marketing & Communications' },
+    { value: 'operations', label: 'Operations' },
+    { value: 'safety', label: 'Safety & Security' },
+    { value: 'training', label: 'Training & Development' },
+  ];
 
   return (
     <div className={styles.page}>
@@ -511,18 +537,14 @@ export default function StyleGuidePage() {
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Category</label>
-                <select
-                  className={styles.formSelect}
+                <Select
+                  label="Category"
+                  options={categoryOptions}
                   value={selectValue}
-                  onChange={(e) => setSelectValue(e.target.value)}
-                >
-                  <option value="">Choose a category...</option>
-                  <option value="procedures">Procedures</option>
-                  <option value="policies">Policies</option>
-                  <option value="training">Training Materials</option>
-                  <option value="forms">Forms & Templates</option>
-                </select>
+                  onChange={setSelectValue}
+                  placeholder="Choose a category..."
+                  hint="Select the primary category for this document"
+                />
               </div>
 
               <div className={styles.formGroup}>
@@ -576,8 +598,196 @@ export default function StyleGuidePage() {
         </div>
       </section>
 
-      {/* Cards */}
+      {/* Select Component Showcase */}
       <section className={styles.section} data-bg="warm">
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.eyebrow}>Dropdowns</span>
+            <h2 className={styles.sectionTitle}>Select Component</h2>
+            <p className={styles.sectionDescription}>
+              A premium custom dropdown with smooth animations, keyboard navigation,
+              and optional search. Replaces native selects for a polished experience.
+            </p>
+          </div>
+
+          <div className={styles.selectShowcase}>
+            {/* Default States */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>Default &amp; Selected</h3>
+              <p className={styles.selectGroupDesc}>Basic dropdown with placeholder and selected states.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    placeholder="Choose a category..."
+                  />
+                  <span className={styles.selectDemoLabel}>Placeholder</span>
+                </div>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value="procedures"
+                    onChange={() => {}}
+                  />
+                  <span className={styles.selectDemoLabel}>Selected</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sizes */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>Sizes</h3>
+              <p className={styles.selectGroupDesc}>Available in small, medium, and large to match input fields.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value={selectSizeValue}
+                    onChange={setSelectSizeValue}
+                    placeholder="Small"
+                    inputSize="sm"
+                  />
+                  <span className={styles.selectDemoLabel}>Small</span>
+                </div>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value={selectSizeValue}
+                    onChange={setSelectSizeValue}
+                    placeholder="Medium"
+                    inputSize="md"
+                  />
+                  <span className={styles.selectDemoLabel}>Medium (default)</span>
+                </div>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value={selectSizeValue}
+                    onChange={setSelectSizeValue}
+                    placeholder="Large"
+                    inputSize="lg"
+                  />
+                  <span className={styles.selectDemoLabel}>Large</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Searchable */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>Searchable</h3>
+              <p className={styles.selectGroupDesc}>Search automatically appears when options exceed 5 items, or can be forced on.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo} style={{ minWidth: '280px' }}>
+                  <Select
+                    options={searchableOptions}
+                    value={selectSearchValue}
+                    onChange={setSelectSearchValue}
+                    placeholder="Search departments..."
+                    searchable="auto"
+                  />
+                  <span className={styles.selectDemoLabel}>Auto-search (12 options)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* With Label & Hint */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>With Label &amp; Hint</h3>
+              <p className={styles.selectGroupDesc}>Integrated label and hint text for form contexts.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo} style={{ minWidth: '280px' }}>
+                  <Select
+                    label="Document Type"
+                    options={categoryOptions}
+                    placeholder="Select type..."
+                    hint="This determines the document template"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* States */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>States</h3>
+              <p className={styles.selectGroupDesc}>Disabled and error states for form validation.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value="policies"
+                    disabled
+                  />
+                  <span className={styles.selectDemoLabel}>Disabled</span>
+                </div>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    placeholder="Select category..."
+                    error="Please select a category"
+                  />
+                  <span className={styles.selectDemoLabel}>Error</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Filled Variant */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>Filled Variant</h3>
+              <p className={styles.selectGroupDesc}>Alternative styling with subtle background fill.</p>
+              <div className={styles.selectRow}>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    placeholder="Choose category..."
+                    variant="filled"
+                  />
+                  <span className={styles.selectDemoLabel}>Filled</span>
+                </div>
+                <div className={styles.selectDemo}>
+                  <Select
+                    options={categoryOptions}
+                    value="training"
+                    variant="filled"
+                    onChange={() => {}}
+                  />
+                  <span className={styles.selectDemoLabel}>Filled selected</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Keyboard Navigation */}
+            <div className={styles.selectGroup}>
+              <h3 className={styles.selectGroupTitle}>Keyboard Navigation</h3>
+              <p className={styles.selectGroupDesc}>Full keyboard support for accessibility.</p>
+              <div className={styles.keyboardHints}>
+                <div className={styles.keyboardHint}>
+                  <kbd className={styles.kbd}>Enter</kbd>
+                  <span>Open dropdown / Select option</span>
+                </div>
+                <div className={styles.keyboardHint}>
+                  <kbd className={styles.kbd}>Esc</kbd>
+                  <span>Close dropdown</span>
+                </div>
+                <div className={styles.keyboardHint}>
+                  <kbd className={styles.kbd}>Arrow</kbd>
+                  <span>Navigate options</span>
+                </div>
+                <div className={styles.keyboardHint}>
+                  <kbd className={styles.kbd}>Home</kbd>
+                  <span>Jump to first</span>
+                </div>
+                <div className={styles.keyboardHint}>
+                  <kbd className={styles.kbd}>End</kbd>
+                  <span>Jump to last</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cards */}
+      <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <span className={styles.eyebrow}>Components</span>
