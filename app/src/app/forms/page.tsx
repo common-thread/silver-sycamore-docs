@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "../../../convex/_generated/api";
 import PageHeader from "@/components/PageHeader";
 import Button from "@/components/ui/Button";
+import { FormShareDialog } from "@/components/FormShareDialog";
 import { Id } from "../../../convex/_generated/dataModel";
 import { useState } from "react";
 
@@ -16,6 +17,11 @@ export default function FormsPage() {
   const deleteForm = useMutation(api.forms.remove);
 
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [shareDialogForm, setShareDialogForm] = useState<{
+    formId: string;
+    formSchemaId: Id<"formSchemas">;
+    title: string;
+  } | null>(null);
 
   const handlePublish = async (id: Id<"formSchemas">) => {
     setActionLoading(id);
@@ -213,23 +219,58 @@ export default function FormsPage() {
               {/* Actions */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 {form.isPublished ? (
-                  <button
-                    onClick={() => handleUnpublish(form._id)}
-                    disabled={actionLoading === form._id}
-                    style={{
-                      padding: "0.5rem 0.875rem",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      color: "var(--color-ink-light)",
-                      background: "transparent",
-                      border: "1px solid var(--color-border)",
-                      cursor: actionLoading === form._id ? "not-allowed" : "pointer",
-                      opacity: actionLoading === form._id ? 0.6 : 1,
-                    }}
-                  >
-                    Unpublish
-                  </button>
+                  <>
+                    <button
+                      onClick={() =>
+                        setShareDialogForm({
+                          formId: form.formId,
+                          formSchemaId: form._id,
+                          title: form.title,
+                        })
+                      }
+                      style={{
+                        padding: "0.5rem 0.875rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "0.8125rem",
+                        fontWeight: 500,
+                        color: "var(--color-accent)",
+                        background: "rgba(139, 115, 85, 0.1)",
+                        border: "1px solid rgba(139, 115, 85, 0.3)",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.375rem",
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path
+                          d="M10.5 5.25L10.5 3.5C10.5 2.67157 9.82843 2 9 2L5 2C4.17157 2 3.5 2.67157 3.5 3.5L3.5 5.25M7 8.75L7 2M7 8.75L9 6.75M7 8.75L5 6.75M2.625 12L11.375 12C11.7202 12 12 11.7202 12 11.375L12 8.625C12 8.27982 11.7202 8 11.375 8L2.625 8C2.27982 8 2 8.27982 2 8.625L2 11.375C2 11.7202 2.27982 12 2.625 12Z"
+                          stroke="currentColor"
+                          strokeWidth="1.25"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() => handleUnpublish(form._id)}
+                      disabled={actionLoading === form._id}
+                      style={{
+                        padding: "0.5rem 0.875rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "0.8125rem",
+                        fontWeight: 500,
+                        color: "var(--color-ink-light)",
+                        background: "transparent",
+                        border: "1px solid var(--color-border)",
+                        cursor: actionLoading === form._id ? "not-allowed" : "pointer",
+                        opacity: actionLoading === form._id ? 0.6 : 1,
+                      }}
+                    >
+                      Unpublish
+                    </button>
+                  </>
                 ) : (
                   <button
                     onClick={() => handlePublish(form._id)}
@@ -291,6 +332,17 @@ export default function FormsPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Share Dialog */}
+      {shareDialogForm && (
+        <FormShareDialog
+          formId={shareDialogForm.formId}
+          formSchemaId={shareDialogForm.formSchemaId}
+          formTitle={shareDialogForm.title}
+          isOpen={true}
+          onClose={() => setShareDialogForm(null)}
+        />
       )}
     </div>
   );
