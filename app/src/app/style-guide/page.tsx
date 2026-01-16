@@ -94,7 +94,7 @@ export default function StyleGuidePage() {
                 <h3 className={styles.logoName}>Horizontal Lockup</h3>
                 <p className={styles.logoUsage}>Icon + wordmark combined. Ideal for headers, navigation bars, and wide layouts.</p>
                 <div className={styles.logoMeta}>
-                  <span>Aspect: 6:1</span>
+                  <span>Aspect: 4:1</span>
                   <span>Min height: 40px</span>
                 </div>
               </div>

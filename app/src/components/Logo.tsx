@@ -12,7 +12,7 @@ interface LogoProps {
  * - logo-full.png: 1536 x 1024 (1.5:1 ratio)
  * - logo-icon.png: 1436 x 673 (2.13:1 ratio - tree+carriage silhouette)
  * - logo-text.png: 1511 x 256 (5.9:1 ratio - wordmark)
- * - logo-horizontal.png: ~7:1 ratio (icon + wordmark at 89% height, bottom-aligned)
+ * - logo-horizontal.png: 4:1 ratio (4000x1000 - icon + wordmark horizontal lockup)
  *
  * Industry standard minimum sizes:
  * - Print: 1 inch / 25mm minimum height
@@ -40,10 +40,10 @@ const sizes = {
     lg: { width: 295, height: 50 },  // Large display - fills showcase boxes
   },
   horizontal: {
-    // 6:1 aspect ratio (640x108 original)
-    sm: { width: 240, height: 40 },  // Compact headers
-    md: { width: 360, height: 60 },  // Standard display
-    lg: { width: 480, height: 80 },  // Showcase/hero usage
+    // 4:1 aspect ratio (4000x1000 original)
+    sm: { width: 160, height: 40 },  // Compact headers
+    md: { width: 240, height: 60 },  // Standard display
+    lg: { width: 400, height: 100 }, // Showcase/hero usage
   },
 };
 
