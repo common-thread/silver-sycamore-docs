@@ -14,7 +14,7 @@ export default function CatalogPage() {
         <Breadcrumb />
         <ContentBox>
           <h1 className="text-2xl font-bold mb-4">Document Catalog</h1>
-          <div className="text-[#586069]">Loading documents...</div>
+          <div style={{ color: "var(--color-ink-muted)" }}>Loading documents...</div>
         </ContentBox>
       </>
     );
@@ -36,7 +36,7 @@ export default function CatalogPage() {
       <Breadcrumb />
       <ContentBox>
         <h1 className="text-2xl font-bold mb-4">Document Catalog</h1>
-        <p className="text-[#586069] mb-6">
+        <p className="mb-6" style={{ color: "var(--color-ink-muted)" }}>
           Complete listing of all documents in the library.
         </p>
 
@@ -48,7 +48,6 @@ export default function CatalogPage() {
                 <tr>
                   <th>Document</th>
                   <th>Subcategory</th>
-                  <th>Type</th>
                 </tr>
               </thead>
               <tbody>
@@ -57,15 +56,14 @@ export default function CatalogPage() {
                     <td>
                       <Link
                         href={`/${doc.category}/${doc.slug}`}
-                        className="text-[#0366d6]"
+                        style={{ color: "var(--color-accent)" }}
                       >
                         {doc.title}
                       </Link>
                     </td>
-                    <td className="text-[#586069] capitalize">
+                    <td className="capitalize" style={{ color: "var(--color-ink-muted)" }}>
                       {doc.subcategory?.replace(/-/g, " ") || "-"}
                     </td>
-                    <td className="text-[#586069]">{doc.sourceType || "md"}</td>
                   </tr>
                 ))}
               </tbody>
