@@ -103,7 +103,7 @@ export function DocumentViewer({
           style={{
             background: "var(--color-paper-warm)",
             border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-md)",
+            borderRadius: 0,
             padding: "var(--space-8)",
             textAlign: "center",
           }}
