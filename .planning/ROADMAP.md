@@ -100,25 +100,28 @@ Plans:
 - [x] 17-03: FormRenderer and FormBuilder token adoption
 - [x] 17-04: CommentSection, MessageList, and UI primitives token adoption
 
-### Phase 18: Content Audit + Type Decisions
+### Phase 18: Content Audit + Type Decisions - COMPLETE
 
 **Goal**: Full content tracker, apply rules-based type decisions, flag edge cases
 **Depends on**: Phase 17
 **Research**: Unlikely (internal content review)
-**Plans**: TBD
+**Plans**: 1/1
+**Completed**: 2026-01-17
 
 Plans:
-- [ ] 18-01: TBD
+- [x] 18-FIX: Evidence-based content classification (70 documents, 5 types)
 
 ### Phase 19: Redundant Content Resolution + IA Redesign
 
 **Goal**: Eliminate duplicates, design new information architecture
 **Depends on**: Phase 18
 **Research**: Unlikely (internal IA work)
-**Plans**: TBD
+**Plans**: 3
 
 Plans:
-- [ ] 19-01: TBD
+- [ ] 19-01: Schema + Seed Migration (contentType field, mapping, redundant form exclusion)
+- [ ] 19-02: Navigation Components (QuickActionNav, Header restructure)
+- [ ] 19-03: Home Page + Verification (listing pages, visual checkpoint)
 
 ### Phase 20: Semantic Formatting + Progressive Disclosure
 
@@ -167,8 +170,8 @@ Plans:
 |-------|-----------|-------|--------|-----------|
 | 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 18. Content Audit + Type Decisions | v1.2 | 0/? | Not started | - |
-| 19. Redundant Content + IA Redesign | v1.2 | 0/? | Not started | - |
+| 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
+| 19. Redundant Content + IA Redesign | v1.2 | 0/3 | Planned | - |
 | 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
 | 22. Forms in Workspace + Universal Comments | v1.2 | 0/? | Not started | - |
