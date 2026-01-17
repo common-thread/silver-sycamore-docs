@@ -198,6 +198,18 @@ async function importDocuments() {
           continue;
         }
 
+        // Prefer markdown over binary: if both file.md and file.docx exist, skip the binary
+        // This ensures converted markdown content takes precedence over original binaries
+        if (["docx", "xlsx", "pdf"].includes(ext)) {
+          const markdownEquivalent = fullPath.replace(/\.(docx|xlsx|pdf)$/i, ".md");
+          if (fs.existsSync(markdownEquivalent)) {
+            const subPath = relativePath ? `${relativePath}/` : "";
+            console.log(`  ⊘ ${category}/${subPath}${entry.name} [BINARY - skipped, .md exists]`);
+            skipped++;
+            continue;
+          }
+        }
+
         // Build lookup key for index.md metadata
         // Key format: category/relativePath/filename-without-ext or category/filename-without-ext
         // relativePath can be nested like "layouts/hall" for proper matching
