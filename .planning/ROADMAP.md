@@ -8,7 +8,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
-- 📋 **v1.2 Content Architecture** — Planning
+- 🚧 **v1.2 Content Architecture** — Phases 16-23 (in progress)
 
 ## Completed Milestones
 
@@ -69,12 +69,100 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-## 📋 v1.2 Content Architecture (Planning)
+## 🚧 v1.2 Content Architecture (In Progress)
 
 **Milestone Goal:** First-principles refactoring of content architecture — how documents are mapped, displayed, and navigated based on intent rather than blind markdown conversion.
 
-See STATE.md for full backlog.
+### Phase 16: Code Mapping + Style Audit
+
+**Goal**: Complete codebase mapping (current + desired state visual), style violation inventory
+**Depends on**: v1.1 complete
+**Research**: Unlikely (internal analysis work)
+**Plans**: TBD
+
+Plans:
+- [ ] 16-01: TBD (run /gsd:plan-phase 16 to break down)
+
+### Phase 17: Base Component Fixes
+
+**Goal**: Fix components so styling inherits correctly, establish enforcement layer
+**Depends on**: Phase 16
+**Research**: Unlikely (existing design system patterns)
+**Plans**: TBD
+
+Plans:
+- [ ] 17-01: TBD
+
+### Phase 18: Content Audit + Type Decisions
+
+**Goal**: Full content tracker, apply rules-based type decisions, flag edge cases
+**Depends on**: Phase 17
+**Research**: Unlikely (internal content review)
+**Plans**: TBD
+
+Plans:
+- [ ] 18-01: TBD
+
+### Phase 19: Redundant Content Resolution + IA Redesign
+
+**Goal**: Eliminate duplicates, design new information architecture
+**Depends on**: Phase 18
+**Research**: Unlikely (internal IA work)
+**Plans**: TBD
+
+Plans:
+- [ ] 19-01: TBD
+
+### Phase 20: Semantic Formatting + Progressive Disclosure
+
+**Goal**: Implement new IA, accordions/collapsible components
+**Depends on**: Phase 19
+**Research**: Unlikely (internal UI components)
+**Plans**: TBD
+
+Plans:
+- [ ] 20-01: TBD
+
+### Phase 21: Form Builder Visual Rebuild
+
+**Goal**: Section-based builder like Google Forms
+**Depends on**: Phase 20
+**Research**: Likely (form builder UX patterns)
+**Research topics**: Google Forms UX patterns, modern form builder approaches, drag-and-drop section builders
+**Plans**: TBD
+
+Plans:
+- [ ] 21-01: TBD
+
+### Phase 22: Forms in Workspace + Universal Comments
+
+**Goal**: Extended collaboration features — forms in workspace, full @mentions implementation
+**Depends on**: Phase 21
+**Research**: Unlikely (extending existing patterns)
+**Plans**: TBD
+
+Plans:
+- [ ] 22-01: TBD
+
+### Phase 23: Create Flows + Dashboard
+
+**Goal**: Fix folder/document creation, simple management dashboard
+**Depends on**: Phase 22
+**Research**: Unlikely (fixing existing code + internal patterns)
+**Plans**: TBD
+
+Plans:
+- [ ] 23-01: TBD
 
 ## Progress
 
-_v1.1 complete. v1.2 in planning._
+| Phase | Milestone | Plans | Status | Completed |
+|-------|-----------|-------|--------|-----------|
+| 16. Code Mapping + Style Audit | v1.2 | 0/? | Not started | - |
+| 17. Base Component Fixes | v1.2 | 0/? | Not started | - |
+| 18. Content Audit + Type Decisions | v1.2 | 0/? | Not started | - |
+| 19. Redundant Content + IA Redesign | v1.2 | 0/? | Not started | - |
+| 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
+| 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
+| 22. Forms in Workspace + Universal Comments | v1.2 | 0/? | Not started | - |
+| 23. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |

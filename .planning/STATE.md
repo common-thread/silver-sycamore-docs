@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-16)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication.
-**Current focus:** v1.2 Content Architecture (Planning)
+**Current focus:** v1.2 Content Architecture
 
 ## Current Position
 
-Phase: Planning v1.2
+Phase: 16 of 23 (Code Mapping + Style Audit)
 Plan: Not started
-Status: v1.1 shipped, v1.2 backlog captured
-Last activity: 2026-01-16 — Completed v1.1 milestone
+Status: Ready to plan
+Last activity: 2026-01-16 — Milestone v1.2 created
 
-Progress: Planning next milestone
+Progress: ░░░░░░░░░░ 0%
 
 ## Performance Metrics
 
@@ -94,22 +94,16 @@ None active.
 
 - Milestone v1.1 created: Content Pipeline & Branding, 5 phases (Phase 12-16)
 - v1.1 restructured: Consolidated design tokens + style guide into Phase 13 (Brand Foundation), now 4 phases (12-15)
+- Milestone v1.2 created: Content Architecture, 8 phases (Phase 16-23)
 
 ## Session Continuity
 
 Last session: 2026-01-16
-Completed: Phase 15 (Custom Dropdowns) - milestone v1.1 complete
-
-### What Was Built
-
-Phase 15-01:
-- Created premium Select component with search, keyboard navigation, smooth animations
-- Replaced native selects in ShareDialog, FormRenderer, FieldEditor, FormBuilder
-- Added comprehensive Select showcase to style guide with all variants documented
+Stopped at: Milestone v1.2 initialization
+Resume file: None
 
 ### Next Steps
 
-Milestone v1.1 complete. Ready for:
-1. **`/gsd:verify-work 15`** — Manual acceptance testing of custom dropdowns
-2. **`/gsd:complete-milestone`** — Archive v1.1 and prepare for v1.2
-3. **`/gsd:new-milestone`** — Plan v1.2 from backlog items
+1. **`/gsd:plan-phase 16`** — Plan Code Mapping + Style Audit phase
+2. **`/gsd:discuss-phase 16`** — Gather context first (optional)
+3. **`/gsd:research-phase 16`** — Investigate unknowns (if needed)
