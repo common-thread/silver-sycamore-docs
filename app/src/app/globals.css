@@ -105,6 +105,8 @@
   --color-error: #8B4D4D;
   --color-error-light: #F5E8E8;
   --color-error-dark: #6B3939;
+  --color-error-bg: rgba(139, 77, 77, 0.1);
+  --color-error-border: rgba(139, 77, 77, 0.3);
 
   --color-info: #4A6B8A;
   --color-info-light: #E8EEF5;
