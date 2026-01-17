@@ -189,7 +189,7 @@ export function CommentSection({
           style={{
             display: "flex",
             justifyContent: "flex-end",
-            marginTop: "0.75rem",
+            marginTop: "var(--space-3)",
           }}
         >
           <button
