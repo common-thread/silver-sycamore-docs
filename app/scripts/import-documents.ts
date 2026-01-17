@@ -24,6 +24,10 @@ function slugify(name: string): string {
     .replace(/[^a-z0-9-]/g, "");
 }
 
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 // Prefixes to move to the end of the title
 const TITLE_PREFIXES = [
   "package-",
@@ -284,6 +288,43 @@ async function importDocuments() {
           console.log(`  ✓ ${category}/${subPath}${entry.name} ${sourceTag} ${typeTag}`);
         } catch (error: any) {
           console.error(`  ✗ Failed to import ${entry.name}: ${error.message}`);
+        }
+      }
+    }
+
+    // Import index.md as a guide document if it exists at category level
+    // Only import at category level (relativePath undefined) to get the 5 navigation guides
+    if (!relativePath) {
+      const indexPath = path.join(dir, "index.md");
+      if (fs.existsSync(indexPath)) {
+        const lookupKey = `${category}/index`;
+        const contentType = getContentType(lookupKey);
+
+        if (contentType === "guide") {
+          const content = fs.readFileSync(indexPath, "utf-8");
+          // Extract title from first h1 or use category name
+          const titleMatch = content.match(/^#\s+(.+)$/m);
+          const title = titleMatch ? titleMatch[1] : capitalize(category);
+
+          try {
+            await client.mutation(api.documents.create, {
+              title,
+              slug: "index",
+              category,
+              subcategory: undefined,
+              content,
+              description: `Navigation guide for ${category}`,
+              sourceFile: "index.md",
+              sourceType: "md",
+              contentType,
+            });
+
+            console.log(`  ✓ ${category}/index.md [guide]`);
+            imported++;
+            contentTypeStats.guide++;
+          } catch (error: any) {
+            console.error(`  ✗ Failed to import ${category}/index.md: ${error.message}`);
+          }
         }
       }
     }
