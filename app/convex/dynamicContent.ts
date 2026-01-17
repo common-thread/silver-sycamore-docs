@@ -40,10 +40,14 @@ function parseStepsFromContent(
 /**
  * Start a new instance for a procedure, checklist, or form.
  * Creates a fresh completion tracking record.
+ * Accepts optional sessionId for anonymous users.
  */
 export const startInstance = mutation({
-  args: { documentId: v.id("documents") },
-  handler: async (ctx, { documentId }) => {
+  args: {
+    documentId: v.id("documents"),
+    sessionId: v.optional(v.string()),
+  },
+  handler: async (ctx, { documentId, sessionId: clientSessionId }) => {
     // Get the document
     const doc = await ctx.db.get(documentId);
     if (!doc) {
@@ -66,7 +70,7 @@ export const startInstance = mutation({
     // Get current user if authenticated
     const identity = await ctx.auth.getUserIdentity();
     let userId: Id<"users"> | undefined = undefined;
-    let sessionId: string | undefined = undefined;
+    let sessionId: string | undefined = clientSessionId;
 
     if (identity) {
       // Look up user by email
@@ -77,8 +81,10 @@ export const startInstance = mutation({
       if (user) {
         userId = user._id;
       }
-      // Store session ID for future anonymous linking
-      sessionId = identity.tokenIdentifier;
+      // Use auth token as sessionId if not provided by client
+      if (!sessionId) {
+        sessionId = identity.tokenIdentifier;
+      }
     }
 
     // Create the instance
@@ -113,14 +119,16 @@ export const startInstance = mutation({
 /**
  * Complete or uncomplete a step in an instance.
  * Updates completion data atomically and recalculates progress.
+ * Accepts optional sessionId for anonymous user access verification.
  */
 export const completeStep = mutation({
   args: {
     instanceId: v.id("dynamicContentInstances"),
     stepIndex: v.number(),
     completed: v.boolean(),
+    sessionId: v.optional(v.string()),
   },
-  handler: async (ctx, { instanceId, stepIndex, completed }) => {
+  handler: async (ctx, { instanceId, stepIndex, completed, sessionId: clientSessionId }) => {
     // Get the instance
     const instance = await ctx.db.get(instanceId);
     if (!instance) {
@@ -143,8 +151,10 @@ export const completeStep = mutation({
         }
       }
     } else if (instance.sessionId) {
-      // Anonymous instance - check session match
-      if (identity?.tokenIdentifier === instance.sessionId) {
+      // Anonymous instance - check session match (client-provided or auth token)
+      if (clientSessionId && clientSessionId === instance.sessionId) {
+        hasAccess = true;
+      } else if (identity?.tokenIdentifier === instance.sessionId) {
         hasAccess = true;
       }
     } else {
@@ -206,35 +216,50 @@ export const completeStep = mutation({
 /**
  * Get user's active instance for a document.
  * Returns in_progress instance if exists, otherwise null.
+ * Supports both authenticated users (by userId) and anonymous users (by sessionId).
  */
 export const getInstanceForDocument = query({
-  args: { documentId: v.id("documents") },
-  handler: async (ctx, { documentId }) => {
+  args: {
+    documentId: v.id("documents"),
+    sessionId: v.optional(v.string()),
+  },
+  handler: async (ctx, { documentId, sessionId }) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      // For anonymous, would need sessionId passed in - return null for now
-      return null;
+
+    // For authenticated users, look up by userId
+    if (identity) {
+      const user = await ctx.db
+        .query("users")
+        .filter((q) => q.eq(q.field("email"), identity.email))
+        .first();
+
+      if (user) {
+        const instance = await ctx.db
+          .query("dynamicContentInstances")
+          .withIndex("by_user_source", (q) =>
+            q.eq("userId", user._id).eq("sourceDocumentId", documentId)
+          )
+          .filter((q) => q.eq(q.field("status"), "in_progress"))
+          .first();
+
+        if (instance) return instance;
+      }
     }
 
-    // Look up user
-    const user = await ctx.db
-      .query("users")
-      .filter((q) => q.eq(q.field("email"), identity.email))
-      .first();
-    if (!user) {
-      return null;
+    // For anonymous users (or if no user-linked instance found), look up by sessionId
+    if (sessionId) {
+      const instance = await ctx.db
+        .query("dynamicContentInstances")
+        .withIndex("by_session_source", (q) =>
+          q.eq("sessionId", sessionId).eq("sourceDocumentId", documentId)
+        )
+        .filter((q) => q.eq(q.field("status"), "in_progress"))
+        .first();
+
+      return instance;
     }
 
-    // Find active instance for this user and document
-    const instance = await ctx.db
-      .query("dynamicContentInstances")
-      .withIndex("by_user_source", (q) =>
-        q.eq("userId", user._id).eq("sourceDocumentId", documentId)
-      )
-      .filter((q) => q.eq(q.field("status"), "in_progress"))
-      .first();
-
-    return instance;
+    return null;
   },
 });
 

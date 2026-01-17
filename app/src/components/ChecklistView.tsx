@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
@@ -13,6 +13,24 @@ interface ChecklistViewProps {
     contentType?: string;
   };
   instanceId?: string;
+}
+
+/**
+ * Get or create a session ID for anonymous checklist tracking.
+ * Stored in localStorage to persist across page refreshes.
+ */
+function getSessionId(): string {
+  if (typeof window === "undefined") return "";
+
+  const key = "silver-sycamore-session-id";
+  let sessionId = localStorage.getItem(key);
+
+  if (!sessionId) {
+    sessionId = `anon-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+    localStorage.setItem(key, sessionId);
+  }
+
+  return sessionId;
 }
 
 /**
@@ -31,11 +49,17 @@ function parseChecklistItems(content: string): string[] {
 
 export function ChecklistView({ document, instanceId: propInstanceId }: ChecklistViewProps) {
   const [isStarting, setIsStarting] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
 
-  // Query for existing instance
+  // Get sessionId on mount (client-side only)
+  useEffect(() => {
+    setSessionId(getSessionId());
+  }, []);
+
+  // Query for existing instance - pass sessionId for anonymous users
   const existingInstance = useQuery(
     api.dynamicContent.getInstanceForDocument,
-    { documentId: document._id as Id<"documents"> }
+    sessionId ? { documentId: document._id as Id<"documents">, sessionId } : "skip"
   );
 
   // Query for instance details if we have an ID
@@ -70,9 +94,13 @@ export function ChecklistView({ document, instanceId: propInstanceId }: Checklis
   const totalCount = instance?.totalSteps ?? items.length;
 
   const handleStartChecklist = async () => {
+    if (!sessionId) return; // Wait for sessionId to be set
     setIsStarting(true);
     try {
-      await startInstance({ documentId: document._id as Id<"documents"> });
+      await startInstance({
+        documentId: document._id as Id<"documents">,
+        sessionId,
+      });
     } catch (error) {
       console.error("Failed to start checklist:", error);
     } finally {
@@ -81,12 +109,13 @@ export function ChecklistView({ document, instanceId: propInstanceId }: Checklis
   };
 
   const handleItemToggle = async (itemIndex: number, completed: boolean) => {
-    if (!instance?._id) return;
+    if (!instance?._id || !sessionId) return;
     try {
       await completeStep({
         instanceId: instance._id,
         stepIndex: itemIndex,
         completed,
+        sessionId,
       });
     } catch (error) {
       console.error("Failed to update item:", error);

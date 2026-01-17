@@ -373,6 +373,7 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_user_source", ["userId", "sourceDocumentId"])
     .index("by_session", ["sessionId"])
+    .index("by_session_source", ["sessionId", "sourceDocumentId"])
     .index("by_user_status", ["userId", "status"]),
 
   // Activity log - tracks user activity for dashboard and sidebar

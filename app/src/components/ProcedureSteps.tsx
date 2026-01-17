@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
@@ -14,6 +14,24 @@ interface ProcedureStepsProps {
     contentType?: string;
   };
   instanceId?: string;
+}
+
+/**
+ * Get or create a session ID for anonymous procedure tracking.
+ * Stored in localStorage to persist across page refreshes.
+ */
+function getSessionId(): string {
+  if (typeof window === "undefined") return "";
+
+  const key = "silver-sycamore-session-id";
+  let sessionId = localStorage.getItem(key);
+
+  if (!sessionId) {
+    sessionId = `anon-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+    localStorage.setItem(key, sessionId);
+  }
+
+  return sessionId;
 }
 
 interface ParsedStep {
@@ -58,11 +76,17 @@ function parseStepsFromContent(content: string): ParsedStep[] {
 
 export function ProcedureSteps({ document, instanceId: propInstanceId }: ProcedureStepsProps) {
   const [isStarting, setIsStarting] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
 
-  // Query for existing instance
+  // Get sessionId on mount (client-side only)
+  useEffect(() => {
+    setSessionId(getSessionId());
+  }, []);
+
+  // Query for existing instance - pass sessionId for anonymous users
   const existingInstance = useQuery(
     api.dynamicContent.getInstanceForDocument,
-    { documentId: document._id as Id<"documents"> }
+    sessionId ? { documentId: document._id as Id<"documents">, sessionId } : "skip"
   );
 
   // Query for instance details if we have an ID
@@ -98,9 +122,13 @@ export function ProcedureSteps({ document, instanceId: propInstanceId }: Procedu
   const progressPercent = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
 
   const handleStartProcedure = async () => {
+    if (!sessionId) return; // Wait for sessionId to be set
     setIsStarting(true);
     try {
-      await startInstance({ documentId: document._id as Id<"documents"> });
+      await startInstance({
+        documentId: document._id as Id<"documents">,
+        sessionId,
+      });
     } catch (error) {
       console.error("Failed to start procedure:", error);
     } finally {
@@ -109,12 +137,13 @@ export function ProcedureSteps({ document, instanceId: propInstanceId }: Procedu
   };
 
   const handleStepToggle = async (stepIndex: number, completed: boolean) => {
-    if (!instance?._id) return;
+    if (!instance?._id || !sessionId) return;
     try {
       await completeStep({
         instanceId: instance._id,
         stepIndex,
         completed,
+        sessionId,
       });
     } catch (error) {
       console.error("Failed to update step:", error);
