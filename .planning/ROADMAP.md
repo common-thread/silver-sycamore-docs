@@ -116,23 +116,44 @@ Plans:
 **Goal**: Eliminate duplicates, design new information architecture
 **Depends on**: Phase 18
 **Research**: Unlikely (internal IA work)
-**Plans**: 3/3
+**Plans**: 4/4
 **Completed**: 2026-01-17
 
 Plans:
 - [x] 19-01: Schema + Seed Migration (contentType field, mapping, redundant form exclusion)
 - [x] 19-02: Navigation Components (QuickActionNav, Header restructure)
 - [x] 19-03: Home Page + Verification (listing pages, visual checkpoint)
+- [x] 19-FIX: Import index.md files as guide documents
 
 ### Phase 20: Semantic Formatting + Progressive Disclosure
 
-**Goal**: Implement new IA, accordions/collapsible components
+**Goal**: Type-specific document rendering — each content type gets appropriate semantic formatting and progressive disclosure
 **Depends on**: Phase 19
-**Research**: Unlikely (internal UI components)
-**Plans**: TBD
+**Research**: Unlikely (internal UI components, patterns defined in DESIRED-STATE.md)
+**Plans**: TBD (estimate 3-4)
+
+**New Components (from DESIRED-STATE.md):**
+- `ContentTypeRenderer` — Routes documents to type-specific renderers
+- `ProcedureSteps` — Numbered steps with visual progress indicators
+- `ChecklistView` — Interactive checkboxes with progress tracking
+- `ReferenceCard` — Metadata-rich display for packages/pricing/layouts
+- `Accordion` / `CollapsibleSection` — Progressive disclosure for long content
+
+**Integration:**
+- DocumentViewer routes through ContentTypeRenderer
+- ContentTypeRenderer selects renderer based on document.contentType
+- Graceful fallback for untyped content (ReactMarkdown)
+
+**Exit Criteria:**
+- [ ] All 5 content types have dedicated rendering
+- [ ] Long documents use progressive disclosure (collapsible sections)
+- [ ] Procedures show numbered steps with visual progress
+- [ ] Checklists have interactive checkboxes
 
 Plans:
-- [ ] 20-01: TBD
+- [ ] 20-01: ContentTypeRenderer + Accordion/CollapsibleSection components
+- [ ] 20-02: ProcedureSteps and ChecklistView renderers
+- [ ] 20-03: ReferenceCard renderer + DocumentViewer integration
 
 ### Phase 21: Form Builder Visual Rebuild
 
@@ -172,7 +193,7 @@ Plans:
 | 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
-| 19. Redundant Content + IA Redesign | v1.2 | 3/3 | Complete | 2026-01-17 |
+| 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
 | 22. Forms in Workspace + Universal Comments | v1.2 | 0/? | Not started | - |
