@@ -29,12 +29,21 @@ export default defineSchema({
     description: v.optional(v.string()),
     status: v.optional(v.string()),
     version: v.optional(v.number()), // Current version number
+    contentType: v.optional(v.union(
+      v.literal("procedure"),
+      v.literal("reference"),
+      v.literal("form"),
+      v.literal("checklist"),
+      v.literal("guide")
+    )), // Purpose-based content classification
+    formId: v.optional(v.string()), // Link form-type documents to their form builder equivalent
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_category", ["category"])
     .index("by_slug", ["slug"])
     .index("by_category_subcategory", ["category", "subcategory"])
+    .index("by_contentType", ["contentType"])
     .searchIndex("search_content", { searchField: "content", filterFields: ["category"] }),
 
   // Document version history
