@@ -8,7 +8,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
-- 🚧 **v1.2 Content Architecture** — Phases 16-23 (in progress)
+- 🚧 **v1.2 Content Architecture** — Phases 16-22 (in progress)
 
 ## Completed Milestones
 
@@ -125,39 +125,55 @@ Plans:
 - [x] 19-03: Home Page + Verification (listing pages, visual checkpoint)
 - [x] 19-FIX: Import index.md files as guide documents
 
-### Phase 20: Semantic Formatting + Progressive Disclosure
+### Phase 20: Dynamic Content System
 
-**Goal**: Type-specific document rendering — each content type gets appropriate semantic formatting and progressive disclosure
+**Goal**: Complete infrastructure for interactive dynamic content — procedures, checklists, and forms that staff can complete, track, and share. Includes semantic rendering, completion lifecycle, activity tracking, and sharing workflows.
 **Depends on**: Phase 19
-**Research**: Unlikely (internal UI components, patterns defined in DESIRED-STATE.md)
-**Plans**: TBD (estimate 3-4)
+**Research**: Unlikely (patterns defined in CONTEXT.md, schema design from codebase exploration)
+**Plans**: TBD (estimate 5-7)
 
-**New Components (from DESIRED-STATE.md):**
+**Two patterns coexist:**
+1. **Template-Based (Controlled):** Wiki procedures/checklists as templates. Managers configure notifications, approval workflows. Staff use templates, results route where specified.
+2. **User-Created (Flexible):** Staff create/duplicate in personal workspace with full control over sharing, workflows, and routing (like Google Forms).
+
+**Core capabilities:**
+- Unified schema for all dynamic content (procedures, checklists, forms)
+- Instance tracking: personal copies with completion state
+- Step-level progress: "3 of 7 steps complete" with checkboxes
+- Activity history: workspace sidebar + full dashboard with filtering
+- Sharing: internal (staff) or external (anonymous link)
+- Routing: configurable result destinations and notifications
+
+**New Components:**
 - `ContentTypeRenderer` — Routes documents to type-specific renderers
-- `ProcedureSteps` — Numbered steps with visual progress indicators
-- `ChecklistView` — Interactive checkboxes with progress tracking
-- `ReferenceCard` — Metadata-rich display for packages/pricing/layouts
-- `Accordion` / `CollapsibleSection` — Progressive disclosure for long content
+- `ProcedureSteps` — Numbered steps with visual progress, checkboxes
+- `ChecklistView` — Interactive checkboxes with completion tracking
+- `ReferenceCard` — Metadata-rich display for static content
+- `Accordion` / `CollapsibleSection` — Progressive disclosure
+- Activity dashboard components
 
-**Integration:**
-- DocumentViewer routes through ContentTypeRenderer
-- ContentTypeRenderer selects renderer based on document.contentType
-- Graceful fallback for untyped content (ReactMarkdown)
+**Schema additions:**
+- `dynamicContentInstances` — Tracks personal instances of templates
+- `completionTracking` — Step completion, submission state
+- `contentRouting` — Notification targets, result destinations
+- `activityLog` — User activity stream
 
 **Exit Criteria:**
 - [ ] All 5 content types have dedicated rendering
-- [ ] Long documents use progressive disclosure (collapsible sections)
-- [ ] Procedures show numbered steps with visual progress
-- [ ] Checklists have interactive checkboxes
+- [ ] Procedures/checklists track completion with step-level progress
+- [ ] Activity history visible in workspace sidebar and full dashboard
+- [ ] Sharing works for internal staff and external links
+- [ ] Template vs user-created permission model enforced
 
 Plans:
-- [ ] 20-01: ContentTypeRenderer + Accordion/CollapsibleSection components
-- [ ] 20-02: ProcedureSteps and ChecklistView renderers
-- [ ] 20-03: ReferenceCard renderer + DocumentViewer integration
+- [ ] 20-01: TBD (schema + core infrastructure)
+- [ ] 20-02: TBD (content type renderers)
+- [ ] 20-03: TBD (completion tracking + activity)
+- [ ] 20-04: TBD (sharing + routing)
 
 ### Phase 21: Form Builder Visual Rebuild
 
-**Goal**: Section-based builder like Google Forms
+**Goal**: Section-based builder like Google Forms — visual drag-and-drop interface
 **Depends on**: Phase 20
 **Research**: Likely (form builder UX patterns)
 **Research topics**: Google Forms UX patterns, modern form builder approaches, drag-and-drop section builders
@@ -166,25 +182,15 @@ Plans:
 Plans:
 - [ ] 21-01: TBD
 
-### Phase 22: Forms in Workspace + Universal Comments
+### Phase 22: Create Flows + Dashboard
 
-**Goal**: Extended collaboration features — forms in workspace, full @mentions implementation
+**Goal**: Fix folder/document creation flows, simple management dashboard
 **Depends on**: Phase 21
-**Research**: Unlikely (extending existing patterns)
-**Plans**: TBD
-
-Plans:
-- [ ] 22-01: TBD
-
-### Phase 23: Create Flows + Dashboard
-
-**Goal**: Fix folder/document creation, simple management dashboard
-**Depends on**: Phase 22
 **Research**: Unlikely (fixing existing code + internal patterns)
 **Plans**: TBD
 
 Plans:
-- [ ] 23-01: TBD
+- [ ] 22-01: TBD
 
 ## Progress
 
@@ -194,7 +200,6 @@ Plans:
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
+| 20. Dynamic Content System | v1.2 | 0/? | Not started | - |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
-| 22. Forms in Workspace + Universal Comments | v1.2 | 0/? | Not started | - |
-| 23. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
+| 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
