@@ -166,7 +166,7 @@ Plans:
 - [ ] Template vs user-created permission model enforced
 
 Plans:
-- [ ] 20-01: TBD (schema + core infrastructure)
+- [x] 20-01: Schema Foundation (dynamicContentInstances, activityLog, shareLinks tables)
 - [ ] 20-02: TBD (content type renderers)
 - [ ] 20-03: TBD (completion tracking + activity)
 - [ ] 20-04: TBD (sharing + routing)
@@ -200,6 +200,6 @@ Plans:
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 20. Dynamic Content System | v1.2 | 0/? | Not started | - |
+| 20. Dynamic Content System | v1.2 | 1/5 | In progress | - |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
