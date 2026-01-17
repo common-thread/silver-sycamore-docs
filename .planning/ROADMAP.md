@@ -125,13 +125,13 @@ Plans:
 - [x] 19-03: Home Page + Verification (listing pages, visual checkpoint)
 - [x] 19-FIX: Import index.md files as guide documents
 
-### Phase 20: Dynamic Content System - COMPLETE
+### Phase 20: Dynamic Content System - FIX PENDING
 
 **Goal**: Complete infrastructure for interactive dynamic content — procedures, checklists, and forms that staff can complete, track, and share. Includes semantic rendering, completion lifecycle, activity tracking, and sharing workflows.
 **Depends on**: Phase 19
 **Research**: Unlikely (patterns defined in CONTEXT.md, schema design from codebase exploration)
-**Plans**: 5/5
-**Completed**: 2026-01-17
+**Plans**: 5/5 + FIX
+**Status**: Core complete, fix plan pending for binary content conversion
 
 Plans:
 - [x] 20-01: Schema Foundation (dynamicContentInstances, activityLog, shareLinks tables)
@@ -139,6 +139,7 @@ Plans:
 - [x] 20-03: Activity System (activity.ts, ActivitySidebar, ActivityDashboard)
 - [x] 20-04: Sharing System (sharing.ts, ShareLinkDialog, /share/[token] page)
 - [x] 20-05: Integration (ContentTypeRenderer, activity page, wiring)
+- [ ] 20-FIX: Binary Content Conversion (convert 39 DOCX/XLSX/PDF files to markdown)
 
 ### Phase 21: Form Builder Visual Rebuild
 

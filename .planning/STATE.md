@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 20 of 22 (Dynamic Content System) - COMPLETE
-Plan: 5 of 5 in current phase
-Status: Phase complete
-Last activity: 2026-01-17 — Completed 20-05-PLAN.md (integration)
+Phase: 20 of 22 (Dynamic Content System) - FIX PENDING
+Plan: FIX (binary content conversion)
+Status: In progress
+Last activity: 2026-01-17 — Created 20-FIX-PLAN.md (convert 39 binary files to markdown)
 
 Progress: █████████████░░ 68% (plans 17 of ~25 in v1.2)
 
@@ -157,10 +157,11 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Completed Phase 20 (Dynamic Content System)
-Resume file: None
+Stopped at: Created 20-FIX-PLAN.md (binary content conversion)
+Resume file: .planning/phases/20-dynamic-content-system/20-FIX-PLAN.md
 
 ### Next Steps
 
-1. **`/gsd:plan-phase 21`** — Plan Phase 21 (if exists)
-2. Continue v1.2 Content Architecture milestone
+1. **`/gsd:execute-plan .planning/phases/20-dynamic-content-system/20-FIX-PLAN.md`** — Convert 39 binary files to markdown
+2. After 20-FIX complete, Phase 20 truly complete
+3. Then continue to Phase 21
