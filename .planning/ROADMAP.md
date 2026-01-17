@@ -73,15 +73,18 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 **Milestone Goal:** First-principles refactoring of content architecture — how documents are mapped, displayed, and navigated based on intent rather than blind markdown conversion.
 
-### Phase 16: Code Mapping + Style Audit
+### Phase 16: Code Mapping + Style Audit - COMPLETE
 
 **Goal**: Complete codebase mapping (current + desired state visual), style violation inventory
 **Depends on**: v1.1 complete
 **Research**: Unlikely (internal analysis work)
-**Plans**: TBD
+**Plans**: 3/3
+**Completed**: 2026-01-17
 
 Plans:
-- [ ] 16-01: TBD (run /gsd:plan-phase 16 to break down)
+- [x] 16-01: User flows and navigation mapping (USER-FLOWS.md)
+- [x] 16-02: Component-to-data flow mapping and style audit (COMPONENT-MAP.md, STYLE-VIOLATIONS.md)
+- [x] 16-03: Target architecture documentation (DESIRED-STATE.md)
 
 ### Phase 17: Base Component Fixes
 
@@ -158,7 +161,7 @@ Plans:
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 16. Code Mapping + Style Audit | v1.2 | 0/? | Not started | - |
+| 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
 | 17. Base Component Fixes | v1.2 | 0/? | Not started | - |
 | 18. Content Audit + Type Decisions | v1.2 | 0/? | Not started | - |
 | 19. Redundant Content + IA Redesign | v1.2 | 0/? | Not started | - |

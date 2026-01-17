@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 16 of 23 (Code Mapping + Style Audit)
-Plan: 16-02 COMPLETE (2 of 3 plans)
-Status: 16-01 + 16-02 complete — Ready for Plan 16-03 (DESIRED-STATE.md)
-Last activity: 2026-01-17 — Navigation and component mapping completed
+Phase: 16 of 23 (Code Mapping + Style Audit) - COMPLETE
+Plan: 16-03 COMPLETE (3 of 3 plans)
+Status: Phase 16 complete — Ready for Phase 17 (Base Component Fixes)
+Last activity: 2026-01-17 — DESIRED-STATE.md created with target architecture
 
-Progress: ██░░░░░░░░ 8% (plans 2 of ~24 in v1.2)
+Progress: ████░░░░░░ 12% (plans 3 of ~24 in v1.2)
 
 ## Performance Metrics
 
@@ -28,8 +28,8 @@ Progress: ██░░░░░░░░ 8% (plans 2 of ~24 in v1.2)
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 2 (16-01, 16-02)
-- Phases complete: 0 of 8 (Phase 16 in progress, Plan 16-03 remaining)
+- Plans completed: 3 (16-01, 16-02, 16-03)
+- Phases complete: 1 of 8 (Phase 16 complete)
 
 ## Accumulated Context
 
@@ -53,6 +53,9 @@ Phase 16 decisions:
 - Border-radius should be `0` consistently (brand aesthetic)
 - Typography/spacing tokens exist but need adoption
 - Phase 17 will fix high-priority violations first
+- Content types defined: procedure, reference, form, checklist, guide
+- Navigation: Purpose-based replaces category-based (Phase 19)
+- Components: 15 keep, 9 refactor, 7 new (see DESIRED-STATE.md)
 
 ### Deferred Issues
 
@@ -109,12 +112,11 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Plan 16-01 complete, Plan 16-03 pending
+Stopped at: Phase 16 complete
 Resume file: None
 
 ### Next Steps
 
-1. **`/gsd:execute-plan 16 03`** — Execute Plan 16-03 (DESIRED-STATE.md)
-2. After 16-03 complete, Phase 16 is done
-3. Then `/gsd:plan-phase 17` — Plan Base Component Fixes phase
-4. Reference STYLE-VIOLATIONS.md for fix priorities (89 violations, 34 high-priority)
+1. **`/gsd:plan-phase 17`** — Plan Base Component Fixes phase
+2. Reference STYLE-VIOLATIONS.md for fix priorities (89 violations, 34 high-priority)
+3. Reference DESIRED-STATE.md for target architecture guidance
