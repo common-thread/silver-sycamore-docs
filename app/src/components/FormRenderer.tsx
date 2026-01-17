@@ -202,12 +202,12 @@ export function FormRenderer({
 
       case "textarea":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
             <label
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
+                fontSize: "var(--text-xs)",
+                fontWeight: "var(--font-medium)",
                 color: "var(--color-ink-light)",
                 letterSpacing: "0.01em",
               }}
@@ -222,15 +222,15 @@ export function FormRenderer({
               rows={4}
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
-                padding: "0.75rem 1rem",
+                fontSize: "var(--text-sm)",
+                padding: "var(--space-3) var(--space-4)",
                 border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 borderRadius: 0,
                 background: "var(--color-surface)",
                 color: "var(--color-ink)",
                 resize: "vertical",
                 outline: "none",
-                transition: "border-color 180ms ease-out",
+                transition: "border-color var(--duration-fast) var(--ease-out)",
                 width: "100%",
               }}
               onFocus={(e) => {
@@ -245,7 +245,7 @@ export function FormRenderer({
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
-                  fontWeight: 500,
+                  fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
               >
@@ -277,12 +277,12 @@ export function FormRenderer({
       case "multiselect":
         const selectedOptions = (value as string[]) || [];
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
             <label
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
+                fontSize: "var(--text-xs)",
+                fontWeight: "var(--font-medium)",
                 color: "var(--color-ink-light)",
                 letterSpacing: "0.01em",
               }}
@@ -294,7 +294,7 @@ export function FormRenderer({
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.5rem",
-                padding: "0.75rem 1rem",
+                padding: "var(--space-3) var(--space-4)",
                 border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
               }}
@@ -307,7 +307,7 @@ export function FormRenderer({
                     alignItems: "center",
                     gap: "0.5rem",
                     fontFamily: "var(--font-body)",
-                    fontSize: "0.875rem",
+                    fontSize: "var(--text-sm)",
                     color: "var(--color-ink)",
                     cursor: isSubmitting ? "not-allowed" : "pointer",
                   }}
@@ -332,7 +332,7 @@ export function FormRenderer({
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
-                  fontWeight: 500,
+                  fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
               >
@@ -344,14 +344,14 @@ export function FormRenderer({
 
       case "checkbox":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
             <label
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
                 fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
+                fontSize: "var(--text-sm)",
                 color: "var(--color-ink)",
                 cursor: isSubmitting ? "not-allowed" : "pointer",
               }}
@@ -374,7 +374,7 @@ export function FormRenderer({
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
-                  fontWeight: 500,
+                  fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
               >
@@ -386,12 +386,12 @@ export function FormRenderer({
 
       case "file":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
             <label
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
+                fontSize: "var(--text-xs)",
+                fontWeight: "var(--font-medium)",
                 color: "var(--color-ink-light)",
                 letterSpacing: "0.01em",
               }}
@@ -419,7 +419,7 @@ export function FormRenderer({
               disabled={isSubmitting}
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
+                fontSize: "var(--text-sm)",
                 padding: "0.5rem",
                 border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
@@ -443,7 +443,7 @@ export function FormRenderer({
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
-                  fontWeight: 500,
+                  fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
               >
@@ -461,15 +461,15 @@ export function FormRenderer({
   return (
     <form onSubmit={handleSubmit} style={{ width: "100%" }}>
       {/* Form Header */}
-      <div style={{ marginBottom: "2rem" }}>
+      <div style={{ marginBottom: "var(--space-8)" }}>
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.75rem",
+            fontSize: "var(--text-2xl)",
             fontWeight: 600,
             color: "var(--color-ink)",
             marginBottom: "0.5rem",
-            letterSpacing: "-0.02em",
+            letterSpacing: "var(--tracking-snug)",
           }}
         >
           {formSchema.title}
@@ -478,7 +478,7 @@ export function FormRenderer({
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
+              fontSize: "var(--text-sm)",
               color: "var(--color-ink-light)",
               lineHeight: 1.6,
             }}
@@ -493,14 +493,14 @@ export function FormRenderer({
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "1.5rem",
+          gap: "var(--space-6)",
         }}
       >
         {fields.map(renderField)}
       </div>
 
       {/* Submit Button */}
-      <div style={{ marginTop: "2rem", display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ marginTop: "var(--space-8)", display: "flex", justifyContent: "flex-end" }}>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
