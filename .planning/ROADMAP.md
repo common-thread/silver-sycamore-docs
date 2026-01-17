@@ -116,11 +116,12 @@ Plans:
 **Goal**: Eliminate duplicates, design new information architecture
 **Depends on**: Phase 18
 **Research**: Unlikely (internal IA work)
-**Plans**: 3
+**Plans**: 2/3
+**Status**: In progress
 
 Plans:
-- [ ] 19-01: Schema + Seed Migration (contentType field, mapping, redundant form exclusion)
-- [ ] 19-02: Navigation Components (QuickActionNav, Header restructure)
+- [x] 19-01: Schema + Seed Migration (contentType field, mapping, redundant form exclusion)
+- [x] 19-02: Navigation Components (QuickActionNav, Header restructure)
 - [ ] 19-03: Home Page + Verification (listing pages, visual checkpoint)
 
 ### Phase 20: Semantic Formatting + Progressive Disclosure
@@ -171,7 +172,7 @@ Plans:
 | 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
-| 19. Redundant Content + IA Redesign | v1.2 | 0/3 | Planned | - |
+| 19. Redundant Content + IA Redesign | v1.2 | 2/3 | In progress | - |
 | 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
 | 22. Forms in Workspace + Universal Comments | v1.2 | 0/? | Not started | - |
