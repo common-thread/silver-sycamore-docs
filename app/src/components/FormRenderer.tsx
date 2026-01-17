@@ -244,7 +244,7 @@ export function FormRenderer({
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--text-xs)",
                   fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
@@ -293,7 +293,7 @@ export function FormRenderer({
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.5rem",
+                gap: "var(--space-2)",
                 padding: "var(--space-3) var(--space-4)",
                 border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
@@ -305,7 +305,7 @@ export function FormRenderer({
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.5rem",
+                    gap: "var(--space-2)",
                     fontFamily: "var(--font-body)",
                     fontSize: "var(--text-sm)",
                     color: "var(--color-ink)",
@@ -318,8 +318,8 @@ export function FormRenderer({
                     onChange={(e) => handleMultiselectChange(field.name, option, e.target.checked)}
                     disabled={isSubmitting}
                     style={{
-                      width: "1rem",
-                      height: "1rem",
+                      width: "var(--space-4)",
+                      height: "var(--space-4)",
                       accentColor: "var(--color-accent)",
                     }}
                   />
@@ -331,7 +331,7 @@ export function FormRenderer({
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--text-xs)",
                   fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
@@ -349,7 +349,7 @@ export function FormRenderer({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "var(--space-2)",
                 fontFamily: "var(--font-body)",
                 fontSize: "var(--text-sm)",
                 color: "var(--color-ink)",
@@ -362,8 +362,8 @@ export function FormRenderer({
                 onChange={(e) => handleFieldChange(field.name, e.target.checked)}
                 disabled={isSubmitting}
                 style={{
-                  width: "1.125rem",
-                  height: "1.125rem",
+                  width: "var(--space-5)",
+                  height: "var(--space-5)",
                   accentColor: "var(--color-accent)",
                 }}
               />
@@ -373,7 +373,7 @@ export function FormRenderer({
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--text-xs)",
                   fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
@@ -420,7 +420,7 @@ export function FormRenderer({
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "var(--text-sm)",
-                padding: "0.5rem",
+                padding: "var(--space-2)",
                 border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
                 cursor: isSubmitting ? "not-allowed" : "pointer",
@@ -431,7 +431,7 @@ export function FormRenderer({
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--text-xs)",
                   color: "var(--color-ink-muted)",
                 }}
               >
@@ -442,7 +442,7 @@ export function FormRenderer({
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--text-xs)",
                   fontWeight: "var(--font-medium)",
                   color: "var(--color-error)",
                 }}
@@ -466,9 +466,9 @@ export function FormRenderer({
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "var(--text-2xl)",
-            fontWeight: 600,
+            fontWeight: "var(--font-semibold)",
             color: "var(--color-ink)",
-            marginBottom: "0.5rem",
+            marginBottom: "var(--space-2)",
             letterSpacing: "var(--tracking-snug)",
           }}
         >
