@@ -735,3 +735,252 @@ Components with the most violations:
 | Feature (FormBuilder, CommentSection, MessageList) | 3 | 33 |
 | UI Primitives (Button, Input, Select, Badge, Card) | 5 | 16 |
 | Other components | 42 | 6 |
+
+---
+
+## Design System Coverage Analysis
+
+### Token Usage Analysis
+
+#### Heavily Used Tokens (Good Coverage)
+
+These tokens are used consistently across the codebase:
+
+| Token Category | Token | Usage |
+|----------------|-------|-------|
+| Colors | `--color-ink`, `--color-ink-muted`, `--color-ink-light` | Widely used for text |
+| Colors | `--color-surface`, `--color-surface-dim` | Background colors |
+| Colors | `--color-accent`, `--color-accent-hover` | Interactive elements |
+| Colors | `--color-border`, `--color-border-strong` | Borders |
+| Fonts | `--font-body`, `--font-display` | Font families |
+
+#### Underutilized Tokens (Need Adoption)
+
+These tokens exist but are rarely used:
+
+| Token Category | Token | Status |
+|----------------|-------|--------|
+| Typography | `--text-xs`, `--text-sm`, `--text-base`, etc. | Hardcoded values used instead |
+| Typography | `--font-medium`, `--font-semibold`, `--font-bold` | Numeric weights used instead |
+| Typography | `--tracking-*` | Hardcoded em values used |
+| Spacing | `--space-1` through `--space-24` | Raw rem values used |
+| Shadows | `--shadow-xs`, `--shadow-sm`, etc. | Custom rgba shadows used |
+| Transitions | `--duration-*`, `--ease-*` | Hardcoded ms/ease values |
+| Status Colors | `--color-error`, `--color-success`, etc. | `#C75050` used directly |
+
+#### Missing Token Patterns
+
+Patterns observed in components that lack token support:
+
+| Pattern | Current Usage | Suggested Token |
+|---------|---------------|-----------------|
+| Small gap spacing | `0.375rem` | Add `--space-1.5` (6px) |
+| Label font size | `0.8125rem` | `--text-xs` (13px) matches |
+| Section title size | `1.25rem` | `--text-xl` (22px) is close |
+| Custom shadows | Various rgba | Extend shadow scale |
+
+### Component Consistency Analysis
+
+#### Fully Compliant Components (Use Tokens Correctly)
+
+These components follow the design system well:
+
+- **DocumentList.tsx** - Uses token colors, relies on global table styles
+- **Breadcrumb.tsx** - Uses token colors, minimal violations
+- **Logo.tsx** - SVG component, no style violations
+- **ConvexClientProvider.tsx** - No UI, no violations
+
+#### Partially Compliant Components (Mixed Usage)
+
+Use some tokens but have violations:
+
+- **Button.tsx** - Uses color tokens but hardcodes spacing/typography
+- **Input.tsx** - Uses color tokens but hardcodes error color
+- **Select.tsx** - Uses color tokens but hardcodes error color
+- **Card.tsx** - Uses color tokens but hardcodes shadows
+- **Badge.tsx** - Uses font token but hardcodes variant colors
+- **Header.tsx** - Uses color tokens but hardcodes spacing/typography
+- **PageHeader.tsx** - Uses color tokens but hardcodes typography
+
+#### Non-Compliant Components (Heavy Violations)
+
+Rely heavily on hardcoded values:
+
+- **FormRenderer.tsx** - 18 violations, extensive hardcoding
+- **FormBuilder.tsx** - 15 violations, similar patterns
+- **FieldEditor.tsx** - Multiple hardcoded values
+- **MessageInput.tsx** - Many hardcoded values
+- **CommentSection.tsx** - 10 violations
+
+### Gap Identification
+
+#### Styling Needs Not Covered by Current Tokens
+
+1. **Error color opacity variants**: Components use `rgba(199, 80, 80, 0.1)` and `rgba(199, 80, 80, 0.3)` which have no tokens. Should add:
+   - `--color-error-light-10` (10% opacity)
+   - `--color-error-light-30` (30% opacity)
+
+2. **Success color in inline styles**: MessageInput uses `#22c55e` for "Ready" state which differs from `--color-success` (#3D6B4F).
+
+3. **Half-step spacing**: `0.375rem` (6px) is used frequently for label gaps but falls between `--space-1` (4px) and `--space-2` (8px).
+
+4. **Button-specific letter-spacing**: Buttons use `0.02em` which doesn't match any `--tracking-*` token.
+
+#### Deprecated Patterns to Remove
+
+1. **Hardcoded `#C75050`**: Should be replaced with `var(--color-error)` (#8B4D4D) which is a more muted, on-brand error red.
+
+2. **Fallback colors with comments**: Patterns like `var(--color-surface-dim, #F8F8F6)` suggest uncertainty about token existence. Remove fallbacks.
+
+3. **Mixed border-radius approaches**: Some use `4px`, some use `0`, some use `2px`. Should consistently use `0` (brand aesthetic) or `--radius-sm`.
+
+4. **Pixel values for spacing**: `48px` should be `var(--space-12)`.
+
+---
+
+## Recommendations for Phase 17 (Base Component Fixes)
+
+### Quick Wins (Simple Find-Replace)
+
+Estimated effort: **Low** (1-2 minutes per component)
+
+These can be fixed with global search-and-replace:
+
+#### 1. Error Color Standardization
+
+Replace across all files:
+```
+#C75050 -> var(--color-error)
+```
+
+Affects: FormRenderer, FormBuilder, FieldEditor, Input, Select (21 instances)
+
+#### 2. Typography Token Adoption
+
+| Find | Replace With |
+|------|--------------|
+| `fontSize: "0.8125rem"` | `fontSize: "var(--text-xs)"` |
+| `fontSize: "0.875rem"` | `fontSize: "var(--text-sm)"` |
+| `fontSize: "0.9375rem"` | `fontSize: "var(--text-sm)"` |
+| `fontSize: "1rem"` | `fontSize: "var(--text-base)"` |
+| `fontSize: "1.25rem"` | `fontSize: "var(--text-xl)"` |
+| `fontSize: "1.75rem"` | `fontSize: "var(--text-2xl)"` |
+| `fontWeight: 500` | `fontWeight: "var(--font-medium)"` |
+| `fontWeight: 600` | `fontWeight: "var(--font-semibold)"` |
+
+#### 3. Spacing Token Adoption
+
+| Find | Replace With |
+|------|--------------|
+| `"0.5rem"` | `"var(--space-2)"` |
+| `"0.75rem"` | `"var(--space-3)"` |
+| `"1rem"` | `"var(--space-4)"` |
+| `"1.25rem"` | `"var(--space-5)"` |
+| `"1.5rem"` | `"var(--space-6)"` |
+| `"2rem"` | `"var(--space-8)"` |
+| `"48px"` | `"var(--space-12)"` |
+
+### Medium Effort (Component Refactoring)
+
+Estimated effort: **Medium** (15-30 minutes per component)
+
+These require reviewing each component's style object:
+
+#### 1. Transition Standardization
+
+Update all `transition` properties to use tokens:
+```javascript
+// Before
+transition: "all 180ms ease-out"
+// After
+transition: `all var(--duration-fast) var(--ease-out)`
+```
+
+Affects: Button, Input, Select, Header, Breadcrumb, SearchBar, CommentSection
+
+#### 2. Shadow Token Adoption
+
+Update Card.tsx elevated variant:
+```javascript
+// Before
+boxShadow: "0 2px 8px rgba(20, 20, 20, 0.06)"
+// After
+boxShadow: "var(--shadow-md)"
+```
+
+#### 3. Border Radius Consistency
+
+Decision needed: Keep `0` for brand aesthetic or use `--radius-sm` (4px)?
+
+Current state is inconsistent:
+- Button: `borderRadius: 0` (correct for brand)
+- CommentSection: `borderRadius: "4px"` (should be 0 or token)
+- DocumentViewer: `borderRadius: "4px"` (should be 0 or token)
+
+**Recommendation:** Use `0` consistently to maintain the editorial/archival aesthetic.
+
+### Complex Fixes (Architecture Changes)
+
+Estimated effort: **High** (1+ hour)
+
+These may require design decisions or new tokens:
+
+#### 1. Add Missing Tokens to globals.css
+
+```css
+/* Error color variants */
+--color-error-bg: rgba(139, 77, 77, 0.1);
+--color-error-border: rgba(139, 77, 77, 0.3);
+
+/* Half-step spacing */
+--space-1-5: 0.375rem;  /* 6px */
+
+/* Button-specific tracking */
+--tracking-button: 0.02em;
+```
+
+#### 2. Create Shared Style Constants
+
+Consider creating a `styles/tokens.ts` file for TypeScript projects:
+```typescript
+export const tokens = {
+  text: {
+    xs: 'var(--text-xs)',
+    sm: 'var(--text-sm)',
+    // ...
+  },
+  space: {
+    2: 'var(--space-2)',
+    // ...
+  }
+}
+```
+
+This provides IDE autocomplete and prevents typos.
+
+#### 3. Form Component Style Unification
+
+FormRenderer, FormBuilder, and FieldEditor share many styles but implement them separately. Consider:
+- Extracting shared label styles
+- Creating a FormSection component
+- Unifying error state styling
+
+---
+
+## Phase 17 Priority Order
+
+Based on impact and effort, execute fixes in this order:
+
+1. **Error color replacement** (Quick Win, High Impact)
+2. **Typography token adoption** (Quick Win, High Impact)
+3. **Spacing token adoption** (Quick Win, Medium Impact)
+4. **Transition standardization** (Medium Effort, Low Impact)
+5. **Border radius consistency** (Medium Effort, Medium Impact)
+6. **Shadow token adoption** (Medium Effort, Low Impact)
+7. **Add missing tokens** (Complex, Enables Future Fixes)
+8. **Form component unification** (Complex, Maintenance Improvement)
+
+---
+
+*Style Violations Audit completed: 2026-01-16*
+*Ready for Phase 17: Base Component Fixes*
