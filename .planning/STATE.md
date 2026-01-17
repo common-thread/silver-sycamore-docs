@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 ## Current Position
 
 Phase: 20 of 22 (Dynamic Content System)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-17 — Completed 20-03-PLAN.md (activity tracking)
+Last activity: 2026-01-17 — Completed 20-04-PLAN.md (sharing system)
 
-Progress: ████████████░ 60% (plans 15 of ~25 in v1.2)
+Progress: █████████████░ 64% (plans 16 of ~25 in v1.2)
 
 ## Performance Metrics
 
@@ -28,7 +28,7 @@ Progress: ████████████░ 60% (plans 15 of ~25 in v1.2)
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 15 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03)
+- Plans completed: 16 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04)
 - Phases complete: 4 of 7 (Phase 16, Phase 17, Phase 18, Phase 19 complete)
 
 ## Accumulated Context
@@ -95,6 +95,12 @@ Phase 20-02 decisions:
 - Store completion state as JSON in completionData field with { steps: boolean[] } structure
 - Verify instance access via userId match (authenticated) or sessionId match (anonymous)
 
+Phase 20-04 decisions:
+- External shares allow anonymous access, internal require authentication + recipient list
+- Usage count incremented on first successful access via useRef guard
+- Share page renders content based on contentType (procedure/checklist/form)
+- Anonymous users get session ID stored in localStorage
+
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
@@ -151,10 +157,10 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Completed 20-03-PLAN.md (activity tracking)
+Stopped at: Completed 20-04-PLAN.md (sharing system)
 Resume file: None
 
 ### Next Steps
 
-1. **`/gsd:execute-plan 20-04`** — Execute plan 20-04 (share links)
+1. **`/gsd:execute-plan 20-05`** — Execute plan 20-05 (if exists)
 2. Continue Phase 20 (Dynamic Content System)
