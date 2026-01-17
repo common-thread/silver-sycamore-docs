@@ -204,10 +204,10 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
     return (
       <div
         style={{
-          padding: "2rem",
+          padding: "var(--space-8)",
           textAlign: "center",
           fontFamily: "var(--font-body)",
-          fontSize: "0.875rem",
+          fontSize: "var(--text-sm)",
           color: "var(--color-ink-muted)",
         }}
       >
@@ -220,10 +220,10 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
     return (
       <div
         style={{
-          padding: "2rem",
+          padding: "var(--space-8)",
           textAlign: "center",
           fontFamily: "var(--font-body)",
-          fontSize: "0.875rem",
+          fontSize: "var(--text-sm)",
           color: "var(--color-ink-muted)",
         }}
       >
@@ -240,7 +240,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "1.5rem",
+        gap: "var(--space-6)",
       }}
     >
       {/* Form Details Section */}
@@ -248,24 +248,24 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
         style={{
           background: "var(--color-surface)",
           border: "1px solid var(--color-border)",
-          padding: "1.5rem",
+          padding: "var(--space-6)",
         }}
       >
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1rem",
-            fontWeight: 600,
+            fontSize: "var(--text-base)",
+            fontWeight: "var(--font-semibold)",
             color: "var(--color-ink)",
-            margin: "0 0 1rem 0",
-            paddingBottom: "0.75rem",
+            margin: "0 0 var(--space-4) 0",
+            paddingBottom: "var(--space-3)",
             borderBottom: "1px solid var(--color-border)",
           }}
         >
           Form Details
         </h2>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
           <Input
             label="Title"
             value={title}
@@ -278,10 +278,10 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
               style={{
                 display: "block",
                 fontFamily: "var(--font-body)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
+                fontSize: "var(--text-xs)",
+                fontWeight: "var(--font-medium)",
                 color: "var(--color-ink-light)",
-                marginBottom: "0.375rem",
+                marginBottom: "var(--space-1)",
               }}
             >
               Description
@@ -293,16 +293,16 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
               rows={3}
               style={{
                 width: "100%",
-                padding: "0.75rem 1rem",
+                padding: "var(--space-3) var(--space-4)",
                 fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
+                fontSize: "var(--text-sm)",
                 color: "var(--color-ink)",
                 background: "var(--color-surface)",
                 border: "1px solid var(--color-border)",
                 borderRadius: 0,
                 outline: "none",
                 resize: "vertical",
-                transition: "border-color 150ms ease",
+                transition: "border-color var(--duration-fast) var(--ease-default)",
               }}
               onFocus={(e) => {
                 e.currentTarget.style.borderColor = "var(--color-accent)";
@@ -334,7 +334,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
         style={{
           background: "var(--color-surface)",
           border: "1px solid var(--color-border)",
-          padding: "1.5rem",
+          padding: "var(--space-6)",
         }}
       >
         <div
@@ -342,16 +342,16 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginBottom: "1rem",
-            paddingBottom: "0.75rem",
+            marginBottom: "var(--space-4)",
+            paddingBottom: "var(--space-3)",
             borderBottom: "1px solid var(--color-border)",
           }}
         >
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "1rem",
-              fontWeight: 600,
+              fontSize: "var(--text-base)",
+              fontWeight: "var(--font-semibold)",
               color: "var(--color-ink)",
               margin: 0,
             }}
@@ -380,10 +380,10 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
         {fields.length === 0 && !isAddingField ? (
           <div
             style={{
-              padding: "2rem",
+              padding: "var(--space-8)",
               textAlign: "center",
               fontFamily: "var(--font-body)",
-              fontSize: "0.875rem",
+              fontSize: "var(--text-sm)",
               color: "var(--color-ink-muted)",
               border: "1px dashed var(--color-border)",
             }}
@@ -391,16 +391,16 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             No fields yet. Click "Add Field" to get started.
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
             {fields.map((field, index) => (
               <div
                 key={field.name}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.75rem 1rem",
-                  background: "var(--color-surface-dim, #F8F8F6)",
+                  gap: "var(--space-3)",
+                  padding: "var(--space-3) var(--space-4)",
+                  background: "var(--color-surface-dim)",
                   border: "1px solid var(--color-border)",
                 }}
               >
@@ -447,8 +447,8 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                   <div
                     style={{
                       fontFamily: "var(--font-body)",
-                      fontSize: "0.9375rem",
-                      fontWeight: 500,
+                      fontSize: "var(--text-sm)",
+                      fontWeight: "var(--font-medium)",
                       color: "var(--color-ink)",
                     }}
                   >
@@ -457,20 +457,20 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                   <div
                     style={{
                       fontFamily: "var(--font-body)",
-                      fontSize: "0.75rem",
+                      fontSize: "var(--text-xs)",
                       color: "var(--color-ink-muted)",
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
+                      gap: "var(--space-2)",
                     }}
                   >
                     <span
                       style={{
-                        padding: "0.125rem 0.375rem",
+                        padding: "var(--space-px) var(--space-1)",
                         background: "var(--color-surface)",
                         border: "1px solid var(--color-border)",
                         borderRadius: "2px",
-                        fontSize: "0.6875rem",
+                        fontSize: "var(--text-xs)",
                         textTransform: "uppercase",
                         letterSpacing: "0.03em",
                       }}
@@ -480,12 +480,12 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                     {field.required && (
                       <span
                         style={{
-                          padding: "0.125rem 0.375rem",
+                          padding: "var(--space-px) var(--space-1)",
                           background: "var(--color-error-bg)",
                           color: "var(--color-error)",
                           borderRadius: "2px",
-                          fontSize: "0.6875rem",
-                          fontWeight: 500,
+                          fontSize: "var(--text-xs)",
+                          fontWeight: "var(--font-medium)",
                         }}
                       >
                         Required
@@ -498,7 +498,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                 <button
                   onClick={() => handleEditField(index)}
                   style={{
-                    padding: "0.5rem",
+                    padding: "var(--space-2)",
                     background: "transparent",
                     border: "none",
                     cursor: "pointer",
@@ -519,7 +519,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                 <button
                   onClick={() => handleDeleteField(index)}
                   style={{
-                    padding: "0.5rem",
+                    padding: "var(--space-2)",
                     background: "transparent",
                     border: "none",
                     cursor: "pointer",
@@ -560,11 +560,11 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
       {error && (
         <div
           style={{
-            padding: "0.75rem 1rem",
+            padding: "var(--space-3) var(--space-4)",
             background: "var(--color-error-bg)",
             border: "1px solid var(--color-error-border)",
             fontFamily: "var(--font-body)",
-            fontSize: "0.875rem",
+            fontSize: "var(--text-sm)",
             color: "var(--color-error)",
           }}
         >
@@ -578,8 +578,8 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-end",
-          gap: "0.75rem",
-          paddingTop: "0.5rem",
+          gap: "var(--space-3)",
+          paddingTop: "var(--space-2)",
         }}
       >
         <Button variant="ghost" onClick={handleCancel} disabled={isSaving}>
