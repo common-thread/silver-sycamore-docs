@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PersonalDocList } from "@/components/PersonalDocList";
+import { ActivitySidebar } from "@/components/ActivitySidebar";
 import { useState } from "react";
 import { Id } from "../../../convex/_generated/dataModel";
 
@@ -178,6 +179,17 @@ export default function WorkspacePage() {
       ) : (
         <PersonalDocList documents={documents} />
       )}
+
+      {/* Activity Sidebar Section */}
+      <div
+        style={{
+          marginTop: "1.5rem",
+          paddingTop: "1.5rem",
+          borderTop: "1px solid var(--color-border)",
+        }}
+      >
+        <ActivitySidebar limit={5} />
+      </div>
     </div>
   );
 }
