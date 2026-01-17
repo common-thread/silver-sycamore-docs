@@ -374,4 +374,59 @@ export default defineSchema({
     .index("by_user_source", ["userId", "sourceDocumentId"])
     .index("by_session", ["sessionId"])
     .index("by_user_status", ["userId", "status"]),
+
+  // Activity log - tracks user activity for dashboard and sidebar
+  activityLog: defineTable({
+    userId: v.id("users"),
+
+    // What happened
+    type: v.union(
+      v.literal("procedure_started"),
+      v.literal("procedure_completed"),
+      v.literal("checklist_completed"),
+      v.literal("form_submitted"),
+      v.literal("form_received") // Someone submitted to this user
+    ),
+
+    // References
+    instanceId: v.optional(v.id("dynamicContentInstances")),
+    documentId: v.optional(v.id("documents")),
+    formSubmissionId: v.optional(v.id("formSubmissions")),
+
+    // Context
+    title: v.string(), // Denormalized for display
+    fromUserId: v.optional(v.id("users")), // Who triggered (for received items)
+
+    // Timestamps
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_recent", ["userId", "createdAt"])
+    .index("by_type", ["type"]),
+
+  // Share links - enables internal and external sharing
+  shareLinks: defineTable({
+    // What's being shared
+    documentId: v.id("documents"),
+
+    // Link configuration
+    shareToken: v.string(), // Random token for URL
+    shareType: v.union(v.literal("internal"), v.literal("external")),
+
+    // Access control
+    createdBy: v.id("users"),
+    sharedWithUserIds: v.optional(v.array(v.id("users"))), // Internal shares
+    routeResultsTo: v.array(v.id("users")), // Who gets submissions
+
+    // Expiration (optional)
+    expiresAt: v.optional(v.number()),
+    maxUses: v.optional(v.number()),
+    useCount: v.number(),
+
+    // Metadata
+    createdAt: v.number(),
+  })
+    .index("by_token", ["shareToken"])
+    .index("by_document", ["documentId"])
+    .index("by_creator", ["createdBy"]),
 });
