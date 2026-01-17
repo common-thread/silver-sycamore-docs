@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 Phase: 17 of 23 (Base Component Fixes) - IN PROGRESS
 Plan: 17-02 COMPLETE (2 of 4 plans)
-Status: Header and DocumentViewer design token adoption complete
-Last activity: 2026-01-16 — Plan 17-02 completed
+Status: Error color foundation + Header/DocumentViewer token adoption complete
+Last activity: 2026-01-17 — Plan 17-01 completed (retroactive summary)
 
 Progress: █████░░░░░ 21% (plans 5 of ~24 in v1.2)
 
@@ -111,8 +111,8 @@ None active.
 
 ## Session Continuity
 
-Last session: 2026-01-16
-Stopped at: Plan 17-02 complete
+Last session: 2026-01-17
+Stopped at: Plan 17-01 and 17-02 complete
 Resume file: None
 
 ### Next Steps
