@@ -108,15 +108,16 @@ None active.
 - Milestone v1.1 created: Content Pipeline & Branding, 5 phases (Phase 12-16)
 - v1.1 restructured: Consolidated design tokens + style guide into Phase 13 (Brand Foundation), now 4 phases (12-15)
 - Milestone v1.2 created: Content Architecture, 8 phases (Phase 16-23)
+- **v1.2 milestone references added**: `.planning/milestones/v1.2-REFERENCES.md` ensures all phases inherit Phase 16 architectural guidance
 
 ## Session Continuity
 
-Last session: 2026-01-16
-Stopped at: Phase 17 complete
+Last session: 2026-01-17
+Stopped at: Phase 17 complete, milestone references file added
 Resume file: None
 
 ### Next Steps
 
-1. **Begin Phase 18** — Content State Mapping
-2. Discuss phase context and create plan
+1. **`/gsd:plan-phase 18`** — Plan Content Audit + Type Decisions
+2. Read `.planning/milestones/v1.2-REFERENCES.md` for required context
 3. Reference DESIRED-STATE.md for content architecture vision
