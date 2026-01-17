@@ -1,5 +1,5 @@
 import { InitiativesTable } from "@/components/InitiativesTable";
-import { CategoryGrid } from "@/components/CategoryGrid";
+import { QuickActionNav } from "@/components/QuickActionNav";
 import { ContentBox } from "@/components/ContentBox";
 
 export default function Home() {
@@ -9,9 +9,9 @@ export default function Home() {
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.75rem",
-            fontWeight: 600,
-            marginBottom: "0.5rem",
+            fontSize: "var(--text-2xl)",
+            fontWeight: "var(--font-semibold)",
+            marginBottom: "var(--space-2)",
             color: "var(--color-ink)",
           }}
         >
@@ -26,9 +26,9 @@ export default function Home() {
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            marginBottom: "1.25rem",
+            fontSize: "var(--text-xl)",
+            fontWeight: "var(--font-semibold)",
+            marginBottom: "var(--space-5)",
             color: "var(--color-ink)",
           }}
         >
@@ -41,15 +41,15 @@ export default function Home() {
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            marginBottom: "1.25rem",
+            fontSize: "var(--text-xl)",
+            fontWeight: "var(--font-semibold)",
+            marginBottom: "var(--space-5)",
             color: "var(--color-ink)",
           }}
         >
-          Browse Documents
+          Quick Actions
         </h2>
-        <CategoryGrid />
+        <QuickActionNav />
       </ContentBox>
     </>
   );
