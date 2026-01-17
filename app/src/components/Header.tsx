@@ -39,7 +39,7 @@ export default function Header() {
       {/* Brand bar */}
       <div
         style={{
-          padding: "1.25rem 2rem",
+          padding: "var(--space-5) var(--space-8)",
           borderBottom: "1px solid var(--color-border)",
           display: "flex",
           alignItems: "center",
@@ -74,7 +74,7 @@ export default function Header() {
         </Link>
 
         {/* Search, Notifications, and User Menu */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-6)" }}>
           <SearchBar />
           {isSignedIn && <NotificationBell />}
           <UserMenu />
@@ -84,7 +84,7 @@ export default function Header() {
       {/* Navigation - table of contents style */}
       <nav
         style={{
-          padding: "0 2rem",
+          padding: "0 var(--space-8)",
           background: "var(--color-surface-dim)",
         }}
       >
@@ -105,11 +105,11 @@ export default function Header() {
                   href={item.href}
                   style={{
                     display: "block",
-                    padding: "0.875rem 1.5rem",
+                    padding: "var(--space-3) var(--space-6)",
                     fontFamily: "var(--font-body)",
-                    fontSize: "0.8125rem",
-                    fontWeight: active ? 600 : 500,
-                    letterSpacing: "0.04em",
+                    fontSize: "var(--text-xs)",
+                    fontWeight: active ? "var(--font-semibold)" : "var(--font-medium)",
+                    letterSpacing: "var(--tracking-wide)",
                     textTransform: "uppercase",
                     color: active ? "var(--color-accent)" : "var(--color-ink-light)",
                     textDecoration: "none",
@@ -117,7 +117,7 @@ export default function Header() {
                       ? "2px solid var(--color-accent)"
                       : "2px solid transparent",
                     marginBottom: "-1px",
-                    transition: "color 0.15s ease, border-color 0.15s ease",
+                    transition: "color var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default)",
                   }}
                   onMouseEnter={(e) => {
                     if (!active) {
