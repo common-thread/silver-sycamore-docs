@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 18 of 23 (Content Audit + Type Decisions) - COMPLETE
-Plan: 18-FIX COMPLETE (1 of 1 plans)
-Status: All 70 documents classified with evidence, CONTENT-TRACKER.md complete
-Last activity: 2026-01-17 — Phase 18 completed
+Phase: 19 of 23 (Redundant Content + IA Redesign)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-17 — Completed 19-01-PLAN.md
 
-Progress: █████████░ 33% (plans 8 of ~24 in v1.2)
+Progress: █████████░ 37% (plans 9 of ~24 in v1.2)
 
 ## Performance Metrics
 
@@ -28,7 +28,7 @@ Progress: █████████░ 33% (plans 8 of ~24 in v1.2)
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 8 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX)
+- Plans completed: 9 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01)
 - Phases complete: 3 of 8 (Phase 16, Phase 17, Phase 18 complete)
 
 ## Accumulated Context
@@ -63,6 +63,12 @@ Phase 18 decisions:
 - 18 redundant items identified (documents that exist in both form builder and markdown/binary)
 - Resolution: Form builder is authoritative for all data collection interfaces
 - Only 1 unconvertible file (tasting-form.pdf) - all other binaries analyzed via GitHub Pages
+
+Phase 19-01 decisions:
+- 13 redundant forms identified for exclusion from import (form builder is authoritative)
+- Actual content type counts from table analysis: 10 procedure, 36 reference, 14 form, 5 checklist, 5 guide
+- 57 documents will be imported after excluding redundant items
+- 4 planning checklists kept as checklists (guidance documents, not data collection forms)
 
 ### Deferred Issues
 
@@ -120,11 +126,11 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Phase 18 complete, content audit finished
+Stopped at: Completed 19-01-PLAN.md (schema + import script for contentTypes)
 Resume file: None
 
 ### Next Steps
 
-1. **`/gsd:plan-phase 19`** — Plan IA Redesign (purpose-based navigation)
-2. Reference CONTENT-TRACKER.md for content type assignments
-3. Transform CategoryGrid to Quick Actions based on content types
+1. **`/gsd:execute-plan .planning/phases/19-redundant-content-ia-redesign/19-02-PLAN.md`** — Execute navigation redesign plan
+2. Run import script to populate database with contentType-tagged documents
+3. Update navigation to use purpose-based filtering
