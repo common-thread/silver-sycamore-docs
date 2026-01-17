@@ -31,43 +31,43 @@ export function DocumentViewer({
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.75rem",
-            fontWeight: 600,
-            marginBottom: "0.5rem",
+            fontSize: "var(--text-2xl)",
+            fontWeight: "var(--font-semibold)",
+            marginBottom: "var(--space-2)",
             color: "var(--color-ink)",
           }}
         >
           {document.title}
         </h1>
         {document.description && (
-          <p style={{ color: "var(--color-ink-muted)", marginBottom: "1.5rem" }}>
+          <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
             {document.description}
           </p>
         )}
         <div
           style={{
             border: "1px solid var(--color-border)",
-            borderRadius: "4px",
+            borderRadius: 0,
             overflow: "hidden",
           }}
         >
           <div
             style={{
               background: "var(--color-cream-dark)",
-              padding: "0.75rem 1rem",
+              padding: "var(--space-3) var(--space-4)",
               borderBottom: "1px solid var(--color-border)",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <span style={{ fontSize: "0.875rem" }}>{document.title}</span>
+            <span style={{ fontSize: "var(--text-sm)" }}>{document.title}</span>
             <a
               href={fileUrl}
               download
               style={{
                 color: "var(--color-accent)",
-                fontSize: "0.875rem",
+                fontSize: "var(--text-sm)",
               }}
             >
               Download
@@ -86,16 +86,16 @@ export function DocumentViewer({
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.75rem",
-            fontWeight: 600,
-            marginBottom: "0.5rem",
+            fontSize: "var(--text-2xl)",
+            fontWeight: "var(--font-semibold)",
+            marginBottom: "var(--space-2)",
             color: "var(--color-ink)",
           }}
         >
           {document.title}
         </h1>
         {document.description && (
-          <p style={{ color: "var(--color-ink-muted)", marginBottom: "1.5rem" }}>
+          <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
             {document.description}
           </p>
         )}
@@ -127,16 +127,16 @@ export function DocumentViewer({
       <h1
         style={{
           fontFamily: "var(--font-display)",
-          fontSize: "1.75rem",
-          fontWeight: 600,
-          marginBottom: "0.5rem",
+          fontSize: "var(--text-2xl)",
+          fontWeight: "var(--font-semibold)",
+          marginBottom: "var(--space-2)",
           color: "var(--color-ink)",
         }}
       >
         {document.title}
       </h1>
       {document.description && (
-        <p style={{ color: "var(--color-ink-muted)", marginBottom: "1.5rem" }}>
+        <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
           {document.description}
         </p>
       )}
