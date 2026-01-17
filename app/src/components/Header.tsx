@@ -10,11 +10,10 @@ import { LogoFull } from "./Logo";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/clients", label: "Clients" },
-  { href: "/staff", label: "Staff" },
-  { href: "/operations", label: "Operations" },
-  { href: "/deliverables", label: "Deliverables" },
+  { href: "/procedures", label: "Procedures" },
+  { href: "/references", label: "References" },
+  { href: "/checklists", label: "Checklists" },
+  { href: "/guides", label: "Guides" },
   { href: "/messages", label: "Messages" },
   { href: "/forms", label: "Forms" },
   { href: "/workspace", label: "My Workspace" },
