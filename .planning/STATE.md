@@ -90,6 +90,11 @@ Phase 20-01 decisions:
 - completionData as JSON string for flexible step/form state storage
 - Title denormalized in activityLog for display performance
 
+Phase 20-02 decisions:
+- Parse h2 headers as procedure steps, markdown list items as checklist items
+- Store completion state as JSON in completionData field with { steps: boolean[] } structure
+- Verify instance access via userId match (authenticated) or sessionId match (anonymous)
+
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
