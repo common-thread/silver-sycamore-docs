@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 ## Current Position
 
 Phase: 16 of 23 (Code Mapping + Style Audit)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-01-16 — Milestone v1.2 created
+Plan: 16-02 COMPLETE (2 of 2 plans)
+Status: Phase 16 complete — Ready for Phase 17
+Last activity: 2026-01-16 — Style violations audit completed
 
-Progress: ░░░░░░░░░░ 0%
+Progress: █████░░░░░ 12.5% (1 of 8 phases in v1.2)
 
 ## Performance Metrics
 
@@ -26,6 +26,10 @@ Progress: ░░░░░░░░░░ 0%
 **v1.1 Progress:**
 - Plans completed: 5 (12-01, 13-01, 14-01, 14-02, 15-01)
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
+
+**v1.2 Progress:**
+- Plans completed: 2 (16-01, 16-02)
+- Phases complete: 1 of 8 (16) - Style audit done
 
 ## Accumulated Context
 
@@ -43,6 +47,12 @@ Phase 15 decisions:
 - No portal needed - position:absolute relative to container
 - 180ms ease-out animations matching Input component
 - Border-radius: 0 to match brand aesthetic
+
+Phase 16 decisions:
+- Error color `#C75050` should become `var(--color-error)` (#8B4D4D)
+- Border-radius should be `0` consistently (brand aesthetic)
+- Typography/spacing tokens exist but need adoption
+- Phase 17 will fix high-priority violations first
 
 ### Deferred Issues
 
@@ -99,11 +109,11 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-16
-Stopped at: Milestone v1.2 initialization
+Stopped at: Phase 16 complete
 Resume file: None
 
 ### Next Steps
 
-1. **`/gsd:plan-phase 16`** — Plan Code Mapping + Style Audit phase
-2. **`/gsd:discuss-phase 16`** — Gather context first (optional)
-3. **`/gsd:research-phase 16`** — Investigate unknowns (if needed)
+1. **`/gsd:plan-phase 17`** — Plan Base Component Fixes phase
+2. Reference `.planning/phases/16-code-mapping-style-audit/STYLE-VIOLATIONS.md` for fix priorities
+3. Execute high-priority violations first (34 items)
