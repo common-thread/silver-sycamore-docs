@@ -125,51 +125,20 @@ Plans:
 - [x] 19-03: Home Page + Verification (listing pages, visual checkpoint)
 - [x] 19-FIX: Import index.md files as guide documents
 
-### Phase 20: Dynamic Content System
+### Phase 20: Dynamic Content System - COMPLETE
 
 **Goal**: Complete infrastructure for interactive dynamic content — procedures, checklists, and forms that staff can complete, track, and share. Includes semantic rendering, completion lifecycle, activity tracking, and sharing workflows.
 **Depends on**: Phase 19
 **Research**: Unlikely (patterns defined in CONTEXT.md, schema design from codebase exploration)
-**Plans**: TBD (estimate 5-7)
-
-**Two patterns coexist:**
-1. **Template-Based (Controlled):** Wiki procedures/checklists as templates. Managers configure notifications, approval workflows. Staff use templates, results route where specified.
-2. **User-Created (Flexible):** Staff create/duplicate in personal workspace with full control over sharing, workflows, and routing (like Google Forms).
-
-**Core capabilities:**
-- Unified schema for all dynamic content (procedures, checklists, forms)
-- Instance tracking: personal copies with completion state
-- Step-level progress: "3 of 7 steps complete" with checkboxes
-- Activity history: workspace sidebar + full dashboard with filtering
-- Sharing: internal (staff) or external (anonymous link)
-- Routing: configurable result destinations and notifications
-
-**New Components:**
-- `ContentTypeRenderer` — Routes documents to type-specific renderers
-- `ProcedureSteps` — Numbered steps with visual progress, checkboxes
-- `ChecklistView` — Interactive checkboxes with completion tracking
-- `ReferenceCard` — Metadata-rich display for static content
-- `Accordion` / `CollapsibleSection` — Progressive disclosure
-- Activity dashboard components
-
-**Schema additions:**
-- `dynamicContentInstances` — Tracks personal instances of templates
-- `completionTracking` — Step completion, submission state
-- `contentRouting` — Notification targets, result destinations
-- `activityLog` — User activity stream
-
-**Exit Criteria:**
-- [ ] All 5 content types have dedicated rendering
-- [ ] Procedures/checklists track completion with step-level progress
-- [ ] Activity history visible in workspace sidebar and full dashboard
-- [ ] Sharing works for internal staff and external links
-- [ ] Template vs user-created permission model enforced
+**Plans**: 5/5
+**Completed**: 2026-01-17
 
 Plans:
 - [x] 20-01: Schema Foundation (dynamicContentInstances, activityLog, shareLinks tables)
-- [ ] 20-02: TBD (content type renderers)
-- [ ] 20-03: TBD (completion tracking + activity)
-- [ ] 20-04: TBD (sharing + routing)
+- [x] 20-02: Completion Tracking (dynamicContent.ts mutations/queries, ProcedureSteps, ChecklistView)
+- [x] 20-03: Activity System (activity.ts, ActivitySidebar, ActivityDashboard)
+- [x] 20-04: Sharing System (sharing.ts, ShareLinkDialog, /share/[token] page)
+- [x] 20-05: Integration (ContentTypeRenderer, activity page, wiring)
 
 ### Phase 21: Form Builder Visual Rebuild
 
@@ -200,6 +169,6 @@ Plans:
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 20. Dynamic Content System | v1.2 | 1/5 | In progress | - |
+| 20. Dynamic Content System | v1.2 | 5/5 | Complete | 2026-01-17 |
 | 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
