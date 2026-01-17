@@ -17,10 +17,36 @@ This project uses **bun** as the package manager. Always use bun commands:
 
 ## Running the App
 
+**Port:** This app runs on **port 3000** (default). Port 3001 is used by a different project (wedding app).
+
+### Quick Start (Both Frontend + Backend)
+
 ```bash
 cd app
-bun run dev          # Start Next.js dev server
+npx convex dev & bun run dev
+```
+
+This runs Convex backend and Next.js frontend together. Press Ctrl+C to stop both.
+
+### Individual Commands
+
+```bash
+cd app
+bun run dev          # Start Next.js dev server on port 3000
 npx convex dev       # Start Convex backend (separate terminal)
+```
+
+### Troubleshooting
+
+If port 3000 is occupied:
+```bash
+lsof -ti:3000 | xargs kill -9
+```
+
+If Convex needs restart:
+```bash
+pkill -f "convex dev"
+npx convex dev
 ```
 
 ## Testing
