@@ -16,6 +16,7 @@ const navItems = [
   { href: "/guides", label: "Guides" },
   { href: "/messages", label: "Messages" },
   { href: "/forms", label: "Forms" },
+  { href: "/activity", label: "Activity" },
   { href: "/workspace", label: "My Workspace" },
 ];
 
