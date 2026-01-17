@@ -18,6 +18,7 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Type Scale — Generous sizing for comfortable reading */
+  --text-2xs: 0.6875rem;     /* 11px — Small badges, compact labels */
   --text-xs: 0.8125rem;      /* 13px — Labels, metadata */
   --text-sm: 0.9375rem;      /* 15px — Secondary text */
   --text-base: 1.0625rem;    /* 17px — Body text (larger than typical 16px) */
@@ -137,7 +138,9 @@
   --space-px: 1px;
   --space-0: 0;
   --space-1: 0.25rem;   /* 4px */
+  --space-1-5: 0.375rem;/* 6px */
   --space-2: 0.5rem;    /* 8px */
+  --space-2-5: 0.625rem;/* 10px */
   --space-3: 0.75rem;   /* 12px */
   --space-4: 1rem;      /* 16px */
   --space-5: 1.25rem;   /* 20px */

@@ -29,11 +29,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         case "none":
           return "0";
         case "sm":
-          return "1rem";
+          return "var(--space-4)";
         case "lg":
-          return "2rem";
+          return "var(--space-8)";
         default: // md
-          return "1.5rem";
+          return "var(--space-6)";
       }
     };
 
@@ -43,7 +43,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           return {
             backgroundColor: "var(--color-surface)",
             border: "none",
-            boxShadow: "0 2px 8px rgba(20, 20, 20, 0.06), 0 1px 2px rgba(20, 20, 20, 0.04)",
+            boxShadow: "var(--shadow-md)",
           };
         case "outlined":
           return {
@@ -64,7 +64,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       if (!interactive) return {};
       return {
         cursor: "pointer",
-        transition: "all 180ms ease-out",
+        transition: `all var(--duration-fast) var(--ease-out)`,
       };
     };
 
@@ -82,14 +82,14 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           if (interactive) {
             const target = e.currentTarget;
             if (variant === "elevated") {
-              target.style.boxShadow = "0 4px 16px rgba(20, 20, 20, 0.08), 0 2px 4px rgba(20, 20, 20, 0.04)";
+              target.style.boxShadow = "var(--shadow-lg)";
               target.style.transform = "translateY(-1px)";
             } else if (variant === "outlined") {
               target.style.borderColor = "var(--color-border-strong)";
               target.style.backgroundColor = "var(--color-surface)";
             } else {
               target.style.borderColor = "var(--color-border-strong)";
-              target.style.boxShadow = "0 1px 3px rgba(20, 20, 20, 0.04)";
+              target.style.boxShadow = "var(--shadow-xs)";
             }
           }
           props.onMouseEnter?.(e);
@@ -98,7 +98,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           if (interactive) {
             const target = e.currentTarget;
             if (variant === "elevated") {
-              target.style.boxShadow = "0 2px 8px rgba(20, 20, 20, 0.06), 0 1px 2px rgba(20, 20, 20, 0.04)";
+              target.style.boxShadow = "var(--shadow-md)";
               target.style.transform = "translateY(0)";
             } else if (variant === "outlined") {
               target.style.borderColor = "var(--color-border)";
@@ -148,8 +148,8 @@ const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       ref={ref}
       className={className}
       style={{
-        marginBottom: "1rem",
-        paddingBottom: "1rem",
+        marginBottom: "var(--space-4)",
+        paddingBottom: "var(--space-4)",
         borderBottom: "1px solid var(--color-border)",
       }}
       {...props}
@@ -172,11 +172,11 @@ const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       className={className}
       style={{
         fontFamily: "var(--font-display)",
-        fontSize: Component === "h2" ? "1.5rem" : Component === "h3" ? "1.25rem" : "1.125rem",
-        fontWeight: 600,
+        fontSize: Component === "h2" ? "var(--text-2xl)" : Component === "h3" ? "var(--text-xl)" : "var(--text-lg)",
+        fontWeight: "var(--font-semibold)",
         color: "var(--color-ink)",
-        letterSpacing: "-0.02em",
-        lineHeight: 1.3,
+        letterSpacing: "var(--tracking-snug)",
+        lineHeight: "var(--leading-snug)",
         margin: 0,
       }}
       {...props}
@@ -198,12 +198,12 @@ const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
       className={className}
       style={{
         fontFamily: "var(--font-body)",
-        fontSize: "0.875rem",
-        fontWeight: 400,
+        fontSize: "var(--text-sm)",
+        fontWeight: "var(--font-normal)",
         color: "var(--color-ink-muted)",
-        lineHeight: 1.6,
+        lineHeight: "var(--leading-relaxed)",
         margin: 0,
-        marginTop: "0.375rem",
+        marginTop: "var(--space-1-5)",
       }}
       {...props}
     >
@@ -224,9 +224,9 @@ const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
       className={className}
       style={{
         fontFamily: "var(--font-body)",
-        fontSize: "0.9375rem",
+        fontSize: "var(--text-sm)",
         color: "var(--color-ink)",
-        lineHeight: 1.6,
+        lineHeight: "var(--leading-relaxed)",
       }}
       {...props}
     >
@@ -246,12 +246,12 @@ const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
       ref={ref}
       className={className}
       style={{
-        marginTop: "1rem",
-        paddingTop: "1rem",
+        marginTop: "var(--space-4)",
+        paddingTop: "var(--space-4)",
         borderTop: "1px solid var(--color-border)",
         display: "flex",
         alignItems: "center",
-        gap: "0.75rem",
+        gap: "var(--space-3)",
       }}
       {...props}
     >

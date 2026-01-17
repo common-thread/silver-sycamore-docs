@@ -97,8 +97,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             htmlFor={inputId}
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
+              fontSize: "var(--text-xs)",
+              fontWeight: "var(--font-medium)",
               color: disabled ? "var(--color-ink-muted)" : "var(--color-ink-light)",
               letterSpacing: "0.01em",
               cursor: disabled ? "not-allowed" : "pointer",
@@ -121,7 +121,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             borderRadius: 0,
             outline: "none",
             width: "100%",
-            transition: "all 180ms ease-out",
+            transition: `all var(--duration-fast) var(--ease-out)`,
             cursor: disabled ? "not-allowed" : "text",
             opacity: disabled ? 0.7 : 1,
             ...getSizeStyles(),

@@ -33,8 +33,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={{
           // Base styles
           fontFamily: "var(--font-body)",
-          fontWeight: 500,
-          letterSpacing: "0.02em",
+          fontWeight: "var(--font-medium)",
+          letterSpacing: "var(--tracking-normal)",
           border: "none",
           borderRadius: 0,
           cursor: disabled ? "not-allowed" : "pointer",
@@ -42,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           alignItems: "center",
           justifyContent: "center",
           gap: "0.5em",
-          transition: "all 180ms ease-out",
+          transition: `all var(--duration-fast) var(--ease-out)`,
           position: "relative",
           textDecoration: "none",
           whiteSpace: "nowrap",
@@ -50,19 +50,19 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
           // Size-specific styles
           ...(size === "sm" && {
-            padding: "0.5rem 1rem",
-            fontSize: "0.8125rem",
-            minHeight: "2rem",
+            padding: "var(--space-2) var(--space-4)",
+            fontSize: "var(--text-xs)",
+            minHeight: "var(--space-8)",
           }),
           ...(size === "md" && {
-            padding: "0.75rem 1.5rem",
-            fontSize: "0.875rem",
-            minHeight: "2.5rem",
+            padding: "var(--space-3) var(--space-6)",
+            fontSize: "var(--text-sm)",
+            minHeight: "var(--space-10)",
           }),
           ...(size === "lg" && {
-            padding: "1rem 2rem",
-            fontSize: "1rem",
-            minHeight: "3rem",
+            padding: "var(--space-4) var(--space-8)",
+            fontSize: "var(--text-base)",
+            minHeight: "var(--space-12)",
           }),
 
           // Variant-specific styles
@@ -79,7 +79,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ...(variant === "ghost" && {
             backgroundColor: "transparent",
             color: disabled ? "var(--color-ink-muted)" : "var(--color-ink)",
-            padding: size === "sm" ? "0.5rem 0.75rem" : size === "md" ? "0.75rem 1rem" : "1rem 1.25rem",
+            padding: size === "sm" ? "var(--space-2) var(--space-3)" : size === "md" ? "var(--space-3) var(--space-4)" : "var(--space-4) var(--space-5)",
           }),
 
           // Disabled opacity
