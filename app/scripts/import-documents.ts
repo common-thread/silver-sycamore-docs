@@ -3,6 +3,7 @@ import { api } from "../convex/_generated/api";
 import * as fs from "fs";
 import * as path from "path";
 import { parseAllIndexFiles, type DocMetadata } from "./lib/indexParser";
+import { getContentType, REDUNDANT_FORMS, type ContentType } from "./lib/contentTypeMapping";
 
 // Load environment variables
 const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL;
@@ -125,8 +126,19 @@ async function importDocuments() {
   const categories = ["services", "clients", "staff", "operations", "deliverables"];
   let imported = 0;
   let skipped = 0;
+  let redundantSkipped = 0;
   let usedParsedMetadata = 0;
   let usedHeuristicMetadata = 0;
+
+  // Track content type statistics
+  const contentTypeStats: Record<ContentType | "untyped", number> = {
+    procedure: 0,
+    reference: 0,
+    form: 0,
+    checklist: 0,
+    guide: 0,
+    untyped: 0,
+  };
 
   // Parse index.md files for authoritative metadata
   console.log("Parsing index.md files for metadata...");
@@ -149,8 +161,9 @@ async function importDocuments() {
     await processDirectory(categoryPath, category, undefined);
   }
 
-  console.log(`\n✅ Import complete: ${imported} documents imported, ${skipped} skipped`);
+  console.log(`\n✅ Import complete: ${imported} documents imported, ${skipped} skipped, ${redundantSkipped} redundant`);
   console.log(`   Metadata source: ${usedParsedMetadata} from index.md, ${usedHeuristicMetadata} from heuristics`);
+  console.log(`   Content types: ${contentTypeStats.procedure} procedure, ${contentTypeStats.reference} reference, ${contentTypeStats.form} form, ${contentTypeStats.checklist} checklist, ${contentTypeStats.guide} guide, ${contentTypeStats.untyped} untyped`);
 
   async function processDirectory(dir: string, category: string, relativePath?: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -188,6 +201,17 @@ async function importDocuments() {
         const lookupKey = relativePath
           ? `${category}/${relativePath}/${filenameWithoutExt}`
           : `${category}/${filenameWithoutExt}`;
+
+        // Check if this document is redundant (exists in form builder)
+        if (REDUNDANT_FORMS.has(lookupKey)) {
+          const subPath = relativePath ? `${relativePath}/` : "";
+          console.log(`  ⊘ ${category}/${subPath}${entry.name} [REDUNDANT - skipped]`);
+          redundantSkipped++;
+          continue;
+        }
+
+        // Get content type from mapping
+        const contentType = getContentType(lookupKey);
 
         // Try to get metadata from parsed index.md
         const parsedMeta = indexMetadata.get(lookupKey);
@@ -243,12 +267,21 @@ async function importDocuments() {
             description,
             sourceFile: entry.name,
             sourceType: ext,
+            contentType,
           });
 
           imported++;
+          // Track content type statistics
+          if (contentType) {
+            contentTypeStats[contentType]++;
+          } else {
+            contentTypeStats.untyped++;
+          }
+
           const subPath = relativePath ? `${relativePath}/` : "";
           const sourceTag = metadataSource === "parsed" ? "[index.md]" : "[heuristic]";
-          console.log(`  ✓ ${category}/${subPath}${entry.name} ${sourceTag}`);
+          const typeTag = contentType ? `[${contentType}]` : "[untyped]";
+          console.log(`  ✓ ${category}/${subPath}${entry.name} ${sourceTag} ${typeTag}`);
         } catch (error: any) {
           console.error(`  ✗ Failed to import ${entry.name}: ${error.message}`);
         }

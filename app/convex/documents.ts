@@ -69,6 +69,14 @@ export const create = mutation({
     sourceType: v.optional(v.string()),
     description: v.optional(v.string()),
     status: v.optional(v.string()),
+    contentType: v.optional(v.union(
+      v.literal("procedure"),
+      v.literal("reference"),
+      v.literal("form"),
+      v.literal("checklist"),
+      v.literal("guide")
+    )),
+    formId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const now = Date.now();
