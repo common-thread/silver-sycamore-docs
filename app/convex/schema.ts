@@ -339,4 +339,39 @@ export default defineSchema({
   })
     .index("by_user", ["userId"])
     .index("by_user_read", ["userId", "isRead"]),
+
+  // Dynamic content instances - personal instances of procedures, checklists, and forms
+  dynamicContentInstances: defineTable({
+    // Source template
+    sourceDocumentId: v.id("documents"),
+    sourceType: v.union(
+      v.literal("procedure"),
+      v.literal("checklist"),
+      v.literal("form")
+    ),
+
+    // Owner (null for anonymous)
+    userId: v.optional(v.id("users")),
+    sessionId: v.optional(v.string()), // For anonymous users
+
+    // Completion state
+    status: v.union(
+      v.literal("in_progress"),
+      v.literal("completed"),
+      v.literal("submitted")
+    ),
+    completionData: v.string(), // JSON: step states, form values
+    completedSteps: v.optional(v.number()), // Quick access to progress
+    totalSteps: v.optional(v.number()),
+
+    // Metadata
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    submittedTo: v.optional(v.array(v.id("users"))), // Who receives results
+  })
+    .index("by_source", ["sourceDocumentId"])
+    .index("by_user", ["userId"])
+    .index("by_user_source", ["userId", "sourceDocumentId"])
+    .index("by_session", ["sessionId"])
+    .index("by_user_status", ["userId", "status"]),
 });
