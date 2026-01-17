@@ -172,6 +172,45 @@ export const related = query({
   },
 });
 
+// Query documents by contentType
+export const byContentType = query({
+  args: {
+    contentType: v.union(
+      v.literal("procedure"),
+      v.literal("reference"),
+      v.literal("form"),
+      v.literal("checklist"),
+      v.literal("guide")
+    ),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("documents")
+      .withIndex("by_contentType", (q) => q.eq("contentType", args.contentType))
+      .collect();
+  },
+});
+
+// Get content type counts for QuickActionNav
+export const contentTypeCounts = query({
+  args: {},
+  handler: async (ctx) => {
+    const docs = await ctx.db.query("documents").collect();
+    const counts: Record<string, number> = {
+      procedure: 0,
+      reference: 0,
+      checklist: 0,
+      guide: 0,
+    };
+    for (const doc of docs) {
+      if (doc.contentType && counts[doc.contentType] !== undefined) {
+        counts[doc.contentType]++;
+      }
+    }
+    return counts;
+  },
+});
+
 // Delete all documents (for re-import)
 export const deleteAll = mutation({
   handler: async (ctx) => {
