@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 Phase: 19 of 23 (Redundant Content + IA Redesign)
 Plan: 3 of 3 in current phase - PHASE COMPLETE
 Status: Complete
-Last activity: 2026-01-17 — Completed 19-03-PLAN.md
+Last activity: 2026-01-17 — Completed 19-FIX-PLAN.md (guides import fix)
 
 Progress: ██████████░ 46% (plans 11 of ~24 in v1.2)
 
@@ -28,7 +28,7 @@ Progress: ██████████░ 46% (plans 11 of ~24 in v1.2)
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 11 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03)
+- Plans completed: 12 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX)
 - Phases complete: 4 of 8 (Phase 16, Phase 17, Phase 18, Phase 19 complete)
 
 ## Accumulated Context
@@ -79,6 +79,10 @@ Phase 19-03 decisions:
 - Home page "Quick Actions" replaces "Browse Documents" with purpose-based QuickActionNav
 - Content type listing pages link to existing /{category}/{slug} routes (preserves URL structure)
 - All content type pages use consistent structure: PageHeader + ContentBox + document list
+
+Phase 19-FIX decisions:
+- Import index.md only at category level (not nested) to get exactly 5 navigation guides
+- Extract title from first h1 heading or fallback to capitalized category name
 
 ### Deferred Issues
 
