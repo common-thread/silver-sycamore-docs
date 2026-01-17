@@ -95,9 +95,9 @@ export function CommentSection({
     return (
       <div
         style={{
-          padding: "1.5rem 0",
+          padding: "var(--space-6) 0",
           fontFamily: "var(--font-body)",
-          fontSize: "0.875rem",
+          fontSize: "var(--text-sm)",
           color: "var(--color-ink-muted)",
         }}
       >
@@ -107,21 +107,21 @@ export function CommentSection({
   }
 
   return (
-    <div style={{ padding: "1.5rem 0" }}>
+    <div style={{ padding: "var(--space-6) 0" }}>
       {/* Section header */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          marginBottom: "1.5rem",
+          marginBottom: "var(--space-6)",
         }}
       >
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.25rem",
-            fontWeight: 600,
+            fontSize: "var(--text-xl)",
+            fontWeight: "var(--font-semibold)",
             color: "var(--color-ink)",
             margin: 0,
           }}
@@ -131,7 +131,7 @@ export function CommentSection({
         <span
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: "0.8125rem",
+            fontSize: "var(--text-xs)",
             color: "var(--color-ink-muted)",
           }}
         >
@@ -147,8 +147,8 @@ export function CommentSection({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1.5rem",
-            marginBottom: "1.5rem",
+            gap: "var(--space-6)",
+            marginBottom: "var(--space-6)",
           }}
         >
           {topLevelComments.map((comment) => (
@@ -173,9 +173,9 @@ export function CommentSection({
       {/* Add comment form */}
       <div
         style={{
-          padding: "1rem",
+          padding: "var(--space-4)",
           background: "var(--color-surface-dim)",
-          borderRadius: "4px",
+          borderRadius: 0,
           border: "1px solid var(--color-border)",
         }}
       >
@@ -196,17 +196,17 @@ export function CommentSection({
             onClick={handleSubmitComment}
             disabled={isSubmitting || !newCommentContent.trim()}
             style={{
-              padding: "0.5rem 1rem",
+              padding: "var(--space-2) var(--space-4)",
               fontFamily: "var(--font-body)",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
+              fontSize: "var(--text-xs)",
+              fontWeight: "var(--font-medium)",
               color: "var(--color-surface)",
               background: "var(--color-accent)",
               border: "none",
-              borderRadius: "2px",
+              borderRadius: 0,
               cursor: isSubmitting || !newCommentContent.trim() ? "not-allowed" : "pointer",
               opacity: isSubmitting || !newCommentContent.trim() ? 0.6 : 1,
-              transition: "background 0.15s ease",
+              transition: `background var(--duration-fast) var(--ease-default)`,
             }}
             onMouseEnter={(e) => {
               if (!isSubmitting && newCommentContent.trim()) {

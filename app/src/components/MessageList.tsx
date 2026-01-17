@@ -126,7 +126,7 @@ export function MessageList({
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "var(--font-body)",
-          fontSize: "0.9375rem",
+          fontSize: "var(--text-sm)",
           color: "var(--color-ink-muted)",
         }}
       >
@@ -144,15 +144,15 @@ export function MessageList({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "2rem",
+          padding: "var(--space-8)",
         }}
       >
         <div style={{ textAlign: "center", maxWidth: "400px" }}>
           <div
             style={{
-              width: "48px",
-              height: "48px",
-              margin: "0 auto 1rem",
+              width: "var(--space-12)",
+              height: "var(--space-12)",
+              margin: "0 auto var(--space-4)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -173,7 +173,7 @@ export function MessageList({
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
+              fontSize: "var(--text-sm)",
               color: "var(--color-ink-muted)",
               margin: 0,
               lineHeight: 1.6,
@@ -219,8 +219,8 @@ export function MessageList({
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  padding: "1rem 1.5rem",
-                  gap: "1rem",
+                  padding: "var(--space-4) var(--space-6)",
+                  gap: "var(--space-4)",
                 }}
               >
                 <div
@@ -233,11 +233,11 @@ export function MessageList({
                 <span
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontSize: "0.75rem",
-                    fontWeight: 500,
+                    fontSize: "var(--text-xs)",
+                    fontWeight: "var(--font-medium)",
                     color: "var(--color-ink-muted)",
                     textTransform: "uppercase",
-                    letterSpacing: "0.05em",
+                    letterSpacing: "var(--tracking-wide)",
                   }}
                 >
                   {item.date}
