@@ -86,15 +86,19 @@ Plans:
 - [x] 16-02: Component-to-data flow mapping and style audit (COMPONENT-MAP.md, STYLE-VIOLATIONS.md)
 - [x] 16-03: Target architecture documentation (DESIRED-STATE.md)
 
-### Phase 17: Base Component Fixes
+### Phase 17: Base Component Fixes - COMPLETE
 
 **Goal**: Fix components so styling inherits correctly, establish enforcement layer
 **Depends on**: Phase 16
 **Research**: Unlikely (existing design system patterns)
-**Plans**: TBD
+**Plans**: 4/4
+**Completed**: 2026-01-17
 
 Plans:
-- [ ] 17-01: TBD
+- [x] 17-01: Error color foundation (add tokens, replace hardcoded colors)
+- [x] 17-02: Header and DocumentViewer token adoption
+- [x] 17-03: FormRenderer and FormBuilder token adoption
+- [x] 17-04: CommentSection, MessageList, and UI primitives token adoption
 
 ### Phase 18: Content Audit + Type Decisions
 
@@ -162,7 +166,7 @@ Plans:
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
-| 17. Base Component Fixes | v1.2 | 0/? | Not started | - |
+| 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 0/? | Not started | - |
 | 19. Redundant Content + IA Redesign | v1.2 | 0/? | Not started | - |
 | 20. Semantic Formatting + Progressive Disclosure | v1.2 | 0/? | Not started | - |
