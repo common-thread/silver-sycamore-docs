@@ -449,7 +449,7 @@ export function FieldEditor({
                           background: "transparent",
                           border: "none",
                           cursor: "pointer",
-                          color: "#C75050",
+                          color: "var(--color-error)",
                         }}
                         title="Remove option"
                       >
@@ -477,9 +477,9 @@ export function FieldEditor({
                 marginBottom: "1rem",
                 fontFamily: "var(--font-body)",
                 fontSize: "0.8125rem",
-                color: "#C75050",
-                background: "rgba(199, 80, 80, 0.1)",
-                border: "1px solid rgba(199, 80, 80, 0.3)",
+                color: "var(--color-error)",
+                background: "var(--color-error-bg)",
+                border: "1px solid var(--color-error-border)",
               }}
             >
               {error}

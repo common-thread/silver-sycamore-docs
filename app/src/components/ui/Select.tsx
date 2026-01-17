@@ -113,7 +113,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
             ? "var(--color-surface-dim)"
             : "var(--color-surface-dim)",
           borderColor: hasError
-            ? "#C75050"
+            ? "var(--color-error)"
             : isOpen
             ? "var(--color-accent)"
             : "transparent",
@@ -125,7 +125,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
           ? "var(--color-surface-dim)"
           : "var(--color-surface)",
         borderColor: hasError
-          ? "#C75050"
+          ? "var(--color-error)"
           : isOpen
           ? "var(--color-accent)"
           : "var(--color-border)",
@@ -645,7 +645,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
               fontFamily: "var(--font-body)",
               fontSize: "0.75rem",
               fontWeight: 500,
-              color: "#C75050",
+              color: "var(--color-error)",
               letterSpacing: "0.01em",
             }}
           >

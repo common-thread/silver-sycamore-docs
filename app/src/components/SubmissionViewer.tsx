@@ -288,7 +288,7 @@ export function SubmissionViewer({
                 gap: "0.75rem",
                 fontFamily: "var(--font-body)",
                 fontSize: "0.8125rem",
-                color: "#C75050",
+                color: "var(--color-error)",
               }}
             >
               <span>Delete this submission?</span>
@@ -301,7 +301,7 @@ export function SubmissionViewer({
                   fontSize: "0.8125rem",
                   fontWeight: 500,
                   color: "var(--color-surface)",
-                  background: "#C75050",
+                  background: "var(--color-error)",
                   border: "none",
                   cursor: isDeleting ? "not-allowed" : "pointer",
                   opacity: isDeleting ? 0.7 : 1,
@@ -336,9 +336,9 @@ export function SubmissionViewer({
                 fontFamily: "var(--font-body)",
                 fontSize: "0.8125rem",
                 fontWeight: 500,
-                color: "#C75050",
-                background: "rgba(199, 80, 80, 0.1)",
-                border: "1px solid rgba(199, 80, 80, 0.2)",
+                color: "var(--color-error)",
+                background: "var(--color-error-bg)",
+                border: "1px solid var(--color-error-border)",
                 cursor: "pointer",
               }}
             >

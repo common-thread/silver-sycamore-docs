@@ -224,7 +224,7 @@ export function FormRenderer({
                 fontFamily: "var(--font-body)",
                 fontSize: "0.875rem",
                 padding: "0.75rem 1rem",
-                border: `1px solid ${error ? "#C75050" : "var(--color-border)"}`,
+                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 borderRadius: 0,
                 background: "var(--color-surface)",
                 color: "var(--color-ink)",
@@ -237,7 +237,7 @@ export function FormRenderer({
                 e.target.style.borderColor = "var(--color-accent)";
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = error ? "#C75050" : "var(--color-border)";
+                e.target.style.borderColor = error ? "var(--color-error)" : "var(--color-border)";
               }}
             />
             {error && (
@@ -246,7 +246,7 @@ export function FormRenderer({
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
                   fontWeight: 500,
-                  color: "#C75050",
+                  color: "var(--color-error)",
                 }}
               >
                 {error}
@@ -295,7 +295,7 @@ export function FormRenderer({
                 flexDirection: "column",
                 gap: "0.5rem",
                 padding: "0.75rem 1rem",
-                border: `1px solid ${error ? "#C75050" : "var(--color-border)"}`,
+                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
               }}
             >
@@ -333,7 +333,7 @@ export function FormRenderer({
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
                   fontWeight: 500,
-                  color: "#C75050",
+                  color: "var(--color-error)",
                 }}
               >
                 {error}
@@ -375,7 +375,7 @@ export function FormRenderer({
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
                   fontWeight: 500,
-                  color: "#C75050",
+                  color: "var(--color-error)",
                 }}
               >
                 {error}
@@ -421,7 +421,7 @@ export function FormRenderer({
                 fontFamily: "var(--font-body)",
                 fontSize: "0.875rem",
                 padding: "0.5rem",
-                border: `1px solid ${error ? "#C75050" : "var(--color-border)"}`,
+                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
                 background: "var(--color-surface)",
                 cursor: isSubmitting ? "not-allowed" : "pointer",
                 width: "100%",
@@ -444,7 +444,7 @@ export function FormRenderer({
                   fontFamily: "var(--font-body)",
                   fontSize: "0.75rem",
                   fontWeight: 500,
-                  color: "#C75050",
+                  color: "var(--color-error)",
                 }}
               >
                 {error}

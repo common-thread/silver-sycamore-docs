@@ -63,7 +63,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ? "var(--color-surface-dim)"
             : "var(--color-surface-dim)",
           borderColor: hasError
-            ? "#C75050"
+            ? "var(--color-error)"
             : isFocused
             ? "var(--color-accent)"
             : "transparent",
@@ -75,7 +75,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ? "var(--color-surface-dim)"
           : "var(--color-surface)",
         borderColor: hasError
-          ? "#C75050"
+          ? "var(--color-error)"
           : isFocused
           ? "var(--color-accent)"
           : "var(--color-border)",
@@ -153,7 +153,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               fontFamily: "var(--font-body)",
               fontSize: "0.75rem",
               fontWeight: 500,
-              color: "#C75050",
+              color: "var(--color-error)",
               letterSpacing: "0.01em",
             }}
           >

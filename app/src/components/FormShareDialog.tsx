@@ -476,11 +476,11 @@ export function FormShareDialog({
               style={{
                 marginBottom: "1rem",
                 padding: "0.75rem",
-                background: "rgba(199, 80, 80, 0.1)",
-                border: "1px solid rgba(199, 80, 80, 0.2)",
+                background: "var(--color-error-bg)",
+                border: "1px solid var(--color-error-border)",
                 fontFamily: "var(--font-body)",
                 fontSize: "0.8125rem",
-                color: "#C75050",
+                color: "var(--color-error)",
               }}
             >
               {error}

@@ -40,9 +40,9 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           };
         case "error":
           return {
-            backgroundColor: "rgba(199, 80, 80, 0.12)",
-            color: "#A33A3A",
-            dotColor: "#C75050",
+            backgroundColor: "var(--color-error-bg)",
+            color: "var(--color-error-dark)",
+            dotColor: "var(--color-error)",
           };
         case "info":
           return {

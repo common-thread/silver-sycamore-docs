@@ -481,8 +481,8 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                       <span
                         style={{
                           padding: "0.125rem 0.375rem",
-                          background: "rgba(199, 80, 80, 0.1)",
-                          color: "#C75050",
+                          background: "var(--color-error-bg)",
+                          color: "var(--color-error)",
                           borderRadius: "2px",
                           fontSize: "0.6875rem",
                           fontWeight: 500,
@@ -523,7 +523,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
                     background: "transparent",
                     border: "none",
                     cursor: "pointer",
-                    color: "#C75050",
+                    color: "var(--color-error)",
                   }}
                   title="Delete field"
                 >
@@ -561,11 +561,11 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
         <div
           style={{
             padding: "0.75rem 1rem",
-            background: "rgba(199, 80, 80, 0.1)",
-            border: "1px solid rgba(199, 80, 80, 0.3)",
+            background: "var(--color-error-bg)",
+            border: "1px solid var(--color-error-border)",
             fontFamily: "var(--font-body)",
             fontSize: "0.875rem",
-            color: "#C75050",
+            color: "var(--color-error)",
           }}
         >
           {error}
