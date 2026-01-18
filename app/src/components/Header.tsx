@@ -14,6 +14,7 @@ const navItems = [
   { href: "/references", label: "References" },
   { href: "/checklists", label: "Checklists" },
   { href: "/guides", label: "Guides" },
+  { href: "/style-guides", label: "Style Guides" },
   { href: "/messages", label: "Messages" },
   { href: "/forms", label: "Forms" },
   { href: "/activity", label: "Activity" },
