@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { UserMenu } from "./UserMenu";
 import { SearchBar } from "./SearchBar";
-import { NotificationBell } from "./NotificationBell";
+// CONNECTOR: NotificationBell - restore from feature/full-v1
 import { LogoFull } from "./Logo";
 
 const navItems = [
@@ -15,9 +15,7 @@ const navItems = [
   { href: "/checklists", label: "Checklists" },
   { href: "/guides", label: "Guides" },
   { href: "/style-guides", label: "Style Guides" },
-  { href: "/messages", label: "Messages" },
-  { href: "/forms", label: "Forms" },
-  { href: "/activity", label: "Activity" },
+  // CONNECTOR: Messages, Forms, Activity routes - restore from feature/full-v1
   { href: "/workspace", label: "My Workspace" },
 ];
 
@@ -39,10 +37,10 @@ export default function Header() {
           <span className="header-brand-tag">Staff Hub</span>
         </Link>
 
-        {/* Search, Notifications, and User Menu */}
+        {/* Search and User Menu */}
         <div className="header-actions">
           <SearchBar />
-          {isSignedIn && <NotificationBell />}
+          {/* CONNECTOR: NotificationBell - restore from feature/full-v1 */}
           <UserMenu />
         </div>
       </div>
