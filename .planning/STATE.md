@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 21 of 22 (Form Builder Visual Rebuild) - PLANNED
-Plan: 2 plans ready (21-01, 21-02)
-Status: Ready for execution
-Last activity: 2026-01-17 — Created Phase 21 plans
+Phase: 21 of 22 (Form Builder Visual Rebuild) - IN PROGRESS
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-18 — Completed 21-01-PLAN.md
 
-Progress: ██████████████░ 72% (plans 18 of ~25 in v1.2)
+Progress: ██████████████░ 76% (plans 19 of ~25 in v1.2)
 
 ## Performance Metrics
 
@@ -28,7 +28,7 @@ Progress: ██████████████░ 72% (plans 18 of ~25 in 
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 18 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05, 20-FIX)
+- Plans completed: 19 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05, 20-FIX, 21-01)
 - Phases complete: 5 of 7 (Phase 16, Phase 17, Phase 18, Phase 19, Phase 20 complete)
 
 ## Accumulated Context
@@ -106,6 +106,11 @@ Phase 20-FIX decisions:
 - Wedding Processional (form/template hybrid) correctly shows 0 steps - fill-in-blank content, not actionable steps
 - PDF placeholder approach: tasting-form.pdf gets note to use Form Builder version
 
+Phase 21-01 decisions:
+- Export shared type definitions from DraggableFieldCard.tsx (FormFieldType, FormField, FIELD_TYPES, slugify)
+- Use collapsed/expanded states for inline editing (no modal overlay)
+- Auto-generate unique field names from labels using slugify helper
+
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
@@ -167,15 +172,14 @@ None active.
 
 ## Session Continuity
 
-Last session: 2026-01-17
-Stopped at: Created Phase 21 plans (Form Builder Visual Rebuild)
+Last session: 2026-01-18
+Stopped at: Completed 21-01-PLAN.md (DraggableFieldCard foundation)
 Resume file: None
 
 ### Next Steps
 
-1. **Phase 21 planned** - 2 plans ready for execution
-2. **`/gsd:execute-phase 21`** - Execute Form Builder Visual Rebuild
-3. Continue to Phase 22 after Phase 21 complete
+1. **Execute 21-02** - Integrate DraggableFieldCard with FormBuilder
+2. Continue to Phase 22 after Phase 21 complete
 
 ### Verification Protocol (added 2026-01-17)
 
