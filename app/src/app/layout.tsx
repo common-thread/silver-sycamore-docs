@@ -1,3 +1,6 @@
+// CONNECTOR: forms builder routes - restore from feature/full-v1
+// Original location: app/src/app/forms/
+
 import type { Metadata } from "next";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";

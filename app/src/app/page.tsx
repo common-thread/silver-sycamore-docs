@@ -2,6 +2,9 @@ import { InitiativesTable } from "@/components/InitiativesTable";
 import { QuickActionNav } from "@/components/QuickActionNav";
 import { ContentBox } from "@/components/ContentBox";
 
+// CONNECTOR: messaging routes - restore from feature/full-v1
+// Original location: app/src/app/messages/
+
 export default function Home() {
   return (
     <>
