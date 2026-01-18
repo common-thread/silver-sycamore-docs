@@ -29,12 +29,13 @@ const quickActions = [
     description: "Navigation and overview documents",
     contentType: "guide",
   },
-  {
-    href: "/forms",
-    label: "Forms",
-    description: "Create, send, and manage forms",
-    contentType: null, // No count, links to forms section
-  },
+  // CONNECTOR: forms quick action - restore from feature/full-v1
+  // {
+  //   href: "/forms",
+  //   label: "Forms",
+  //   description: "Create, send, and manage forms",
+  //   contentType: null,
+  // },
 ];
 
 export function QuickActionNav() {
