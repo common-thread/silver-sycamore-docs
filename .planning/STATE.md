@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 
 ## Current Position
 
-Phase: 24 of 28 (Feature Branch Extraction)
-Plan: 4 of 5 complete
-Status: In progress
-Last activity: 2026-01-18 — Completed 24-04-PLAN.md
+Phase: 24 of 28 (Feature Branch Extraction) — COMPLETE
+Plan: 5 of 5 complete
+Status: Phase complete, ready for Phase 25
+Last activity: 2026-01-18 — Phase 24 complete
 
-Progress: ████░░░░░░ 80%
+Progress: ██████████ 100%
 
 ## Performance Metrics
 
@@ -32,9 +32,12 @@ Progress: ████░░░░░░ 80%
 - Phases complete: 7 of 8 (Phase 22 deferred)
 - Timeline: 6 days (2026-01-12 → 2026-01-18)
 
+**v1.3 Progress:**
+- Phase 24: 5 plans complete (Feature Branch Extraction)
+
 **Overall:**
-- 65 plans completed across 3 milestones
-- 22 phases shipped
+- 70 plans completed across 4 milestones
+- 23 phases shipped
 
 ## Accumulated Context
 
@@ -45,7 +48,7 @@ Progress: ████░░░░░░ 80%
 **Strategy:** 360-degree holistic approach — full awareness of content, context, and system before making any single move. Nav menu items, catalog structure, and document presentation all considered as interconnected parts of one system.
 
 **Approach:**
-1. Extract deferred features to branch (simplify codebase)
+1. ✅ Extract deferred features to branch (simplify codebase) — DONE
 2. Audit all source content files AND navigation structure
 3. Design transposition methodology with system-wide perspective
 4. Execute transposition on wiki docs
@@ -56,14 +59,25 @@ Progress: ████░░░░░░ 80%
 - Browser automation required for visual verification
 - Wiki-only focus for this milestone
 
-### Deferred to Branch
+### Phase 24 Outcomes
 
-Features moving to separate branch:
-- Comments system
-- Messaging channels
+**Branch created:** `feature/full-v1` preserves complete feature set
+
+**Features extracted from main:**
+- Messaging channels + notifications
 - Forms builder
-- Procedures feature
-- Checklists feature
+- Comments system
+- Interactive procedures/checklists (simplified to static markdown)
+- Activity system
+
+**Auth toggle implemented:**
+- `NEXT_PUBLIC_ENABLE_AUTH=false` disables Clerk in providers
+- `NEXT_PUBLIC_BYPASS_AUTH=true` disables Clerk middleware
+- App runs in "Guest Mode" for single-user development
+
+**Navigation simplified:**
+- Home, Procedures, References, Checklists, Guides, Style Guides, My Workspace
+- No Messages, Forms, Activity links
 
 ### Decisions
 
@@ -74,10 +88,11 @@ Recent key decisions:
 - Purpose-based navigation replaces category-based
 - Form builder is authoritative for data collection
 - Border-radius > 0 for UI refresh (v1.2 overrides v1.1)
+- Auth toggle requires BOTH env vars for full bypass
 
 ### Pending Todos
 
-None — starting fresh milestone.
+None.
 
 ### Blockers/Concerns
 
@@ -93,13 +108,13 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: Completed 24-04-PLAN.md
+Stopped at: Phase 24 complete
 Resume file: None
 
 ### Next Steps
 
-1. Run `/gsd:execute-plan .planning/phases/24-feature-branch-extraction/24-05-PLAN.md` for next plan
-2. Or run `/gsd:execute-phase 24` to execute remaining 1 plan
+1. Run `/gsd:plan-phase 25` to plan Content Source Audit
+2. Or run `/gsd:discuss-phase 25` if context gathering needed first
 
 ### Phase Archives
 
