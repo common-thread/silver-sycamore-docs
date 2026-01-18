@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 20 of 22 (Dynamic Content System) - COMPLETE
-Plan: FIX complete
-Status: Phase complete
-Last activity: 2026-01-17 — Completed 20-FIX-PLAN.md (binary content conversion)
+Phase: 21 of 22 (Form Builder Visual Rebuild) - PLANNED
+Plan: 2 plans ready (21-01, 21-02)
+Status: Ready for execution
+Last activity: 2026-01-17 — Created Phase 21 plans
 
 Progress: ██████████████░ 72% (plans 18 of ~25 in v1.2)
 
@@ -144,6 +144,11 @@ Create structured log tracking each document's:
 - **Forms in workspace** — Allow forms to be added to workspace (not just docs)
 - **Universal comments with @mentions** — Comment on anything, @mention people/documents with linking
 
+**Phase 24 (post-v1.2): UI Refresh**
+- Dynamic content UI (procedures, checklists) needs visual polish
+- Current implementation is functional but rough
+- Defer until after Phase 21-23 complete all functionality
+
 ### Pending Todos
 
 None — Milestone v1.1 complete.
@@ -158,15 +163,23 @@ None active.
 - v1.1 restructured: Consolidated design tokens + style guide into Phase 13 (Brand Foundation), now 4 phases (12-15)
 - Milestone v1.2 created: Content Architecture, 8 phases (Phase 16-23)
 - **v1.2 milestone references added**: `.planning/milestones/v1.2-REFERENCES.md` ensures all phases inherit Phase 16 architectural guidance
+- **Phase 24 added**: UI Refresh pass for dynamic content (procedures, checklists) - deferred until after v1.2 functionality complete
 
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Completed 20-FIX-PLAN.md (binary content conversion)
+Stopped at: Created Phase 21 plans (Form Builder Visual Rebuild)
 Resume file: None
 
 ### Next Steps
 
-1. **Phase 20 complete** - Dynamic content system working with real content
-2. **`/gsd:plan-phase 21`** - Begin Phase 21 planning
+1. **Phase 21 planned** - 2 plans ready for execution
+2. **`/gsd:execute-phase 21`** - Execute Form Builder Visual Rebuild
 3. Continue to Phase 22 after Phase 21 complete
+
+### Verification Protocol (added 2026-01-17)
+
+All UI verification is self-performed via browser automation:
+- Screenshots saved to `.planning/phases/{phase}/screenshots/`
+- User reviews screenshots for approval
+- See CLAUDE.md for full requirements

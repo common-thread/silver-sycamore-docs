@@ -70,3 +70,30 @@ bun run test:ui      # Run tests with UI
 - Fonts: Playfair Display (display), DM Sans (body)
 - Colors: Ink/paper/bronze palette (see globals.css)
 - Aesthetic: Typeform-inspired, archival/editorial
+
+## Verification Requirements
+
+**All UI/visual verification must be self-performed by Claude:**
+
+1. **Run the build yourself** - Don't ask the user to run builds or tests
+2. **Use browser automation** - Test UI changes with the browser agent (claude-in-chrome)
+3. **Take screenshots** - Save verification screenshots to `.planning/phases/{phase}/screenshots/`
+4. **Provide review link** - Include path to screenshots folder in verification output
+5. **User reviews screenshots** - User approval is based on reviewing the screenshots you provide
+
+**Screenshot naming convention:**
+- `{plan}-{task}-{description}.png` (e.g., `01-02-field-card-inline-edit.png`)
+
+**Verification checkpoint format:**
+```
+## Verification Complete
+
+Screenshots saved to: `.planning/phases/XX-name/screenshots/`
+
+| Screenshot | Description |
+|------------|-------------|
+| 01-01-initial-state.png | Form builder before changes |
+| 01-02-drag-reorder.png | Field reordering via drag |
+```
+
+This applies to all phases with UI changes or visual verification tasks.
