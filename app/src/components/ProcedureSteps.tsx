@@ -40,12 +40,15 @@ interface ParsedStep {
 }
 
 /**
- * Parse procedure content into steps based on h2 headers.
- * Each step includes its title and content until the next h2.
+ * Parse procedure content into steps.
+ * Primary: h2 headers (## Step Title) with content between headers
+ * Fallback: bullet list items (- Item) for converted binary documents
  */
 function parseStepsFromContent(content: string): ParsedStep[] {
   const lines = content.split("\n");
-  const steps: ParsedStep[] = [];
+
+  // First try: Parse h2 headers with their content
+  const h2Steps: ParsedStep[] = [];
   let currentStep: ParsedStep | null = null;
   let contentLines: string[] = [];
 
@@ -55,7 +58,7 @@ function parseStepsFromContent(content: string): ParsedStep[] {
       // Save previous step if exists
       if (currentStep) {
         currentStep.content = contentLines.join("\n").trim();
-        steps.push(currentStep);
+        h2Steps.push(currentStep);
       }
       // Start new step
       currentStep = { title: h2Match[1].trim(), content: "" };
@@ -68,10 +71,24 @@ function parseStepsFromContent(content: string): ParsedStep[] {
   // Save last step
   if (currentStep) {
     currentStep.content = contentLines.join("\n").trim();
-    steps.push(currentStep);
+    h2Steps.push(currentStep);
   }
 
-  return steps;
+  // If h2 headers found, return those
+  if (h2Steps.length > 0) {
+    return h2Steps;
+  }
+
+  // Fallback: Parse list items for converted binary documents
+  const listSteps: ParsedStep[] = [];
+  for (const line of lines) {
+    const listMatch = line.match(/^[-*]\s+(?:\[[ x]\]\s+)?(.+)$/);
+    if (listMatch) {
+      listSteps.push({ title: listMatch[1].trim(), content: "" });
+    }
+  }
+
+  return listSteps;
 }
 
 export function ProcedureSteps({ document, instanceId: propInstanceId }: ProcedureStepsProps) {

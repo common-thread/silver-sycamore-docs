@@ -192,6 +192,10 @@ function htmlToMarkdown(html: string): string {
   markdown = markdown
     // Remove excessive blank lines
     .replace(/\n{3,}/g, "\n\n")
+    // Unescape escaped dashes at start of lines (turndown escapes them)
+    .replace(/^\\-/gm, "-")
+    // Add space after list markers that are missing it (e.g., "-Item" -> "- Item")
+    .replace(/^-([^\s-])/gm, "- $1")
     // Clean up list spacing
     .replace(/^\s*-\s+/gm, "- ")
     // Remove empty links

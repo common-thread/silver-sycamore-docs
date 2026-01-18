@@ -12,13 +12,23 @@ function parseStepsFromContent(
   contentType: "procedure" | "checklist" | "form"
 ): string[] {
   if (contentType === "procedure") {
-    // Extract h2 headers as steps (## Step Title)
+    // First try: Extract h2 headers as steps (## Step Title)
     const h2Regex = /^##\s+(.+)$/gm;
     const steps: string[] = [];
     let match;
     while ((match = h2Regex.exec(content)) !== null) {
       steps.push(match[1].trim());
     }
+
+    // If no h2 headers found, fall back to list items
+    // This supports converted binary documents that use bullet lists
+    if (steps.length === 0) {
+      const listRegex = /^[-*]\s+(?:\[[ x]\]\s+)?(.+)$/gm;
+      while ((match = listRegex.exec(content)) !== null) {
+        steps.push(match[1].trim());
+      }
+    }
+
     return steps;
   }
 
