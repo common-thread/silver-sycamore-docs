@@ -146,7 +146,7 @@ export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
   "deliverables/recipe-app/README": "checklist",
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GUIDES (5)
+  // GUIDES (9)
   // Explanatory prose content, navigation, documentation
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -155,6 +155,10 @@ export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
   "staff/index": "guide",
   "operations/index": "guide",
   "deliverables/index": "guide",
+  "style-guides/index": "guide",
+  "style-guides/editorial-archive-main": "guide",
+  "style-guides/editorial-archive-wedding": "guide",
+  "style-guides/editorial-archive-staff-hub": "guide",
 };
 
 /**

@@ -127,7 +127,7 @@ function extractDescription(content: string, subcategory?: string): string | und
 }
 
 async function importDocuments() {
-  const categories = ["services", "clients", "staff", "operations", "deliverables"];
+  const categories = ["services", "clients", "staff", "operations", "deliverables", "style-guides"];
   let imported = 0;
   let skipped = 0;
   let redundantSkipped = 0;

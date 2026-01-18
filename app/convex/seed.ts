@@ -39,6 +39,12 @@ export const seedCategories = mutation({
         description: "Projects",
         order: 5,
       },
+      {
+        name: "Style Guides",
+        slug: "style-guides",
+        description: "Design system documentation",
+        order: 6,
+      },
     ];
 
     for (const cat of categories) {
