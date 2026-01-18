@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 20 of 22 (Dynamic Content System) - FIX PENDING
-Plan: FIX (binary content conversion)
-Status: In progress
-Last activity: 2026-01-17 — Created 20-FIX-PLAN.md (convert 39 binary files to markdown)
+Phase: 20 of 22 (Dynamic Content System) - COMPLETE
+Plan: FIX complete
+Status: Phase complete
+Last activity: 2026-01-17 — Completed 20-FIX-PLAN.md (binary content conversion)
 
-Progress: █████████████░░ 68% (plans 17 of ~25 in v1.2)
+Progress: ██████████████░ 72% (plans 18 of ~25 in v1.2)
 
 ## Performance Metrics
 
@@ -28,7 +28,7 @@ Progress: █████████████░░ 68% (plans 17 of ~25 in 
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 17 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05)
+- Plans completed: 18 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05, 20-FIX)
 - Phases complete: 5 of 7 (Phase 16, Phase 17, Phase 18, Phase 19, Phase 20 complete)
 
 ## Accumulated Context
@@ -101,6 +101,11 @@ Phase 20-04 decisions:
 - Share page renders content based on contentType (procedure/checklist/form)
 - Anonymous users get session ID stored in localStorage
 
+Phase 20-FIX decisions:
+- Bullet lists parsed as procedure steps when no h2 headers found (supports converted binary content)
+- Wedding Processional (form/template hybrid) correctly shows 0 steps - fill-in-blank content, not actionable steps
+- PDF placeholder approach: tasting-form.pdf gets note to use Form Builder version
+
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
@@ -157,11 +162,11 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-17
-Stopped at: Created 20-FIX-PLAN.md (binary content conversion)
-Resume file: .planning/phases/20-dynamic-content-system/20-FIX-PLAN.md
+Stopped at: Completed 20-FIX-PLAN.md (binary content conversion)
+Resume file: None
 
 ### Next Steps
 
-1. **`/gsd:execute-plan .planning/phases/20-dynamic-content-system/20-FIX-PLAN.md`** — Convert 39 binary files to markdown
-2. After 20-FIX complete, Phase 20 truly complete
-3. Then continue to Phase 21
+1. **Phase 20 complete** - Dynamic content system working with real content
+2. **`/gsd:plan-phase 21`** - Begin Phase 21 planning
+3. Continue to Phase 22 after Phase 21 complete
