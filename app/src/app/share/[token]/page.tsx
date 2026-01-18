@@ -3,25 +3,13 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useParams } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
-import { ProcedureSteps } from "@/components/ProcedureSteps";
+import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
-// Session ID storage key for anonymous users
-const SESSION_ID_KEY = "share_session_id";
-
-// Generate a simple session ID for anonymous users
-function getOrCreateSessionId(): string {
-  if (typeof window === "undefined") {
-    return "";
-  }
-  let sessionId = localStorage.getItem(SESSION_ID_KEY);
-  if (!sessionId) {
-    sessionId = `anon_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem(SESSION_ID_KEY, sessionId);
-  }
-  return sessionId;
-}
+// CONNECTOR: Interactive shared content - restore from feature/full-v1
+// Previously imported ProcedureSteps for interactive procedure following
+// Shared procedures/checklists now display as read-only markdown
+// Session ID generation was removed (was used for anonymous checklist tracking)
 
 // Loading spinner component
 function LoadingSpinner() {
@@ -181,204 +169,9 @@ function ErrorDisplay({
   );
 }
 
-// Checklist renderer for shared checklists
-function ChecklistView({
-  document,
-  sessionId,
-}: {
-  document: {
-    _id: string;
-    title: string;
-    content: string;
-    contentType?: string;
-  };
-  sessionId: string;
-}) {
-  // Parse checklist items from markdown content
-  const items = document.content
-    .split("\n")
-    .filter((line) => /^[-*]\s+/.test(line))
-    .map((line) => line.replace(/^[-*]\s+(?:\[[ x]\]\s+)?/, "").trim());
-
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(() =>
-    items.map(() => false)
-  );
-
-  const completedCount = checkedItems.filter(Boolean).length;
-  const progressPercent =
-    items.length > 0 ? Math.round((completedCount / items.length) * 100) : 0;
-
-  const handleToggle = (index: number) => {
-    setCheckedItems((prev) => {
-      const updated = [...prev];
-      updated[index] = !updated[index];
-      return updated;
-    });
-  };
-
-  return (
-    <div>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-2)",
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
-            fontWeight: "var(--font-semibold)",
-            color: "var(--color-ink)",
-          }}
-        >
-          {document.title}
-        </h1>
-        <span
-          style={{
-            fontSize: "var(--text-sm)",
-            color: "var(--color-ink-muted)",
-          }}
-        >
-          {completedCount}/{items.length} items
-        </span>
-      </div>
-
-      {/* Progress Bar */}
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "var(--space-2)",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "var(--text-xs)",
-              color: "var(--color-ink-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "var(--tracking-wider)",
-            }}
-          >
-            Progress
-          </span>
-          <span
-            style={{
-              fontSize: "var(--text-sm)",
-              color: "var(--color-ink-light)",
-              fontWeight: "var(--font-medium)",
-            }}
-          >
-            {progressPercent}%
-          </span>
-        </div>
-        <div
-          style={{
-            height: "8px",
-            background: "var(--color-paper-mid)",
-            borderRadius: "0",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              height: "100%",
-              width: `${progressPercent}%`,
-              background: "var(--color-champagne-dark)",
-              transition: "width var(--duration-slow) var(--ease-out)",
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Checklist Items */}
-      <div
-        style={{
-          border: "1px solid var(--color-border)",
-          borderRadius: "0",
-          background: "var(--color-surface)",
-        }}
-      >
-        {items.map((item, index) => {
-          const isChecked = checkedItems[index];
-          return (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "var(--space-4)",
-                padding: "var(--space-4)",
-                borderBottom:
-                  index < items.length - 1
-                    ? "1px solid var(--color-border)"
-                    : "none",
-                background: isChecked ? "var(--color-paper-warm)" : "transparent",
-                cursor: "pointer",
-              }}
-              onClick={() => handleToggle(index)}
-            >
-              {/* Checkbox */}
-              <div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  minWidth: "20px",
-                  border: `2px solid ${isChecked ? "var(--color-success)" : "var(--color-border-strong)"}`,
-                  borderRadius: "0",
-                  background: isChecked ? "var(--color-success)" : "transparent",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "2px",
-                  transition: "all var(--duration-fast) var(--ease-default)",
-                }}
-              >
-                {isChecked && (
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    style={{ color: "var(--color-paper-white)" }}
-                  >
-                    <path
-                      d="M2 6L5 9L10 3"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </div>
-
-              {/* Item Text */}
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-base)",
-                  color: isChecked ? "var(--color-ink-muted)" : "var(--color-ink)",
-                  textDecoration: isChecked ? "line-through" : "none",
-                  flex: 1,
-                }}
-              >
-                {item}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// Reference document renderer (read-only markdown)
+// Document renderer (read-only markdown)
+// CONNECTOR: Interactive shared checklists - restore from feature/full-v1
+// Previously had interactive ChecklistView component for checkbox completion
 function ReferenceView({
   document,
 }: {
@@ -413,12 +206,6 @@ export default function SharePage() {
   const params = useParams();
   const token = params.token as string;
   const hasIncrementedRef = useRef(false);
-
-  // Get session ID for anonymous users
-  const [sessionId, setSessionId] = useState("");
-  useEffect(() => {
-    setSessionId(getOrCreateSessionId());
-  }, []);
 
   // Query share link access
   const accessResult = useQuery(api.sharing.accessViaShareLink, { token });
@@ -466,57 +253,20 @@ export default function SharePage() {
 
   const { document, sharedBy } = accessResult;
 
-  // Determine which renderer to use based on content type
+  // All shared content types render as read-only markdown
+  // CONNECTOR: Interactive content routing - restore from feature/full-v1
+  // Previously routed procedure -> ProcedureSteps, checklist -> ChecklistView
   const renderContent = () => {
-    switch (document.contentType) {
-      case "procedure":
-        return (
-          <ProcedureSteps
-            document={{
-              _id: document._id,
-              title: document.title,
-              content: document.content,
-              contentType: document.contentType,
-            }}
-          />
-        );
-      case "checklist":
-        return (
-          <ChecklistView
-            document={{
-              _id: document._id,
-              title: document.title,
-              content: document.content,
-              contentType: document.contentType,
-            }}
-            sessionId={sessionId}
-          />
-        );
-      case "form":
-        // For now, render as reference - form rendering would need FormRenderer integration
-        return (
-          <ReferenceView
-            document={{
-              _id: document._id,
-              title: document.title,
-              content: document.content,
-              contentType: document.contentType,
-            }}
-          />
-        );
-      default:
-        // Default to reference view for other content types
-        return (
-          <ReferenceView
-            document={{
-              _id: document._id,
-              title: document.title,
-              content: document.content,
-              contentType: document.contentType,
-            }}
-          />
-        );
-    }
+    return (
+      <ReferenceView
+        document={{
+          _id: document._id,
+          title: document.title,
+          content: document.content,
+          contentType: document.contentType,
+        }}
+      />
+    );
   };
 
   return (
