@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-18)
 
 **Core value:** Staff use it daily as the single go-to place for procedures, knowledge, and team communication.
-**Current focus:** v1.3 Polish & Refinements (planning)
+**Current focus:** v1.3 Wiki Content Transposition
 
 ## Current Position
 
-Phase: Ready for v1.3 planning
+Phase: 24 of 28 (Feature Branch Extraction)
 Plan: Not started
-Status: v1.2 milestone SHIPPED, preparing v1.3
-Last activity: 2026-01-18 — v1.2 milestone archived
+Status: Ready to plan
+Last activity: 2026-01-18 — Milestone v1.3 created
 
-Progress: Ready for next milestone
+Progress: ░░░░░░░░░░ 0%
 
 ## Performance Metrics
 
@@ -38,20 +38,32 @@ Progress: Ready for next milestone
 
 ## Accumulated Context
 
-### v1.3 Issues (captured 2026-01-18)
+### v1.3 Focus
 
-**Feature Issues:**
-- **Procedures feature broken/never tested** — May need removal or merge with checklists
-- **Procedures vs Checklists too similar** — Consider consolidating into single "interactive list" with display modes
-- **Anonymous dynamic content testing needed** — Verify sessionId localStorage approach works without auth
+**Core problem:** Markdown content was imported but never properly transposed for the UI context. The style guide exists but documents weren't analyzed for their intent and how they should be presented within the app.
 
-**Content Type Misclassifications (12 found, FIXED in contentTypeMapping.ts):**
-Already corrected during 23-03 execution. Re-seed applied. Verify during v1.3.
+**Strategy:** 360-degree holistic approach — full awareness of content, context, and system before making any single move. Nav menu items, catalog structure, and document presentation all considered as interconnected parts of one system.
 
-**Deferred from v1.2:**
-- Create flows error handling (Phase 22) — works but needs polish
-- Forms in workspace — allow forms to be added alongside docs
-- Universal comments with @mentions
+**Approach:**
+1. Extract deferred features to branch (simplify codebase)
+2. Audit all source content files AND navigation structure
+3. Design transposition methodology with system-wide perspective
+4. Execute transposition on wiki docs
+5. Refine navigation based on results
+
+**Constraints:**
+- All UI/visual work done by Claude directly using frontend-design skill
+- Browser automation required for visual verification
+- Wiki-only focus for this milestone
+
+### Deferred to Branch
+
+Features moving to separate branch:
+- Comments system
+- Messaging channels
+- Forms builder
+- Procedures feature
+- Checklists feature
 
 ### Decisions
 
@@ -65,7 +77,7 @@ Recent key decisions:
 
 ### Pending Todos
 
-None — v1.2 milestone complete.
+None — starting fresh milestone.
 
 ### Blockers/Concerns
 
@@ -76,19 +88,18 @@ None active.
 - v1.0: Phases 1-11 (37 plans) — Foundation + Features
 - v1.1: Phases 12-15 (5 plans) — Content Pipeline & Branding
 - v1.2: Phases 16-23 (23 plans) — Content Architecture
-- v1.3: Phases 24+ (TBD) — Polish & Refinements
+- v1.3: Phases 24-28 (TBD plans) — Wiki Content Transposition
 
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: v1.2 milestone archived
+Stopped at: Milestone v1.3 initialization
 Resume file: None
 
 ### Next Steps
 
-1. Run `/gsd:discuss-milestone` to scope v1.3
-2. Candidates: Procedures consolidation, content type verification, error handling, universal comments
-3. Or: Quality verification pass on existing features before adding more
+1. Run `/gsd:plan-phase 24` to break down Feature Branch Extraction
+2. Or run `/gsd:discuss-phase 24` for more context first
 
 ### Phase Archives
 

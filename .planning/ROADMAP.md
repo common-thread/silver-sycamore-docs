@@ -9,7 +9,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
 - ✅ [v1.2 Content Architecture](milestones/v1.2-ROADMAP.md) (Phases 16-23) — SHIPPED 2026-01-18
-- 📋 **v1.3 Polish & Refinements** — TBD (planning)
+- 🚧 **v1.3 Wiki Content Transposition** — Phases 24-28 (in progress)
 
 ## Completed Milestones
 
@@ -103,22 +103,66 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-## 📋 v1.3 Polish & Refinements (Planning)
+### 🚧 v1.3 Wiki Content Transposition (In Progress)
 
-**Milestone Goal:** Address known issues from v1.2, quality refinements, and feature consolidation.
+**Milestone Goal:** Transform raw markdown into properly contextualized wiki content that adheres to the style guide and makes sense within the app UI. Defer secondary features to a branch.
 
-**Candidates from v1.2 issues:**
-- Procedures/checklists feature consolidation
-- Content type misclassification fixes (12 identified)
-- Create flows error handling
-- Anonymous dynamic content testing
-- Universal comments with @mentions
-- Forms in workspace
+#### Phase 24: Feature Branch Extraction
 
-*Run `/gsd:discuss-milestone` to scope v1.3*
+**Goal**: Move deferred features (comments, messaging, forms builder, procedures, checklists) to a separate branch, simplify main codebase
+**Depends on**: v1.2 complete
+**Research**: Unlikely (git operations, internal work)
+**Plans**: TBD
+
+Plans:
+- [ ] 24-01: TBD (run /gsd:plan-phase 24 to break down)
+
+#### Phase 25: Content Source Audit
+
+**Goal**: Investigate all source files (markdown, JSON), catalog formats, identify what needs transposition
+**Depends on**: Phase 24
+**Research**: Unlikely (internal file analysis)
+**Plans**: TBD
+
+Plans:
+- [ ] 25-01: TBD
+
+#### Phase 26: Transposition Process Design
+
+**Goal**: Create methodology for analyzing document intent and conversion to UI context
+**Depends on**: Phase 25
+**Research**: Unlikely (methodology work, internal)
+**Plans**: TBD
+
+Plans:
+- [ ] 26-01: TBD
+
+#### Phase 27: Content Transposition Execution
+
+**Goal**: Apply transposition methodology to all wiki documents (scope determined by audit)
+**Depends on**: Phase 26
+**Research**: Unlikely (applying established methodology)
+**Plans**: TBD
+
+Plans:
+- [ ] 27-01: TBD
+
+#### Phase 28: Navigation & Catalog Refinement
+
+**Goal**: Restructure wiki navigation based on transposed content, remove duplication, fix illogical organization
+**Depends on**: Phase 27
+**Research**: Unlikely (internal restructuring)
+**Plans**: TBD
+
+Plans:
+- [ ] 28-01: TBD
 
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 24+ | TBD | - | Planning | - |
+| 24. Feature Branch Extraction | v1.3 | 0/? | Not started | - |
+| 25. Content Source Audit | v1.3 | 0/? | Not started | - |
+| 26. Transposition Process Design | v1.3 | 0/? | Not started | - |
+| 27. Content Transposition Execution | v1.3 | 0/? | Not started | - |
+| 28. Navigation & Catalog Refinement | v1.3 | 0/? | Not started | - |
