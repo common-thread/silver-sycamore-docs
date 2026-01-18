@@ -5,6 +5,10 @@ import { ContentBox } from "@/components/ContentBox";
 // CONNECTOR: messaging routes - restore from feature/full-v1
 // Original location: app/src/app/messages/
 
+// CONNECTOR: activity system - restore from feature/full-v1
+// Routes: app/src/app/activity/
+// Components: ActivityDashboard, ActivitySidebar
+
 export default function Home() {
   return (
     <>
