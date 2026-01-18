@@ -139,18 +139,18 @@ Plans:
 - [x] 20-03: Activity System (activity.ts, ActivitySidebar, ActivityDashboard)
 - [x] 20-04: Sharing System (sharing.ts, ShareLinkDialog, /share/[token] page)
 - [x] 20-05: Integration (ContentTypeRenderer, activity page, wiring)
-- [ ] 20-FIX: Binary Content Conversion (convert 39 DOCX/XLSX/PDF files to markdown)
+- [x] 20-FIX: Binary Content Conversion (convert 39 DOCX/XLSX/PDF files to markdown)
 
 ### Phase 21: Form Builder Visual Rebuild
 
 **Goal**: Section-based builder like Google Forms — visual drag-and-drop interface
 **Depends on**: Phase 20
-**Research**: Likely (form builder UX patterns)
-**Research topics**: Google Forms UX patterns, modern form builder approaches, drag-and-drop section builders
-**Plans**: TBD
+**Research**: Level 1 (dnd-kit is the modern standard, no deep research needed)
+**Plans**: 2/2
 
 Plans:
-- [ ] 21-01: TBD
+- [ ] 21-01: Foundation + DraggableFieldCard (dnd-kit, inline editing component)
+- [ ] 21-02: FormBuilder Integration + Visual Verification (refactor, browser testing)
 
 ### Phase 22: Create Flows + Dashboard
 
@@ -170,6 +170,6 @@ Plans:
 | 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 20. Dynamic Content System | v1.2 | 5/5 | Complete | 2026-01-17 |
-| 21. Form Builder Visual Rebuild | v1.2 | 0/? | Not started | - |
+| 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
+| 21. Form Builder Visual Rebuild | v1.2 | 0/2 | Planned | - |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
