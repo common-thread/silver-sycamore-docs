@@ -153,15 +153,21 @@ Plans:
 - [x] 21-01: Foundation + DraggableFieldCard (dnd-kit, inline editing component)
 - [x] 21-02: FormBuilder Integration + Visual Verification (refactor, browser testing)
 
-### Phase 22: Create Flows + Dashboard
+### Phase 22: Create Flows + Dashboard - DEFERRED
 
-**Goal**: Fix folder/document creation flows, simple management dashboard
+**Goal**: Add error handling to folder/document creation flows, simple management dashboard
 **Depends on**: Phase 21
 **Research**: Unlikely (fixing existing code + internal patterns)
 **Plans**: TBD
+**Status**: Deferred — flows work when authenticated, error handling is UX polish not blocking
+
+**Findings from investigation (2026-01-18):**
+- Create folder/document mutations work correctly when user is logged in
+- Missing: try/catch in UI handlers, error toasts, redirect to signin on auth failure
+- Low priority since core functionality works
 
 Plans:
-- [ ] 22-01: TBD
+- [ ] 22-01: TBD (when resumed)
 
 ## Progress
 
@@ -173,4 +179,4 @@ Plans:
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
 | 21. Form Builder Visual Rebuild | v1.2 | 2/2 | Complete | 2026-01-18 |
-| 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |
+| 22. Create Flows + Dashboard | v1.2 | 0/? | Deferred | - |

@@ -11,10 +11,10 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 Phase: 21 of 22 (Form Builder Visual Rebuild) - COMPLETE
 Plan: 2 of 2 in current phase - COMPLETE
-Status: Ready for Phase 22
-Last activity: 2026-01-18 — Completed Phase 21 (Form Builder Visual Rebuild)
+Status: v1.2 functionally complete, Phase 22 deferred
+Last activity: 2026-01-18 — Phase 22 investigated, deferred (flows work when authenticated)
 
-Progress: ██████████████░ 85% (plans 21 of ~25 in v1.2)
+Progress: ██████████████░ 95% (v1.2 core complete, polish deferred)
 
 ## Performance Metrics
 
@@ -150,8 +150,8 @@ Create structured log tracking each document's:
 ---
 
 **Additional backlog items:**
-- **Folder/document creation broken** — Create folder and create document flows not working
-- **Form builder overhaul** — Visual section-based builder like Google Forms (not modal-heavy)
+- ~~**Folder/document creation broken** — Create folder and create document flows not working~~ INVESTIGATED 2026-01-18: Works when authenticated, needs error handling polish (deferred)
+- ~~**Form builder overhaul** — Visual section-based builder like Google Forms (not modal-heavy)~~ RESOLVED in Phase 21
 - **Forms in workspace** — Allow forms to be added to workspace (not just docs)
 - **Universal comments with @mentions** — Comment on anything, @mention people/documents with linking
 
@@ -179,13 +179,13 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: Phase 21 complete, ready for Phase 22
+Stopped at: v1.2 functionally complete, Phase 22 deferred
 Resume file: None
 
 ### Next Steps
 
-1. Begin Phase 22 - Create Flows + Dashboard
-2. Plan Phase 22 (discuss-phase or plan-phase)
+1. Decide next milestone or initiative
+2. Options: v1.3 planning, UI refresh (Phase 24), or ship v1.2
 
 ### Verification Protocol (added 2026-01-17)
 
