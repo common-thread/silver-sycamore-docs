@@ -141,16 +141,17 @@ Plans:
 - [x] 20-05: Integration (ContentTypeRenderer, activity page, wiring)
 - [x] 20-FIX: Binary Content Conversion (convert 39 DOCX/XLSX/PDF files to markdown)
 
-### Phase 21: Form Builder Visual Rebuild
+### Phase 21: Form Builder Visual Rebuild - COMPLETE
 
 **Goal**: Section-based builder like Google Forms — visual drag-and-drop interface
 **Depends on**: Phase 20
 **Research**: Level 1 (dnd-kit is the modern standard, no deep research needed)
 **Plans**: 2/2
+**Completed**: 2026-01-18
 
 Plans:
 - [x] 21-01: Foundation + DraggableFieldCard (dnd-kit, inline editing component)
-- [ ] 21-02: FormBuilder Integration + Visual Verification (refactor, browser testing)
+- [x] 21-02: FormBuilder Integration + Visual Verification (refactor, browser testing)
 
 ### Phase 22: Create Flows + Dashboard
 
@@ -171,5 +172,5 @@ Plans:
 | 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
 | 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
 | 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
-| 21. Form Builder Visual Rebuild | v1.2 | 1/2 | In progress | - |
+| 21. Form Builder Visual Rebuild | v1.2 | 2/2 | Complete | 2026-01-18 |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Not started | - |

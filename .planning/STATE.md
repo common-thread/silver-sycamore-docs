@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 21 of 22 (Form Builder Visual Rebuild) - IN PROGRESS
-Plan: 2 of 2 in current phase
-Status: Awaiting checkpoint approval (Task 3 of 21-02)
-Last activity: 2026-01-18 — Completed 21-02 Tasks 1-2, awaiting human verification
+Phase: 21 of 22 (Form Builder Visual Rebuild) - COMPLETE
+Plan: 2 of 2 in current phase - COMPLETE
+Status: Ready for Phase 22
+Last activity: 2026-01-18 — Completed Phase 21 (Form Builder Visual Rebuild)
 
-Progress: ██████████████░ 80% (plans 20 of ~25 in v1.2)
+Progress: ██████████████░ 85% (plans 21 of ~25 in v1.2)
 
 ## Performance Metrics
 
@@ -28,9 +28,8 @@ Progress: ██████████████░ 80% (plans 20 of ~25 in 
 - Phases complete: 4 of 4 (12, 13, 14, 15) - MILESTONE COMPLETE
 
 **v1.2 Progress:**
-- Plans completed: 20 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05, 20-FIX, 21-01, 21-02*)
-- Phases complete: 5 of 7 (Phase 16, Phase 17, Phase 18, Phase 19, Phase 20 complete)
-- *21-02 pending checkpoint approval
+- Plans completed: 21 (16-01, 16-02, 16-03, 17-01, 17-02, 17-03, 17-04, 18-FIX, 19-01, 19-02, 19-03, 19-FIX, 20-01, 20-02, 20-03, 20-04, 20-05, 20-FIX, 21-01, 21-02)
+- Phases complete: 6 of 7 (Phase 16, Phase 17, Phase 18, Phase 19, Phase 20, Phase 21 complete)
 
 ## Accumulated Context
 
@@ -112,6 +111,12 @@ Phase 21-01 decisions:
 - Use collapsed/expanded states for inline editing (no modal overlay)
 - Auto-generate unique field names from labels using slugify helper
 
+Phase 21-02 decisions:
+- Replaced modal-based FieldEditor with inline DraggableFieldCard expansion
+- Single editingFieldIndex state controls which field is expanded at a time
+- Add Field creates collapsed card then auto-expands for editing
+- Verification performed via browser automation (screenshots visible in conversation only)
+
 ### Deferred Issues
 
 - ~~**Deterministic content seeding** — Import script uses heuristics instead of parsing index.md tables.~~ RESOLVED in Phase 12
@@ -174,14 +179,13 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: 21-02 Task 3 checkpoint (human verification)
+Stopped at: Phase 21 complete, ready for Phase 22
 Resume file: None
 
 ### Next Steps
 
-1. **User reviews screenshots** - Approve or request fixes for form builder UI
-2. After approval, complete 21-02 and Phase 21
-3. Continue to Phase 22
+1. Begin Phase 22 - Create Flows + Dashboard
+2. Plan Phase 22 (discuss-phase or plan-phase)
 
 ### Verification Protocol (added 2026-01-17)
 
