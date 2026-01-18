@@ -408,6 +408,69 @@ a:hover {
   font-size: var(--text-sm);
 }
 
+/* Prose tables - editorial document tables */
+.prose table {
+  width: 100%;
+  margin: var(--space-6) 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.prose thead {
+  background: var(--color-paper-warm);
+}
+
+.prose th {
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-xs);
+  text-align: left;
+  color: var(--color-ink-light);
+  border-bottom: 1px solid var(--color-border-strong);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.prose td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  font-size: var(--text-sm);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr {
+  transition: background var(--duration-normal) var(--ease-default);
+}
+
+.prose tbody tr:hover {
+  background: var(--color-paper-warm);
+}
+
+/* Prose hr - decorative dividers */
+.prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border-strong), transparent);
+  margin: var(--space-10) 0;
+}
+
+/* Prose images */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: var(--space-6) 0;
+}
+
 /* ============================================================================
    TABLES — Archive Styling
    ============================================================================ */
