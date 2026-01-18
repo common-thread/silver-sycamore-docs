@@ -6,49 +6,23 @@ export default function Home() {
   return (
     <>
       <ContentBox>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
-            fontWeight: "var(--font-semibold)",
-            marginBottom: "var(--space-2)",
-            color: "var(--color-ink)",
-          }}
-        >
-          Staff Dashboard
-        </h1>
-        <p style={{ color: "var(--color-ink-muted)", margin: 0 }}>
+        <h1 className="page-title">Staff Dashboard</h1>
+        <p className="page-subtitle">
           Internal documentation and project tracking
         </p>
       </ContentBox>
 
       <ContentBox>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-xl)",
-            fontWeight: "var(--font-semibold)",
-            marginBottom: "var(--space-5)",
-            color: "var(--color-ink)",
-          }}
-        >
-          Priority Initiatives
-        </h2>
+        <div className="content-section-header">
+          <h2 className="content-section-title">Priority Initiatives</h2>
+        </div>
         <InitiativesTable />
       </ContentBox>
 
       <ContentBox>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-xl)",
-            fontWeight: "var(--font-semibold)",
-            marginBottom: "var(--space-5)",
-            color: "var(--color-ink)",
-          }}
-        >
-          Quick Actions
-        </h2>
+        <div className="content-section-header">
+          <h2 className="content-section-title">Quick Actions</h2>
+        </div>
         <QuickActionNav />
       </ContentBox>
     </>

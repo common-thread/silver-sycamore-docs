@@ -1,13 +1,23 @@
-export function ContentBox({ children }: { children: React.ReactNode }) {
+interface ContentBoxProps {
+  children: React.ReactNode;
+  variant?: "default" | "accent" | "subtle";
+  className?: string;
+}
+
+export function ContentBox({
+  children,
+  variant = "default",
+  className = "",
+}: ContentBoxProps) {
+  const variantClass =
+    variant === "accent"
+      ? "card-accent"
+      : variant === "subtle"
+        ? "card-subtle"
+        : "";
+
   return (
-    <div
-      className="rounded p-6 mb-6"
-      style={{
-        background: "var(--color-white)",
-        border: "1px solid var(--color-border)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
-      }}
-    >
+    <div className={`content-section ${variantClass} ${className}`}>
       {children}
     </div>
   );

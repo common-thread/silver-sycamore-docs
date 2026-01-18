@@ -46,45 +46,12 @@ export function QuickActionNav() {
         <Link
           key={action.href}
           href={action.href}
-          className="block p-5 no-underline transition-all duration-150"
-          style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "0",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = "var(--color-accent)";
-            e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.06)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = "var(--color-border)";
-            e.currentTarget.style.boxShadow = "none";
-          }}
+          className="quick-action-card"
         >
-          <h3
-            className="font-semibold mb-1"
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "var(--color-ink)",
-              fontSize: "var(--text-lg)",
-            }}
-          >
-            {action.label}
-          </h3>
-          <p
-            className="text-sm m-0 mb-2"
-            style={{ color: "var(--color-ink-muted)" }}
-          >
-            {action.description}
-          </p>
+          <h3 className="quick-action-title">{action.label}</h3>
+          <p className="quick-action-description">{action.description}</p>
           {action.contentType && counts && (
-            <span
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-xs)",
-                color: "var(--color-ink-light)",
-              }}
-            >
+            <span className="quick-action-meta">
               {counts[action.contentType] ?? 0} documents
             </span>
           )}
