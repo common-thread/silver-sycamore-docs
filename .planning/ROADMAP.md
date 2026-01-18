@@ -112,10 +112,14 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 **Goal**: Move deferred features (comments, messaging, forms builder, procedures, checklists) to a separate branch, simplify main codebase
 **Depends on**: v1.2 complete
 **Research**: Unlikely (git operations, internal work)
-**Plans**: TBD
+**Plans**: 5 in 3 waves
 
 Plans:
-- [ ] 24-01: TBD (run /gsd:plan-phase 24 to break down)
+- [ ] 24-01: Branch Creation + Auth Toggle (Wave 1)
+- [ ] 24-02: Messaging + Notifications Extraction (Wave 2)
+- [ ] 24-03: Interactive Content Simplification (Wave 2, parallel)
+- [ ] 24-04: Forms + Comments Extraction (Wave 2, parallel)
+- [ ] 24-05: Navigation Cleanup + Verification (Wave 3)
 
 #### Phase 25: Content Source Audit
 
@@ -161,7 +165,7 @@ Plans:
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 24. Feature Branch Extraction | v1.3 | 0/? | Not started | - |
+| 24. Feature Branch Extraction | v1.3 | 0/5 | Planned | - |
 | 25. Content Source Audit | v1.3 | 0/? | Not started | - |
 | 26. Transposition Process Design | v1.3 | 0/? | Not started | - |
 | 27. Content Transposition Execution | v1.3 | 0/? | Not started | - |

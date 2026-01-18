@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 ## Current Position
 
 Phase: 24 of 28 (Feature Branch Extraction)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-01-18 — Milestone v1.3 created
+Plan: 5 plans created
+Status: Ready to execute
+Last activity: 2026-01-18 — Phase 24 planned
 
 Progress: ░░░░░░░░░░ 0%
 
@@ -98,8 +98,8 @@ Resume file: None
 
 ### Next Steps
 
-1. Run `/gsd:plan-phase 24` to break down Feature Branch Extraction
-2. Or run `/gsd:discuss-phase 24` for more context first
+1. Run `/gsd:execute-phase 24` to execute all 5 plans
+2. Or run `/gsd:execute-plan .planning/phases/24-feature-branch-extraction/24-01-PLAN.md` for single plan execution
 
 ### Phase Archives
 
