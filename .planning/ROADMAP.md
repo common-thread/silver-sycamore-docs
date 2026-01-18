@@ -8,7 +8,8 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
-- 🚧 **v1.2 Content Architecture** — Phases 16-23 (in progress)
+- ✅ [v1.2 Content Architecture](milestones/v1.2-ROADMAP.md) (Phases 16-23) — SHIPPED 2026-01-18
+- 📋 **v1.3 Polish & Refinements** — TBD (planning)
 
 ## Completed Milestones
 
@@ -69,135 +70,55 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-## 🚧 v1.2 Content Architecture (In Progress)
+<details>
+<summary>v1.2 Content Architecture (Phases 16-23) — SHIPPED 2026-01-18</summary>
 
-**Milestone Goal:** First-principles refactoring of content architecture — how documents are mapped, displayed, and navigated based on intent rather than blind markdown conversion.
+| Phase | Name | Plans | Status | Completed |
+|-------|------|-------|--------|-----------|
+| 16 | Code Mapping + Style Audit | 3/3 | Complete | 2026-01-17 |
+| 17 | Base Component Fixes | 4/4 | Complete | 2026-01-17 |
+| 18 | Content Audit + Type Decisions | 1/1 | Complete | 2026-01-17 |
+| 19 | Redundant Content + IA Redesign | 4/4 | Complete | 2026-01-17 |
+| 20 | Dynamic Content System | 6/6 | Complete | 2026-01-17 |
+| 21 | Form Builder Visual Rebuild | 2/2 | Complete | 2026-01-18 |
+| 22 | Create Flows + Dashboard | - | Deferred | - |
+| 23 | UI Refresh | 3/3 | Complete | 2026-01-18 |
 
-### Phase 16: Code Mapping + Style Audit - COMPLETE
+**Total:** 23 plans, 6 days execution time
 
-**Goal**: Complete codebase mapping (current + desired state visual), style violation inventory
-**Depends on**: v1.1 complete
-**Research**: Unlikely (internal analysis work)
-**Plans**: 3/3
-**Completed**: 2026-01-17
+**Delivered:**
+- Complete codebase mapping with 28 routes, 51 components documented
+- Design token adoption across all major components
+- Evidence-based content classification (70 documents, 5 types)
+- Purpose-based navigation replacing category-based
+- Dynamic content system (procedures, checklists, activity, sharing)
+- Visual form builder with drag-and-drop
+- Staff Hub style guide as wiki content
+- Visible CSS polish (border-radius, focus rings, prose styling)
 
-Plans:
-- [x] 16-01: User flows and navigation mapping (USER-FLOWS.md)
-- [x] 16-02: Component-to-data flow mapping and style audit (COMPONENT-MAP.md, STYLE-VIOLATIONS.md)
-- [x] 16-03: Target architecture documentation (DESIRED-STATE.md)
+**Known Issues for v1.3:**
+- Procedures feature not tested — may need merge with checklists
+- 12 content type misclassifications identified
+- Create flows error handling deferred
 
-### Phase 17: Base Component Fixes - COMPLETE
+</details>
 
-**Goal**: Fix components so styling inherits correctly, establish enforcement layer
-**Depends on**: Phase 16
-**Research**: Unlikely (existing design system patterns)
-**Plans**: 4/4
-**Completed**: 2026-01-17
+## 📋 v1.3 Polish & Refinements (Planning)
 
-Plans:
-- [x] 17-01: Error color foundation (add tokens, replace hardcoded colors)
-- [x] 17-02: Header and DocumentViewer token adoption
-- [x] 17-03: FormRenderer and FormBuilder token adoption
-- [x] 17-04: CommentSection, MessageList, and UI primitives token adoption
+**Milestone Goal:** Address known issues from v1.2, quality refinements, and feature consolidation.
 
-### Phase 18: Content Audit + Type Decisions - COMPLETE
+**Candidates from v1.2 issues:**
+- Procedures/checklists feature consolidation
+- Content type misclassification fixes (12 identified)
+- Create flows error handling
+- Anonymous dynamic content testing
+- Universal comments with @mentions
+- Forms in workspace
 
-**Goal**: Full content tracker, apply rules-based type decisions, flag edge cases
-**Depends on**: Phase 17
-**Research**: Unlikely (internal content review)
-**Plans**: 1/1
-**Completed**: 2026-01-17
-
-Plans:
-- [x] 18-FIX: Evidence-based content classification (70 documents, 5 types)
-
-### Phase 19: Redundant Content Resolution + IA Redesign - COMPLETE
-
-**Goal**: Eliminate duplicates, design new information architecture
-**Depends on**: Phase 18
-**Research**: Unlikely (internal IA work)
-**Plans**: 4/4
-**Completed**: 2026-01-17
-
-Plans:
-- [x] 19-01: Schema + Seed Migration (contentType field, mapping, redundant form exclusion)
-- [x] 19-02: Navigation Components (QuickActionNav, Header restructure)
-- [x] 19-03: Home Page + Verification (listing pages, visual checkpoint)
-- [x] 19-FIX: Import index.md files as guide documents
-
-### Phase 20: Dynamic Content System - FIX PENDING
-
-**Goal**: Complete infrastructure for interactive dynamic content — procedures, checklists, and forms that staff can complete, track, and share. Includes semantic rendering, completion lifecycle, activity tracking, and sharing workflows.
-**Depends on**: Phase 19
-**Research**: Unlikely (patterns defined in CONTEXT.md, schema design from codebase exploration)
-**Plans**: 5/5 + FIX
-**Status**: Core complete, fix plan pending for binary content conversion
-
-Plans:
-- [x] 20-01: Schema Foundation (dynamicContentInstances, activityLog, shareLinks tables)
-- [x] 20-02: Completion Tracking (dynamicContent.ts mutations/queries, ProcedureSteps, ChecklistView)
-- [x] 20-03: Activity System (activity.ts, ActivitySidebar, ActivityDashboard)
-- [x] 20-04: Sharing System (sharing.ts, ShareLinkDialog, /share/[token] page)
-- [x] 20-05: Integration (ContentTypeRenderer, activity page, wiring)
-- [x] 20-FIX: Binary Content Conversion (convert 39 DOCX/XLSX/PDF files to markdown)
-
-### Phase 21: Form Builder Visual Rebuild - COMPLETE
-
-**Goal**: Section-based builder like Google Forms — visual drag-and-drop interface
-**Depends on**: Phase 20
-**Research**: Level 1 (dnd-kit is the modern standard, no deep research needed)
-**Plans**: 2/2
-**Completed**: 2026-01-18
-
-Plans:
-- [x] 21-01: Foundation + DraggableFieldCard (dnd-kit, inline editing component)
-- [x] 21-02: FormBuilder Integration + Visual Verification (refactor, browser testing)
-
-### Phase 22: Create Flows + Dashboard - DEFERRED
-
-**Goal**: Add error handling to folder/document creation flows, simple management dashboard
-**Depends on**: Phase 21
-**Research**: Unlikely (fixing existing code + internal patterns)
-**Plans**: TBD
-**Status**: Deferred — flows work when authenticated, error handling is UX polish not blocking
-
-**Findings from investigation (2026-01-18):**
-- Create folder/document mutations work correctly when user is logged in
-- Missing: try/catch in UI handlers, error toasts, redirect to signin on auth failure
-- Low priority since core functionality works
-
-Plans:
-- [ ] 22-01: TBD (when resumed)
-
-### Phase 23: UI Refresh
-
-**Goal**: Custom style guide variant optimized for internal wiki+ use case, style guides as wiki content, visible UI polish
-**Depends on**: Phase 21 (v1.2 core complete)
-**Research**: Unlikely (frontend-design skill analyzes codebase directly)
-**Plans**: 3/3
-**Status**: In progress (23-01, 23-02 complete but insufficient; 23-03 addresses full scope)
-
-**Approach:**
-- Style guides as actual wiki CONTENT (searchable documents, not just code)
-- All 3 variants visible: main, wedding, staff hub
-- Style guides in navigation menu
-- Document rendering enhanced per content type (not blind markdown conversion)
-- Visible CSS polish: border-radius, shadows, hover effects
-
-Plans:
-- [x] 23-01: CSS utility classes (infrastructure only, no visible changes)
-- [x] 23-02: Component CSS refactor (code cleanup only, no visible changes)
-- [ ] 23-03: Full UI Refresh - style guide content + visible CSS + document rendering
+*Run `/gsd:discuss-milestone` to scope v1.3*
 
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 16. Code Mapping + Style Audit | v1.2 | 3/3 | Complete | 2026-01-17 |
-| 17. Base Component Fixes | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 18. Content Audit + Type Decisions | v1.2 | 1/1 | Complete | 2026-01-17 |
-| 19. Redundant Content + IA Redesign | v1.2 | 4/4 | Complete | 2026-01-17 |
-| 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
-| 21. Form Builder Visual Rebuild | v1.2 | 2/2 | Complete | 2026-01-18 |
-| 22. Create Flows + Dashboard | v1.2 | 0/? | Deferred | - |
-| 23. UI Refresh | v1.2 | 2/3 | In Progress | - |
+| 24+ | TBD | - | Planning | - |
