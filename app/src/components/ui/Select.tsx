@@ -78,59 +78,39 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     // Get selected option
     const selectedOption = options.find((opt) => opt.value === value);
 
-    // Size styles matching Input component
-    const getSizeStyles = () => {
-      switch (inputSize) {
-        case "sm":
-          return {
-            padding: "0.5rem 0.75rem",
-            paddingRight: "2rem",
-            fontSize: "0.8125rem",
-            minHeight: "2rem",
-          };
-        case "lg":
-          return {
-            padding: "1rem 1.25rem",
-            paddingRight: "2.5rem",
-            fontSize: "1rem",
-            minHeight: "3rem",
-          };
-        default: // md
-          return {
-            padding: "0.75rem 1rem",
-            paddingRight: "2.5rem",
-            fontSize: "0.875rem",
-            minHeight: "2.5rem",
-          };
-      }
-    };
+    // Build trigger classes
+    const sizeClass = `select-${inputSize}`;
+    const variantClass = variant === "filled" ? "select-filled" : "";
+    const openClass = isOpen ? "select-trigger-open" : "";
+    const errorClass = hasError ? "select-trigger-error" : "";
+    const placeholderClass = !selectedOption ? "select-trigger-placeholder" : "";
+    const triggerClasses = [
+      "select-trigger",
+      sizeClass,
+      variantClass,
+      openClass,
+      errorClass,
+      placeholderClass,
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-    // Variant styles matching Input component
-    const getVariantStyles = () => {
-      if (variant === "filled") {
-        return {
-          backgroundColor: disabled
-            ? "var(--color-surface-dim)"
-            : "var(--color-surface-dim)",
-          borderColor: hasError
-            ? "var(--color-error)"
-            : isOpen
-            ? "var(--color-accent)"
-            : "transparent",
-        };
-      }
-      // default variant
-      return {
-        backgroundColor: disabled
-          ? "var(--color-surface-dim)"
-          : "var(--color-surface)",
-        borderColor: hasError
-          ? "var(--color-error)"
-          : isOpen
-          ? "var(--color-accent)"
-          : "var(--color-border)",
-      };
-    };
+    // Build label classes
+    const labelClasses = [
+      "select-label",
+      disabled ? "select-label-disabled" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    // Build chevron classes
+    const chevronClasses = [
+      "select-chevron",
+      isOpen ? "select-chevron-open" : "",
+      inputSize === "sm" ? "select-chevron-sm" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
 
     // Handle click outside to close dropdown
     useEffect(() => {
@@ -184,7 +164,6 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
       if (disabled) return;
       if (!isOpen) {
         setIsOpen(true);
-        // Set highlighted index to selected option if exists
         const selectedIndex = filteredOptions.findIndex(
           (opt) => opt.value === value
         );
@@ -333,9 +312,6 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
       searchInputRef.current?.focus();
     };
 
-    const sizeStyles = getSizeStyles();
-    const variantStyles = getVariantStyles();
-
     // Chevron icon
     const ChevronIcon = () => (
       <svg
@@ -343,14 +319,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
         height="12"
         viewBox="0 0 12 12"
         fill="none"
-        style={{
-          position: "absolute",
-          right: inputSize === "sm" ? "0.5rem" : "0.75rem",
-          top: "50%",
-          transform: `translateY(-50%) rotate(${isOpen ? "180deg" : "0deg"})`,
-          transition: "transform 180ms ease-out",
-          pointerEvents: "none",
-        }}
+        className={chevronClasses}
       >
         <path
           d="M2.5 4.5L6 8L9.5 4.5"
@@ -394,29 +363,9 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     );
 
     return (
-      <div
-        ref={containerRef}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.375rem",
-          width: "100%",
-          position: "relative",
-        }}
-        className={className}
-      >
+      <div ref={containerRef} className={`select-wrapper ${className}`}>
         {label && (
-          <label
-            htmlFor={selectId}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
-              color: disabled ? "var(--color-ink-muted)" : "var(--color-ink-light)",
-              letterSpacing: "0.01em",
-              cursor: disabled ? "not-allowed" : "pointer",
-            }}
-          >
+          <label htmlFor={selectId} className={labelClasses}>
             {label}
           </label>
         )}
@@ -446,38 +395,9 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
           disabled={disabled}
           onClick={handleToggle}
           onKeyDown={handleKeyDown}
-          style={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            fontFamily: "var(--font-body)",
-            fontWeight: 400,
-            letterSpacing: "0.01em",
-            color: selectedOption
-              ? disabled
-                ? "var(--color-ink-muted)"
-                : "var(--color-ink)"
-              : "var(--color-ink-muted)",
-            border: "1px solid",
-            borderRadius: 0,
-            outline: "none",
-            transition: "all 180ms ease-out",
-            cursor: disabled ? "not-allowed" : "pointer",
-            opacity: disabled ? 0.7 : 1,
-            textAlign: "left",
-            ...sizeStyles,
-            ...variantStyles,
-          }}
+          className={triggerClasses}
         >
-          <span
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              flex: 1,
-            }}
-          >
+          <span className="select-value">
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           <ChevronIcon />
@@ -485,30 +405,10 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
         {/* Dropdown */}
         {isOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-              right: 0,
-              marginTop: "4px",
-              background: "var(--color-surface)",
-              border: "1px solid var(--color-border)",
-              boxShadow: "var(--shadow-lg)",
-              zIndex: "var(--z-dropdown)",
-              animation: "selectDropdownOpen 180ms ease-out",
-              overflow: "hidden",
-            }}
-          >
+          <div className="select-dropdown">
             {/* Search input */}
             {isSearchable && (
-              <div
-                style={{
-                  padding: "0.5rem",
-                  borderBottom: "1px solid var(--color-border)",
-                  position: "relative",
-                }}
-              >
+              <div className="select-search">
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -516,43 +416,13 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
                   placeholder="Search..."
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem 2rem 0.5rem 0.75rem",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.8125rem",
-                    color: "var(--color-ink)",
-                    background: "var(--color-surface-dim)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: 0,
-                    outline: "none",
-                    transition: "border-color 180ms ease-out",
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = "var(--color-accent)";
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = "var(--color-border)";
-                  }}
+                  className="select-search-input"
                 />
                 {searchTerm && (
                   <button
                     type="button"
                     onClick={handleClearSearch}
-                    style={{
-                      position: "absolute",
-                      right: "0.75rem",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      padding: "0.25rem",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      color: "var(--color-ink-muted)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="select-search-clear"
                     aria-label="Clear search"
                   >
                     <ClearIcon />
@@ -567,30 +437,22 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
               id={listboxId}
               role="listbox"
               aria-label={label || "Options"}
-              style={{
-                listStyle: "none",
-                margin: 0,
-                padding: 0,
-                maxHeight: "240px",
-                overflowY: "auto",
-              }}
+              className="select-options"
             >
               {filteredOptions.length === 0 ? (
-                <li
-                  style={{
-                    padding: "0.75rem 1rem",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.8125rem",
-                    color: "var(--color-ink-muted)",
-                    textAlign: "center",
-                  }}
-                >
-                  No options found
-                </li>
+                <li className="select-empty">No options found</li>
               ) : (
                 filteredOptions.map((option, index) => {
                   const isSelected = option.value === value;
                   const isHighlighted = index === highlightedIndex;
+
+                  const optionClasses = [
+                    "select-option",
+                    isHighlighted ? "select-option-highlighted" : "",
+                    isSelected ? "select-option-selected" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
 
                   return (
                     <li
@@ -600,34 +462,9 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                       aria-selected={isSelected}
                       onClick={(e) => handleOptionClick(e, option.value)}
                       onMouseEnter={() => setHighlightedIndex(index)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: "0.5rem",
-                        padding: "0.625rem 1rem",
-                        fontFamily: "var(--font-body)",
-                        fontSize: "0.875rem",
-                        color: isSelected
-                          ? "var(--color-ink)"
-                          : "var(--color-ink)",
-                        fontWeight: isSelected ? 500 : 400,
-                        background: isHighlighted
-                          ? "var(--color-surface-dim)"
-                          : "transparent",
-                        cursor: "pointer",
-                        transition: "background 100ms ease-out",
-                      }}
+                      className={optionClasses}
                     >
-                      <span
-                        style={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {option.label}
-                      </span>
+                      <span className="select-option-label">{option.label}</span>
                       {isSelected && <CheckIcon />}
                     </li>
                   );
@@ -638,48 +475,15 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
         )}
 
         {error && (
-          <span
-            id={`${selectId}-error`}
-            role="alert"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.75rem",
-              fontWeight: 500,
-              color: "var(--color-error)",
-              letterSpacing: "0.01em",
-            }}
-          >
+          <span id={`${selectId}-error`} role="alert" className="input-error-text">
             {error}
           </span>
         )}
         {hint && !error && (
-          <span
-            id={`${selectId}-hint`}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.75rem",
-              fontWeight: 400,
-              color: "var(--color-ink-muted)",
-              letterSpacing: "0.01em",
-            }}
-          >
+          <span id={`${selectId}-hint`} className="input-hint">
             {hint}
           </span>
         )}
-
-        {/* Animation keyframes via style tag */}
-        <style>{`
-          @keyframes selectDropdownOpen {
-            from {
-              opacity: 0;
-              transform: translateY(-4px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}</style>
       </div>
     );
   }
