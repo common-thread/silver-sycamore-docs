@@ -8,44 +8,35 @@ import { Id } from "../../convex/_generated/dataModel";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Select from "@/components/ui/Select";
-import { FieldEditor } from "./FieldEditor";
 
-// Type definitions matching forms.ts
-type FormFieldType =
-  | "text"
-  | "textarea"
-  | "number"
-  | "date"
-  | "time"
-  | "email"
-  | "tel"
-  | "select"
-  | "multiselect"
-  | "checkbox"
-  | "file";
+// dnd-kit imports
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
-interface FormField {
-  name: string;
-  type: FormFieldType;
-  label: string;
-  required: boolean;
-  options?: string[];
-  placeholder?: string;
-}
+// Import DraggableFieldCard and shared types
+import {
+  DraggableFieldCard,
+  FormField,
+  slugify,
+} from "./DraggableFieldCard";
 
 interface FormBuilderProps {
   formId?: Id<"formSchemas">;
   onSave?: () => void;
   onCancel?: () => void;
-}
-
-// Helper to generate unique field name from label
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_|_$/g, "")
-    .slice(0, 50);
 }
 
 // Generate unique formId for new forms
@@ -78,7 +69,14 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editingFieldIndex, setEditingFieldIndex] = useState<number | null>(null);
-  const [isAddingField, setIsAddingField] = useState(false);
+
+  // dnd-kit sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   // Initialize form from existing data
   useEffect(() => {
@@ -97,59 +95,67 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
     }
   }, [existingForm]);
 
+  // Add new field (creates default field and expands for editing)
   const handleAddField = () => {
-    setIsAddingField(true);
+    const newField: FormField = {
+      name: `field_${Date.now()}`, // Temporary unique name
+      type: "text",
+      label: "",
+      required: false,
+    };
+    setFields([...fields, newField]);
+    setEditingFieldIndex(fields.length); // Expand the new field for editing
+  };
+
+  // Start editing a field
+  const handleStartEdit = (index: number) => {
+    setEditingFieldIndex(index);
+  };
+
+  // Save field changes (DraggableFieldCard handles validation)
+  const handleFieldSave = (index: number, updatedField: FormField) => {
+    const newFields = [...fields];
+    newFields[index] = updatedField;
+    setFields(newFields);
     setEditingFieldIndex(null);
   };
 
-  const handleEditField = (index: number) => {
-    setEditingFieldIndex(index);
-    setIsAddingField(false);
-  };
-
+  // Delete a field
   const handleDeleteField = (index: number) => {
     setFields(fields.filter((_, i) => i !== index));
-  };
-
-  const handleMoveField = (index: number, direction: "up" | "down") => {
-    const newIndex = direction === "up" ? index - 1 : index + 1;
-    if (newIndex < 0 || newIndex >= fields.length) return;
-
-    const newFields = [...fields];
-    [newFields[index], newFields[newIndex]] = [newFields[newIndex], newFields[index]];
-    setFields(newFields);
-  };
-
-  const handleFieldSave = (field: FormField) => {
-    if (isAddingField) {
-      // Adding new field - ensure unique name
-      let fieldName = field.name;
-      let counter = 1;
-      while (fields.some((f) => f.name === fieldName)) {
-        fieldName = `${field.name}_${counter}`;
-        counter++;
+    // Adjust editingFieldIndex if needed
+    if (editingFieldIndex !== null) {
+      if (editingFieldIndex === index) {
+        setEditingFieldIndex(null);
+      } else if (editingFieldIndex > index) {
+        setEditingFieldIndex(editingFieldIndex - 1);
       }
-      setFields([...fields, { ...field, name: fieldName }]);
-      setIsAddingField(false);
-    } else if (editingFieldIndex !== null) {
-      // Editing existing field
-      const newFields = [...fields];
-      // Ensure name uniqueness (except for current field)
-      let fieldName = field.name;
-      let counter = 1;
-      while (fields.some((f, i) => i !== editingFieldIndex && f.name === fieldName)) {
-        fieldName = `${field.name}_${counter}`;
-        counter++;
-      }
-      newFields[editingFieldIndex] = { ...field, name: fieldName };
-      setFields(newFields);
-      setEditingFieldIndex(null);
     }
   };
 
-  const handleFieldCancel = () => {
-    setIsAddingField(false);
-    setEditingFieldIndex(null);
+  // Handle drag end for reordering
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setFields((items) => {
+        const oldIndex = items.findIndex((f) => f.name === active.id);
+        const newIndex = items.findIndex((f) => f.name === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+
+      // Adjust editingFieldIndex if it's affected by the reorder
+      if (editingFieldIndex !== null) {
+        const oldEditingField = fields[editingFieldIndex];
+        if (oldEditingField) {
+          const newEditingIndex = fields.findIndex((f) => f.name === oldEditingField.name);
+          if (newEditingIndex !== editingFieldIndex) {
+            // The editing field moved, but we keep it expanded
+            // The index will be recalculated on next render
+          }
+        }
+      }
+    }
   };
 
   const handleSave = async (asDraft: boolean = true) => {
@@ -232,7 +238,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
     );
   }
 
-  const currentEditingField = editingFieldIndex !== null ? fields[editingFieldIndex] : null;
+  // Get existing field names for uniqueness validation
   const existingFieldNames = fields.map((f) => f.name);
 
   return (
@@ -362,7 +368,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             variant="secondary"
             size="sm"
             onClick={handleAddField}
-            disabled={isAddingField || editingFieldIndex !== null}
+            disabled={editingFieldIndex !== null}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -376,8 +382,8 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
           </Button>
         </div>
 
-        {/* Field List */}
-        {fields.length === 0 && !isAddingField ? (
+        {/* Field List with Drag-and-Drop */}
+        {fields.length === 0 ? (
           <div
             style={{
               padding: "var(--space-8)",
@@ -391,168 +397,31 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             No fields yet. Click "Add Field" to get started.
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-            {fields.map((field, index) => (
-              <div
-                key={field.name}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  padding: "var(--space-3) var(--space-4)",
-                  background: "var(--color-surface-dim)",
-                  border: "1px solid var(--color-border)",
-                }}
-              >
-                {/* Move buttons */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                  <button
-                    onClick={() => handleMoveField(index, "up")}
-                    disabled={index === 0}
-                    style={{
-                      padding: "2px",
-                      background: "transparent",
-                      border: "none",
-                      cursor: index === 0 ? "not-allowed" : "pointer",
-                      color: index === 0 ? "var(--color-ink-muted)" : "var(--color-ink-light)",
-                      opacity: index === 0 ? 0.3 : 1,
-                    }}
-                    title="Move up"
-                  >
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M6 3L10 7H2L6 3Z" fill="currentColor" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => handleMoveField(index, "down")}
-                    disabled={index === fields.length - 1}
-                    style={{
-                      padding: "2px",
-                      background: "transparent",
-                      border: "none",
-                      cursor: index === fields.length - 1 ? "not-allowed" : "pointer",
-                      color: index === fields.length - 1 ? "var(--color-ink-muted)" : "var(--color-ink-light)",
-                      opacity: index === fields.length - 1 ? 0.3 : 1,
-                    }}
-                    title="Move down"
-                  >
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M6 9L2 5H10L6 9Z" fill="currentColor" />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Field info */}
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "var(--text-sm)",
-                      fontWeight: "var(--font-medium)",
-                      color: "var(--color-ink)",
-                    }}
-                  >
-                    {field.label}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "var(--text-xs)",
-                      color: "var(--color-ink-muted)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "var(--space-2)",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "var(--space-px) var(--space-1)",
-                        background: "var(--color-surface)",
-                        border: "1px solid var(--color-border)",
-                        borderRadius: "2px",
-                        fontSize: "var(--text-xs)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.03em",
-                      }}
-                    >
-                      {field.type}
-                    </span>
-                    {field.required && (
-                      <span
-                        style={{
-                          padding: "var(--space-px) var(--space-1)",
-                          background: "var(--color-error-bg)",
-                          color: "var(--color-error)",
-                          borderRadius: "2px",
-                          fontSize: "var(--text-xs)",
-                          fontWeight: "var(--font-medium)",
-                        }}
-                      >
-                        Required
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Action buttons */}
-                <button
-                  onClick={() => handleEditField(index)}
-                  style={{
-                    padding: "var(--space-2)",
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "var(--color-ink-light)",
-                  }}
-                  title="Edit field"
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M11.5 2.5L13.5 4.5L5 13H3V11L11.5 2.5Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleDeleteField(index)}
-                  style={{
-                    padding: "var(--space-2)",
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "var(--color-error)",
-                  }}
-                  title="Delete field"
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M4 4L12 12M12 4L4 12"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={fields.map((f) => f.name)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                {fields.map((field, index) => (
+                  <DraggableFieldCard
+                    key={field.name}
+                    field={field}
+                    index={index}
+                    isEditing={editingFieldIndex === index}
+                    onStartEdit={() => handleStartEdit(index)}
+                    onSave={(updatedField) => handleFieldSave(index, updatedField)}
+                    onDelete={() => handleDeleteField(index)}
+                    existingFieldNames={existingFieldNames.filter((_, i) => i !== index)}
+                  />
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Field Editor Dialog */}
-        {(isAddingField || editingFieldIndex !== null) && (
-          <FieldEditor
-            field={currentEditingField || undefined}
-            existingFieldNames={
-              editingFieldIndex !== null
-                ? existingFieldNames.filter((_, i) => i !== editingFieldIndex)
-                : existingFieldNames
-            }
-            onSave={handleFieldSave}
-            onCancel={handleFieldCancel}
-          />
+            </SortableContext>
+          </DndContext>
         )}
       </div>
 
