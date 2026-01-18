@@ -20,27 +20,20 @@ export type ContentType = "procedure" | "reference" | "form" | "checklist" | "gu
  */
 export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
   // ═══════════════════════════════════════════════════════════════════════════
-  // PROCEDURES (10)
+  // PROCEDURES (4)
   // Step-by-step instructions with numbered steps and imperative verbs
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Staff procedures
+  // Staff procedures (actual step-by-step instructions)
   "staff/procedures/closing-procedures": "procedure",
   "staff/procedures/service-protocols": "procedure",
-  "staff/procedures/phone-system-guide": "procedure",
 
-  // Staff training
+  // Staff training (actual step-by-step training)
   "staff/training/training-manual": "procedure",
   "staff/training/training-program": "procedure",
-  "staff/training/training-schedule": "procedure",
-  "staff/training/sales-script": "procedure",
 
-  // Operations
-  "operations/facilities/maintenance-schedule": "procedure",
-
-  // Clients
-  "clients/planning/pre-wedding-todo": "procedure",
-  "clients/day-of/wedding-processional": "procedure",
+  // Clients - actual procedures
+  // (none currently - pre-wedding-todo moved to checklist)
 
   // ═══════════════════════════════════════════════════════════════════════════
   // REFERENCES (32)
@@ -77,7 +70,10 @@ export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
   "clients/day-of/timeline-first-look": "reference",
   "clients/day-of/timeline-micro-wedding": "reference",
   "clients/day-of/shoe-game-questions": "reference",
-  "clients/day-of/quinceanera-processional": "reference",
+
+  // Clients - Reset checklists (visual layout diagrams, not forms)
+  "clients/layouts/hall/reset-checklist": "reference",
+  "clients/layouts/saloon/reset-checklist": "reference",
 
   // Clients - Layouts (all layouts are reference, NOT reset-checklists)
   "clients/layouts/hall/head-table": "reference",
@@ -96,8 +92,13 @@ export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
 
   // Operations - Reference materials
   "operations/facilities/venue-layout": "reference",
-  "operations/bar/alcohol-pull-tracker": "reference",
+  "operations/facilities/maintenance-schedule": "reference",
   "operations/catering/catering-sign-up": "reference",
+
+  // Staff - Reference materials (moved from procedures)
+  "staff/procedures/phone-system-guide": "reference",
+  "staff/training/training-schedule": "reference",
+  "staff/training/sales-script": "reference",
 
   // ═══════════════════════════════════════════════════════════════════════════
   // FORMS (18)
@@ -126,39 +127,47 @@ export const CONTENT_TYPE_MAP: Record<string, ContentType> = {
   "clients/planning/bridal-planning-2024": "form",
   "clients/planning/micro-wedding-planning": "form",
 
-  // Clients - Reset checklists (REDUNDANT - form builder has these)
-  "clients/layouts/hall/reset-checklist": "form",
-  "clients/layouts/saloon/reset-checklist": "form",
-
-  // Operations - Bar (NOT redundant - keep this one)
+  // Operations - Bar (data collection forms)
   "operations/bar/bar-event-list": "form",
+  "operations/bar/alcohol-pull-tracker": "form",
+
+  // Clients - Day-of forms (fill-in-the-blank templates)
+  "clients/day-of/wedding-processional": "form",
+  "clients/day-of/quinceanera-processional": "form",
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // CHECKLISTS (5)
+  // CHECKLISTS (3)
   // Items to complete with checkbox or bullet-list format
-  // Note: Planning checklists are GUIDES, not data collection forms
   // ═══════════════════════════════════════════════════════════════════════════
 
-  "clients/planning/checklist-1-3-months": "checklist",
-  "clients/planning/checklist-4-6-months": "checklist",
+  "clients/planning/pre-wedding-todo": "checklist",
   "clients/planning/checklist-7-8-months": "checklist",
   "clients/planning/checklist-9-12-months": "checklist",
-  "deliverables/recipe-app/README": "checklist",
+
+  // Deliverables (reference, not checklist)
+  "deliverables/recipe-app/README": "reference",
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GUIDES (9)
+  // GUIDES (11)
   // Explanatory prose content, navigation, documentation
   // ═══════════════════════════════════════════════════════════════════════════
 
+  // Category index pages
   "clients/index": "guide",
   "services/index": "guide",
   "staff/index": "guide",
   "operations/index": "guide",
   "deliverables/index": "guide",
   "style-guides/index": "guide",
+
+  // Style guides
   "style-guides/editorial-archive-main": "guide",
   "style-guides/editorial-archive-wedding": "guide",
   "style-guides/editorial-archive-staff-hub": "guide",
+
+  // Planning guides (prose with vendor recommendations, not checklists)
+  "clients/planning/checklist-1-3-months": "guide",
+  "clients/planning/checklist-4-6-months": "guide",
 };
 
 /**
@@ -190,16 +199,8 @@ export const REDUNDANT_FORMS: Set<string> = new Set([
   "clients/planning/bridal-planning-2024",
   "clients/planning/micro-wedding-planning",
 
-  // Reset checklists (binary) - 2 items
-  "clients/layouts/hall/reset-checklist",
-  "clients/layouts/saloon/reset-checklist",
-
-  // Planning checklists - NOT redundant per CONTENT-TRACKER.md
-  // These are checklists (guides), not data collection forms
-  // "clients/planning/checklist-1-3-months" - KEEP
-  // "clients/planning/checklist-4-6-months" - KEEP
-  // "clients/planning/checklist-7-8-months" - KEEP
-  // "clients/planning/checklist-9-12-months" - KEEP
+  // Note: Reset checklists removed from redundant list - they're layout diagrams (reference)
+  // Note: Planning checklists are guides, not forms
 ]);
 
 /**

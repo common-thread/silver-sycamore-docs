@@ -139,6 +139,33 @@ Phase 23-02 decisions:
 - ~~**Technical indicators in UI** — File type labels, emojis need removal from document viewer.~~ RESOLVED in Phase 14
 - ~~**Custom dropdowns** — Replace native HTML select elements with styled components.~~ RESOLVED in Phase 15
 
+**v1.3 Issues (captured 2026-01-18):**
+
+**Feature Issues:**
+- **Procedures feature broken/never tested** — May need removal or merge with checklists
+- **Procedures vs Checklists too similar** — Consider consolidating into single "interactive list" with display modes
+- **Anonymous dynamic content testing needed** — Verify sessionId localStorage approach works without auth
+
+**Content Type Misclassifications (12 found via audit):**
+
+| Document | Current | Should Be | Reason |
+|----------|---------|-----------|--------|
+| staff/training/training-schedule | procedure | reference | Schedule listing, not steps |
+| staff/training/sales-script | procedure | reference | Conversation template, not steps |
+| operations/facilities/maintenance-schedule | procedure | reference | Weekly schedule by day |
+| staff/procedures/phone-system-guide | procedure | reference | Equipment reference guide |
+| clients/planning/checklist-1-3-months | checklist | guide | Prose with vendor recommendations |
+| clients/planning/checklist-4-6-months | checklist | guide | Prose with vendor recommendations |
+| clients/planning/pre-wedding-todo | procedure | checklist | Simple bullet list to check off |
+| clients/day-of/wedding-processional | procedure | form | Fill-in-the-blank template |
+| clients/day-of/quinceanera-processional | reference | form | Fill-in-the-blank template |
+| clients/layouts/hall/reset-checklist | form | reference | Visual layout diagram |
+| clients/layouts/saloon/reset-checklist | form | reference | Visual layout diagram |
+| operations/bar/alcohol-pull-tracker | reference | form | Spreadsheet with fill-in fields |
+| deliverables/recipe-app/README | checklist | reference | Project status/links (FIXED) |
+
+**Action needed:** Update contentTypeMapping.ts and re-seed after plan 23-03
+
 **v1.2 Backlog (captured 2026-01-16):**
 
 **CORE INITIATIVE: First-Principles Content Architecture Refactoring**
