@@ -171,20 +171,23 @@ Plans:
 
 ### Phase 23: UI Refresh
 
-**Goal**: Custom style guide variant optimized for internal wiki+ use case, with frontend-design skill making creative decisions
+**Goal**: Custom style guide variant optimized for internal wiki+ use case, style guides as wiki content, visible UI polish
 **Depends on**: Phase 21 (v1.2 core complete)
 **Research**: Unlikely (frontend-design skill analyzes codebase directly)
-**Plans**: TBD
-**Status**: Context gathered
+**Plans**: 3/3
+**Status**: In progress (23-01, 23-02 complete but insufficient; 23-03 addresses full scope)
 
 **Approach:**
-- Use existing style guide as orientation/northstar
-- Reference wedding app's adapted variant for pattern
-- frontend-design skill determines scope, feel, and execution
-- Optimize for daily staff use (procedures, references, checklists, forms)
+- Style guides as actual wiki CONTENT (searchable documents, not just code)
+- All 3 variants visible: main, wedding, staff hub
+- Style guides in navigation menu
+- Document rendering enhanced per content type (not blind markdown conversion)
+- Visible CSS polish: border-radius, shadows, hover effects
 
 Plans:
-- [ ] 23-01: TBD (frontend-design skill scopes and executes)
+- [x] 23-01: CSS utility classes (infrastructure only, no visible changes)
+- [x] 23-02: Component CSS refactor (code cleanup only, no visible changes)
+- [ ] 23-03: Full UI Refresh - style guide content + visible CSS + document rendering
 
 ## Progress
 
@@ -197,4 +200,4 @@ Plans:
 | 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
 | 21. Form Builder Visual Rebuild | v1.2 | 2/2 | Complete | 2026-01-18 |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Deferred | - |
-| 23. UI Refresh | v1.2 | 0/? | Context gathered | - |
+| 23. UI Refresh | v1.2 | 2/3 | In Progress | - |
