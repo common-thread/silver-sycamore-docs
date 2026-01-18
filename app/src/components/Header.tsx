@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
+// CONNECTOR: useAuth from @clerk/nextjs - restore from feature/full-v1
 import { UserMenu } from "./UserMenu";
 import { SearchBar } from "./SearchBar";
 // CONNECTOR: NotificationBell - restore from feature/full-v1
@@ -21,7 +21,6 @@ const navItems = [
 
 export default function Header() {
   const pathname = usePathname();
-  const { isSignedIn } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";

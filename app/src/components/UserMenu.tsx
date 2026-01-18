@@ -9,7 +9,11 @@ const ROLE_COLORS: Record<string, string> = {
   staff: "var(--color-ink-muted)",
 };
 
-export function UserMenu() {
+// Auth toggle check - must match ConvexClientProvider
+const isAuthEnabled = process.env.NEXT_PUBLIC_ENABLE_AUTH !== "false";
+
+// Wrapper component that only uses Clerk hooks when auth is enabled
+function AuthenticatedUserMenu() {
   const { isSignedIn, isLoaded } = useAuth();
   const { signOut } = useClerk();
   const { role, isLoading: permissionsLoading, user } = usePermissions();
@@ -83,4 +87,23 @@ export function UserMenu() {
       </button>
     </div>
   );
+}
+
+export function UserMenu() {
+  // When auth is disabled, show simple guest indicator
+  if (!isAuthEnabled) {
+    return (
+      <div
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: "0.8125rem",
+          color: "var(--color-ink-muted)",
+        }}
+      >
+        Guest Mode
+      </div>
+    );
+  }
+
+  return <AuthenticatedUserMenu />;
 }

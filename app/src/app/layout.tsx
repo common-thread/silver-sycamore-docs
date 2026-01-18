@@ -12,13 +12,24 @@ export const metadata: Metadata = {
   description: "Internal documentation hub for Silver Sycamore staff",
 };
 
+// Auth toggle - must match ConvexClientProvider
+const isAuthEnabled = process.env.NEXT_PUBLIC_ENABLE_AUTH !== "false";
+
+// Wrapper that conditionally includes server auth provider
+function AuthWrapper({ children }: { children: React.ReactNode }) {
+  if (!isAuthEnabled) {
+    return <>{children}</>;
+  }
+  return <ConvexAuthNextjsServerProvider>{children}</ConvexAuthNextjsServerProvider>;
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <ConvexAuthNextjsServerProvider>
+    <AuthWrapper>
       <html lang="en">
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,6 +79,6 @@ export default function RootLayout({
           </ConvexClientProvider>
         </body>
       </html>
-    </ConvexAuthNextjsServerProvider>
+    </AuthWrapper>
   );
 }
