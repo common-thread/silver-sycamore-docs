@@ -121,25 +121,25 @@ Plans:
 - [x] 24-04: Forms + Comments Extraction (Wave 2, parallel) — Complete 2026-01-18
 - [x] 24-05: Navigation Cleanup + Verification (Wave 3) — Complete 2026-01-18
 
-#### Phase 25: Content Source Audit
+#### Phase 25: Content Source Audit — COMPLETE
 
 **Goal**: Investigate all source files (markdown, JSON), catalog formats, identify what needs transposition
 **Depends on**: Phase 24
 **Research**: Unlikely (internal file analysis)
-**Plans**: TBD
+**Plans**: 1 in 1 wave
 
 Plans:
-- [ ] 25-01: TBD
+- [x] 25-01: Content Source Audit (Wave 1) — Complete 2026-01-18
 
 #### Phase 26: Transposition Process Design
 
 **Goal**: Create methodology for analyzing document intent and conversion to UI context
 **Depends on**: Phase 25
 **Research**: Unlikely (methodology work, internal)
-**Plans**: TBD
+**Plans**: 1 in 1 wave
 
 Plans:
-- [ ] 26-01: TBD
+- [ ] 26-01: Transposition Process Design (Wave 1) [has checkpoint]
 
 #### Phase 27: Content Transposition Execution
 
@@ -166,7 +166,7 @@ Plans:
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 24. Feature Branch Extraction | v1.3 | 5/5 | Complete | 2026-01-18 |
-| 25. Content Source Audit | v1.3 | 0/? | Not started | - |
-| 26. Transposition Process Design | v1.3 | 0/? | Not started | - |
+| 25. Content Source Audit | v1.3 | 1/1 | Complete | 2026-01-18 |
+| 26. Transposition Process Design | v1.3 | 0/1 | Planned | - |
 | 27. Content Transposition Execution | v1.3 | 0/? | Not started | - |
 | 28. Navigation & Catalog Refinement | v1.3 | 0/? | Not started | - |
