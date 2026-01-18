@@ -116,8 +116,8 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 Plans:
 - [x] 24-01: Branch Creation + Auth Toggle (Wave 1) — Complete 2026-01-18
-- [ ] 24-02: Messaging + Notifications Extraction (Wave 2)
-- [ ] 24-03: Interactive Content Simplification (Wave 2, parallel)
+- [x] 24-02: Messaging + Notifications Extraction (Wave 2) — Complete 2026-01-18
+- [x] 24-03: Interactive Content Simplification (Wave 2, parallel) — Complete 2026-01-18
 - [ ] 24-04: Forms + Comments Extraction (Wave 2, parallel)
 - [ ] 24-05: Navigation Cleanup + Verification (Wave 3)
 
@@ -165,7 +165,7 @@ Plans:
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 24. Feature Branch Extraction | v1.3 | 1/5 | In Progress | - |
+| 24. Feature Branch Extraction | v1.3 | 3/5 | In Progress | - |
 | 25. Content Source Audit | v1.3 | 0/? | Not started | - |
 | 26. Transposition Process Design | v1.3 | 0/? | Not started | - |
 | 27. Content Transposition Execution | v1.3 | 0/? | Not started | - |
