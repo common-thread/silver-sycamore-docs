@@ -207,71 +207,23 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
 
   // Loading state for edit mode
   if (formId && existingForm === undefined) {
-    return (
-      <div
-        style={{
-          padding: "var(--space-8)",
-          textAlign: "center",
-          fontFamily: "var(--font-body)",
-          fontSize: "var(--text-sm)",
-          color: "var(--color-ink-muted)",
-        }}
-      >
-        Loading form...
-      </div>
-    );
+    return <div className="form-builder-loading">Loading form...</div>;
   }
 
   if (formId && existingForm === null) {
-    return (
-      <div
-        style={{
-          padding: "var(--space-8)",
-          textAlign: "center",
-          fontFamily: "var(--font-body)",
-          fontSize: "var(--text-sm)",
-          color: "var(--color-ink-muted)",
-        }}
-      >
-        Form not found
-      </div>
-    );
+    return <div className="form-builder-loading">Form not found</div>;
   }
 
   // Get existing field names for uniqueness validation
   const existingFieldNames = fields.map((f) => f.name);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-6)",
-      }}
-    >
+    <div className="form-builder">
       {/* Form Details Section */}
-      <div
-        style={{
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          padding: "var(--space-6)",
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-base)",
-            fontWeight: "var(--font-semibold)",
-            color: "var(--color-ink)",
-            margin: "0 0 var(--space-4) 0",
-            paddingBottom: "var(--space-3)",
-            borderBottom: "1px solid var(--color-border)",
-          }}
-        >
-          Form Details
-        </h2>
+      <div className="form-builder-section">
+        <h2 className="form-builder-section-title">Form Details</h2>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+        <div className="form-renderer-fields">
           <Input
             label="Title"
             value={title}
@@ -279,43 +231,14 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
             placeholder="Enter form title"
           />
 
-          <div>
-            <label
-              style={{
-                display: "block",
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-xs)",
-                fontWeight: "var(--font-medium)",
-                color: "var(--color-ink-light)",
-                marginBottom: "var(--space-1)",
-              }}
-            >
-              Description
-            </label>
+          <div className="flex flex-col gap-1">
+            <label className="form-label">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe the purpose of this form..."
               rows={3}
-              style={{
-                width: "100%",
-                padding: "var(--space-3) var(--space-4)",
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-sm)",
-                color: "var(--color-ink)",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: 0,
-                outline: "none",
-                resize: "vertical",
-                transition: "border-color var(--duration-fast) var(--ease-default)",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = "var(--color-accent)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = "var(--color-border)";
-              }}
+              className="form-textarea"
             />
           </div>
 
@@ -336,32 +259,9 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
       </div>
 
       {/* Fields Section */}
-      <div
-        style={{
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          padding: "var(--space-6)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "var(--space-4)",
-            paddingBottom: "var(--space-3)",
-            borderBottom: "1px solid var(--color-border)",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "var(--text-base)",
-              fontWeight: "var(--font-semibold)",
-              color: "var(--color-ink)",
-              margin: 0,
-            }}
-          >
+      <div className="form-builder-section">
+        <div className="form-builder-fields-header">
+          <h2 className="form-builder-section-title" style={{ margin: 0, padding: 0, border: 'none' }}>
             Fields
           </h2>
           <Button
@@ -384,16 +284,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
 
         {/* Field List with Drag-and-Drop */}
         {fields.length === 0 ? (
-          <div
-            style={{
-              padding: "var(--space-8)",
-              textAlign: "center",
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-sm)",
-              color: "var(--color-ink-muted)",
-              border: "1px dashed var(--color-border)",
-            }}
-          >
+          <div className="form-builder-empty">
             No fields yet. Click "Add Field" to get started.
           </div>
         ) : (
@@ -406,7 +297,7 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
               items={fields.map((f) => f.name)}
               strategy={verticalListSortingStrategy}
             >
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <div className="form-builder-fields">
                 {fields.map((field, index) => (
                   <DraggableFieldCard
                     key={field.name}
@@ -426,31 +317,10 @@ export function FormBuilder({ formId, onSave, onCancel }: FormBuilderProps) {
       </div>
 
       {/* Error Message */}
-      {error && (
-        <div
-          style={{
-            padding: "var(--space-3) var(--space-4)",
-            background: "var(--color-error-bg)",
-            border: "1px solid var(--color-error-border)",
-            fontFamily: "var(--font-body)",
-            fontSize: "var(--text-sm)",
-            color: "var(--color-error)",
-          }}
-        >
-          {error}
-        </div>
-      )}
+      {error && <div className="form-builder-error">{error}</div>}
 
       {/* Action Buttons */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          gap: "var(--space-3)",
-          paddingTop: "var(--space-2)",
-        }}
-      >
+      <div className="form-builder-actions">
         <Button variant="ghost" onClick={handleCancel} disabled={isSaving}>
           Cancel
         </Button>

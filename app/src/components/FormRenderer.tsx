@@ -202,56 +202,17 @@ export function FormRenderer({
 
       case "textarea":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-            <label
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-xs)",
-                fontWeight: "var(--font-medium)",
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {labelWithRequired}
-            </label>
+          <div key={field.name} className="flex flex-col gap-1 w-full">
+            <label className="form-label">{labelWithRequired}</label>
             <textarea
               placeholder={field.placeholder}
               value={(value as string) || ""}
               onChange={(e) => handleFieldChange(field.name, e.target.value)}
               disabled={isSubmitting}
               rows={4}
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-sm)",
-                padding: "var(--space-3) var(--space-4)",
-                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
-                borderRadius: 0,
-                background: "var(--color-surface)",
-                color: "var(--color-ink)",
-                resize: "vertical",
-                outline: "none",
-                transition: "border-color var(--duration-fast) var(--ease-out)",
-                width: "100%",
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = "var(--color-accent)";
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = error ? "var(--color-error)" : "var(--color-border)";
-              }}
+              className={`form-textarea ${error ? "form-textarea-error" : ""}`}
             />
-            {error && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: "var(--font-medium)",
-                  color: "var(--color-error)",
-                }}
-              >
-                {error}
-              </span>
-            )}
+            {error && <span className="form-error">{error}</span>}
           </div>
         );
 
@@ -277,133 +238,59 @@ export function FormRenderer({
       case "multiselect":
         const selectedOptions = (value as string[]) || [];
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-            <label
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-xs)",
-                fontWeight: "var(--font-medium)",
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {labelWithRequired}
-            </label>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-2)",
-                padding: "var(--space-3) var(--space-4)",
-                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
-                background: "var(--color-surface)",
-              }}
-            >
+          <div key={field.name} className="flex flex-col gap-1 w-full">
+            <label className="form-label">{labelWithRequired}</label>
+            <div className={`form-input ${error ? "form-input-error" : ""}`} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
               {field.options?.map((option) => (
                 <label
                   key={option}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "var(--text-sm)",
-                    color: "var(--color-ink)",
-                    cursor: isSubmitting ? "not-allowed" : "pointer",
-                  }}
+                  className="list-item-title"
+                  style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", cursor: isSubmitting ? "not-allowed" : "pointer", fontWeight: "normal" }}
                 >
                   <input
                     type="checkbox"
                     checked={selectedOptions.includes(option)}
                     onChange={(e) => handleMultiselectChange(field.name, option, e.target.checked)}
                     disabled={isSubmitting}
-                    style={{
-                      width: "var(--space-4)",
-                      height: "var(--space-4)",
-                      accentColor: "var(--color-accent)",
-                    }}
+                    style={{ width: "var(--space-4)", height: "var(--space-4)", accentColor: "var(--color-accent)" }}
                   />
                   {option}
                 </label>
               ))}
             </div>
-            {error && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: "var(--font-medium)",
-                  color: "var(--color-error)",
-                }}
-              >
-                {error}
-              </span>
-            )}
+            {error && <span className="form-error">{error}</span>}
           </div>
         );
 
       case "checkbox":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+          <div key={field.name} className="flex flex-col gap-1 w-full">
             <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-sm)",
-                color: "var(--color-ink)",
-                cursor: isSubmitting ? "not-allowed" : "pointer",
-              }}
+              className="list-item-title"
+              style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", cursor: isSubmitting ? "not-allowed" : "pointer", fontWeight: "normal" }}
             >
               <input
                 type="checkbox"
                 checked={!!value}
                 onChange={(e) => handleFieldChange(field.name, e.target.checked)}
                 disabled={isSubmitting}
-                style={{
-                  width: "var(--space-5)",
-                  height: "var(--space-5)",
-                  accentColor: "var(--color-accent)",
-                }}
+                style={{ width: "var(--space-5)", height: "var(--space-5)", accentColor: "var(--color-accent)" }}
               />
               {labelWithRequired}
             </label>
-            {error && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: "var(--font-medium)",
-                  color: "var(--color-error)",
-                }}
-              >
-                {error}
-              </span>
-            )}
+            {error && <span className="form-error">{error}</span>}
           </div>
         );
 
       case "file":
         return (
-          <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-            <label
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-xs)",
-                fontWeight: "var(--font-medium)",
-                color: "var(--color-ink-light)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {labelWithRequired}
-            </label>
+          <div key={field.name} className="flex flex-col gap-1 w-full">
+            <label className="form-label">{labelWithRequired}</label>
             <input
               type="file"
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  // Convert to base64 for storage
                   const reader = new FileReader();
                   reader.onload = () => {
                     handleFieldChange(field.name, {
@@ -417,39 +304,13 @@ export function FormRenderer({
                 }
               }}
               disabled={isSubmitting}
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-sm)",
-                padding: "var(--space-2)",
-                border: `1px solid ${error ? "var(--color-error)" : "var(--color-border)"}`,
-                background: "var(--color-surface)",
-                cursor: isSubmitting ? "not-allowed" : "pointer",
-                width: "100%",
-              }}
+              className={`form-input ${error ? "form-input-error" : ""}`}
+              style={{ cursor: isSubmitting ? "not-allowed" : "pointer" }}
             />
             {typeof value === "object" && value !== null && "name" in value && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
-                  color: "var(--color-ink-muted)",
-                }}
-              >
-                Selected: {(value as { name: string }).name}
-              </span>
+              <span className="form-helper">Selected: {(value as { name: string }).name}</span>
             )}
-            {error && (
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: "var(--font-medium)",
-                  color: "var(--color-error)",
-                }}
-              >
-                {error}
-              </span>
-            )}
+            {error && <span className="form-error">{error}</span>}
           </div>
         );
 
@@ -459,48 +320,20 @@ export function FormRenderer({
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+    <form onSubmit={handleSubmit} className="form-renderer">
       {/* Form Header */}
-      <div style={{ marginBottom: "var(--space-8)" }}>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
-            fontWeight: "var(--font-semibold)",
-            color: "var(--color-ink)",
-            marginBottom: "var(--space-2)",
-            letterSpacing: "var(--tracking-snug)",
-          }}
-        >
-          {formSchema.title}
-        </h1>
+      <div className="form-renderer-header">
+        <h1 className="form-renderer-title">{formSchema.title}</h1>
         {formSchema.description && (
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-sm)",
-              color: "var(--color-ink-light)",
-              lineHeight: 1.6,
-            }}
-          >
-            {formSchema.description}
-          </p>
+          <p className="form-renderer-description">{formSchema.description}</p>
         )}
       </div>
 
       {/* Form Fields */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-6)",
-        }}
-      >
-        {fields.map(renderField)}
-      </div>
+      <div className="form-renderer-fields">{fields.map(renderField)}</div>
 
       {/* Submit Button */}
-      <div style={{ marginTop: "var(--space-8)", display: "flex", justifyContent: "flex-end" }}>
+      <div className="form-renderer-actions">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>

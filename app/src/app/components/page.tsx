@@ -67,10 +67,10 @@ export default function ComponentShowcase() {
           </div>
 
           <div>
-            <h3 style={{ fontSize: "1rem", marginBottom: "1rem", color: "var(--color-ink-light)" }}>Filled Variant</h3>
+            <h3 style={{ fontSize: "1rem", marginBottom: "1rem", color: "var(--color-ink-light)" }}>With Hints</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <Input variant="filled" label="Search" placeholder="Search documents..." />
-              <Input variant="filled" label="Notes" placeholder="Add notes here" hint="Optional field" />
+              <Input label="Search" placeholder="Search documents..." hint="Search by title or content" />
+              <Input label="Notes" placeholder="Add notes here" hint="Optional field" />
             </div>
           </div>
 

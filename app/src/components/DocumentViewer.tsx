@@ -28,48 +28,14 @@ export function DocumentViewer({
 
     return (
       <div>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
-            fontWeight: "var(--font-semibold)",
-            marginBottom: "var(--space-2)",
-            color: "var(--color-ink)",
-          }}
-        >
-          {document.title}
-        </h1>
+        <h1 className="document-title">{document.title}</h1>
         {document.description && (
-          <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
-            {document.description}
-          </p>
+          <p className="document-description">{document.description}</p>
         )}
-        <div
-          style={{
-            border: "1px solid var(--color-border)",
-            borderRadius: 0,
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              background: "var(--color-cream-dark)",
-              padding: "var(--space-3) var(--space-4)",
-              borderBottom: "1px solid var(--color-border)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "var(--text-sm)" }}>{document.title}</span>
-            <a
-              href={fileUrl}
-              download
-              style={{
-                color: "var(--color-accent)",
-                fontSize: "var(--text-sm)",
-              }}
-            >
+        <div className="document-embed-container">
+          <div className="document-embed-header">
+            <span className="document-embed-title">{document.title}</span>
+            <a href={fileUrl} download className="document-download-link">
               Download
             </a>
           </div>
@@ -83,37 +49,12 @@ export function DocumentViewer({
   if (["docx", "xlsx", "pdf"].includes(sourceType)) {
     return (
       <div>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
-            fontWeight: "var(--font-semibold)",
-            marginBottom: "var(--space-2)",
-            color: "var(--color-ink)",
-          }}
-        >
-          {document.title}
-        </h1>
+        <h1 className="document-title">{document.title}</h1>
         {document.description && (
-          <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
-            {document.description}
-          </p>
+          <p className="document-description">{document.description}</p>
         )}
-        <div
-          style={{
-            background: "var(--color-paper-warm)",
-            border: "1px solid var(--color-border)",
-            borderRadius: 0,
-            padding: "var(--space-8)",
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              color: "var(--color-ink-muted)",
-              fontSize: "var(--text-sm)",
-            }}
-          >
+        <div className="document-pending">
+          <p className="document-pending-text">
             This document is pending conversion.
           </p>
         </div>
@@ -124,21 +65,9 @@ export function DocumentViewer({
   // For markdown, render content using ReactMarkdown
   return (
     <div>
-      <h1
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "var(--text-2xl)",
-          fontWeight: "var(--font-semibold)",
-          marginBottom: "var(--space-2)",
-          color: "var(--color-ink)",
-        }}
-      >
-        {document.title}
-      </h1>
+      <h1 className="document-title">{document.title}</h1>
       {document.description && (
-        <p style={{ color: "var(--color-ink-muted)", marginBottom: "var(--space-6)" }}>
-          {document.description}
-        </p>
+        <p className="document-description">{document.description}</p>
       )}
       <div className="prose">
         <ReactMarkdown>{document.content}</ReactMarkdown>
