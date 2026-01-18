@@ -8,7 +8,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
-- 🚧 **v1.2 Content Architecture** — Phases 16-22 (in progress)
+- 🚧 **v1.2 Content Architecture** — Phases 16-23 (in progress)
 
 ## Completed Milestones
 
@@ -169,6 +169,23 @@ Plans:
 Plans:
 - [ ] 22-01: TBD (when resumed)
 
+### Phase 23: UI Refresh
+
+**Goal**: Custom style guide variant optimized for internal wiki+ use case, with frontend-design skill making creative decisions
+**Depends on**: Phase 21 (v1.2 core complete)
+**Research**: Unlikely (frontend-design skill analyzes codebase directly)
+**Plans**: TBD
+**Status**: Context gathered
+
+**Approach:**
+- Use existing style guide as orientation/northstar
+- Reference wedding app's adapted variant for pattern
+- frontend-design skill determines scope, feel, and execution
+- Optimize for daily staff use (procedures, references, checklists, forms)
+
+Plans:
+- [ ] 23-01: TBD (frontend-design skill scopes and executes)
+
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
@@ -180,3 +197,4 @@ Plans:
 | 20. Dynamic Content System | v1.2 | 6/6 | Complete | 2026-01-17 |
 | 21. Form Builder Visual Rebuild | v1.2 | 2/2 | Complete | 2026-01-18 |
 | 22. Create Flows + Dashboard | v1.2 | 0/? | Deferred | - |
+| 23. UI Refresh | v1.2 | 0/? | Context gathered | - |

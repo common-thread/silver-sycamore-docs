@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-16)
 
 ## Current Position
 
-Phase: 21 of 22 (Form Builder Visual Rebuild) - COMPLETE
-Plan: 2 of 2 in current phase - COMPLETE
-Status: v1.2 functionally complete, Phase 22 deferred
-Last activity: 2026-01-18 — Phase 22 investigated, deferred (flows work when authenticated)
+Phase: 23 of 23 (UI Refresh) - Context gathered
+Plan: 0 of ? in current phase
+Status: Ready for Phase 23 planning
+Last activity: 2026-01-18 — Phase 23 context captured (frontend-design skill unleashed)
 
-Progress: ██████████████░ 95% (v1.2 core complete, polish deferred)
+Progress: ██████████████░ 90% (v1.2 core complete, UI refresh next)
 
 ## Performance Metrics
 
@@ -155,10 +155,10 @@ Create structured log tracking each document's:
 - **Forms in workspace** — Allow forms to be added to workspace (not just docs)
 - **Universal comments with @mentions** — Comment on anything, @mention people/documents with linking
 
-**Phase 24 (post-v1.2): UI Refresh**
-- Dynamic content UI (procedures, checklists) needs visual polish
-- Current implementation is functional but rough
-- Defer until after Phase 21-23 complete all functionality
+**Phase 23: UI Refresh** (moved up from backlog)
+- frontend-design skill to create custom style variant for staff wiki+ use case
+- Reference wedding app's adapted variant for pattern
+- Dynamic content UI (procedures, checklists) visual polish included
 
 ### Pending Todos
 
@@ -174,18 +174,19 @@ None active.
 - v1.1 restructured: Consolidated design tokens + style guide into Phase 13 (Brand Foundation), now 4 phases (12-15)
 - Milestone v1.2 created: Content Architecture, 8 phases (Phase 16-23)
 - **v1.2 milestone references added**: `.planning/milestones/v1.2-REFERENCES.md` ensures all phases inherit Phase 16 architectural guidance
-- **Phase 24 added**: UI Refresh pass for dynamic content (procedures, checklists) - deferred until after v1.2 functionality complete
+- **Phase 23 added**: UI Refresh moved up from backlog (was Phase 24), frontend-design skill unleashed for custom style variant
 
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: v1.2 functionally complete, Phase 22 deferred
+Stopped at: Phase 23 context gathered, ready for planning
 Resume file: None
 
 ### Next Steps
 
-1. Decide next milestone or initiative
-2. Options: v1.3 planning, UI refresh (Phase 24), or ship v1.2
+1. Plan Phase 23 (UI Refresh) — `/gsd:plan-phase 23`
+2. frontend-design skill scopes and executes the refresh
+3. Complete v1.2 milestone
 
 ### Verification Protocol (added 2026-01-17)
 
