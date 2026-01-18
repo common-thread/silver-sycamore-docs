@@ -10,7 +10,7 @@ import { ShareLinkDialog } from "@/components/ShareLinkDialog";
 import { VersionBadge } from "@/components/VersionBadge";
 import { VersionHistory } from "@/components/VersionHistory";
 import { FolderPicker } from "@/components/FolderPicker";
-import { CommentSection } from "@/components/CommentSection";
+// CONNECTOR: CommentSection - restore from feature/full-v1
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Id } from "../../../../convex/_generated/dataModel";
@@ -222,55 +222,7 @@ export default function DocumentPage() {
         <RelatedDocs documentId={document._id} category={document.category} />
       </ContentBox>
 
-      {/* Comments Section */}
-      <ContentBox>
-        {/* Divider */}
-        <div
-          style={{
-            height: "1px",
-            background: "var(--color-border)",
-            marginBottom: "2rem",
-          }}
-        />
-
-        {isSignedIn ? (
-          <div style={{ maxWidth: "65ch" }}>
-            <CommentSection documentId={document._id} />
-          </div>
-        ) : (
-          <div
-            style={{
-              padding: "2rem",
-              textAlign: "center",
-              background: "var(--color-surface-dim)",
-              borderRadius: "4px",
-              border: "1px solid var(--color-border)",
-            }}
-          >
-            <h3
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.125rem",
-                fontWeight: 600,
-                color: "var(--color-ink)",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Discussion
-            </h3>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.875rem",
-                color: "var(--color-ink-muted)",
-                margin: 0,
-              }}
-            >
-              Sign in to view and add comments
-            </p>
-          </div>
-        )}
-      </ContentBox>
+      {/* CONNECTOR: CommentSection - restore from feature/full-v1 */}
 
       {/* Folder Picker Modal */}
       {showFolderPicker && (
