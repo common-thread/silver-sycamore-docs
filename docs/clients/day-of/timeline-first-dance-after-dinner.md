@@ -1,95 +1,34 @@
-# Timeline First Dance After Dinner
+---
+title: First Dance After Dinner Timeline
+description: Event timing reference for weddings with first dance after dinner service
+contentType: reference
+---
 
-![](timeline-first-dance-after-dinner_html_a8e2205d.jpg)
+# First Dance After Dinner Timeline
 
-  
+Sample timeline for weddings where the first dance occurs after dinner, rather than during the cocktail hour.
 
-**Wedding**
+## Wedding
 
-  
+| Time | Event |
+|------|-------|
+| 5:00 PM | Wedding ceremony |
+| 5:20 PM | Family photos / Cocktail hour in Town |
 
-  
+## Reception
 
-5:00 Wedding Ceremony
+| Time | Event |
+|------|-------|
+| 6:00 PM | Grand entrance into reception |
+| 6:05 PM | Dinner service |
+| 6:50 PM | Cake cutting |
+| 6:55 PM | Toasts |
+| 7:05 PM | First dance |
+| 7:10 PM | Bride and father dance |
+| 7:15 PM | Groom and mother dance |
+| 7:20 PM | Dance floor open |
+| 8:30 PM | Bouquet and garter toss |
+| 9:50 PM | Grand exit |
+| 10:00 PM | End of wedding |
 
-  
-
-  
-
-5:20 Family Photos/Cocktail Hour in Town
-
-  
-
-  
-
-**Reception**
-
-  
-
-  
-
-6:00 Grand Entrance into Reception
-
-  
-
-  
-
-6:05 Dinner Service
-
-  
-
-  
-
-6:50 Cake Cutting
-
-  
-
-  
-
-6:55 Toasts
-
-  
-
-  
-
-7:05 First Dance
-
-  
-
-7:10 Bride and Father Dance
-
-  
-
-  
-
-7:15 Groom and Mother Dance
-
-  
-
-  
-
-7:20 Dance Floor Open
-
-  
-
-  
-
-8:30 Bouquet and Garter Toss
-
-  
-
-  
-
-9:50 Grand Exit
-
-  
-
-  
-
-10:00 End of Wedding
-
-  
-
-  
-
-Time may be adjusted as needed basis
+Times may be adjusted as needed.

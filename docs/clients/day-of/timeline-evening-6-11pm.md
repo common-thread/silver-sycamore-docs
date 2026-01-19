@@ -1,89 +1,33 @@
-# Timeline Evening 6 11pm
+---
+title: Evening Event Timeline (6-11pm)
+description: Event timing reference for evening weddings running from 6pm to 11pm
+contentType: reference
+---
 
-**Ceremony**
+# Evening Event Timeline (6-11pm)
 
-  
+Sample timeline for evening weddings with a 6pm ceremony and 11pm conclusion.
 
-6:00 pm Ceremony
+## Ceremony
 
-  
+| Time | Event |
+|------|-------|
+| 6:00 PM | Ceremony |
+| 6:20 PM | Guests exit / Bar opens |
 
-  
+## Reception
 
-6:20 pm Guests Exit/Bar Opens
-
-  
-
-**Reception**
-
-  
-
-  
-
-7:10 Grand Entrance
-
-  
-
-  
-
-7:15 Buffet Opens
-
-  
-
-  
-
-8:00 Cake cutting
-
-  
-
-  
-
-8:10 Toasts
-
-  
-
-  
-
-8:20 First Dance
-
-  
-
-  
-
-8:25 Bride and Father Dance
-
-  
-
-  
-
-8:30 Groom and Mother Dance
-
-  
-
-  
-
-8:35 Dance Floor Open
-
-  
-
-  
-
-9:30 Bouquet and Garter Toss
-
-  
-
-  
-
-10:45 Line up for Grand Exit
-
-  
-
-  
-
-11:00 End of Wedding
-
-  
-
-  
-
-11:30 All belongings removed from buildings
+| Time | Event |
+|------|-------|
+| 7:10 PM | Grand entrance |
+| 7:15 PM | Buffet opens |
+| 8:00 PM | Cake cutting |
+| 8:10 PM | Toasts |
+| 8:20 PM | First dance |
+| 8:25 PM | Bride and father dance |
+| 8:30 PM | Groom and mother dance |
+| 8:35 PM | Dance floor open |
+| 9:30 PM | Bouquet and garter toss |
+| 10:45 PM | Line up for grand exit |
+| 11:00 PM | End of wedding |
+| 11:30 PM | All belongings removed from buildings |
