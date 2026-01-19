@@ -104,6 +104,19 @@ User checkpoint decisions from prior session:
 3. micro-wedding-planning.md: **TRUNCATE** (venue policies only)
 4. tasting-form.md: **REMOVE** (empty stub)
 
+## Removed Content Sources (PIN)
+
+**Original data for removed/truncated files:**
+
+| Removed File | Original Source Location |
+|--------------|--------------------------|
+| `catering-sign-up.md` | **Google Sheets** - "Catering Sign-Up" spreadsheet (live event scheduling database) |
+| `tasting-form.md` | **PDF** - Original tasting form PDF in shared drive (stub referenced but never converted) |
+| `bridal-planning-2024.md` (full version) | **Google Sheets** - "Bridal Planning 2024" shared with clients |
+| `micro-wedding-planning.md` (full version) | **Google Sheets** - "Micro Wedding Planning" shared with clients |
+
+Note: The wiki now contains only the venue policies extracted from these files. Interactive planning worksheets and live scheduling data remain in their original Google Sheets.
+
 ## Deviations from Plan
 
 None - applied user decisions exactly as specified.
