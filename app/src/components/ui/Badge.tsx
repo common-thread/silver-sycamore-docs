@@ -34,9 +34,9 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           };
         case "warning":
           return {
-            backgroundColor: "rgba(180, 130, 50, 0.12)",
-            color: "#8B6914",
-            dotColor: "#B48232",
+            backgroundColor: "var(--color-warning-light)",
+            color: "var(--color-warning-dark)",
+            dotColor: "var(--color-warning)",
           };
         case "error":
           return {
@@ -46,13 +46,13 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           };
         case "info":
           return {
-            backgroundColor: "rgba(80, 120, 180, 0.12)",
-            color: "#3D5A80",
-            dotColor: "#5078B4",
+            backgroundColor: "var(--color-info-light)",
+            color: "var(--color-info-dark)",
+            dotColor: "var(--color-info)",
           };
         case "accent":
           return {
-            backgroundColor: "rgba(139, 115, 85, 0.12)",
+            backgroundColor: "var(--color-accent-light)",
             color: "var(--color-accent-hover)",
             dotColor: "var(--color-accent)",
           };
@@ -96,7 +96,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           letterSpacing: "var(--tracking-normal)",
           textTransform: "uppercase",
           whiteSpace: "nowrap",
-          borderRadius: 0,
+          borderRadius: "var(--radius-full)",
           backgroundColor: colors.backgroundColor,
           color: colors.color,
           fontSize: sizeStyles.fontSize,

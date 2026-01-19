@@ -10,7 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
-const SCREENSHOT_DIR = path.join(__dirname, 'screenshots');
+const SCREENSHOT_DIR = path.join(__dirname, '..', '.planning', 'screenshots');
 
 // Static routes that don't require dynamic params
 const STATIC_ROUTES = [

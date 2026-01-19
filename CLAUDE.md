@@ -97,3 +97,27 @@ Screenshots saved to: `.planning/phases/XX-name/screenshots/`
 ```
 
 This applies to all phases with UI changes or visual verification tasks.
+
+## Full-App Screenshots (Playwright)
+
+For capturing screenshots of all app pages at once:
+
+**Location:** `.planning/screenshots/`
+
+**Script:** `app/screenshot-pages.ts`
+
+**Usage:**
+```bash
+cd app
+bun run screenshot-pages.ts
+```
+
+**Output:**
+- Screenshots saved to `.planning/screenshots/` (not in app folder)
+- JSON report at `.planning/screenshots/report.json`
+- Filenames: `{route-name}.png` (e.g., `home.png`, `events.png`, `deliverables.png`)
+
+**When to run:**
+- After major UI/styling changes
+- Before milestone completion
+- When auditing brand adherence

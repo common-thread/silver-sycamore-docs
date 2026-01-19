@@ -73,7 +73,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={className}
         style={{
-          borderRadius: 0,
+          borderRadius: "var(--radius-lg)",
           padding: getPaddingValue(),
           ...getVariantStyles(),
           ...getInteractiveStyles(),
