@@ -1,5 +1,8 @@
 "use client";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import type { Components } from "react-markdown";
+import type { ReactNode } from "react";
 
 interface Document {
   _id: string;
@@ -9,6 +12,8 @@ interface Document {
   sourceFile?: string;
   description?: string;
 }
+
+type ContentType = "procedure" | "reference" | "form" | "checklist" | "guide";
 
 // Strip leading H1 if it matches the document title (avoids duplicate headings)
 function processContent(content: string, title: string): string {
@@ -36,12 +41,61 @@ function processContent(content: string, title: string): string {
   return content;
 }
 
+// Extract text content from React children for pattern matching
+function getTextContent(children: ReactNode): string {
+  if (typeof children === "string") return children;
+  if (typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(getTextContent).join("");
+  if (children && typeof children === "object" && "props" in children) {
+    return getTextContent((children as { props?: { children?: ReactNode } }).props?.children);
+  }
+  return "";
+}
+
+// Create custom markdown components based on contentType
+function getMarkdownComponents(contentType?: ContentType): Components {
+  return {
+    // For checklists/procedures: render list items as interactive checkboxes
+    li: ({ children, ...props }) => {
+      const text = getTextContent(children);
+
+      // Check if this is a checkbox item (starts with [ ] or [x])
+      const checkboxMatch = text.match(/^\[([ xX])\]\s*/);
+
+      // Render as checkbox if: explicit checkbox syntax OR checklist/procedure type
+      if (checkboxMatch || contentType === "checklist" || contentType === "procedure") {
+        const isChecked = checkboxMatch ? checkboxMatch[1].toLowerCase() === "x" : false;
+        // Strip the checkbox syntax from content if present
+        const content = checkboxMatch
+          ? text.replace(/^\[([ xX])\]\s*/, "")
+          : children;
+
+        return (
+          <li className="checklist-item" data-checked={isChecked} {...props}>
+            <span className="checkbox-indicator" aria-hidden="true" />
+            <span className="task-text">{content}</span>
+          </li>
+        );
+      }
+
+      return <li {...props}>{children}</li>;
+    },
+
+    // Style H2s as section headers with accent bar
+    h2: ({ children, ...props }) => (
+      <h2 className="section-header" {...props}>{children}</h2>
+    ),
+  };
+}
+
 export function DocumentViewer({
   document,
   fileUrl,
+  contentType,
 }: {
   document: Document;
   fileUrl?: string;
+  contentType?: ContentType;
 }) {
   const sourceType = document.sourceType || "md";
 
@@ -91,7 +145,10 @@ export function DocumentViewer({
   // Process content to remove duplicate H1
   const processedContent = processContent(document.content, document.title);
 
-  // Render markdown with default components - let CSS handle styling
+  // Get content-type-aware markdown components
+  const components = getMarkdownComponents(contentType);
+
+  // Render markdown with GFM support and custom components
   return (
     <div>
       <h1 className="document-title">{document.title}</h1>
@@ -99,7 +156,9 @@ export function DocumentViewer({
         <p className="document-description">{document.description}</p>
       )}
       <div className="prose">
-        <ReactMarkdown>{processedContent}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+          {processedContent}
+        </ReactMarkdown>
       </div>
     </div>
   );

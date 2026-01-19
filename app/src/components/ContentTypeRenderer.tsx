@@ -18,9 +18,17 @@ interface ContentTypeRendererProps {
 /**
  * ContentTypeRenderer - renders documents via DocumentViewer.
  *
- * The contentType field is preserved for future content-aware rendering.
- * Currently uses pattern-based detection for timelines and checklists.
+ * Passes contentType to DocumentViewer for content-aware rendering:
+ * - checklist/procedure: items render as interactive checkboxes
+ * - reference: tables and timelines styled
+ * - guide: standard prose
  */
 export function ContentTypeRenderer({ document, fileUrl }: ContentTypeRendererProps) {
-  return <DocumentViewer document={document} fileUrl={fileUrl} />;
+  return (
+    <DocumentViewer
+      document={document}
+      fileUrl={fileUrl}
+      contentType={document.contentType}
+    />
+  );
 }
