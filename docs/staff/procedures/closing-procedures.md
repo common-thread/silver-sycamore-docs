@@ -1,157 +1,150 @@
-# Closing Procedures - Pine Street Café
-
-Daily closing routines for Pine Street Café service staff.
-
-**Source:** Client operational documents (2026-01-12)
-
 ---
+title: Closing Procedures
+description: End-of-day tasks for shutting down venue operations
+contentType: procedure
+---
+
+# Closing Procedures
+
+Complete these procedures at the end of each business day to ensure the facility is properly closed and secured for the next day.
 
 ## 1:30pm Closing Tasks
 
-**Mid-afternoon wind-down procedures**
+Mid-afternoon wind-down procedures for Pine Street Cafe.
 
-- Turn off Soup Heater
-- Give Chef all soups
-- Dump out Water in soup heater and wipe clean
-- Jug and label remain tea with name and date
-- Dump coffee (unless guests are drinking it)
-- Rinse out tea urn and coffee pots
-- Wipe down totally coffee/ tea station and turn off
-- Clean and organize server shelves
-- Wipe down server station
-- Clean in and out of microwave
-- Sweep and mop (no mopping on wood floors)
-
----
+1. Turn off soup heater
+2. Give chef all soups
+3. Dump out water in soup heater and wipe clean
+4. Jug and label remaining tea with name and date
+5. Dump coffee (unless guests are drinking it)
+6. Rinse out tea urn and coffee pots
+7. Wipe down coffee/tea station completely and turn off
+8. Clean and organize server shelves
+9. Wipe down server station
+10. Clean in and out of microwave
+11. Sweep and mop (no mopping on wood floors)
 
 ## 2:00pm Final Closing
 
-**End of service procedures**
+End of service procedures for Pine Street Cafe.
 
 ### Guest Management
 
-- **Turn off open sign (guests can come in all the way till 2pm) DO NOT CLOSE OR TURN OFF SIGN EARLY**
-- Lock doors after all guests are gone
-- Turn off music after all guests are gone
+1. Turn off open sign at 2pm - **guests can enter until closing time**
+2. Lock doors after all guests are gone
+3. Turn off music after all guests are gone
 
 ### Dining Room
 
-- Clean all tables and chairs
-- Sweep all rooms
+1. Clean all tables and chairs
+2. Sweep all rooms
 
 ### Restrooms
 
-- Mop Restrooms (only - **no wet mopping wood floors**)
-- Clean restroom (sink, mirror, toilet – with toilet brush, take out trash and put a new bag in trash container)
+1. Mop restrooms only - **no wet mopping on wood floors**
+2. Clean sink, mirror, and toilet with toilet brush
+3. Take out trash and replace bag in container
 
-### Climate & Security
+### Climate and Security
 
-- Adjust AC properly (77 for ac and 65 for heat)
-- Take out Trash
-- Turn off all lights
-- Clock Out
+1. Adjust AC properly (77 for AC, 65 for heat)
+2. Take out trash
+3. Turn off all lights
+4. Clock out
 
----
+## Event Cleanup
 
-## Event Cleanup Checklist
-
-**Post-event facility cleaning standards**
-
-**Note:** After every event at Silver Sycamore, the facility must be left clean for the next event.
+Post-event facility cleaning standards. After every event at Silver Sycamore, the facility must be left clean for the next event.
 
 ### Kitchen
 
-- All dishes washed and put away in designated area; sinks wiped and cleaned
-- Ovens/Grill thoroughly swept and mopped; All spills thoroughly cleaned until no longer "sticky"
-- All trash/garbage/spills in walk-in cooler in a neat pile in the reception area
-- All electrical appliances are off and/or unplugged and gas stove turned off
+1. Wash all dishes and put away in designated area
+2. Wipe and clean sinks
+3. Thoroughly sweep and mop ovens/grill area
+4. Clean all spills until no longer sticky
+5. Place all trash/garbage in a neat pile in the reception area
+6. Turn off all electrical appliances and/or unplug
+7. Turn off gas stove
 
 ### Coffee/Drink Station
 
-- Coffee pots, tea pot(s) dumped, cleaned and coffee maker, tea maker left in "off" position
-- Counters and mirrors cleaned and wiped down
-- Empty paper towel and/or paper cup holder replenished
+1. Dump and clean coffee pots and tea pots
+2. Leave coffee maker and tea maker in off position
+3. Clean and wipe down counters and mirrors
+4. Replenish empty paper towel and/or paper cup holders
 
 ### Reception Hall
 
-- Facility has no trash/recycling material must be removed and clean, trash bags left in the appropriate cans. Please check all restrooms
-- Entire floor thoroughly swept and mopped; All spills thoroughly cleaned until no longer "sticky"
-- All trash/dirty towels put in hamper in a neat pile in the reception hall
-- All bathrooms checked and cleaned
-- Counters and mirrors cleaned and wiped down
-- Floors swept and mopped
-- All empty tissue boxes, paper cup, soap dispenser and/or paper towel holder replenished
-- All lights on in the house; Just prior to leaving
-- All condiment baskets (Salt & Pepper Shaker) (Sugar) in its original setup (Centerpiece)
-- Reset all thermostats to the temperatures indicated on the thermostat
-- All lighting in whole facility turned of
-- All Doors locked
+1. Remove all trash and recycling material - check all restrooms
+2. Thoroughly sweep and mop entire floor
+3. Clean all spills until no longer sticky
+4. Put all trash and dirty towels in hamper in reception hall
+5. Check and clean all bathrooms
+6. Clean and wipe down counters and mirrors
+7. Sweep and mop floors
+8. Replenish tissue boxes, paper cups, soap dispensers, and paper towel holders
+9. Return all condiment baskets (salt, pepper, sugar) to original setup with centerpieces
+10. Reset all thermostats to temperatures indicated on thermostat
+11. Turn off all lighting in whole facility
+12. Lock all doors
 
 ### Bridal Cottage
 
-- Clean all rooms/trash out and toilets flushed
-- All lights out and all doors locked
-
----
+1. Clean all rooms and remove trash
+2. Flush all toilets
+3. Turn off all lights
+4. Lock all doors
 
 ## Grill/Fry Station Daily Operations
 
-**Daily Opening/Closing Routine**
-
 ### Opening Duties
 
-1. Set waffle mix out to waffle station (if you're the 1st one in)
-2. Turn on all equipment (if you're the 1st one in)
+1. Set waffle mix out to waffle station (if first one in)
+2. Turn on all equipment (if first one in)
 3. Par cook chicken breast (if pre-cut, same time/temp as fries)
 4. Par cook skillet potatoes (if pre-cut, same time/temp as fries)
-5. Set-up warmer trays. if not in fry bin or place 1/3 pan with lunch meat/cheeses, container with chicken breasts (6), caramelized onions, asjas sauce and container of garlic
-6. Set-up bus tub with fry bus tub place 1/3 pans with lunch meat/cheeses, container with chicken breasts (6), caramelized onions, as jas sauce and container of garlic. **Refill pans with bacon or sausage if necessary**
+5. Set up warmer trays with lunch meat/cheeses, chicken breasts, caramelized onions, asjas sauce, and garlic
+6. Set up bus tub with fry station items - **refill pans with bacon or sausage if necessary**
 7. Set out containers of fries and onion for service
 8. Get utensils for station set out
 9. Par cook bacon bits (if needed)
-10. **Grill veggies for skillet potatoes. Usually need 15 weekdays & 20 weekends**
-11. Grill veggies for skillet potatoes
-12. Cook off bacon bits if needed
-13. Thaw chicken breasts for service if needed
-14. Any additional pans as outlined on production sheet
+10. Grill veggies for skillet potatoes - usually need 15 weekdays and 20 weekends
+11. Cook off bacon bits if needed
+12. Thaw chicken breasts for service if needed
+13. Complete any additional pans as outlined on production sheet
 
-### Closing Duties
+### Closing Duties - 1:30pm
 
-**1:30pm**
+1. Turn off soup heater
+2. Give chef all soups
+3. Dump out water in soup heater and wipe clean
+4. Jug and label remaining tea with name and date
+5. Dump coffee (unless guests are drinking it)
+6. Rinse out tea urn and coffee pots
+7. Wipe down coffee/tea station completely and turn off
+8. Clean and organize server shelves
+9. Wipe down server station
+10. Clean in and out of microwave
+11. Sweep and mop (no mopping on wood floors)
 
-- Turn off Soup Heater
-- Give Chef all soups
-- Dump out Water in soup heater and wipe clean
-- Jug and label remain tea with name and date
-- Dump coffee (unless guests are drinking it)
-- Rinse out tea urn and coffee pots
-- Wipe down totally coffee/ tea station and turn off
-- Clean and organize server shelves
-- Wipe down server station
-- Clean in and out of microwave
-- Sweep and mop (no mopping on wood floors)
+### Closing Duties - 2:00pm
 
-**2:00pm**
+1. Turn off open sign - **guests can enter until 2pm**
+2. Lock doors after all guests are gone
+3. Turn off music after all guests are gone
+4. Clean all tables and chairs
+5. Sweep all rooms
+6. Mop restrooms only - **no wet mopping on wood floors**
+7. Clean restroom (sink, mirror, toilet with brush, replace trash bag)
+8. Adjust AC properly (77 for AC, 65 for heat)
+9. Take out trash
+10. Turn off all lights
+11. Clock out
 
-- Turn off open sign (guests can come in all the way till 2pm) **DO NOT CLOSE OR TURN OFF SIGN EARLY**
-- Lock doors after all guests are gone
-- Turn off music after all guests are gone
-- Clean all tables and chairs
-- Sweep all rooms
-- Mop Restrooms (only - **no wet mopping wood floors**)
-- Clean restroom (sink, mirror, toilet –with toilet brush, take out trash and put a new bag in trash container)
-- Adjust AC properly (77 for ac and 65 for heat)
-- Take out Trash
-- Turn off all lights
-- Clock Out
+## Important Notes
 
----
-
-## Implementation Notes
-
-- Wood floor protection is critical - no wet mopping
-- Open sign must stay on until 2pm (customer service standard)
-- Temperature settings specific for energy management
-- Event cleanup must restore facility to pristine condition
-- Cash drawer reconciliation required before staff departure
-- Cross-reference with training schedule for new hire onboarding
+- **Wood floor protection is critical** - no wet mopping on wood floors
+- **Customer service standard** - open sign must stay on until 2pm
+- **Temperature settings** are specific for energy management
+- **Event cleanup** must restore facility to pristine condition
+- **Cash drawer reconciliation** is required before staff departure

@@ -1,140 +1,126 @@
+---
+title: Phone System Guide
+description: Step-by-step instructions for Crexendo CX340 phone system operations
+contentType: procedure
+---
+
 # Phone System Guide
 
-*Extracted from IMG_0425-0426*
+Quick reference guide for the Crexendo Enterprise IP Phone (CX340). Use this guide for common phone operations including calls, transfers, and voicemail.
 
----
+## Indicator Lights
 
-## Crexendo Enterprise IP Phone
+Understanding the phone's status lights:
 
-**Quick Reference for CX340**
-
----
-
-## Features Overview
-
-### EDS (Electronic Display System)
-
-**Power Indicator:** Steady green when power on, blinking green when a call is light
-
-### Line Keys
-
-- **Steady green:** During a conversation, or after transfer is picked up prior to blind
-- **Blinking red:** A call is ringing
-- **Off:** Line is idle (not in use)
-
----
+- **Steady green** - Power on, or during a conversation/after transfer pickup
+- **Blinking red** - A call is ringing
+- **Off** - Line is idle (not in use)
 
 ## Place a Call
 
-There are several ways to make a call:
+1. Pick up the handset
+2. Enter the number you want to dial
+3. Press the **Send** softkey or the round button
 
-1. **Handset:** Pick up the handset, enter the number, and then press the Send softkey or press [circle icon]
-2. or lift the keys, enter the number, and then press the Send softkey or press [circle icon]
-3. or enter the number, and then press the Send softkey or [circle icon]. You can also use contacts or the call log in lieu of entering the manual number you want.
+**Alternative methods:**
 
-**Note:** You can use contacts or the call log for all using of the ways mentioned above.
-
----
+- Lift the handset first, then dial
+- Enter the number first, then lift the handset
+- Use **Contacts** or **Call Log** instead of entering a number manually
 
 ## Answer a Call
 
-1) Handset: Pick up the handset.
-2) Speaker: Press [speaker icon]
-3) Headset: Press [headset icon]
+**Using handset:**
+1. Pick up the handset
 
-**Note:** You can reject the call by press the Reject soft key.
+**Using speaker:**
+1. Press the speaker button
 
----
+**Using headset:**
+1. Press the headset button
+
+**To reject a call:**
+1. Press the **Reject** softkey
 
 ## Redial
 
-Press [circle icon] or the Redial softkey to dial the last called number.
-
----
+1. Press the round button or the **Redial** softkey to dial the last called number
 
 ## Hold
 
-Press [circle icon] or the Hold softkey during a call to place the caller on hold.
+**To place a call on hold:**
+1. Press the round button or the **Hold** softkey during a call
 
-Press [circle icon] or the Resume softkey to resume the call.
+**To resume the call:**
+1. Press the round button or the **Resume** softkey
 
----
+## Blind Transfer
 
-## Call Transfer
+Transfer a call without announcing it to the recipient.
 
-### Blind Transfer
+1. Press the **Transfer** softkey during a call (caller will be placed on hold)
+2. Enter the number to transfer to
+3. Press the **Transfer** softkey to complete the transfer
 
-a. Press [circle icon] or the Transfer softkey during a call, the caller will be placed on hold.
-b. Enter the number that the call is to be transferred to.
-c. Press [circle icon] or the Transfer softkey to complete the transfer.
+## Attended Transfer
 
-### Attended Transfer
+Transfer a call after announcing it to the recipient.
 
-a. Press [circle icon] or the Transfer softkey during a call, the caller will be placed on hold.
-b. Enter the number that the call is to be transferred to, and the press Send softkey.
-c. When the person answers, make the introduction, then press Send softkey [circle icon] or Transfer softkey to complete the transfer.
+1. Press the **Transfer** softkey during a call (caller will be placed on hold)
+2. Enter the number to transfer to
+3. Press the **Send** softkey and wait for the person to answer
+4. Announce the transfer
+5. Press the **Transfer** softkey to complete the transfer
 
----
+## Conference Call
 
-## Call Conference
+1. Dial the first party and wait for them to answer
+2. Press the **Conf** softkey
+3. Dial the second party
+4. Wait for them to answer
+5. Press the **Conf** softkey again to connect all parties
 
-a. Dial the first party. When they answer, press the Conf softkey.
-b. Dial the second party, after they answer, press the Conf softkey. All parties will now be connected.
+## Mute
 
----
+**To mute your microphone:**
+1. Press the round button during a call
 
-## Call Mute
-
-Press [circle icon] to mute the microphone during the call.
-Press [circle icon] again to un-mute the conversation.
-
----
+**To unmute:**
+1. Press the round button again
 
 ## Headset Operations
 
-**Headset:** Press [headset icon] to answer or hang up
-**Speaker:** Press the Cancel softkey.
-**Headset hang up** the Handset or press the Cancel softkey.
+- Press the headset button to answer or hang up
+- Press the **Cancel** softkey to switch to speaker
+- Hang up the handset or press **Cancel** to end the call
 
----
+## Check Voicemail
 
-## Checking Voicemail
+**From your phone:**
 
-**On your phone:**
-a. Lift the handset and press the Voicemail Message button
-b. Follow the voice prompts to enter your Password (PIN)
+1. Lift the handset
+2. Press the **Voicemail Message** button
+3. Enter your password (PIN) when prompted
 
-**OR**
+**Alternative method:**
 
-a. Lift the handset and dial your Company's VM Extension
-b. Enter Password (PIN)
+1. Lift the handset
+2. Dial your company's VM extension
+3. Enter your password (PIN)
 
-**Using Crexendo Web Portal:**
-a. Log into your Crexendo Web Portal
-b. Double-click the message to play through your PC's speakers.
+**From Crexendo Web Portal:**
 
-**Dial 877-282-4524 and enter:**
-- The 10-digit Direct Dial number for your phone
-- Your ID (Extension Number)
-- Your Password (PIN)
+1. Log into your Crexendo Web Portal
+2. Double-click the message to play through your PC speakers
 
----
+**From external phone:**
 
-## Assembly
-
-[Diagram showing phone assembly with handset, base unit, and cord connections]
-
----
+1. Dial **877-282-4524**
+2. Enter your 10-digit direct dial number
+3. Enter your extension number (ID)
+4. Enter your password (PIN)
 
 ## Support Contact
 
-- Contact your Crexendo System Administrator for first-tier answers and troubleshooting
-
-- The Crexendo Cloud Communications Professional Services Support Team is ready to help at any time at **855-211-2255**
-
----
-
-## Silver Sycamore Contacts x000D_
-
-[Reference to vendor contacts list]
-
+- Contact your Crexendo System Administrator for first-tier support
+- Crexendo Professional Services Support Team: **855-211-2255**
