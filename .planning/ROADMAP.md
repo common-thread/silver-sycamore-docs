@@ -9,7 +9,7 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-11) — SHIPPED 2026-01-16
 - ✅ [v1.1 Content Pipeline & Branding](milestones/v1.1-ROADMAP.md) (Phases 12-15) — SHIPPED 2026-01-16
 - ✅ [v1.2 Content Architecture](milestones/v1.2-ROADMAP.md) (Phases 16-23) — SHIPPED 2026-01-18
-- 🚧 **v1.3 Wiki Content Transposition** — Phases 24-28 (in progress)
+- ✅ [v1.3 Wiki Content Transposition](milestones/v1.3-ROADMAP.md) (Phases 24-28) — SHIPPED 2026-01-19
 
 ## Completed Milestones
 
@@ -103,7 +103,8 @@ Transform the existing Next.js/Convex wiki foundation into a comprehensive inter
 
 </details>
 
-### 🚧 v1.3 Wiki Content Transposition (In Progress)
+<details>
+<summary>v1.3 Wiki Content Transposition (Phases 24-28) — SHIPPED 2026-01-19</summary>
 
 **Milestone Goal:** Transform raw markdown into properly contextualized wiki content that adheres to the style guide and makes sense within the app UI. Defer secondary features to a branch.
 
@@ -158,7 +159,7 @@ Plans:
 - [x] 27-07: Forms - Transpose 9 form documentation docs (Wave 2, parallel) — Complete 2026-01-19
 - [x] 27-08: Heavy Lift - Handle 4 large/problematic files (Wave 3) — Complete 2026-01-19
 
-#### Phase 28: Navigation Refinement
+#### Phase 28: Navigation Refinement — COMPLETE
 
 **Goal**: Replace type-based navigation with context-based organization (Events, Services, Operations)
 **Depends on**: Phase 27
@@ -167,8 +168,26 @@ Plans:
 
 Plans:
 - [x] 28-01: Backend Query + ContextCatalog Component (Wave 1) — Complete 2026-01-19
-- [ ] 28-02: Context Pages - Events, Services, Operations (Wave 2)
-- [ ] 28-03: Header Update + Visual Verification (Wave 3) [has checkpoint]
+- [x] 28-02: Context Pages - Events, Services, Operations (Wave 2) — Complete 2026-01-19
+- [x] 28-03: Header Update + Visual Verification (Wave 3) — Complete 2026-01-19
+
+**Total:** 18 plans
+
+**Delivered:**
+- Feature branch `feature/full-v1` preserving full feature set (messaging, forms builder, comments, etc.)
+- Auth toggle for Guest Mode development (NEXT_PUBLIC_ENABLE_AUTH=false)
+- Comprehensive content audit (111 source files cataloged)
+- Transposition methodology (TEMPLATES.md, METHODOLOGY.md)
+- 62+ documents transposed with proper frontmatter and content type tags
+- 6 index files removed, 4 heavy lift files handled
+- Context-based navigation system (Events, Services, Operations)
+- ContextCatalog component with type filter chips
+- Legacy route redirects for backwards compatibility
+
+**Known Issues:**
+- Document viewer has Clerk auth error when auth disabled (pre-existing from Phase 24)
+
+</details>
 
 ## Progress
 
@@ -178,4 +197,4 @@ Plans:
 | 25. Content Source Audit | v1.3 | 1/1 | Complete | 2026-01-18 |
 | 26. Transposition Process Design | v1.3 | 1/1 | Complete | 2026-01-18 |
 | 27. Wiki Content Transposition | v1.3 | 8/8 | Complete | 2026-01-19 |
-| 28. Navigation Refinement | v1.3 | 1/3 | In progress | - |
+| 28. Navigation Refinement | v1.3 | 3/3 | Complete | 2026-01-19 |
