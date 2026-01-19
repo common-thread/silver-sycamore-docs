@@ -1,3 +1,9 @@
+---
+title: Reception Hall Packages
+description: Package options for the main Reception Hall venue
+contentType: reference
+---
+
 # Reception Hall Shower/Party Packages
 
 **Rental Fees:** For 50+ guests minimum with 3 hour event time

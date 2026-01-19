@@ -1,3 +1,9 @@
+---
+title: Company Picnic Proposal Template
+description: Sample proposal for corporate picnic events
+contentType: reference
+---
+
 # Company Picnic Proposal
 
 | Field | Details |

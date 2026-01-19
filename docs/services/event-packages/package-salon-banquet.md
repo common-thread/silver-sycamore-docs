@@ -1,3 +1,9 @@
+---
+title: Salon Banquet Package
+description: Banquet package for the Saloon venue space
+contentType: reference
+---
+
 # School Banquet Package
 
 ## 3 Hour Event Banquet and Dance

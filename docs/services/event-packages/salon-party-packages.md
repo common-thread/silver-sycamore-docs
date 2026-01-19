@@ -1,3 +1,9 @@
+---
+title: Salon Party Packages
+description: Party packages for the Saloon venue space
+contentType: reference
+---
+
 # Silver Sycamore - Salon Party Packages
 
 **Source:** IMG_0407.jpg, IMG_0408.jpg, IMG_0409.jpg, IMG_0410.jpg
