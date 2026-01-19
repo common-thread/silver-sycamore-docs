@@ -1,21 +1,64 @@
-# Quinceanera Processional
+---
+title: Quinceañera Processional
+description: Order and positioning for quinceañera ceremony entrance
+contentType: procedure
+---
 
-**Processional**
+# Quinceañera Processional
 
-Quinceanera Grandparents:![Shape1](quinceanera-processional_html_cb192281.gif)
+Use this guide to plan and coordinate the quinceañera ceremony processional. The processional order determines who enters when and how they are positioned during the ceremony.
 
-Quinceanera Parents:![Shape2](quinceanera-processional_html_cb192281.gif)
+## Before the Ceremony
 
-Quinceanera Padrinos:![Shape3](quinceanera-processional_html_cb192281.gif)
+1. Confirm with the family whether damas and chambelanes will walk together or separately
+2. Review the layout diagram for positioning
+3. Gather names for each role below
 
-Quinceanera Siblings:![Shape4](quinceanera-processional_html_cb192281.gif)
+## Processional Order
 
-  
+Follow this sequence for the ceremony entrance.
 
-**Specify if** **Damas** **and** **Chammelans** **are walking together or separately. See Layout fo****r** **placement**
+### Family Entrance
 
-![](quinceanera-processional_html_82b2c718.png) **Damas** **Chambelans**
+1. **Quinceañera's Grandparents** - First to be seated or enter
+2. **Quinceañera's Parents** - Enter and take their position
+3. **Padrinos** (Godparents) - Enter and take their position
+4. **Quinceañera's Siblings** - Enter and take their positions
 
-1\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 1\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 2\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 2\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 3\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 3\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 4\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 4\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 5\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 5\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 6\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 6\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+### Court of Honor
 
-Quinceanera and Escort:![Shape5](quinceanera-processional_html_cb192281.gif)
+The damas (female attendants) and chambelanes (male attendants) enter next.
+
+5. **Dama/Chambelán 1** - First pair or individual
+6. **Dama/Chambelán 2** - Second pair or individual
+7. **Dama/Chambelán 3** - Third pair or individual
+8. **Dama/Chambelán 4** - Fourth pair or individual
+9. **Dama/Chambelán 5** - Fifth pair or individual
+10. **Dama/Chambelán 6** - Sixth pair or individual
+
+### The Quinceañera
+
+11. **Quinceañera with Escort** - The quinceañera enters last, typically escorted by her father or chambelán de honor
+
+## Positioning Notes
+
+- See the venue layout diagram for exact positioning
+- Damas typically stand on one side, chambelanes on the opposite
+- The Court of Honor frames the quinceañera during the ceremony
+- Padrinos are positioned near the quinceañera for traditional ceremonies
+
+## Traditional Ceremony Elements
+
+During the ceremony, the following items may be presented:
+
+- **La Última Muñeca** - The last doll, symbolizing childhood
+- **La Tiara** - The crown or tiara
+- **Los Zapatos** - The changing of shoes from flats to heels
+- **El Anillo** - The ring
+
+## Rehearsal Tips
+
+1. Practice the timing and spacing between each entrance
+2. Confirm music cues for each section
+3. Coordinate with the DJ for the waltz and other dances
+4. Designate someone to signal when each person should begin walking
