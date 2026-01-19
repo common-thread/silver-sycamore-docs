@@ -1,53 +1,60 @@
-# Silver Sycamore - Shower/Small Party Contract Package
-
-**Source:** IMG_0406.jpg
-
+---
+title: Shower Package Contract Terms
+description: Contract terms and pricing for shower event packages
+contentType: reference
 ---
 
-## Additional Items to Make Your Event Extra Special!
+# Shower Package Contract Terms
 
-### DJ - $900
+Contract terms and add-on pricing for shower and small party events at Silver Sycamore.
 
-### Uplighting
-- White, Pink, Red (Signature Color) - $1450
+## Add-On Services
 
-### Shower and Small Party Add-Ons
-- Mimosa Bar (100 Per Guests) - $100
-- Bellini Bar (100 Per Guests) - $100
-- Bloody Mary Bar - $600 (40/75) +$150 (100/150)
-- Shirley Temple (50) - $105, $155, $250
+### Entertainment
 
-### Linens
-- Specialty and custom linens are available upon request. Add $500+ for Linen Quotes.
+| Service | Price |
+|---------|-------|
+| DJ | $900 |
+| Uplighting (White, Pink, Red) | $1,450 |
 
-### Liquor Packages - $20 per person
-*(Minimum guest count for bar service)*
-- Includes 2 house wines, (the house has unlimited Champagne Toast)
+### Beverage Bars
 
-### Larger Parties
-- For 90+ we require that events be booked in our Salon or full venue spaces only. Minimum spend applies.
+| Bar Type | Price |
+|----------|-------|
+| Mimosa Bar (up to 100 guests) | $100 |
+| Bellini Bar (up to 100 guests) | $100 |
+| Bloody Mary Bar (40-75 guests) | $600 |
+| Bloody Mary Bar (100-150 guests) | $750 |
+| Shirley Temple (50 guests) | $105 / $155 / $250 |
 
----
+### Additional Options
+
+| Service | Price |
+|---------|-------|
+| Specialty/custom linens | $500+ (quote required) |
+| Liquor package | $20/person |
+
+**Liquor Package Includes:** 2 house wines, unlimited champagne toast
+
+## Event Guidelines
+
+- Events last 4 hours maximum
+- Silver Sycamore is hired and set up in advance
+- Kids table: $50 for every 10+ kids
+- For 90+ guests: Events must be booked in Salon or full venue spaces only (minimum spend applies)
 
 ## Contract Terms
 
 ### Photo Policy
-- Photo or Video footage of your event is prohibited per our policies and are for your private use.
 
-### Event Guidelines
-- Events last 4 hours max. Silver Sycamore is hired and set up in advance.
-- One table is $50 for every 10+ kids. Silver Sycamore's minimal standard covers the guest count.
+Photo or video footage of your event is prohibited per our policies and is for your private use only.
 
-### Final Payment
-- If paid by credit card, please confirm 4-6 weeks before the event. Cash payments are also accepted on site. There will be no money refunded after the deposit if the event is cancelled within 30 days.
+### Payment Terms
 
-### Agreement Statement
+- Credit card payments: Confirm 4-6 weeks before event
+- Cash payments: Accepted on site
+- Deposit: Non-refundable if event cancelled within 30 days
+
+### Agreement
+
 By signing this agreement, you have agreed to pay charges outlined on the Silver Sycamore Shower or Celebration Packages Terms and any deposit. We agree to honor the Silver Sycamore Shower or Celebration Package Terms and prices outlined by our requested menus, with exception of the allotted time period.
-
----
-
-### INITIAL: _______
-
----
-
-**Note:** Post-it note on binder section reads: "SHOWER CONTRACT 2 PAGES"
