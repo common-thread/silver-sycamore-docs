@@ -1,24 +1,43 @@
-# Pre Wedding Todo
+---
+title: Pre-Wedding Week Tasks
+description: Staff tasks to complete in the week leading up to a wedding event
+contentType: checklist
+---
 
-**To Do Before Wedding**
+# Pre-Wedding Week Tasks
 
-  
-  
+Complete all items during the week before the wedding. Use this checklist to ensure nothing is missed in final preparations.
 
-**For \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_on\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**
-- Set up 3 weeks out appointment
-- Check up to date on payments/ Send reminder email
-- Remind them to bring damage deposit
-- Make Kitchen Event Sheet
-- Give to Chef 10 days before event
-- Call all Vendors for set up time & final details
-- Fill out vendor payment & info sheet
-- Confirm with the Catering Manager that staff are lined up
-- Order alcohol as needed
-- Order sign if needed
-- Check all B&B stays on calendar & paid
-- Gather all decor from “Something Borrowed” room the day before event
-- Give Layout to Abel-remember tents if outside
-- Print timeline for DJ
-- Fill our “Bar Event Info” for bartender, if necessary
-- Print out Processional prior to rehearsal
+## Client Communication
+
+- [ ] Set up 3-weeks-out appointment
+- [ ] Check payment status and send reminder email
+- [ ] Remind client to bring damage deposit
+
+## Kitchen and Catering
+
+- [ ] Create kitchen event sheet
+- [ ] Submit event sheet to Chef 10 days before event
+- [ ] Confirm with Catering Manager that staff are lined up
+
+## Vendor Coordination
+
+- [ ] Call all vendors for setup time and final details
+- [ ] Fill out vendor payment and info sheet
+
+## Bar and Beverages
+
+- [ ] Order alcohol as needed
+- [ ] Fill out "Bar Event Info" sheet for bartender
+
+## Venue and Setup
+
+- [ ] Verify all B&B stays on calendar and paid
+- [ ] Order custom sign if needed
+- [ ] Gather all decor from "Something Borrowed" room (day before event)
+- [ ] Give layout to Abel (remember tents if outside)
+
+## Day-Of Preparation
+
+- [ ] Print timeline for DJ
+- [ ] Print processional prior to rehearsal
