@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 
 ## Current Position
 
-Phase: 27 of 28 (Wiki Content Transposition) — COMPLETE
-Plan: 8 of 8 complete (All waves complete)
-Status: Phase 27 complete, ready for Phase 28
-Last activity: 2026-01-19 — Completed 27-08-PLAN.md (heavy lift resolution)
+Phase: 28 of 28 (Navigation Refinement)
+Plan: 1 of 3 complete
+Status: In progress
+Last activity: 2026-01-19 — Completed 28-01-PLAN.md (backend query + ContextCatalog)
 
 Progress: ██████████ 100%
 
@@ -37,9 +37,10 @@ Progress: ██████████ 100%
 - Phase 25: 1 plan complete (Content Source Audit)
 - Phase 26: 1 plan complete (Transposition Process Design)
 - Phase 27: 8 of 8 plans complete (Wiki Content Transposition) — COMPLETE
+- Phase 28: 1 of 3 plans complete (Navigation Refinement)
 
 **Overall:**
-- 73 plans completed across 4 milestones
+- 74 plans completed across 4 milestones
 - 26 phases shipped (27 complete, Phase 22 deferred)
 
 ## Accumulated Context
@@ -149,21 +150,22 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Plan 27-08 complete (heavy lift resolution) - Phase 27 complete
-Resume file: .planning/phases/27-wiki-content-transposition/27-08-SUMMARY.md
-Next command: /gsd:plan-phase 28
+Stopped at: Plan 28-01 complete (backend query + ContextCatalog)
+Resume file: .planning/phases/28-navigation-refinement/28-01-SUMMARY.md
+Next command: /gsd:execute-plan 28-02
 
 ### Next Steps
 
-1. Plan Phase 28 (Navigation Refinement)
-2. Execute Phase 28 to complete v1.3 milestone
+1. Execute Plan 28-02 (Context Pages - Events, Services, Operations)
+2. Execute Plan 28-03 (Header Update + Visual Verification)
+3. Complete v1.3 milestone
 
-### Phase 27 Structure (Complete)
+### Phase 28 Structure
 
-8 plans in 3 waves:
-- **Wave 1 (parallel):** Plans 01-02 (cleanup + services frontmatter) ✅
-- **Wave 2 (parallel):** Plans 03-07 (procedures, references, checklists, forms) ✅
-- **Wave 3:** Plan 08 (heavy lift with decision checkpoint) ✅
+3 plans in 3 waves:
+- **Wave 1:** Plan 01 (backend query + ContextCatalog) ✅
+- **Wave 2:** Plan 02 (context pages)
+- **Wave 3:** Plan 03 (header update + visual verification) [has checkpoint]
 
 ### Phase Archives
 
