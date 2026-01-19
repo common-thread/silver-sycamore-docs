@@ -38,17 +38,17 @@ export default function DeliverablesPage() {
               </p>
             </CardContent>
             <CardFooter>
-              <Link href="/deliverables/recipe-app" className="btn btn-secondary btn-sm">
-                View Documentation
-              </Link>
               <a
                 href="https://pine-street-cafe-recipes.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-ghost btn-sm"
+                className="btn btn-primary btn-sm"
               >
                 Open App →
               </a>
+              <Link href="/deliverables/recipe-app" className="btn btn-ghost btn-sm">
+                Documentation
+              </Link>
             </CardFooter>
           </Card>
 
@@ -72,12 +72,12 @@ export default function DeliverablesPage() {
                 href="https://silver-sycamore-wedding.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary btn-sm"
+                className="btn btn-primary btn-sm"
               >
                 Open App →
               </a>
-              <Link href="/style-guide" className="btn btn-ghost btn-sm">
-                View Style Guide
+              <Link href="/deliverables/wedding-app" className="btn btn-ghost btn-sm">
+                Documentation
               </Link>
             </CardFooter>
           </Card>
@@ -98,8 +98,8 @@ export default function DeliverablesPage() {
               </p>
             </CardContent>
             <CardFooter>
-              <Link href="/style-guide" className="btn btn-secondary btn-sm">
-                View Brand Guide
+              <Link href="/style-guide" className="btn btn-primary btn-sm">
+                Style Guide
               </Link>
               <Link href="/components" className="btn btn-ghost btn-sm">
                 Component Library
