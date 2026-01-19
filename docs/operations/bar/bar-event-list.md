@@ -1,65 +1,55 @@
+---
+title: Bar Event List
+description: Bar service requirements and setup for events
+contentType: form
+---
+
 # Bar Event List
 
-**EVENT BAR INFO**
+> **Use the Form Builder:** This form is available in the Forms section for data collection. This document serves as field reference.
 
-  
+## Purpose
 
-Event Date: Time: Location:
+Document bar service requirements and track alcohol inventory for each event. Bartenders use this form to understand service type, track inventory, and maintain running tallies of drinks served.
 
-  
+## Event Information Fields
 
-Event: Guest #: Cash Bar or Open Bar
+| Field | Description | Required |
+|-------|-------------|----------|
+| Event Date | Date of the event | Yes |
+| Time | Event time | Yes |
+| Location | Event venue | Yes |
+| Event Name | Type or name of event | Yes |
+| Guest Count | Number of guests | Yes |
+| Bar Type | Cash Bar or Open Bar | Yes |
 
-  
+## Cash Bar Fields
 
-Cash Box Amount to Start With $
+| Field | Description | Required |
+|-------|-------------|----------|
+| Cash Box Starting Amount | Starting cash for making change | If Cash Bar |
+| Number of Prepaid Drinks | Quantity of prepaid drink tickets | No |
+| Paying One Tab | If client is covering a single tab | No |
 
-  
+## Beverage Inventory Fields
 
-\# of Prepaid Drinks: OR Paying one tab?
+| Field | Description | Required |
+|-------|-------------|----------|
+| Beer | Beer selections (default: Bud Light and Miller Lite) | Yes |
+| Wine | Wine selections (default: Moscato, Sycamore Lane Chardonnay, Merlot, Cabernet) | Yes |
+| Liquor | Liquor selections | If applicable |
+| Set-Ups | Mixers and garnishes | Yes |
+| Specialty Drinks | Event-specific cocktails | No |
 
-  
+## Tracking Fields
 
-  
+| Field | Description | Required |
+|-------|-------------|----------|
+| Running Tally | Count of all beer and wine sold | Yes |
 
-**(SAVE ALL CAPS/CORKS)**
+## Notes
 
-Beer: **Bud Light and Miller Lite**
-
-  
-
-  
-
-Wine:**Moscato, Sycamore Lane Chardonnay, Sycamore Lane Merlot, Sycamore Lane Cabernet**
-
-  
-
-  
-
-Liquor:
-
-  
-
-  
-
-  
-
-Set-Ups:
-
-  
-
-  
-
-Specialty Drinks:
-
-  
-
-  
-
-  
-
-  
-
-**\* YOU MUST KEEP A TALLY OF ALL BEER AND WINE SOLD. USE BACK PAGE \***
-
-**RUNNING TALLY**
+- Save all bottle caps and wine corks for inventory reconciliation
+- Maintain running tally of all beer and wine sold on back page
+- Default beer selections are Bud Light and Miller Lite unless specified
+- Default wine selections are Moscato and Sycamore Lane varietals unless specified

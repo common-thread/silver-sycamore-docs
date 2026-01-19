@@ -1,95 +1,56 @@
-# Music List
+---
+title: Music Selection Form
+description: Client music preferences and playlist requirements
+contentType: form
+---
 
-Ceremony Music
+# Music Selection Form
 
-  
+> **Use the Form Builder:** This form is available in the Forms section for data collection. This document serves as field reference.
 
-Guest arriving music- country, Jazz, R&B etc.
+## Purpose
 
-  
+Collect client music preferences for ceremony and reception. This form ensures the DJ or music vendor has all song selections and timing information for key moments throughout the event.
 
-Bridal Party Entrance Song -
+## Ceremony Music Fields
 
-  
+| Field | Description | Required |
+|-------|-------------|----------|
+| Guest Arriving Music | Genre or style for guest seating (country, jazz, R&B, etc.) | Yes |
+| Bridal Party Entrance Song | Song for wedding party entrance | Yes |
+| Bride Entrance Song | Song for bride's walk down the aisle | Yes |
+| Exit Song | Song after "I do" | Yes |
 
-Bride Entrance Song-
+## Reception Music Fields
 
-  
+| Field | Description | Required |
+|-------|-------------|----------|
+| Bridal Party Grand Entrance Song | Song for wedding party introduction | Yes |
+| Bridal Party Names | Names for introduction (if needed) | No |
+| Newlyweds Grand Entrance Song | Song for couple's first entrance | Yes |
+| First Dance Song | Song for couple's first dance | Yes |
+| Father Daughter Song | Song for father-daughter dance | No |
+| Mother Son Song | Song for mother-son dance | No |
+| Bouquet Toss Song | Song during bouquet toss | No |
+| Retrieve Garter Song | Song while removing garter | No |
+| Garter Toss Song | Song during garter toss | No |
+| Cake Cutting Song | Song during cake cutting | No |
+| Grand Exit Song | Song for sparkler exit | No |
 
-Exit Song - (after you two say I do) -
+## General Music Preferences
 
-  
+| Field | Description | Required |
+|-------|-------------|----------|
+| Preferred Artists | Artists to feature throughout the night | Yes |
+| Preferred Songs | Specific songs to include | No |
+| Reception Feel | Desired vibe (country, pop, alternative, etc.) | Yes |
+| Dinner Music Style | Music for dinner service | Yes |
+| Music to Avoid | Genres or songs not to play | No |
+| Traditional/Family Music | Special requests from family | No |
+| Guest Requests | Allow DJ to take guest requests? | Yes |
 
-  
+## Notes
 
-Reception Music
-
-  
-
-Bridal Party Grand Entrance Song:
-
-& names of bridal party if needed introduction
-
-  
-
-Newly Weds Grand Entrance Song-
-
-  
-
-First Dance Song-
-
-  
-
-Father Daughter Song-
-
-  
-
-Mother Son Song-
-
-  
-
-Bouquet Toss Song-
-
-  
-
-Retrieve Garter Song-
-
-  
-
-Garter Toss Song-
-
-  
-
-Cake Cutting Song-
-
-  
-
-Grand Exit Song (Sparkler Grand Exit)-
-
-  
-
-Also would need to know a couple of music artist that you guys would like to be played and/or songs that you would like to be played throughout the night.
-
-  
-
-What type of feel did you want for the reception & during dinner? Country, pop, alternative, etc..
-
-  
-
-Is there any type of music that you don’t want played?
-
-  
-
-Is there any traditional music that the family would like to hear?
-
-  
-
-Do you want me to take special request songs from the guest?
-
-  
-
-What type of music do you want played while everyone is eating?
-
-  
-
-Also the itinerary with time schedule can be either emailed of printed for the DJ to obtain. To better ensure the flow of the wedding is perfect
+- Provide completed form to DJ along with event timeline
+- Itinerary with time schedule should be emailed or printed for DJ
+- Discuss specific song versions if applicable (original vs. cover)
