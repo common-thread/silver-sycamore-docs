@@ -1,32 +1,39 @@
-# Overview
-
+---
+title: Alcohol Pull Tracker
+description: Inventory tracking sheet for bar stock
+contentType: reference
 ---
 
-# Overview
+# Alcohol Pull Tracker
 
-[Sheet1](#table0)  
-[Copy of Sheet1](#table1)  
+Use this sheet to track bar inventory for each event. Record items pulled from storage, sold during the event, and what needs restocking.
 
----
+## Tracking Template
 
-# Sheet 1: _Sheet1_
+| Beverage | Pulled | Sold | Restock |
+|----------|--------|------|---------|
+| Miller Lite | | | |
+| Bud Light | | | |
+| Coors Light | | | |
+| Michelob | | | |
+| Modelo Oro | | | |
+| Dos XX | | | |
+| Moscato | | | |
+| Chardonnay | | | |
+| Merlot | | | |
+| Cabernet | | | |
+| Champagne | | | |
 
-|  |  | Miller Lite | Bud Light | Coors Light | Michelob | Modelo Oro | Dos xx | Moscato | Chardonnay | Merlot | Cabernet |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Event Date: | 11/14/25 |  |  |  |  |  |  |  |  |  |  |
-|  | Pulled: |  |  |  |  |  |  |  |  |  |  |
-|  | Sold: |  |  |  |  |  |  |  |  |  |  |
-|  | Restock: |  |  |  |  |  |  |  |  |  |  |
-| HALL |  |  |  |  |  |  |  |  |  |  |  |
+## Usage
 
----
+1. **Before Event** - Fill in "Pulled" column with quantities taken from storage
+2. **After Event** - Count remaining inventory to calculate "Sold" amounts
+3. **Restock** - Note quantities needed to replenish storage
 
-# Sheet 2: _Copy of Sheet1_
+## Notes
 
-| Stephanie Shower |  |  |  |  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-|  |  |  | Miller lite | Coors lite | Chardonnay | Cabernet | Merlot | Moscato | Champagne |
-| Event Date: | 3/2/24 |  |  |  |  |  |  |  |  |
-|  | Pulled: |  |  |  |  |  |  |  |  |
-|  | Sold: |  |  |  |  |  |  |  |  |
-|  | Restock: |  |  |  |  |  |  |  |  |
+- Event Date: ____________
+- Venue: ____________ (Hall, Saloon, etc.)
+- Staff: ____________
+
+Adjust beverage list based on event package and client preferences. Some events may include additional specialty items not listed above.
