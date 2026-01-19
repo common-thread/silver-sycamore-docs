@@ -1,36 +1,24 @@
-# Round Tables
+---
+title: Town Round Tables Layout
+description: Table arrangement for Town venue space with round table configuration
+contentType: reference
+---
 
-![Shape 6](round-tables_html_d4fca67e.gif)
+# Town Round Tables Layout
 
-Chapel
+Floor plan for the Town venue featuring round tables arranged around a sweetheart table.
 
-  
+## Layout Elements
 
-  
+| Element | Location/Details |
+|---------|------------------|
+| Chapel | Adjacent ceremony space |
+| Sweetheart Table | Central front position |
+| Cake Table | Near sweetheart table |
 
-![Shape 4](round-tables_html_ba7f1ac9.gif)  
-![Shape 3](round-tables_html_3af856ae.gif)
+## Seating Arrangement
 
-Sweetheart
+- **Multiple round tables** arranged throughout the space
+- **Sweetheart table** for the couple in a central position
 
-![Shape 4](round-tables_html_ba7f1ac9.gif)  
-![Shape 2](round-tables_html_cf91451c.gif)  
-
-![Shape 4](round-tables_html_ba7f1ac9.gif)  
-  
-
-![Shape 4](round-tables_html_7b12a8dd.gif)
-
-Cake
-
-  
-
-  
-
-  
-
-  
-
-![Shape 4](round-tables_html_ba7f1ac9.gif) ![Shape 5](round-tables_html_7a696926.gif)  
- ![Shape 4](round-tables_html_ba7f1ac9.gif) ![Shape 4](round-tables_html_cf91451c.gif)  
-![Shape 4](round-tables_html_ba7f1ac9.gif)
+This layout provides flexibility for various guest counts while maintaining an intimate feel with the sweetheart table as the focal point.

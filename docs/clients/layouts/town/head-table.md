@@ -1,49 +1,24 @@
-# Head Table
+---
+title: Town Head Table Layout
+description: Table arrangement for Town venue space with head table configuration
+contentType: reference
+---
 
-Chapel
+# Town Head Table Layout
 
-![Shape 2](head-table_html_f3386b95.gif)
+Floor plan for the Town venue featuring a head table arrangement adjacent to the Chapel and Saloon spaces.
 
-![Shape 31](head-table_html_55a67c21.gif)  
-![Shape 2](head-table_html_2973eda1.gif)  
+## Layout Elements
 
-Saloon
+| Element | Location/Details |
+|---------|------------------|
+| Chapel | Adjacent ceremony space |
+| Saloon | Connected venue space |
+| Cake Table | Designated spot |
 
-![Shape 30](head-table_html_3d763c28.gif)
+## Seating Arrangement
 
-Cake
+- **Head table configuration** with individual place settings marked
+- **16 seats** arranged along the head table (8 per side)
 
-![Shape3](head-table_html_3b9ac81f.gif)  
-![Shape1](head-table_html_69d7e69e.gif)  
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
-
-x
+This layout works well for wedding parties who want to sit together at a single long table facing their guests.
