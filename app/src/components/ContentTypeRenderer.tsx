@@ -16,13 +16,11 @@ interface ContentTypeRendererProps {
 }
 
 /**
- * ContentTypeRenderer - renders all document types via DocumentViewer.
+ * ContentTypeRenderer - renders documents via DocumentViewer.
  *
- * CONNECTOR: Interactive content rendering - restore from feature/full-v1
- * Previously routed procedure -> ProcedureSteps, checklist -> ChecklistView, form -> FormLink
+ * The contentType field is preserved for future content-aware rendering.
+ * Currently uses pattern-based detection for timelines and checklists.
  */
 export function ContentTypeRenderer({ document, fileUrl }: ContentTypeRendererProps) {
-  // All content types now render as standard documents
-  // The contentType field is preserved for future re-enablement
   return <DocumentViewer document={document} fileUrl={fileUrl} />;
 }

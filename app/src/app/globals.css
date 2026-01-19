@@ -472,6 +472,133 @@ a:hover {
 }
 
 /* ============================================================================
+   CONTENT TYPES — Checklists & Timelines
+   ============================================================================ */
+
+/* Checklist items - styled checkbox with task text */
+.prose .checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  list-style: none;
+  margin-left: calc(-1 * var(--space-6));
+}
+
+.prose .checklist-item .checkbox-indicator {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  border: 2px solid var(--color-champagne-dark);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-white);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+
+.prose .checklist-item[data-checked="true"] .checkbox-indicator {
+  background: var(--color-champagne);
+  border-color: var(--color-champagne-dark);
+  position: relative;
+}
+
+.prose .checklist-item[data-checked="true"] .checkbox-indicator::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--color-ink);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.prose .checklist-item .task-text {
+  flex: 1;
+  line-height: var(--leading-relaxed);
+}
+
+.prose .checklist-item[data-checked="true"] .task-text {
+  color: var(--color-ink-muted);
+  text-decoration: line-through;
+}
+
+/* Timeline entries - time badge with event description */
+.prose .timeline-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-champagne);
+  margin-left: var(--space-2);
+  margin-bottom: var(--space-2);
+  list-style: none;
+  position: relative;
+}
+
+.prose .timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: var(--space-5);
+  width: 8px;
+  height: 8px;
+  background: var(--color-champagne);
+  border-radius: 50%;
+}
+
+.prose .timeline-entry .time-badge {
+  flex-shrink: 0;
+  min-width: 5.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-champagne-deep);
+  background: var(--color-champagne-light);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.prose .timeline-entry .event-text {
+  flex: 1;
+  color: var(--color-ink);
+  line-height: var(--leading-relaxed);
+}
+
+/* Section headers with visual separator - enhanced h2 */
+.prose .section-header {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-semibold);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-6);
+  padding-top: var(--space-8);
+  letter-spacing: var(--tracking-snug);
+}
+
+.prose .section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: var(--color-champagne);
+  border-radius: 2px;
+}
+
+/* Remove default list styling for special items */
+.prose ul:has(.checklist-item),
+.prose ul:has(.timeline-entry),
+.prose ol:has(.timeline-entry) {
+  padding-left: 0;
+  list-style: none;
+}
+
+/* ============================================================================
    TABLES — Archive Styling
    ============================================================================ */
 

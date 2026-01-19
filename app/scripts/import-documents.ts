@@ -24,6 +24,40 @@ function slugify(name: string): string {
     .replace(/[^a-z0-9-]/g, "");
 }
 
+interface ParsedMarkdown {
+  content: string;  // Clean content without frontmatter
+  frontmatter: {
+    title?: string;
+    description?: string;
+    contentType?: string;
+  };
+}
+
+function parseMarkdownWithFrontmatter(raw: string): ParsedMarkdown {
+  if (!raw.startsWith("---")) {
+    return { content: raw, frontmatter: {} };
+  }
+
+  const endIndex = raw.indexOf("---", 3);
+  if (endIndex === -1) {
+    return { content: raw, frontmatter: {} };
+  }
+
+  const yamlBlock = raw.slice(3, endIndex).trim();
+  const content = raw.slice(endIndex + 3).trim();
+
+  // Parse simple YAML key: value pairs
+  const frontmatter: Record<string, string> = {};
+  for (const line of yamlBlock.split("\n")) {
+    const match = line.match(/^(\w+):\s*(.+)$/);
+    if (match) {
+      frontmatter[match[1]] = match[2];
+    }
+  }
+
+  return { content, frontmatter };
+}
+
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -226,8 +260,8 @@ async function importDocuments() {
           continue;
         }
 
-        // Get content type from mapping
-        const contentType = getContentType(lookupKey);
+        // Get content type from mapping (may be overridden by frontmatter)
+        let contentType = getContentType(lookupKey);
 
         // Try to get metadata from parsed index.md
         const parsedMeta = indexMetadata.get(lookupKey);
@@ -237,16 +271,37 @@ async function importDocuments() {
         const subcategory = relativePath ? relativePath.split("/").pop() : undefined;
 
         let content = "";
-        let title: string;
+        let title: string | undefined;
         let description: string | undefined;
-        let metadataSource: string;
+        let metadataSource: string = "heuristic";
+        let frontmatterContentType: ContentType | undefined;
 
         if (ext === "md") {
-          content = fs.readFileSync(fullPath, "utf-8");
+          const rawContent = fs.readFileSync(fullPath, "utf-8");
+          const parsed = parseMarkdownWithFrontmatter(rawContent);
+          content = parsed.content;  // Clean content without frontmatter
+
+          // Track frontmatter values for potential use
+          if (parsed.frontmatter.contentType) {
+            frontmatterContentType = parsed.frontmatter.contentType as ContentType;
+          }
+
+          // Use frontmatter for metadata if no index.md parsed metadata exists
+          if (!parsedMeta && parsed.frontmatter.title) {
+            title = parsed.frontmatter.title;
+            description = parsed.frontmatter.description || extractDescription(content, subcategory);
+            metadataSource = "frontmatter";
+            usedParsedMetadata++;  // Count frontmatter as "parsed" for stats
+          }
         } else {
           // For binary files, store metadata placeholder
           const stats = fs.statSync(fullPath);
           content = `[Binary file: ${entry.name}]\nSize: ${(stats.size / 1024).toFixed(1)} KB\nType: ${ext.toUpperCase()}`;
+        }
+
+        // Override contentType with frontmatter value if present
+        if (frontmatterContentType) {
+          contentType = frontmatterContentType;
         }
 
         if (parsedMeta) {
@@ -255,20 +310,23 @@ async function importDocuments() {
           description = parsedMeta.description;
           metadataSource = "parsed";
           usedParsedMetadata++;
-        } else {
-          // Fallback to heuristics for files not in index.md
+        }
+
+        // Fallback to heuristics if no title from frontmatter or parsedMeta
+        if (!title) {
           title = titleFromFilename(entry.name);
 
           if (ext === "md") {
-            description = extractDescription(content, subcategory);
+            description = description || extractDescription(content, subcategory);
           } else {
             description = (subcategory && defaultDescriptions[subcategory])
               ? defaultDescriptions[subcategory]
               : `${ext.toUpperCase()} document`;
           }
 
-          metadataSource = "heuristic";
-          usedHeuristicMetadata++;
+          if (metadataSource === "heuristic") {
+            usedHeuristicMetadata++;
+          }
         }
 
         const slug = slugify(filenameWithoutExt);
