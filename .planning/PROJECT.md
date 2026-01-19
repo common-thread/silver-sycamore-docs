@@ -10,9 +10,10 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 
 ## Current State
 
-**Version:** v1.0 MVP (shipped 2026-01-16)
-**Codebase:** ~78,000 LOC TypeScript, Next.js 15 + Convex
-**Features:** Wiki, auth, search, versioning, workspaces, sharing, comments, suggestions, messaging, forms
+**Version:** v1.3 Wiki Content Transposition (shipped 2026-01-19)
+**Codebase:** ~72,000 LOC TypeScript, Next.js 15 + Convex (reduced from v1.0 via feature extraction)
+**Features (main branch):** Wiki with context-based navigation, auth toggle, search, versioning, workspaces
+**Features (feature/full-v1 branch):** Full v1.0 features including messaging, forms builder, comments, suggestions
 
 ## Requirements
 
@@ -39,15 +40,16 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 
 ### Active
 
-**Content Pipeline (v1.1)**
-- [ ] Deterministic content seeding from markdown source of truth
-- [ ] Parse index.md tables for document titles/descriptions
-- [ ] Remove technical indicators from document viewer (file type labels, emojis)
-- [ ] Markdown source of truth: `/docs/` → deterministic parser → Convex
-
-**Polish**
-- [ ] Custom dropdowns to replace native HTML select elements
+**Future Enhancements**
 - [ ] Binary file preview (docx, xlsx, pdf viewers)
+- [ ] Deployment to production hosting
+- [ ] User acceptance testing with staff
+
+**Feature Restoration (from feature/full-v1)**
+- [ ] Messaging channels and DMs
+- [ ] Forms builder
+- [ ] Comments system
+- [ ] Suggestion workflow
 
 ### Out of Scope
 
@@ -93,8 +95,11 @@ Staff use it daily as the single go-to place for procedures, knowledge, and team
 | Channel types as string union | Extensibility for future types | ✓ Good |
 | Cursor-based message pagination | Efficient infinite scroll | ✓ Good |
 | Form ownership model | Clear accountability | ✓ Good |
-| Heuristic description extraction | Quick implementation | ⚠️ Revisit — need deterministic parsing |
-| Parse index.md for metadata | Deterministic, matches Jekyll | — Pending (v1.1) |
+| Heuristic description extraction | Quick implementation | ✓ Good — replaced by index.md parser in v1.1 |
+| Parse index.md for metadata | Deterministic, matches Jekyll | ✓ Good — v1.1 |
+| Context-based navigation | Matches user mental model (Events/Services/Operations) | ✓ Good — v1.3 |
+| Feature branch for full v1 | Preserve features while simplifying main | ✓ Good — v1.3 |
+| Content type templates | Consistent transposition methodology | ✓ Good — v1.3 |
 
 ---
-*Last updated: 2026-01-16 after v1.0 milestone*
+*Last updated: 2026-01-19 after v1.3 milestone*

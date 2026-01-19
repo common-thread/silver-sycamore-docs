@@ -1,5 +1,31 @@
 # Project Milestones: Silver Sycamore Staff Hub
 
+## v1.3 Wiki Content Transposition (Shipped: 2026-01-19)
+
+**Delivered:** Full wiki content transposition from raw markdown to properly contextualized app content, with context-based navigation replacing type-based organization.
+
+**Phases completed:** 24-28 (18 plans total)
+
+**Key accomplishments:**
+- Feature branch `feature/full-v1` preserving full feature set (messaging, forms builder, comments)
+- Auth toggle for Guest Mode development (NEXT_PUBLIC_ENABLE_AUTH / BYPASS_AUTH)
+- Comprehensive content audit (111 source files cataloged, 62 prioritized)
+- Transposition methodology with template specs for 5 content types
+- 62+ documents transposed with proper frontmatter and content type tags
+- Context-based navigation system (Events, Services, Operations) replacing type-based
+
+**Stats:**
+- 162 files modified
+- +9,219 / -14,642 lines (net reduction of 5,423 lines)
+- 5 phases, 18 plans
+- 1 day from start to ship
+
+**Git range:** `8fdfd02` → `b9aa394`
+
+**What's next:** TBD — wiki content is complete, consider deployment or additional features
+
+---
+
 ## v1.2 Content Architecture (Shipped: 2026-01-18)
 
 **Delivered:** First-principles content architecture refactoring — semantic content types, purpose-based navigation, dynamic content system, and visual polish.

@@ -191,10 +191,13 @@ Plans:
 
 ## Progress
 
-| Phase | Milestone | Plans | Status | Completed |
-|-------|-----------|-------|--------|-----------|
-| 24. Feature Branch Extraction | v1.3 | 5/5 | Complete | 2026-01-18 |
-| 25. Content Source Audit | v1.3 | 1/1 | Complete | 2026-01-18 |
-| 26. Transposition Process Design | v1.3 | 1/1 | Complete | 2026-01-18 |
-| 27. Wiki Content Transposition | v1.3 | 8/8 | Complete | 2026-01-19 |
-| 28. Navigation Refinement | v1.3 | 3/3 | Complete | 2026-01-19 |
+All phases complete. Phase archives available in `.planning/milestones/`.
+
+| Milestone | Phases | Plans | Status |
+|-----------|--------|-------|--------|
+| v1.0 MVP | 1-11 | 37 | Shipped 2026-01-16 |
+| v1.1 Content Pipeline & Branding | 12-15 | 5 | Shipped 2026-01-16 |
+| v1.2 Content Architecture | 16-23 | 23 | Shipped 2026-01-18 |
+| v1.3 Wiki Content Transposition | 24-28 | 18 | Shipped 2026-01-19 |
+
+**Total:** 28 phases, 83 plans shipped
