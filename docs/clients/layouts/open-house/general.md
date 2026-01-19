@@ -1,29 +1,27 @@
-# General
+---
+title: Open House General Setup
+description: Standard vendor and setup information for open house events
+contentType: reference
+---
 
-![Shape 9](general_html_196eba27.gif) ![Shape 7](general_html_59bdc911.gif)
+# Open House General Setup
 
-Bar
+General floor plan for open house events showing vendor table placement and service areas.
 
-![Shape 6](general_html_c1dd1ef0.gif)
+## Layout Elements
 
-Buffet Counter
+| Element | Location |
+|---------|----------|
+| Bar | Service area |
+| Buffet Counter | Food service |
+| Cake Display | Designated spot |
 
-![Shape 8](general_html_57f93112.gif)
+## Table Arrangement
 
-Cake
+| Table Size | Quantity | Total Seats |
+|------------|----------|-------------|
+| 6-top | 6 | 36 |
 
-![Shape5](general_html_7dfcf629.gif)
+- **Total capacity:** 36 guests
 
-6
-
-6
-
-6
-
-![Shape1](general_html_d57f55af.gif)
-
-6
-
-6
-
-6
+This layout serves as the baseline configuration for open house events, with modifications made based on specific vendor needs.

@@ -1,48 +1,31 @@
-# Standard
+---
+title: Tea Room Standard Layout
+description: Standard table arrangement for Tea Room venue space
+contentType: reference
+---
 
-Tea Room Standard Layout
+# Tea Room Standard Layout
 
-  
-  
+Standard floor plan for the Tea Room venue showing table configurations around fixed elements.
 
-![Shape1](standard_html_8eef25a0.gif)
+## Fixed Elements
 
-Storage
+| Element | Location |
+|---------|----------|
+| Storage | Back area |
+| Restroom | Side access |
+| Kitchen and Office | Service area |
 
-Restroom
+## Seating Arrangement
 
-Kitchen and Office
+Mixed seating configuration with various table sizes:
 
-  
-  
+| Table Size | Quantity |
+|------------|----------|
+| 2-top (2 guests) | 6 |
+| 4-top (4 guests) | 5 |
+| 6-top (6 guests) | 1 |
 
-  
-  
+- **Total capacity:** Approximately 38 guests
 
- ![Shape4](standard_html_76c29617.gif)![Shape5](standard_html_d1b31d60.gif) ![Shape6](standard_html_75c6e5f7.gif) ![Shape3](standard_html_5a058d9.gif) ![Shape2](standard_html_47f17673.gif)
-
-4x
-
-4x
-
-4x
-
-4x
-
-2x
-
-2x
-
-4x
-
-6x
-
-2x
-
-2x
-
-2x
-
-2x
-
-2x
+This layout is designed for everyday tea service and small private events.

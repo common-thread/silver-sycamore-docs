@@ -1,27 +1,27 @@
-# Saloon
+---
+title: Open House Saloon Setup
+description: Vendor and setup information for open house events in the Saloon
+contentType: reference
+---
 
-![Shape 4](saloon_html_ed4e08a5.gif)  
+# Open House Saloon Setup
 
-Front Doors
+Floor plan for open house events in the Saloon showing vendor booth placement.
 
-![Shape 5](saloon_html_4a0d32b7.gif)  
+## Venue Elements
 
-Al’s Formal Wear
+| Element | Location |
+|---------|----------|
+| Front Doors | Main entry |
 
-![Shape 2](saloon_html_a54a5e8f.gif)  
+## Vendor Directory
 
-Davenport Events and Rental
+| Vendor | Service |
+|--------|---------|
+| Al's Formal Wear | Formalwear/tuxedos |
+| Davenport Events and Rental | Event rentals |
+| Small Bites | Catering/appetizers |
+| H&H Photo Booth | Photo booth services |
+| His and Hers | TBD |
 
-![Shape 8](saloon_html_d23476bc.gif)  
-
-Small Bites
-
-![Shape 3](saloon_html_50004b33.gif)  
-
-H&H Photo Booth
-
-![Shape 6](saloon_html_78f34dfa.gif)  
-
-His and Hers
-
-![Shape 7](saloon_html_8aa6d1d2.gif)
+This smaller space is ideal for vendors requiring a more intimate setting or one-on-one consultations with couples.

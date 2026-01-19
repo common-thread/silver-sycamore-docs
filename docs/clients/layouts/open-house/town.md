@@ -1,45 +1,28 @@
-# Town
+---
+title: Open House Town Setup
+description: Vendor and setup information for open house events in the Town venue
+contentType: reference
+---
 
-Chapel
+# Open House Town Setup
 
-![Shape 2](town_html_abf80f.gif)
+Floor plan for open house events in the Town venue showing table placement and vendor areas.
 
-![Shape 5](town_html_122fee9b.gif)  
+## Venue Elements
 
-6
+| Element | Location |
+|---------|----------|
+| Chapel | Adjacent ceremony space |
+| Sign-in Table | Near entrance |
+| Cake Display | Designated spot |
+| SH Table (Sweetheart) | 6 ft table |
+| Dance Floor Space | Center of room |
 
-![Shape 3](town_html_4530fb47.gif)
+## Table Arrangement
 
-SH Table - 6ft
+| Table Type | Size | Quantity |
+|------------|------|----------|
+| Round tables | 6-top | 3 |
+| Long tables | 6 ft | 4 |
 
-![Shape 7](town_html_7d6f124.gif)  
-
-Cake
-
-![Shape2](town_html_a52337bf.gif)  
-
-6 ft
-
-6 ft
-
-![Shape 4](town_html_a739d001.gif)  
-
-Sign-In Table
-
-![Shape 5](town_html_122fee9b.gif)  
-
-6
-
-![Shape1](town_html_a52337bf.gif)  
-
-6 ft
-
-6 ft
-
-![Shape 6](town_html_2a509e8a.gif)  
-
-Dance Floor Space
-
-![Shape 5](town_html_122fee9b.gif)  
-
-6
+This layout showcases how the Town venue can be configured for receptions while allowing vendors to display their services throughout the space.

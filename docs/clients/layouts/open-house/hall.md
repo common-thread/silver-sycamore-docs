@@ -1,69 +1,36 @@
-# Hall
+---
+title: Open House Hall Setup
+description: Vendor and setup information for open house events in the Reception Hall
+contentType: reference
+---
 
-![Shape 5](hall_html_59bdc911.gif)
+# Open House Hall Setup
 
-Bar
+Floor plan for open house events in the Reception Hall showing vendor booth placement.
 
-![Shape 3](hall_html_c1dd1ef0.gif)
+## Venue Elements
 
-Buffet Counter
+| Element | Location |
+|---------|----------|
+| Bar | Service area |
+| Buffet Counter | Food service |
+| Cake Display | Designated spot |
+| Front Doors | Main entry |
+| SS (Silver Sycamore) | Host station |
 
-![Shape 9](hall_html_4c0f905c.gif)  
+## Vendor Directory
 
-Simple Beauty
+| Vendor | Service |
+|--------|---------|
+| Simple Beauty | Beauty services |
+| Chatman Destination | Travel/honeymoon planning |
+| Majestic Linens | Linen rentals |
+| Belvieu Bridal | Bridal attire |
+| DJ Cidney Ray | DJ/entertainment |
+| Flowers by Rickea | Floral arrangements |
+| Cakes by Jula | Wedding cakes |
+| Dream Photo and Video | Photography/videography |
 
-![Shape 15](hall_html_57f93112.gif)
+## Table Arrangement
 
-Cake
-
-![Shape 8](hall_html_2a42df41.gif)  
-
-Chatman Destination
-
-![Shape3](hall_html_7dfcf629.gif)
-
-6
-
-6
-
-6
-
-![Shape 17](hall_html_e58d128c.gif)  
-
-SS
-
-![Shape 7](hall_html_9d87f9ac.gif)  
-
-Majestic Linens
-
-![Shape1](hall_html_d57f55af.gif)  
-
-6
-
-6
-
-6
-
-![Shape 6](hall_html_ef2f076b.gif)  
-
-Belvieu Bridal
-
-![Shape 14](hall_html_6047692f.gif) ![Shape 16](hall_html_e705842f.gif)  
-
-Dj Cidney Ray
-
-![Shape 2](hall_html_58d7d56d.gif)  
-
-Flowers by Rickea
-
-![Shape 4](hall_html_17e6554f.gif)  
-
-Cakes by Jula
-
-![Shape 4](hall_html_abf98a5b.gif)  
-
-Front Doors
-
-![Shape 4](hall_html_37eb5a3e.gif)  
-
-Dream Photo and Video
+- **6-top tables** for guest seating: 6 tables, 36 total seats

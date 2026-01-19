@@ -1,15 +1,23 @@
-# Valentines Day
+---
+title: Tea Room Valentine's Day Layout
+description: Special event table arrangement for Tea Room Valentine's Day service
+contentType: reference
+---
 
-![Shape1](valentines-day_html_e15a3979.gif) ![Shape 2](valentines-day_html_a187ddde.gif) ![Shape 3](valentines-day_html_510edf48.gif)
+# Tea Room Valentine's Day Layout
 
-Storage
+Special floor plan for the Tea Room venue configured for Valentine's Day service with bar setup.
 
-![Shape 2](valentines-day_html_8d971112.gif) ![Shape 2](valentines-day_html_1e996712.gif) ![Shape 3](valentines-day_html_510edf48.gif)
+## Layout Elements
 
-Restroom
+| Element | Location |
+|---------|----------|
+| Storage | Back area |
+| Restroom | Side access |
+| Bar | Designated service area |
 
-![Shape 2](valentines-day_html_dd828037.gif) ![Shape 3](valentines-day_html_510edf48.gif)
+## Seating Configuration
 
-Bar
+This layout is optimized for romantic couples dining with smaller table arrangements throughout the space.
 
-![Shape 2](valentines-day_html_1e996712.gif) ![Shape 2](valentines-day_html_1e996712.gif) ![Shape 2](valentines-day_html_a187ddde.gif) ![Shape 4](valentines-day_html_d127be11.gif) ![Shape 2](valentines-day_html_a187ddde.gif) ![Shape 2](valentines-day_html_1e996712.gif) ![Shape 2](valentines-day_html_1e996712.gif)
+The bar area is activated for this event to offer specialty drinks and champagne service.
