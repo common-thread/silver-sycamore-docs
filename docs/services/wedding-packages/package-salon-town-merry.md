@@ -1,3 +1,9 @@
+---
+title: Salon, Town & Merry Package
+description: Combined venue package for multi-space events
+contentType: reference
+---
+
 # Saloon and Town Micro Wedding Package
 
 One hour at the bridal cottage and jail to get ready for your special day

@@ -1,3 +1,9 @@
+---
+title: Dream Wedding Package
+description: Premium all-inclusive wedding package with full venue access
+contentType: reference
+---
+
 # Silver Sycamore
 *"A True Southern Experience"*
 

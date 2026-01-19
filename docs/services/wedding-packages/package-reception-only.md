@@ -1,3 +1,9 @@
+---
+title: Reception Only Package
+description: Venue package for reception-only events (ceremony elsewhere)
+contentType: reference
+---
+
 # Silver Sycamore
 *"A True Southern Experience"*
 

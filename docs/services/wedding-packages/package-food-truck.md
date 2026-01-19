@@ -1,3 +1,9 @@
+---
+title: Food Truck Wedding Package
+description: Casual wedding package featuring food truck catering
+contentType: reference
+---
+
 # Food Truck Fun Wedding Package
 ## 4 hour Ceremony and Reception
 

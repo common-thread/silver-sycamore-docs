@@ -1,3 +1,9 @@
+---
+title: Simple Elegance Package
+description: Intimate wedding package for smaller celebrations
+contentType: reference
+---
+
 # Simple Elegance Wedding Package
 ## 3 1/2 hour Ceremony and Reception
 
