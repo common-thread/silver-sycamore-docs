@@ -1,3 +1,9 @@
+---
+title: Off-Premise Catering Menu
+description: Catering options for events at external venues
+contentType: reference
+---
+
 # Off Premise Menu
 
 ![](off-premise-menu_html_b95f0c87.jpg)

@@ -1,3 +1,9 @@
+---
+title: Catering Menu
+description: Full catering menu with pricing for on-site events
+contentType: reference
+---
+
 # Silver Sycamore Weddings Catering Menu
 
 *Extracted from binder photos IMG_0446-0451 on 2026-01-05*
