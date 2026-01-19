@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 ## Current Position
 
 Phase: 27 of 28 (Wiki Content Transposition) — IN PROGRESS
-Plan: 1 of 8 complete
-Status: Wave 1 in progress
-Last activity: 2026-01-19 — Completed 27-01-PLAN.md (cleanup)
+Plan: 2 of 8 complete
+Status: Wave 1 complete, ready for Wave 2
+Last activity: 2026-01-19 — Completed 27-02-PLAN.md (services frontmatter)
 
-Progress: █░░░░░░░░░ 12%
+Progress: ██░░░░░░░░ 25%
 
 ## Performance Metrics
 
@@ -146,12 +146,12 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 27-01-PLAN.md (cleanup)
-Resume file: None
+Stopped at: Wave 1 complete (plans 01-02), ready for Wave 2
+Resume file: .planning/phases/27-wiki-content-transposition/.continue-here.md
 
 ### Next Steps
 
-1. Continue Phase 27 execution (Plans 02-08 remaining)
+1. Resume Phase 27 execution with `/gsd:execute-phase 27` (Wave 2: plans 03-07)
 2. Reference TEMPLATES.md and METHODOLOGY.md during transposition
 
 ### Phase 27 Structure
