@@ -1,102 +1,100 @@
+---
+title: HR Forms
+description: Time-off requests and employee documentation forms
+contentType: form
+---
+
 # HR Forms
 
-Human resources forms used at Silver Sycamore.
+> **Use the Form Builder:** These forms are available in the Forms section for data collection. This document serves as field reference.
 
-**Source:** Client operational documents (2026-01-12)
+## Purpose
+
+Standardized human resources forms for employee time-off requests and disciplinary documentation. These forms create a paper trail for HR compliance and ensure consistent handling of employee matters.
 
 ## Employee Time-Off Request Form
 
-**Purpose:** Standardized process for employees to request time off
+Use this form when an employee needs to request time off from work.
 
-### Form Fields
+### Fields
 
-- Today's Date
-- Employee's Name
-- Time-Off Request: Days or Hours (checkbox)
-- Beginning on: [Date]
-- Ending on: [Date]
+| Field | Description | Required |
+|-------|-------------|----------|
+| Today's Date | Date the request is submitted | Yes |
+| Employee's Name | Full name of requesting employee | Yes |
+| Time-Off Type | Days or Hours (checkbox selection) | Yes |
+| Beginning Date | Start date of time off | Yes |
+| Ending Date | End date of time off | Yes |
 
-### Reason for Request (checkboxes)
+### Reason Options
 
-- Vacation
-- Personal Leave
-- Funeral / Bereavement
-- Jury Duty
-- Family Reasons
-- Medical Leave
-- To Vote
-- Other: [specify]
+| Reason | Description |
+|--------|-------------|
+| Vacation | Planned vacation time |
+| Personal Leave | Personal matters |
+| Funeral/Bereavement | Death in family |
+| Jury Duty | Court-mandated jury service |
+| Family Reasons | Family emergency or obligation |
+| Medical Leave | Health-related absence |
+| To Vote | Election day voting |
+| Other | Specify in notes |
 
-### Employee Section
+### Signature Fields
 
-Employee acknowledgment: "I understand that this request is subject to approval by my employer."
-
-- Employee's Signature
-- Date
-
-### Employer's Decision
-
-- Approved / Rejected (checkbox)
-- Employer's Signature
-- Date
-- Print Name
-
----
+| Field | Description | Required |
+|-------|-------------|----------|
+| Employee Signature | Employee acknowledgment of approval requirement | Yes |
+| Employee Date | Date employee signed | Yes |
+| Approved/Rejected | Manager decision | Yes |
+| Employer Signature | Manager authorization | Yes |
+| Employer Date | Date of decision | Yes |
+| Employer Print Name | Manager's printed name | Yes |
 
 ## Employee Warning Form
 
-**Purpose:** Documentation of disciplinary issues and corrective actions
+Use this form to document disciplinary issues and required corrective actions.
 
-### Form Fields
+### Fields
 
-- Employee's Name
-- Manager/Supervisor's Name
-- Date
-- If previous discipline meeting occurred, enter date
+| Field | Description | Required |
+|-------|-------------|----------|
+| Employee's Name | Name of employee receiving warning | Yes |
+| Manager/Supervisor's Name | Issuing manager's name | Yes |
+| Date | Date of warning | Yes |
+| Previous Discipline Date | Date of prior discipline meeting, if applicable | No |
 
-### Reasons for Warning (checkboxes)
+### Warning Reason Options
 
-- Absenteeism
-- Failure to follow procedure
-- Rudeness
-- Tardiness
-- Failure to meet performance
-- Refusal to work overtime
-- Policy violation
-- Fighting
-- Language
-- Other: [specify]
+| Reason | Description |
+|--------|-------------|
+| Absenteeism | Excessive unexcused absences |
+| Tardiness | Repeated late arrivals |
+| Failure to follow procedure | Not following established protocols |
+| Failure to meet performance | Below performance standards |
+| Rudeness | Unprofessional behavior |
+| Refusal to work overtime | Declining required overtime |
+| Policy violation | Breaking company policies |
+| Fighting | Physical altercation |
+| Language | Inappropriate language |
+| Other | Specify in details |
 
-### Details Section
+### Documentation Fields
 
-"Details of actions that warranted this warning:" [free text area]
+| Field | Description | Required |
+|-------|-------------|----------|
+| Details | Description of actions warranting the warning | Yes |
+| Corrective Action | Required changes and consequences of non-compliance | Yes |
+| Employee Signature | Employee acknowledgment of discussion | Yes |
+| Employee Print Name | Employee's printed name | Yes |
+| Employee Date | Date employee signed | Yes |
+| Supervisor Signature | Supervisor authorization | Yes |
+| Supervisor Print Name | Supervisor's printed name | Yes |
+| Supervisor Date | Date supervisor signed | Yes |
 
-### Corrective Action Required
-
-"The following immediate and sustained corrective action must be taken by the employee. Failure to do so will result in further disciplinary action up to and including termination:" [free text area]
-
-### Note
-
-"Your signature on this form means that we have discussed the situation. It doesn't necessarily mean you agree that the infraction occurred."
-
-### Signatures
-
-**Employee:**
-- Employee's Signature
-- Print Name
-- Date
-
-**Supervisor:**
-- Supervisor's Signature
-- Print Name
-- Date
-
----
-
-## Implementation Notes
+## Notes
 
 - Forms should be printed and kept in HR files
 - Time-off requests require manager approval before taking leave
-- Warning forms document disciplinary process
-- Signatures acknowledge discussion, not necessarily agreement
+- Warning forms document the disciplinary process
+- Employee signature acknowledges the discussion occurred, not necessarily agreement with the infraction
 - Forms create paper trail for HR compliance
