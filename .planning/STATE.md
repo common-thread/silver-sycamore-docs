@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 
 ## Current Position
 
-Phase: 26 of 28 (Transposition Process Design) — COMPLETE
-Plan: 1 of 1 complete
-Status: Phase complete, ready for Phase 27
-Last activity: 2026-01-18 — Phase 26 plan 01 executed
+Phase: 27 of 28 (Wiki Content Transposition) — PLANNED
+Plan: 0 of 8 complete
+Status: Phase planned, ready for execution
+Last activity: 2026-01-18 — Phase 27 plans created
 
-Progress: ██████████ 100%
+Progress: ░░░░░░░░░░ 0%
 
 ## Performance Metrics
 
@@ -36,6 +36,7 @@ Progress: ██████████ 100%
 - Phase 24: 5 plans complete (Feature Branch Extraction)
 - Phase 25: 1 plan complete (Content Source Audit)
 - Phase 26: 1 plan complete (Transposition Process Design)
+- Phase 27: 8 plans planned (Wiki Content Transposition) — ready for execution
 
 **Overall:**
 - 72 plans completed across 4 milestones
@@ -145,13 +146,20 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: Phase 26 complete
+Stopped at: Phase 27 planned
 Resume file: None
 
 ### Next Steps
 
-1. Run `/gsd:plan-phase 27` to plan Wiki Content Transposition
-2. Review TEMPLATES.md and METHODOLOGY.md before execution
+1. Run `/gsd:execute-phase 27` to execute Wiki Content Transposition
+2. Reference TEMPLATES.md and METHODOLOGY.md during execution
+
+### Phase 27 Structure
+
+8 plans in 3 waves:
+- **Wave 1 (parallel):** Plans 01-02 (cleanup + services frontmatter)
+- **Wave 2 (parallel):** Plans 03-07 (procedures, references, checklists, forms)
+- **Wave 3:** Plan 08 (heavy lift with decision checkpoint)
 
 ### Phase Archives
 

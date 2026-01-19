@@ -139,17 +139,24 @@ Plans:
 **Plans**: 1 in 1 wave
 
 Plans:
-- [ ] 26-01: Transposition Process Design (Wave 1) [has checkpoint]
+- [x] 26-01: Transposition Process Design (Wave 1) [has checkpoint] — Complete 2026-01-18
 
 #### Phase 27: Content Transposition Execution
 
-**Goal**: Apply transposition methodology to all wiki documents (scope determined by audit)
+**Goal**: Apply transposition methodology to all wiki documents (62 docs + 7 removals)
 **Depends on**: Phase 26
 **Research**: Unlikely (applying established methodology)
-**Plans**: TBD
+**Plans**: 8 in 3 waves
 
 Plans:
-- [ ] 27-01: TBD
+- [ ] 27-01: Cleanup - Remove index files and recipe-app README (Wave 1)
+- [ ] 27-02: Services Frontmatter - Add metadata to 13 services docs (Wave 1, parallel)
+- [ ] 27-03: Procedures - Transpose 9 procedure docs + 2 reclassifications (Wave 2)
+- [ ] 27-04: Client References - Transpose 18 layouts and timelines (Wave 2, parallel)
+- [ ] 27-05: Operations References - Transpose 5 operations docs + 2 reclassifications (Wave 2, parallel)
+- [ ] 27-06: Checklists - Transpose 7 checklist docs + 1 reclassification (Wave 2, parallel)
+- [ ] 27-07: Forms - Transpose 9 form documentation docs (Wave 2, parallel)
+- [ ] 27-08: Heavy Lift - Handle 4 large/problematic files (Wave 3) [has checkpoint]
 
 #### Phase 28: Navigation & Catalog Refinement
 
@@ -167,6 +174,6 @@ Plans:
 |-------|-----------|-------|--------|-----------|
 | 24. Feature Branch Extraction | v1.3 | 5/5 | Complete | 2026-01-18 |
 | 25. Content Source Audit | v1.3 | 1/1 | Complete | 2026-01-18 |
-| 26. Transposition Process Design | v1.3 | 0/1 | Planned | - |
-| 27. Content Transposition Execution | v1.3 | 0/? | Not started | - |
+| 26. Transposition Process Design | v1.3 | 1/1 | Complete | 2026-01-18 |
+| 27. Content Transposition Execution | v1.3 | 0/8 | Planned | - |
 | 28. Navigation & Catalog Refinement | v1.3 | 0/? | Not started | - |
