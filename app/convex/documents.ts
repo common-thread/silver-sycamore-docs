@@ -191,6 +191,44 @@ export const byContentType = query({
   },
 });
 
+// Query documents by multiple categories with optional contentType filter
+export const byCategories = query({
+  args: {
+    categories: v.array(v.string()),
+    contentType: v.optional(
+      v.union(
+        v.literal("procedure"),
+        v.literal("reference"),
+        v.literal("form"),
+        v.literal("checklist"),
+        v.literal("guide")
+      )
+    ),
+  },
+  handler: async (ctx, args) => {
+    // Return empty array if no categories provided
+    if (args.categories.length === 0) {
+      return [];
+    }
+
+    // Fetch all documents and filter client-side
+    // (appropriate for ~70 docs, avoids adding new index)
+    const allDocs = await ctx.db.query("documents").collect();
+
+    return allDocs.filter((doc) => {
+      // Must be in one of the requested categories
+      if (!args.categories.includes(doc.category)) {
+        return false;
+      }
+      // If contentType filter provided, must match
+      if (args.contentType && doc.contentType !== args.contentType) {
+        return false;
+      }
+      return true;
+    });
+  },
+});
+
 // Get content type counts for QuickActionNav
 export const contentTypeCounts = query({
   args: {},
