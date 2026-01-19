@@ -1,29 +1,42 @@
-# Reset Checklist
+---
+title: Hall Reset Checklist
+description: Inventory and reset items for the Hall venue space after events
+contentType: checklist
+---
 
-![Shape 9](reset-checklist_html_196eba27.gif) ![Shape 7](reset-checklist_html_59bdc911.gif)
+# Hall Reset Checklist
 
-Bar
+Use this checklist after events to verify all items are returned and the Hall is reset to standard configuration.
 
-![Shape 6](reset-checklist_html_c1dd1ef0.gif)
+## Bar Area
 
-Buffet Counter
+- [ ] Bar counter cleared and wiped down
+- [ ] Bar stools returned to position (qty: 10)
+- [ ] Glassware collected and cleaned
+- [ ] Bar equipment stored properly
 
-![Shape 8](reset-checklist_html_57f93112.gif)
+## Buffet Counter
 
-Cake
+- [ ] Buffet counter cleared and cleaned
+- [ ] Chafing dishes collected (qty: 10)
+- [ ] Serving utensils returned to kitchen
+- [ ] Linens removed for laundering
 
-![Shape5](reset-checklist_html_d49610a2.gif)
+## Cake Station
 
-10
+- [ ] Cake table cleared
+- [ ] Cake stand cleaned and stored
+- [ ] Cake knife and server collected
 
-10
+## Tables and Chairs
 
-10
+- [ ] Round tables reset to standard positions (qty: 10)
+- [ ] Chairs stacked or returned to storage
+- [ ] Table linens removed
 
-![Shape1](reset-checklist_html_1a421d64.gif)
+## General Reset
 
-10
-
-10
-
-10
+- [ ] Floors swept and mopped
+- [ ] Decorations removed
+- [ ] Trash collected and disposed
+- [ ] Lights and A/V equipment powered down

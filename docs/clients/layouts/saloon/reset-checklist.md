@@ -1,11 +1,34 @@
-# Reset Checklist
+---
+title: Saloon Reset Checklist
+description: Inventory and reset items for the Saloon venue space after events
+contentType: checklist
+---
 
-![Shape 4](reset-checklist_html_3c9ae931.gif)  
+# Saloon Reset Checklist
 
-  
+Use this checklist after events to verify all items are returned and the Saloon is reset to standard configuration.
 
-![Shape 7](reset-checklist_html_7d502e50.gif)  
-![Shape 6](reset-checklist_html_1bff738c.gif)  
-![Shape 5](reset-checklist_html_ef83dfa.gif)  
-![Shape 2](reset-checklist_html_88af0836.gif)  
-![Shape 3](reset-checklist_html_4e87327b.gif)
+## Furniture
+
+- [ ] Tables returned to standard positions
+- [ ] Chairs stacked or returned to storage
+- [ ] Lounge furniture arranged properly
+
+## Bar Area
+
+- [ ] Bar counter cleared and wiped down
+- [ ] Glassware collected and cleaned
+- [ ] Bar equipment stored properly
+
+## Linens and Decor
+
+- [ ] Table linens removed for laundering
+- [ ] Decorations removed and stored
+- [ ] Centerpieces returned to storage
+
+## General Reset
+
+- [ ] Floors swept and mopped
+- [ ] Trash collected and disposed
+- [ ] Lights and A/V equipment powered down
+- [ ] Doors locked and secured
