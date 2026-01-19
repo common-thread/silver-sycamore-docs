@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function GuidesPage() {
-  redirect("/style-guides");
+  redirect("/style-guide");
 }

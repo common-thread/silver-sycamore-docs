@@ -13,7 +13,7 @@ const navItems = [
   { href: "/events", label: "Events" },
   { href: "/services", label: "Services" },
   { href: "/operations", label: "Operations" },
-  { href: "/style-guides", label: "Style Guides" },
+  { href: "/style-guide", label: "Style Guide" },
   // CONNECTOR: Messages, Forms, Activity routes - restore from feature/full-v1
   { href: "/workspace", label: "My Workspace" },
 ];

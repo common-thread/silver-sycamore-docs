@@ -1,9 +1,8 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
+import { Suspense } from "react";
 import { useQuery } from "convex/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { SuggestionForm } from "@/components/SuggestionForm";
@@ -11,8 +10,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { ContentBox } from "@/components/ContentBox";
 import Link from "next/link";
 
-export default function NewSuggestionPage() {
-  const { isSignedIn, isLoaded } = useAuth();
+function NewSuggestionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const documentId = searchParams.get("documentId") as Id<"documents"> | null;
@@ -22,35 +20,6 @@ export default function NewSuggestionPage() {
     api.documents.byId,
     documentId ? { id: documentId } : "skip"
   );
-
-  // Redirect unauthenticated users
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push("/signin");
-    }
-  }, [isLoaded, isSignedIn, router]);
-
-  // Show loading while checking auth
-  if (!isLoaded || !isSignedIn) {
-    return (
-      <>
-        <Breadcrumb />
-        <ContentBox>
-          <div
-            style={{
-              padding: "2rem",
-              textAlign: "center",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.875rem",
-              color: "var(--color-ink-muted)",
-            }}
-          >
-            Loading...
-          </div>
-        </ContentBox>
-      </>
-    );
-  }
 
   // No document ID provided
   if (!documentId) {
@@ -251,5 +220,34 @@ export default function NewSuggestionPage() {
         <SuggestionForm documentId={documentId} onSave={handleSave} />
       </ContentBox>
     </>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <>
+      <Breadcrumb />
+      <ContentBox>
+        <div
+          style={{
+            padding: "2rem",
+            textAlign: "center",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.875rem",
+            color: "var(--color-ink-muted)",
+          }}
+        >
+          Loading...
+        </div>
+      </ContentBox>
+    </>
+  );
+}
+
+export default function NewSuggestionPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <NewSuggestionContent />
+    </Suspense>
   );
 }

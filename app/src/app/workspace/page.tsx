@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -8,7 +9,7 @@ import { PersonalDocList } from "@/components/PersonalDocList";
 import { useState } from "react";
 import { Id } from "../../../convex/_generated/dataModel";
 
-export default function WorkspacePage() {
+function WorkspaceContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const folderId = searchParams.get("folder") as Id<"personalFolders"> | null;
@@ -182,5 +183,37 @@ export default function WorkspacePage() {
 
       {/* CONNECTOR: ActivitySidebar - restore from feature/full-v1 */}
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div
+      style={{
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+        padding: "1.5rem",
+      }}
+    >
+      <div
+        style={{
+          padding: "2rem",
+          textAlign: "center",
+          fontFamily: "var(--font-body)",
+          fontSize: "0.875rem",
+          color: "var(--color-ink-muted)",
+        }}
+      >
+        Loading...
+      </div>
+    </div>
+  );
+}
+
+export default function WorkspacePage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <WorkspaceContent />
+    </Suspense>
   );
 }

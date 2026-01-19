@@ -1,46 +1,11 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { SuggestionList } from "@/components/SuggestionList";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ContentBox } from "@/components/ContentBox";
 import Link from "next/link";
 
 export default function SuggestionsPage() {
-  const { isSignedIn, isLoaded } = useAuth();
-  const router = useRouter();
-
-  // Redirect unauthenticated users
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push("/signin");
-    }
-  }, [isLoaded, isSignedIn, router]);
-
-  // Show loading while checking auth
-  if (!isLoaded || !isSignedIn) {
-    return (
-      <>
-        <Breadcrumb />
-        <ContentBox>
-          <div
-            style={{
-              padding: "2rem",
-              textAlign: "center",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.875rem",
-              color: "var(--color-ink-muted)",
-            }}
-          >
-            Loading...
-          </div>
-        </ContentBox>
-      </>
-    );
-  }
-
   return (
     <>
       <Breadcrumb />

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { FolderTree } from "@/components/FolderTree";
@@ -8,6 +9,28 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+function FolderTreeWithSuspense({ folders }: { folders: { _id: string; name: string; parentId?: string }[] }) {
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            padding: "1rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.8125rem",
+            color: "var(--color-ink-muted)",
+            textAlign: "center",
+          }}
+        >
+          Loading folders...
+        </div>
+      }
+    >
+      <FolderTree folders={folders as any} />
+    </Suspense>
+  );
+}
 
 export default function WorkspaceLayout({
   children,
@@ -165,7 +188,7 @@ export default function WorkspaceLayout({
           )}
 
           {/* Folder tree */}
-          <FolderTree folders={folders ?? []} />
+          <FolderTreeWithSuspense folders={folders ?? []} />
 
           {/* Shared with me link */}
           <Link
