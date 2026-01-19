@@ -158,15 +158,17 @@ Plans:
 - [x] 27-07: Forms - Transpose 9 form documentation docs (Wave 2, parallel) — Complete 2026-01-19
 - [x] 27-08: Heavy Lift - Handle 4 large/problematic files (Wave 3) — Complete 2026-01-19
 
-#### Phase 28: Navigation & Catalog Refinement
+#### Phase 28: Navigation Refinement
 
-**Goal**: Restructure wiki navigation based on transposed content, remove duplication, fix illogical organization
+**Goal**: Replace type-based navigation with context-based organization (Events, Services, Operations)
 **Depends on**: Phase 27
 **Research**: Unlikely (internal restructuring)
-**Plans**: TBD
+**Plans**: 3 in 3 waves
 
 Plans:
-- [ ] 28-01: TBD
+- [ ] 28-01: Backend Query + ContextCatalog Component (Wave 1)
+- [ ] 28-02: Context Pages - Events, Services, Operations (Wave 2)
+- [ ] 28-03: Header Update + Visual Verification (Wave 3) [has checkpoint]
 
 ## Progress
 
@@ -176,4 +178,4 @@ Plans:
 | 25. Content Source Audit | v1.3 | 1/1 | Complete | 2026-01-18 |
 | 26. Transposition Process Design | v1.3 | 1/1 | Complete | 2026-01-18 |
 | 27. Wiki Content Transposition | v1.3 | 8/8 | Complete | 2026-01-19 |
-| 28. Navigation & Catalog Refinement | v1.3 | 0/? | Not started | - |
+| 28. Navigation Refinement | v1.3 | 0/3 | Not started | - |
