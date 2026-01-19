@@ -1,3 +1,9 @@
+---
+title: Wedding Add-On Services
+description: Optional enhancements and upgrades for wedding packages
+contentType: reference
+---
+
 # Make Your Wedding Extra Special
 
 ## Queso Fountain - $7.50/per person minimum 100

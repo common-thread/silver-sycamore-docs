@@ -1,3 +1,9 @@
+---
+title: Salon Party Packages
+description: Package options for salon parties and small events
+contentType: reference
+---
+
 # Saloon Small Party and Bridal and Baby Showers
 
 **Rental Fees:** For 30+ guests minimum with 3 hour event time
