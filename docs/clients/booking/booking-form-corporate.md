@@ -1,49 +1,51 @@
-# Silver Sycamore - Corporate Event Booking Form
-
-**Source:** IMG_0411.jpg
-
+---
+title: Corporate Event Booking Form
+description: Booking information for corporate events and meetings
+contentType: form
 ---
 
-## CORPORATE EVENT BOOKING FORM
+# Corporate Event Booking Form
 
-| Field | Value |
-|-------|-------|
-| Responsible Party | _________________ |
-| Company | _________________ |
-| Address | _________________ |
-| City | _________________ |
-| Cell Ph. | _________________ |
-| Email | _________________ |
+> **Use the Form Builder:** This form is available in the Forms section for data collection. This document serves as field reference.
 
----
+## Purpose
 
-### Payment Tracking Table
+Collect contact and event information for corporate event reservations. This form captures company details, event specifics, and payment information for business events.
 
-| Payment Date | By | Amount |
-|--------------|-----|--------|
-| | | |
-| | | |
-| | | |
+## Contact Information Fields
 
----
+| Field | Description | Required |
+|-------|-------------|----------|
+| Responsible Party | Person booking the event | Yes |
+| Company | Company or organization name | Yes |
+| Address | Company mailing address | Yes |
+| City | City location | Yes |
+| Cell Ph. | Mobile phone number | Yes |
+| Email | Business email address | Yes |
 
-### Event Details
+## Event Details Fields
 
-| Field | Value |
-|-------|-------|
-| Date of Event | _________________ |
-| Time | _________________ |
-| Type of Event | _________________ |
-| Guest Count | _________________ |
-| Deposit Paid | _________________ |
-| Event Location | _________________ |
+| Field | Description | Required |
+|-------|-------------|----------|
+| Date of Event | When the event will take place | Yes |
+| Time | Event start time | Yes |
+| Type of Event | Meeting, party, retreat, etc. | Yes |
+| Guest Count | Expected number of attendees | Yes |
+| Event Location | Venue selection | Yes |
 
----
+## Payment Fields
 
-### Additional Comments
+| Field | Description | Required |
+|-------|-------------|----------|
+| Deposit Paid | Amount of deposit received | Yes |
+| Payment Tracking | Date, collected by, and amount for each payment | Yes |
 
-_________________________________________________________________
+## Additional Comments
 
----
+Free text area for any special requests, notes, or requirements not covered by the standard fields.
 
-**Note:** Post-it note on binder section reads: "* Corporate events get venue contracts. Same as wedding"
+## Notes
+
+- Corporate events receive venue contracts (same as weddings)
+- Event types include company meetings, holiday parties, corporate retreats, and business gatherings
+- Deposits secure the reservation date

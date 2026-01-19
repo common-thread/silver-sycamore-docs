@@ -1,55 +1,56 @@
-# Silver Sycamore - Shower/Small Party Booking Form
-
-**Source:** IMG_0403.jpg, IMG_0404.jpg (blank template)
-
+---
+title: Shower Booking Form
+description: Booking information for shower and small party events
+contentType: form
 ---
 
-## SHOWER/SMALL PARTY BOOKING FORM
+# Shower Booking Form
 
-| Field | Value |
-|-------|-------|
-| Name of Responsible Party | _________________ |
-| Guest(s) of Honor | _________________ |
-| Address | _________________ |
-| City and Zip Code | _________________ |
-| Daytime Phone | _________________ |
-| Cell Phone | _________________ |
-| Email | _________________ |
+> **Use the Form Builder:** This form is available in the Forms section for data collection. This document serves as field reference.
 
----
+## Purpose
 
-### Payment Tracking Table
+Collect contact and event information for shower and small party reservations. This form captures the responsible party details, event specifics, and payment information for non-wedding events.
 
-| Payment Date | By | Amount |
-|--------------|-----|--------|
-| | | |
-| | | |
-| | | |
-| | | |
+## Contact Information Fields
 
----
+| Field | Description | Required |
+|-------|-------------|----------|
+| Name of Responsible Party | Person booking the event | Yes |
+| Guest(s) of Honor | Who the event is celebrating | Yes |
+| Address | Mailing address | Yes |
+| City and Zip Code | Location details | Yes |
+| Daytime Phone | Primary phone number | Yes |
+| Cell Phone | Mobile number | No |
+| Email | Email address | Yes |
 
-### Event Details
+## Event Details Fields
 
-| Field | Value |
-|-------|-------|
-| Date of Event | _________________ |
-| Time | _________________ |
-| Type of Party | _________________ |
-| Guest Count | _________________ |
-| Deposit Paid | _________________ |
-| Date | _________________ |
-| Event Location | _________________ |
-| Cake Info | _________________ |
-| Bar Info | _________________ |
-| Menu | _________________ |
+| Field | Description | Required |
+|-------|-------------|----------|
+| Date of Event | When the event will take place | Yes |
+| Time | Event start time | Yes |
+| Type of Party | Shower, birthday, etc. | Yes |
+| Guest Count | Expected number of guests | Yes |
+| Event Location | Venue selection | Yes |
+| Cake Info | Cake vendor or details | No |
+| Bar Info | Bar service requirements | No |
+| Menu | Menu selection | No |
 
----
+## Payment Fields
 
-### Additional Comments
+| Field | Description | Required |
+|-------|-------------|----------|
+| Deposit Paid | Amount of deposit received | Yes |
+| Date | Date deposit was paid | Yes |
+| Payment Tracking | Date, collected by, and amount for each payment | Yes |
 
-_________________________________________________________________
+## Additional Comments
 
----
+Free text area for any special requests, notes, or requirements not covered by the standard fields.
 
-**Note:** This is a blank booking form template used for shower and small party reservations.
+## Notes
+
+- This form is used for all shower and small party bookings
+- Event types include baby showers, bridal showers, birthday parties, and similar small gatherings
+- Deposits secure the reservation date
