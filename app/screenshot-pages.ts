@@ -33,7 +33,12 @@ const STATIC_ROUTES = [
   { path: '/suggestions/review', name: 'suggestions-review' },
   { path: '/clients', name: 'clients' },
   { path: '/deliverables', name: 'deliverables' },
+  { path: '/deliverables/recipe-app', name: 'deliverables-recipe-app' },
+  { path: '/deliverables/wedding-app', name: 'deliverables-wedding-app' },
   { path: '/staff', name: 'staff' },
+  { path: '/brand', name: 'brand' },
+  { path: '/brand/recipe-app', name: 'brand-recipe-app' },
+  { path: '/brand/wedding-app', name: 'brand-wedding-app' },
 ];
 
 interface PageResult {
