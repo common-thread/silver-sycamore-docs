@@ -1,27 +1,25 @@
-# Rounds 20
+---
+title: Saloon Rounds 20 Layout
+description: Saloon floor plan with round tables for intimate gatherings up to 20 guests
+contentType: reference
+---
 
-![Shape1](rounds-20_html_8b6e90a0.gif)
+# Saloon Rounds 20 Layout
 
-Buffet Table
+Floor plan for the Saloon with round table configuration for intimate gatherings of up to 20 guests.
 
-![Shape 10](rounds-20_html_53648a68.gif)  
+## Layout Elements
 
-Front Doors
+| Element | Location/Details |
+|---------|------------------|
+| Front Doors | Main entry |
+| Buffet Table | Along wall |
+| Cake Table | Designated spot |
+| Sweetheart Table | Central front position |
 
-![Shape 8](rounds-20_html_16599388.gif)
+## Seating Arrangement
 
-10
+- **2 round tables** at 10 guests each
+- **Total capacity:** 20 guests
 
-![Shape 9](rounds-20_html_40210df3.gif)  
-
-10
-
-![Shape 13](rounds-20_html_b0ce9e80.gif)
-
-Cake
-
-![Shape 12](rounds-20_html_3482e67f.gif)
-
-Sweetheart
-
-![Shape 11](rounds-20_html_d43dfeb0.gif)
+This layout is ideal for small wedding receptions, rehearsal dinners, or intimate celebrations.

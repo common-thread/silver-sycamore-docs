@@ -1,47 +1,30 @@
-# Rounds 120
+---
+title: Hall Rounds 120 Layout
+description: Reception Hall floor plan with round tables for 120 guests
+contentType: reference
+---
 
-Sweetheart Table
+# Hall Rounds 120 Layout
 
-Cake Table
+Floor plan for the Reception Hall with round table configuration for up to 120 guests.
 
-Sign-In Table
+## Layout Elements
 
-Front Doors
+| Element | Location/Details |
+|---------|------------------|
+| Sweetheart Table | Front of room |
+| Cake Table | Near sweetheart table |
+| Sign-in Table | Near entrance |
+| Front Doors | Main entry |
+| Bar | Along wall |
+| Buffet Counter | Service area |
 
-  
+## Seating Arrangement
 
-![Shape1](rounds-120_html_1ca74de8.gif) ![Shape 9](rounds-120_html_59bdc911.gif)
+- **12 round tables** (mix of 8 and 10 guests each)
+- **Total capacity:** 118-120 guests
 
-Bar
-
-![Shape 8](rounds-120_html_c1dd1ef0.gif)
-
-Buffet Counter
-
-![Shape8](rounds-120_html_732c8318.gif)
-
-8
-
-10
-
-10
-
-10
-
-10
-
-10
-
-![Shape2](rounds-120_html_40254f0.gif)
-
-10
-
-10
-
-10
-
-10
-
-10
-
-10
+| Row | Tables | Guests per Table |
+|-----|--------|-----------------|
+| Front row | 1 table of 8, 5 tables of 10 | 58 total |
+| Back row | 6 tables of 10 | 60 total |
