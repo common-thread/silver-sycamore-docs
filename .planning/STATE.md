@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-18)
 
 ## Current Position
 
-Phase: 27 of 28 (Wiki Content Transposition) — IN PROGRESS
-Plan: 7 of 8 complete (Wave 2 complete)
-Status: Plans 01-07 complete, ready for Wave 3
-Last activity: 2026-01-19 — Completed 27-07-PLAN.md (forms)
+Phase: 27 of 28 (Wiki Content Transposition) — COMPLETE
+Plan: 8 of 8 complete (All waves complete)
+Status: Phase 27 complete, ready for Phase 28
+Last activity: 2026-01-19 — Completed 27-08-PLAN.md (heavy lift resolution)
 
-Progress: ████████░░ 88%
+Progress: ██████████ 100%
 
 ## Performance Metrics
 
@@ -36,11 +36,11 @@ Progress: ████████░░ 88%
 - Phase 24: 5 plans complete (Feature Branch Extraction)
 - Phase 25: 1 plan complete (Content Source Audit)
 - Phase 26: 1 plan complete (Transposition Process Design)
-- Phase 27: 7 of 8 plans complete (Wiki Content Transposition) — Wave 2 complete
+- Phase 27: 8 of 8 plans complete (Wiki Content Transposition) — COMPLETE
 
 **Overall:**
-- 72 plans completed across 4 milestones
-- 25 phases shipped
+- 73 plans completed across 4 milestones
+- 26 phases shipped (27 complete, Phase 22 deferred)
 
 ## Accumulated Context
 
@@ -54,13 +54,28 @@ Progress: ████████░░ 88%
 1. ✅ Extract deferred features to branch (simplify codebase) — DONE
 2. ✅ Audit all source content files AND navigation structure — DONE
 3. ✅ Design transposition methodology with system-wide perspective — DONE
-4. Execute transposition on wiki docs
+4. ✅ Execute transposition on wiki docs — DONE
 5. Refine navigation based on results
 
 **Constraints:**
 - All UI/visual work done by Claude directly using frontend-design skill
 - Browser automation required for visual verification
 - Wiki-only focus for this milestone
+
+### Phase 27 Outcomes
+
+**Wiki Content Transposition complete:**
+- 62+ documents transposed with proper frontmatter
+- 6 index files removed (type-based navigation sufficient)
+- 2 heavy lift files removed (catering-sign-up.md, tasting-form.md)
+- 2 heavy lift files truncated to policy references (bridal/micro wedding planning)
+- 5 reclassifications applied
+- All content types properly tagged: procedure, reference, checklist, form, guide
+
+**Wave structure executed:**
+- Wave 1: Plans 01-02 (cleanup + services frontmatter)
+- Wave 2: Plans 03-07 (procedures, references, checklists, forms)
+- Wave 3: Plan 08 (heavy lift with decision checkpoint)
 
 ### Phase 25 Outcomes
 
@@ -73,12 +88,6 @@ Progress: ████████░░ 88%
 - 6 content type reclassifications identified
 - Prioritized transposition list (62 documents)
 
-**Transposition scope:**
-- Quick wins: 28 documents (1-2 hours)
-- Medium effort: 24 documents (4-6 hours)
-- Heavy lift: 10 documents (2-4 hours)
-- Total estimated: 7-12 hours
-
 ### Phase 26 Outcomes
 
 **Checkpoint decisions resolved:**
@@ -89,13 +98,6 @@ Progress: ████████░░ 88%
 **Deliverables:**
 - TEMPLATES.md: Visual specs for 5 content types + fallback
 - METHODOLOGY.md: Step-by-step transposition process
-
-**Transposition ready:**
-- 62 documents to transpose
-- 7 documents to remove (6 index + recipe-app README)
-- 5 reclassifications to apply
-- 5 execution waves planned
-- Estimated effort: 7-12 hours
 
 ### Phase 24 Outcomes
 
@@ -127,6 +129,7 @@ Recent key decisions:
 - Form builder is authoritative for data collection
 - Border-radius > 0 for UI refresh (v1.2 overrides v1.1)
 - Auth toggle requires BOTH env vars for full bypass
+- Heavy lift files: remove spreadsheet dumps, truncate planning docs to policies
 
 ### Pending Todos
 
@@ -146,21 +149,21 @@ None active.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Plan 27-07 complete (forms) - Wave 2 complete
-Resume file: .planning/phases/27-wiki-content-transposition/.continue-here.md
-Next command: /gsd:execute-phase 27
+Stopped at: Plan 27-08 complete (heavy lift resolution) - Phase 27 complete
+Resume file: .planning/phases/27-wiki-content-transposition/27-08-SUMMARY.md
+Next command: /gsd:plan-phase 28
 
 ### Next Steps
 
-1. Execute Phase 27 Wave 3: Plan 08 (heavy lift with decision checkpoint)
-2. Complete phase 27 and move to phase 28
+1. Plan Phase 28 (Navigation Refinement)
+2. Execute Phase 28 to complete v1.3 milestone
 
-### Phase 27 Structure
+### Phase 27 Structure (Complete)
 
 8 plans in 3 waves:
-- **Wave 1 (parallel):** Plans 01-02 (cleanup + services frontmatter)
-- **Wave 2 (parallel):** Plans 03-07 (procedures, references, checklists, forms)
-- **Wave 3:** Plan 08 (heavy lift with decision checkpoint)
+- **Wave 1 (parallel):** Plans 01-02 (cleanup + services frontmatter) ✅
+- **Wave 2 (parallel):** Plans 03-07 (procedures, references, checklists, forms) ✅
+- **Wave 3:** Plan 08 (heavy lift with decision checkpoint) ✅
 
 ### Phase Archives
 
