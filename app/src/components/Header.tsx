@@ -10,10 +10,9 @@ import { LogoFull } from "./Logo";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/procedures", label: "Procedures" },
-  { href: "/references", label: "References" },
-  { href: "/checklists", label: "Checklists" },
-  { href: "/guides", label: "Guides" },
+  { href: "/events", label: "Events" },
+  { href: "/services", label: "Services" },
+  { href: "/operations", label: "Operations" },
   { href: "/style-guides", label: "Style Guides" },
   // CONNECTOR: Messages, Forms, Activity routes - restore from feature/full-v1
   { href: "/workspace", label: "My Workspace" },
