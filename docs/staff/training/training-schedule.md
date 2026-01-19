@@ -1,62 +1,26 @@
+---
+title: Training Schedule
+description: Day-by-day training curriculum overview for admin staff
+contentType: reference
+---
+
 # Admin Training Schedule
 
-*Extracted from IMG_0424*
+Eight-day training curriculum for new administrative staff. Each day covers specific skills and systems needed for the role.
 
-**See training manual**
+## Training Overview
 
----
+| Day | Topic | Key Skills |
+|-----|-------|------------|
+| Day 1 | Office Basics | Maintain clean office, sweep floors each morning, answer phone lines, take messages |
+| Day 2 | Phone and Systems | Phone scripts, navigate Soffront, Wedding Wire, and The Knot |
+| Day 3 | Packages | Learn all event packages and pricing |
+| Day 4 | Tours and Supplies | Set up tours by phone (including building setups), order office supplies |
+| Day 5 | B&B Reservations | Bed and breakfast booking process |
+| Day 6 | Shower Bookings | Shower and small party booking process |
+| Day 7 | Event Coordination | Coordinate events, vendor ordering |
+| Day 8 | Advanced Tasks | Research, technical support, receive payments, confirm appointments |
 
-## Day One:
+## Reference Materials
 
-- Maintain a clean office, sweeping floors each morning
-- Answer multiple phone lines and take messages
-
----
-
-## Day Two:
-
-- Phone scripts
-- Navigating soffront, wedding wire, and the knot
-
----
-
-## Day Three:
-
-- Packages
-
----
-
-## Day Four:
-
-- Setting up tours by calls
-  - Including building set-ups
-- Ordering office supplies
-
----
-
-## Day Five:
-
-- Bed and breakfast reservations
-
----
-
-## Day Six:
-
-- Shower bookings
-
----
-
-## Day Seven:
-
-- Coordinating events
-- Vendor ordering
-
----
-
-## Day Eight:
-
-- Researching
-- Technical support
-- Receiving payments
-- Confirming appointments
-
+See training manual for detailed procedures on each topic.

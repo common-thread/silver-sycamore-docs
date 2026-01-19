@@ -1,82 +1,55 @@
-# Maintenance & Groundskeeping Schedule
-
-Weekly maintenance tasks for Silver Sycamore facility and grounds.
-
-**Source:** Client operational documents (2026-01-12) - Handwritten notes
-
+---
+title: Maintenance Schedule
+description: Weekly maintenance tasks by day of week
+contentType: reference
 ---
 
-## Weekly Groundskeeping & Maintenance
+# Maintenance Schedule
 
-### Monday - Lines
-- Weed trimming around fences and walls
-- Maintain property boundaries
-- Edge walkways and driveways
-- Clean up all restaurant & Pine House areas
+Weekly maintenance and groundskeeping tasks for Silver Sycamore facility and grounds. Schedule focuses on maintaining curb appeal for wedding and event venue with heavy emphasis on weekend preparation.
 
-### Tuesday - Weeds
-- Weed control throughout property
-- Inspect lawn and beds for weeds
-- Trim trees, shrubs, and hedges
-- Clean up around pool area
+## Weekly Schedule
 
-### Wednesday - Bushes & Clean
-- Trim and shape bushes and shrubs
-- Weed side driveway
-- General property cleanup
-- Inspect and clean around dining areas
-- Prune around fence line
+| Day | Focus Area | Tasks |
+|-----|------------|-------|
+| Monday | Lines | Weed trimming around fences/walls, edge walkways/driveways, maintain property boundaries, clean restaurant and Pine House areas |
+| Tuesday | Weeds | Property-wide weed control, inspect lawn/beds, trim trees/shrubs/hedges, clean pool area |
+| Wednesday | Bushes & Clean | Trim/shape bushes and shrubs, weed side driveway, general property cleanup, inspect dining areas, prune fence line |
+| Thursday | Bushes & Clean | Continue bush/shrub maintenance, weed Green Space, trim triangle bush at entrance, Knoll upkeep (remove sticks), weed main/entrance drive, maintain common areas |
+| Friday | Weekend Prep | Property-wide cleanup for weekend events, inspect high-traffic walking areas |
+| Weekend | Event Ready | Final walkthrough for guest-facing areas, ensure pristine condition for events |
 
-### Thursday - Bushes & Clean
-- Continue bush and shrub maintenance
-- Weed Green Space (main lawn area)
-- Trim triangle bush in main area entrance
-- Knoll upkeep & maintenance (remove sticks)
-- Property cleanup including restaurant, venue areas
-- Weed main/entrance drive
-- Maintain common areas and walkways
+## Rotating Tasks
 
-### Friday - Weeds
-- Weekend all property for moving weekend cleanup
-- Inspect property for moving property cleanup
-- Focus on high-traffic walking areas
+### Lawn and Grounds
 
-### Weekend Prep
-- Finish all restaurant and dining area maintenance
-- Final walkthrough for guest-facing areas
-- Ensure pristine condition for weekend events
-
----
-
-## Special Tasks (Rotating)
-
-### Lawn & Grounds
-- **Para Eventos** (For Events) - Pre-event lawn prep and cleanup
-- Move/relocate equipment as needed for events
+| Task | Frequency | Notes |
+|------|-----------|-------|
+| Pre-event lawn prep | As needed | Para Eventos - coordinate with event calendar |
+| Equipment relocation | As needed | Move for event setup |
+| Irrigation inspection | Weekly | Check systems and outdoor lighting |
 
 ### General Maintenance
-- Empty/replace trash containers in outdoor areas
-- Check and refill salt/pepper containers in restaurant areas
-- Inspect outdoor furniture for damage
-- Check irrigation systems and outdoor lighting
 
----
+| Task | Frequency |
+|------|-----------|
+| Empty outdoor trash containers | Daily |
+| Inspect outdoor furniture | Weekly |
+| Check salt/pepper in restaurant areas | Daily |
+
+## Property Zones
+
+- **Restaurant** - Dining areas, outdoor seating
+- **Venue Grounds** - Event spaces, ceremony areas
+- **Pool Area** - Pool deck and surroundings
+- **Entrance** - Driveway, main walkways, triangle bush
 
 ## Notes
-
-- Schedule focuses on maintaining curb appeal for wedding/event venue
-- Heavy emphasis on weekend preparation (Thursday-Friday)
-- Groundskeeping coordinated with restaurant operations
-- Property divided into zones: restaurant, venue grounds, pool area, entrance
-- Weed control is ongoing throughout the week
-- Bush/shrub maintenance twice weekly (Wed/Thu)
-- Line trimming weekly (Monday)
-
----
-
-## Implementation
 
 - Daily walk-through recommended to catch urgent issues
 - Coordinate with event calendar for pre-event prep
 - Weather-dependent adjustments as needed
 - Supplies and equipment maintained in designated storage areas
+- Weed control is ongoing throughout the week
+- Bush/shrub maintenance twice weekly (Wednesday/Thursday)
+- Line trimming weekly (Monday)
