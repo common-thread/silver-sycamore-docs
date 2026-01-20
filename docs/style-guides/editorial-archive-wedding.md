@@ -1,6 +1,7 @@
 ---
-layout: default
 title: Editorial Archive - Wedding Variant
+description: Client-facing design variant for wedding packages and presentations
+contentType: guide
 ---
 
 # Editorial Archive - Wedding Variant

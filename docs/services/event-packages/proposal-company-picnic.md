@@ -52,3 +52,11 @@ Includes: Flour Tortillas for Beef and chicken fajitas, Spanish Rice, and Beans
 | Includes loaded baked potatoes with chives, sour cream, cheese | |
 | BBQ Sandwiches - **$7** per person | |
 | Includes Shredded Brisket Sandwiches and chips | |
+
+---
+
+5111 Pine Ave, Pasadena, TX
+
+www.silversycamore.com
+
+281-487-4033

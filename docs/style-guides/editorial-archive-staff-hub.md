@@ -1,6 +1,7 @@
 ---
-layout: default
 title: Editorial Archive - Staff Hub Variant
+description: Internal-use design variant optimized for daily staff workflows
+contentType: guide
 ---
 
 # Editorial Archive - Staff Hub Variant

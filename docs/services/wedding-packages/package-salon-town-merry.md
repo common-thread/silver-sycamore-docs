@@ -1,6 +1,6 @@
 ---
-title: Salon, Town & Merry Package
-description: Combined venue package for multi-space events
+title: Saloon and Town Micro Wedding Package
+description: Intimate micro wedding package with ceremony and reception in the Saloon
 contentType: reference
 ---
 
@@ -49,3 +49,11 @@ Ceremony at Your choice of Outdoor Ceremony sites or White Chapel
 8.25% sales tax and 20% service charge will be added to the final invoice total.
 
 **Deposit $1,500.00**
+
+---
+
+5111 Pine Ave, Pasadena, TX
+
+www.silversycamore.com
+
+281-487-4033

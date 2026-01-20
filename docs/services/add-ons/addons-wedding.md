@@ -23,7 +23,7 @@ Cascades of queso flowing over a 3-tiered fountain, surrounded by a tiered array
 | Dance Floor Rental for Dancing in the Streets of our Western Town | **$750** |
 | Photo Booth | **$250** |
 | Personalized Town Cake Gazebo | **$400** |
-| Harpist | **$2/person** |
+| Harpist | **$200** |
 | Popcorn Machine with attendant | **$800** |
 | Mechanical bull (4 hours) | **$100** |
 | Yard Games (corn hole, Giant Jenga, Tic Tac Toe tables, horseshoes) | **$1350** |
@@ -43,3 +43,11 @@ Set Ups for guest supplied liquor (includes juice and sodas) **$4.5/person** (NO
 **Cash Bar:** Bartender serving beer and wine and sodas with Police Officer **$675**
 
 *(over 120 guests or adding Liquor setups require additional officer and bartender)*
+
+---
+
+5111 Pine Ave, Pasadena, TX
+
+www.silversycamore.com
+
+281-487-4033

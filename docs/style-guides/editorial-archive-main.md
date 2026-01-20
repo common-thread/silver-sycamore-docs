@@ -1,6 +1,7 @@
 ---
-layout: default
 title: Editorial Archive - Main Style Guide
+description: Core design system documentation for Silver Sycamore applications
+contentType: guide
 ---
 
 # Editorial Archive Style Guide

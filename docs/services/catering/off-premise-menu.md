@@ -174,3 +174,11 @@ Broccoli and Cheddar (butter, onion, flour, cheese, broccoli, seasonings)
 **Delivery, Setup, Servers, Cleanup and Gratuity - 20% of Subtotal.**
 
 **Banquet Plating, Stemware and Linens available for rental.**
+
+---
+
+5111 Pine Ave, Pasadena, TX
+
+www.silversycamore.com
+
+281-487-4033

@@ -6,8 +6,6 @@ contentType: reference
 
 # Silver Sycamore Weddings Catering Menu
 
-*Extracted from binder photos IMG_0446-0451 on 2026-01-05*
-
 ---
 
 ## Sycamore Comfort - $25 per person
@@ -291,3 +289,11 @@ Two entree/plate dinner selection of beef, chicken and one seafood or seafood
 ### Additional Fees
 - 18% service charge applies to all food, beverage, equipment, and room rentals
 - State sales tax applies
+
+---
+
+5111 Pine Ave, Pasadena, TX
+
+www.silversycamore.com
+
+281-487-4033
