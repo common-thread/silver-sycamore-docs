@@ -349,9 +349,18 @@ a:hover {
   padding-left: var(--space-6);
 }
 
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
 .prose li {
   margin-bottom: var(--space-2);
   line-height: var(--leading-relaxed);
+  display: list-item;
 }
 
 .prose li::marker {
@@ -359,8 +368,18 @@ a:hover {
 }
 
 .prose strong {
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   color: var(--color-ink);
+}
+
+/* Prominent pricing - standalone bold paragraphs with prices */
+.prose p:has(> strong:only-child) > strong:only-child {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-ink);
+  margin: var(--space-2) 0;
 }
 
 .prose a {
