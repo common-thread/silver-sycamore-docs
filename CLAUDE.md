@@ -1,4 +1,23 @@
-# Project Conventions for Claude
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This repository contains a dual-system architecture:
+- **Jekyll site** (root level) - Static documentation for GitHub Pages
+- **Next.js app** (`/app`) - Full-stack application deployed to Vercel with Convex backend
+
+## Prerequisites
+
+- Node.js 18+
+- bun (package manager): `curl -fsSL https://bun.sh/install | bash`
+
+Quick setup:
+```bash
+cd app
+bun install
+```
 
 ## Package Manager
 
@@ -49,12 +68,22 @@ pkill -f "convex dev"
 npx convex dev
 ```
 
+## Build & Lint
+
+```bash
+cd app
+bun run build        # Build for production (runs TypeScript checks)
+bun run lint         # Run ESLint
+bun run lint --fix   # Auto-fix lint issues where possible
+```
+
 ## Testing
 
 ```bash
 cd app
-bun run test         # Run Playwright E2E tests
-bun run test:ui      # Run tests with UI
+bun run test                      # Run all Playwright E2E tests
+bun run test:ui                   # Run tests with UI
+bun run test e2e/basic.spec.ts   # Run a single test file
 ```
 
 ## Tech Stack
@@ -65,11 +94,78 @@ bun run test:ui      # Run tests with UI
 - Tailwind CSS
 - TypeScript
 
+## Architecture Overview
+
+This is a full-stack BaaS (Backend-as-a-Service) application:
+
+**Frontend (`app/src/`):**
+- `app/` - Next.js App Router pages and routes
+- `components/` - 60+ React components
+- `hooks/` - Custom hooks (e.g., `usePermissions.ts`)
+
+**Backend (`app/convex/`):**
+- 26 serverless function modules (documents, forms, messages, channels, etc.)
+- `schema.ts` - Database schema (27+ tables)
+- `lib/roles.ts` - Role-based access control (staff, manager, admin)
+- `lib/auth.ts` - Centralized auth utilities
+- `_generated/` - Auto-generated types & API (do not edit)
+
+**Data Flow:**
+- Client uses `useQuery`/`useMutation` hooks from Convex React client
+- Real-time data subscriptions via Convex
+- Authentication via Clerk + Convex Auth
+
+For detailed architecture documentation, see `.planning/codebase/`:
+- `ARCHITECTURE.md` - Data flow diagrams and layer descriptions
+- `STRUCTURE.md` - Full directory layout and naming conventions
+- `CONVENTIONS.md` - Code patterns and practices
+
+## Jekyll Documentation Site
+
+The root-level Jekyll site is for static documentation deployed to GitHub Pages.
+
+**When to use:** Adding static docs, updating the public-facing documentation site.
+
+**Local preview:**
+```bash
+bundle install
+bundle exec jekyll serve
+```
+
+**Deployment:** Automatic via GitHub Actions on push to main.
+
 ## Design System
 
 - Fonts: Playfair Display (display), DM Sans (body)
 - Colors: Ink/paper/bronze palette (see globals.css)
 - Aesthetic: Typeform-inspired, archival/editorial
+- Layout patterns documented in `.planning/codebase/`
+
+## Debugging
+
+**Convex connection errors:**
+- Check if `npx convex dev` is running
+- Verify `.env.local` has correct `CONVEX_URL`
+
+**TypeScript errors:**
+- Run `bun run build` to see full error output
+- Check `app/convex/_generated/` is up to date
+
+**Auth issues:**
+- Verify Clerk keys in `.env.local`
+- Check browser console for auth errors
+
+**Log locations:**
+- Browser console for frontend errors
+- Terminal running `npx convex dev` for backend errors
+
+## Folders to Ignore
+
+Do not modify these folders:
+- `.agent/` - External agent system
+- `.planning/` - Planning artifacts (read-only reference)
+- `.gemini/` - Gemini configuration
+- `app/convex/_generated/` - Auto-generated Convex types
 
 ## Verification Requirements
 

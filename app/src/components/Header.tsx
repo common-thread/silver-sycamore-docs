@@ -53,6 +53,7 @@ export default function Header() {
                 <Link
                   href={item.href}
                   className={`header-nav-link ${active ? "header-nav-link-active" : ""}`}
+                  aria-current={active ? "page" : undefined}
                 >
                   {item.label}
                 </Link>

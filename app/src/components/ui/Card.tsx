@@ -125,6 +125,13 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           }
           props.onBlur?.(e);
         }}
+        onKeyDown={(e) => {
+          if (interactive && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            e.currentTarget.click();
+          }
+          props.onKeyDown?.(e);
+        }}
         tabIndex={interactive ? 0 : undefined}
         role={interactive ? "button" : undefined}
         {...props}

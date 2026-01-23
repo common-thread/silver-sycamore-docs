@@ -1,22 +1,7 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { Doc } from "./_generated/dataModel";
-
-// Helper to get current user ID from auth
-async function getCurrentUserId(ctx: {
-  auth: { getUserIdentity: () => Promise<{ email?: string } | null> };
-  db: any;
-}) {
-  const identity = await ctx.auth.getUserIdentity();
-  if (!identity?.email) return null;
-
-  const user = await ctx.db
-    .query("users")
-    .filter((q: any) => q.eq(q.field("email"), identity.email))
-    .first();
-
-  return user?._id ?? null;
-}
+import { getCurrentUserId } from "./lib/auth";
 
 // List groups current user owns
 export const listMyGroups = query({
@@ -27,15 +12,15 @@ export const listMyGroups = query({
 
     const groups = await ctx.db
       .query("shareGroups")
-      .withIndex("by_owner", (q: any) => q.eq("ownerId", userId))
+      .withIndex("by_owner", (q) => q.eq("ownerId", userId))
       .collect();
 
     // Get member count for each group
     const groupsWithCounts = await Promise.all(
-      groups.map(async (group: any) => {
+      groups.map(async (group) => {
         const members = await ctx.db
           .query("groupMembers")
-          .withIndex("by_group", (q: any) => q.eq("groupId", group._id))
+          .withIndex("by_group", (q) => q.eq("groupId", group._id))
           .collect();
 
         return {
@@ -58,12 +43,12 @@ export const listMyMemberships = query({
 
     const memberships = await ctx.db
       .query("groupMembers")
-      .withIndex("by_user", (q: any) => q.eq("userId", userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
     // Get group details for each membership
     const groups = await Promise.all(
-      memberships.map(async (membership: any) => {
+      memberships.map(async (membership) => {
         const group = await ctx.db.get(membership.groupId) as Doc<"shareGroups"> | null;
         if (!group) return null;
 
@@ -73,7 +58,7 @@ export const listMyMemberships = query({
         // Get member count
         const members = await ctx.db
           .query("groupMembers")
-          .withIndex("by_group", (q: any) => q.eq("groupId", group._id))
+          .withIndex("by_group", (q) => q.eq("groupId", group._id))
           .collect();
 
         return {
@@ -108,7 +93,7 @@ export const get = query({
     // Check if user owns or is member of the group
     const isMember = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group_user", (q: any) =>
+      .withIndex("by_group_user", (q) =>
         q.eq("groupId", args.id).eq("userId", userId)
       )
       .first();
@@ -118,11 +103,11 @@ export const get = query({
     // Get members with user info
     const members = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group", (q: any) => q.eq("groupId", args.id))
+      .withIndex("by_group", (q) => q.eq("groupId", args.id))
       .collect();
 
     const membersWithInfo = await Promise.all(
-      members.map(async (member: any) => {
+      members.map(async (member) => {
         const user = await ctx.db.get(member.userId) as Doc<"users"> | null;
         return {
           _id: member._id,
@@ -157,7 +142,7 @@ export const getMembers = query({
     // Check if user owns or is member of the group
     const isMember = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group_user", (q: any) =>
+      .withIndex("by_group_user", (q) =>
         q.eq("groupId", args.groupId).eq("userId", userId)
       )
       .first();
@@ -166,11 +151,11 @@ export const getMembers = query({
 
     const members = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group", (q: any) => q.eq("groupId", args.groupId))
+      .withIndex("by_group", (q) => q.eq("groupId", args.groupId))
       .collect();
 
     const membersWithInfo = await Promise.all(
-      members.map(async (member: any) => {
+      members.map(async (member) => {
         const user = await ctx.db.get(member.userId) as Doc<"users"> | null;
         return {
           _id: member._id,
@@ -247,7 +232,7 @@ export const remove = mutation({
     // Cascade delete: remove all folder shares referencing this group
     const shares = await ctx.db
       .query("folderShares")
-      .withIndex("by_group", (q: any) => q.eq("sharedWithGroupId", args.id))
+      .withIndex("by_group", (q) => q.eq("sharedWithGroupId", args.id))
       .collect();
     for (const share of shares) {
       await ctx.db.delete(share._id);
@@ -256,7 +241,7 @@ export const remove = mutation({
     // Cascade delete: remove all group members
     const members = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group", (q: any) => q.eq("groupId", args.id))
+      .withIndex("by_group", (q) => q.eq("groupId", args.id))
       .collect();
     for (const member of members) {
       await ctx.db.delete(member._id);
@@ -291,7 +276,7 @@ export const addMember = mutation({
     // Check if already a member
     const existingMember = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group_user", (q: any) =>
+      .withIndex("by_group_user", (q) =>
         q.eq("groupId", args.groupId).eq("userId", args.userId)
       )
       .first();
@@ -326,7 +311,7 @@ export const removeMember = mutation({
     // Find membership
     const membership = await ctx.db
       .query("groupMembers")
-      .withIndex("by_group_user", (q: any) =>
+      .withIndex("by_group_user", (q) =>
         q.eq("groupId", args.groupId).eq("userId", args.userId)
       )
       .first();

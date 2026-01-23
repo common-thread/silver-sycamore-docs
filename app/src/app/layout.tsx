@@ -32,12 +32,20 @@ export default function RootLayout({
       </head>
       <body>
         <ConvexClientProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded"
+          >
+            Skip to main content
+          </a>
           <div className="min-h-screen flex flex-col">
             <Header />
 
             {/* Main content */}
             <main
+              id="main-content"
               className="flex-1"
+              tabIndex={-1}
               style={{
                 padding: "2rem",
                 maxWidth: "1200px",

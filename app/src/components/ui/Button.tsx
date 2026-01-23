@@ -3,7 +3,7 @@
 import { forwardRef, ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "accent";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -36,6 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       sm: "btn-sm",
       md: "",
       lg: "btn-lg",
+      icon: "btn-icon",
     }[size];
 
     const classes = ["btn", variantClass, sizeClass, className]

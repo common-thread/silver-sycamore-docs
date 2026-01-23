@@ -2,6 +2,7 @@ import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
+import { assertPermission } from "./permissions";
 
 // Query to get all documents
 export const list = query({
@@ -79,6 +80,7 @@ export const create = mutation({
     formId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    await assertPermission(ctx, "edit_content");
     const now = Date.now();
     return await ctx.db.insert("documents", {
       ...args,
@@ -105,6 +107,7 @@ export const update = mutation({
     changeNote: v.optional(v.string()),
   },
   handler: async (ctx, args): Promise<void> => {
+    await assertPermission(ctx, "edit_content");
     const { id, changeNote, ...updates } = args;
 
     // Get current document state
@@ -147,6 +150,27 @@ export const update = mutation({
     await ctx.db.patch(id, {
       ...filteredUpdates,
       version: newVersion,
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+// Simple content update (without version snapshot)
+export const updateContent = mutation({
+  args: {
+    id: v.id("documents"),
+    content: v.string(),
+    title: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    await assertPermission(ctx, "edit_content");
+
+    const doc = await ctx.db.get(args.id);
+    if (!doc) throw new Error("Document not found");
+
+    await ctx.db.patch(args.id, {
+      content: args.content,
+      ...(args.title && { title: args.title }),
       updatedAt: Date.now(),
     });
   },
@@ -252,6 +276,7 @@ export const contentTypeCounts = query({
 // Delete all documents (for re-import)
 export const deleteAll = mutation({
   handler: async (ctx) => {
+    await assertPermission(ctx, "delete_content");
     const docs = await ctx.db.query("documents").collect();
     for (const doc of docs) {
       await ctx.db.delete(doc._id);

@@ -1,12 +1,14 @@
 "use client";
 
 import { usePermissions, Action, Role } from "@/hooks/usePermissions";
+import Skeleton from "@/components/ui/Skeleton";
 
 interface PermissionGuardProps {
   children: React.ReactNode;
   action?: Action;
   role?: Role;
   fallback?: React.ReactNode;
+  showSkeleton?: boolean;
 }
 
 export function PermissionGuard({
@@ -14,11 +16,16 @@ export function PermissionGuard({
   action,
   role,
   fallback = null,
+  showSkeleton = false,
 }: PermissionGuardProps) {
   const { can, hasRole, isLoading } = usePermissions();
 
   if (isLoading) {
-    return null; // Or a loading indicator
+    return showSkeleton ? (
+      <div style={{ opacity: 0.5 }}>
+        <Skeleton variant="text" width="100%" />
+      </div>
+    ) : null;
   }
 
   if (action && !can(action)) {

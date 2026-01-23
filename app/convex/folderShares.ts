@@ -1,24 +1,11 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { Id, Doc } from "./_generated/dataModel";
+import { getCurrentUserId } from "./lib/auth";
 
-// Helper to get current user ID from auth
-async function getCurrentUserId(ctx: {
-  auth: { getUserIdentity: () => Promise<{ email?: string } | null> };
-  db: any;
-}) {
-  const identity = await ctx.auth.getUserIdentity();
-  if (!identity?.email) return null;
-
-  const user = await ctx.db
-    .query("users")
-    .filter((q: any) => q.eq(q.field("email"), identity.email))
-    .first();
-
-  return user?._id ?? null;
-}
-
-// Permission type for reference: "view" | "comment" | "edit"
+// Permission type for folder shares
+type Permission = "view" | "comment" | "edit";
+const PERMISSION_RANK: Record<Permission, number> = { view: 1, comment: 2, edit: 3 };
 
 // List all shares for a folder (owner only)
 export const listByFolder = query({
@@ -35,12 +22,12 @@ export const listByFolder = query({
 
     const shares = await ctx.db
       .query("folderShares")
-      .withIndex("by_folder", (q: any) => q.eq("folderId", args.folderId))
+      .withIndex("by_folder", (q) => q.eq("folderId", args.folderId))
       .collect();
 
     // Enrich with user/group info
     const enrichedShares = await Promise.all(
-      shares.map(async (share: any) => {
+      shares.map(async (share) => {
         let sharedWith = null;
 
         if (share.sharedWithUserId) {
@@ -87,22 +74,22 @@ export const listSharedWithMe = query({
     // 1. Get direct shares where sharedWithUserId = current user
     const directShares = await ctx.db
       .query("folderShares")
-      .withIndex("by_user", (q: any) => q.eq("sharedWithUserId", userId))
+      .withIndex("by_user", (q) => q.eq("sharedWithUserId", userId))
       .collect();
 
     // 2. Get user's group memberships
     const memberships = await ctx.db
       .query("groupMembers")
-      .withIndex("by_user", (q: any) => q.eq("userId", userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
     // 3. Get group shares for those groups
-    const groupIds = memberships.map((m: any) => m.groupId);
-    const groupShares: any[] = [];
+    const groupIds = memberships.map((m) => m.groupId);
+    const groupShares: Doc<"folderShares">[] = [];
     for (const groupId of groupIds) {
       const shares = await ctx.db
         .query("folderShares")
-        .withIndex("by_group", (q: any) => q.eq("sharedWithGroupId", groupId))
+        .withIndex("by_group", (q) => q.eq("sharedWithGroupId", groupId))
         .collect();
       groupShares.push(...shares);
     }
@@ -110,7 +97,7 @@ export const listSharedWithMe = query({
     // 4. Combine and dedupe by folder, keeping highest permission
     const folderMap = new Map<
       string,
-      { share: any; permission: string; via: "direct" | "group" }
+      { share: Doc<"folderShares">; permission: string; via: "direct" | "group" }
     >();
 
     const permissionRank = { view: 1, comment: 2, edit: 3 };
@@ -191,7 +178,7 @@ export const getPermission = query({
     // Check direct share
     const directShare = await ctx.db
       .query("folderShares")
-      .withIndex("by_folder_user", (q: any) =>
+      .withIndex("by_folder_user", (q) =>
         q.eq("folderId", args.folderId).eq("sharedWithUserId", userId)
       )
       .first();
@@ -199,7 +186,7 @@ export const getPermission = query({
     // Check group shares
     const memberships = await ctx.db
       .query("groupMembers")
-      .withIndex("by_user", (q: any) => q.eq("userId", userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
     let highestPermission: string | null = directShare?.permission || null;
@@ -208,7 +195,7 @@ export const getPermission = query({
     for (const membership of memberships) {
       const groupShare = await ctx.db
         .query("folderShares")
-        .withIndex("by_folder_group", (q: any) =>
+        .withIndex("by_folder_group", (q) =>
           q.eq("folderId", args.folderId).eq("sharedWithGroupId", membership.groupId)
         )
         .first();
@@ -245,7 +232,7 @@ export const canAccess = query({
     // Check direct share
     const directShare = await ctx.db
       .query("folderShares")
-      .withIndex("by_folder_user", (q: any) =>
+      .withIndex("by_folder_user", (q) =>
         q.eq("folderId", args.folderId).eq("sharedWithUserId", userId)
       )
       .first();
@@ -255,13 +242,13 @@ export const canAccess = query({
     // Check group shares
     const memberships = await ctx.db
       .query("groupMembers")
-      .withIndex("by_user", (q: any) => q.eq("userId", userId))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
     for (const membership of memberships) {
       const groupShare = await ctx.db
         .query("folderShares")
-        .withIndex("by_folder_group", (q: any) =>
+        .withIndex("by_folder_group", (q) =>
           q.eq("folderId", args.folderId).eq("sharedWithGroupId", membership.groupId)
         )
         .first();
@@ -325,14 +312,14 @@ export const share = mutation({
     if (args.userId) {
       existingShare = await ctx.db
         .query("folderShares")
-        .withIndex("by_folder_user", (q: any) =>
+        .withIndex("by_folder_user", (q) =>
           q.eq("folderId", args.folderId).eq("sharedWithUserId", args.userId)
         )
         .first();
     } else if (args.groupId) {
       existingShare = await ctx.db
         .query("folderShares")
-        .withIndex("by_folder_group", (q: any) =>
+        .withIndex("by_folder_group", (q) =>
           q.eq("folderId", args.folderId).eq("sharedWithGroupId", args.groupId)
         )
         .first();
