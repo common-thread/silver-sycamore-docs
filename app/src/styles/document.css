@@ -1,0 +1,164 @@
+/* 
+  DOCUMENT TYPOGRAPHY (Functional Clarity)
+  
+  Purpose: Distinct from the "Champagne & Playfair" site branding.
+  Aesthetic: Notion / Google Docs / Obsidan.
+  font-family: System / Inter (Sans-Serif)
+*/
+
+.document-content {
+    color: #171717;
+    /* Neutral-900 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 65ch;
+    margin: 0 auto;
+}
+
+/* Headings: Clean, Bold, Sans-Serif. No Playfair/Serif. */
+.document-content h1,
+.document-content h2,
+.document-content h3,
+.document-content h4 {
+    font-family: inherit;
+    /* Keep sans-serif */
+    font-weight: 600;
+    color: #0a0a0a;
+    /* Neutral-950 */
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+.document-content h1 {
+    font-size: 2.25em;
+    font-weight: 700;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0.3em;
+    margin-bottom: 0.8em;
+}
+
+.document-content h2 {
+    font-size: 1.75em;
+    border-bottom: 1px solid #e5e5e5;
+    /* Subtle section breaks */
+    padding-bottom: 0.25em;
+    margin-top: 1.8em;
+}
+
+.document-content h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.document-content h4 {
+    font-size: 1.15em;
+    font-weight: 600;
+}
+
+/* Body Text */
+.document-content p {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Lists */
+.document-content ul,
+.document-content ol {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 1.5em;
+}
+
+.document-content li {
+    margin-bottom: 0.25em;
+}
+
+.document-content ul {
+    list-style-type: disc;
+}
+
+.document-content ol {
+    list-style-type: decimal;
+}
+
+/* Links: Standard "Link Blue" for immediate recognition */
+.document-content a {
+    color: #2563eb;
+    /* Blue-600 */
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.document-content a:hover {
+    text-decoration: underline;
+}
+
+/* Checklists (Task Lists) */
+.document-content ul[data-type="taskList"] {
+    list-style: none;
+    padding-left: 0;
+}
+
+.document-content li[data-type="taskItem"] {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 0.5em;
+}
+
+.document-content li[data-type="taskItem"] input[type="checkbox"] {
+    margin-right: 0.5em;
+    margin-top: 0.3em;
+    accent-color: #2563eb;
+}
+
+/* Code Blocks */
+.document-content pre {
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 1em;
+    font-family: "Menlo", "Consolas", monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+    margin: 1em 0;
+    border: 1px solid #e5e5e5;
+}
+
+.document-content code {
+    font-family: "Menlo", "Consolas", monospace;
+    font-size: 0.85em;
+    background: #f0f0f0;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+/* Blockquotes */
+.document-content blockquote {
+    border-left: 3px solid #d4d4d4;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #525252;
+    font-style: italic;
+}
+
+/* Tables */
+.document-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.document-content th,
+.document-content td {
+    border: 1px solid #e5e5e5;
+    padding: 0.5em 0.75em;
+    text-align: left;
+}
+
+.document-content th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}

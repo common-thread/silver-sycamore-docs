@@ -19,6 +19,7 @@ import type * as folderShares from "../folderShares.js";
 import type * as forms from "../forms.js";
 import type * as http from "../http.js";
 import type * as initiatives from "../initiatives.js";
+import type * as lib_auth from "../lib/auth.js";
 import type * as lib_roles from "../lib/roles.js";
 import type * as messages from "../messages.js";
 import type * as notifications from "../notifications.js";
@@ -52,6 +53,7 @@ declare const fullApi: ApiFromModules<{
   forms: typeof forms;
   http: typeof http;
   initiatives: typeof initiatives;
+  "lib/auth": typeof lib_auth;
   "lib/roles": typeof lib_roles;
   messages: typeof messages;
   notifications: typeof notifications;
