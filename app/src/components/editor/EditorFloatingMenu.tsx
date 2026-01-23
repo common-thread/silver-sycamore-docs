@@ -1,7 +1,6 @@
 "use client";
 
-import { Editor } from "@tiptap/react";
-import { FloatingMenu } from "@tiptap/react/menus";
+import { Editor, FloatingMenu } from "@tiptap/react";
 import Button from "@/components/ui/Button";
 
 interface EditorFloatingMenuProps {

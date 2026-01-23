@@ -72,7 +72,7 @@ export function LogoLockup({
                     />
                 </div>
                 {showTag && (
-                    <div className="flex items-center mt-1 border-t border-stone-300 pt-1">
+                    <div className="flex items-center mt-1 pt-1" style={{ borderTop: '1px solid var(--color-border)' }}>
                         <span className={`font-body font-medium tracking-widest text-accent uppercase ${size === 'sm' ? 'text-xs' : 'text-sm'}`}>
                             {tagText}
                         </span>
@@ -95,7 +95,7 @@ export function LogoLockup({
 
             {showTag && (
                 <div className="flex items-center ml-1">
-                    <span className="h-5 w-px bg-stone-300 mx-2 hidden sm:block"></span>
+                    <span className="h-5 w-px mx-2 hidden sm:block" style={{ backgroundColor: 'var(--color-border)' }}></span>
                     <span className={`font-body font-medium tracking-widest text-accent uppercase ${size === 'sm' ? 'text-xs' : 'text-sm'}`}>
                         {tagText}
                     </span>

@@ -1,7 +1,6 @@
 "use client";
 
-import { Editor } from "@tiptap/react";
-import { BubbleMenu } from "@tiptap/react/menus";
+import { Editor, BubbleMenu } from "@tiptap/react";
 import Button from "@/components/ui/Button";
 
 interface EditorBubbleMenuProps {

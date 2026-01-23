@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+
+// Lazy load the rich text editor to avoid SSR issues
+const RichTextEditor = lazy(() => import("./RichTextEditor"));
 
 interface SuggestionFormProps {
   // For creating a new suggestion from a document
@@ -288,25 +291,36 @@ export function SuggestionForm({
         >
           Content
         </label>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          disabled={!!isReadOnly}
-          rows={16}
+        <div
           style={{
-            width: "100%",
-            padding: "0.75rem",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.9375rem",
-            lineHeight: 1.6,
-            color: "var(--color-ink)",
-            background: isReadOnly ? "var(--color-surface-dim)" : "var(--color-surface)",
             border: "1px solid var(--color-border)",
             borderRadius: "2px",
-            outline: "none",
-            resize: "vertical",
+            background: isReadOnly ? "var(--color-surface-dim)" : "var(--color-surface)",
+            minHeight: "400px",
           }}
-        />
+        >
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  padding: "1rem",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.875rem",
+                  color: "var(--color-ink-muted)",
+                }}
+              >
+                Loading editor...
+              </div>
+            }
+          >
+            <RichTextEditor
+              content={content}
+              onChange={setContent}
+              editable={!isReadOnly}
+              hideToolbar={!!isReadOnly}
+            />
+          </Suspense>
+        </div>
       </div>
 
       {/* Change note field */}

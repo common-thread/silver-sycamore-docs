@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { Editor } from "@tiptap/react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { VersionBadge } from "@/components/VersionBadge";
@@ -41,24 +40,35 @@ export function UnifiedDocumentToolbar({
     onEditClick,
     editor,
 }: UnifiedDocumentToolbarProps) {
-    const [headerHeight, setHeaderHeight] = useState(0);
+    const toolbarRef = useRef<HTMLDivElement>(null);
 
+    // Use CSS custom property to track header height - avoids React state and re-renders
     useEffect(() => {
-        const updateHeight = () => {
-            const header = document.querySelector(".site-header");
-            if (header) {
-                setHeaderHeight(header.clientHeight);
-            }
+        const header = document.querySelector(".site-header");
+        const toolbar = toolbarRef.current;
+        if (!header || !toolbar) return;
+
+        // Helper to update the CSS custom property directly
+        const updateToolbarPosition = (height: number) => {
+            toolbar.style.setProperty("--toolbar-top", `${height}px`);
         };
 
-        // Initial check and subsequent checks in case of layout shifts
-        updateHeight();
-        const interval = setInterval(updateHeight, 500);
-        window.addEventListener("resize", updateHeight);
+        // Set initial position
+        updateToolbarPosition(header.clientHeight);
+
+        // Use ResizeObserver for efficient updates on resize
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.target === header) {
+                    updateToolbarPosition(entry.contentRect.height);
+                }
+            }
+        });
+
+        resizeObserver.observe(header);
 
         return () => {
-            window.removeEventListener("resize", updateHeight);
-            clearInterval(interval);
+            resizeObserver.disconnect();
         };
     }, []);
 
@@ -68,8 +78,9 @@ export function UnifiedDocumentToolbar({
             <div className="h-[65px] w-full" aria-hidden="true" />
 
             <div
+                ref={toolbarRef}
                 className="fixed left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm"
-                style={{ top: `${headerHeight}px` }}
+                style={{ top: "var(--toolbar-top, 0px)" }}
             >
                 {/* Main Row: Breadcrumb | Formatting (conditional) | Actions */}
                 <div className="flex items-center justify-between gap-4 px-6 py-3 max-w-7xl mx-auto">

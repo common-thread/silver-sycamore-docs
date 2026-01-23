@@ -351,6 +351,7 @@ export const create = mutation({
 
     const now = Date.now();
 
+    // Create form with initial version 1
     const id = await ctx.db.insert("formSchemas", {
       formId: args.formId,
       title: args.title,
@@ -361,8 +362,19 @@ export const create = mutation({
       status: "draft",
       ownerId: currentUser.user._id,
       isPublished: false,
+      version: 1,
       createdAt: now,
       updatedAt: now,
+    });
+
+    // Create initial version record
+    await ctx.db.insert("formSchemaVersions", {
+      formSchemaId: id,
+      version: 1,
+      title: args.title,
+      fields: args.fields,
+      createdAt: now,
+      createdBy: currentUser.user._id,
     });
 
     return await ctx.db.get(id);
@@ -389,12 +401,32 @@ export const update = mutation({
       throw new Error("Not authorized to update this form");
     }
 
-    const updates: Record<string, any> = { updatedAt: Date.now() };
+    const now = Date.now();
+    const updates: Record<string, unknown> = { updatedAt: now };
     if (args.title !== undefined) updates.title = args.title;
     if (args.description !== undefined) updates.description = args.description;
     if (args.category !== undefined) updates.category = args.category;
     if (args.fields !== undefined) updates.fields = args.fields;
     if (args.status !== undefined) updates.status = args.status;
+
+    // Check if fields have changed - if so, create a new version
+    const fieldsChanged = args.fields !== undefined && args.fields !== form.fields;
+
+    if (fieldsChanged) {
+      const currentVersion = form.version || 1;
+      const newVersion = currentVersion + 1;
+      updates.version = newVersion;
+
+      // Create version record with snapshot of new fields
+      await ctx.db.insert("formSchemaVersions", {
+        formSchemaId: args.id,
+        version: newVersion,
+        title: args.title || form.title,
+        fields: args.fields!,
+        createdAt: now,
+        createdBy: currentUser.user._id,
+      });
+    }
 
     await ctx.db.patch(args.id, updates);
     return await ctx.db.get(args.id);
@@ -477,6 +509,176 @@ export const remove = mutation({
   },
 });
 
+/**
+ * Validate submitted form data against the form schema.
+ * Throws detailed errors on validation failure.
+ */
+function validateFormSubmission(
+  fieldsJson: string,
+  dataJson: string
+): { validatedData: Record<string, unknown>; errors: string[] } {
+  const errors: string[] = [];
+
+  // Parse the form fields schema
+  let fields: FormField[];
+  try {
+    fields = parseFormFields(fieldsJson);
+  } catch (_e) {
+    throw new Error("Invalid form schema");
+  }
+
+  // Parse the submitted data
+  let submittedData: Record<string, unknown>;
+  try {
+    submittedData = JSON.parse(dataJson);
+    if (typeof submittedData !== "object" || submittedData === null || Array.isArray(submittedData)) {
+      throw new Error("Submitted data must be an object");
+    }
+  } catch (e) {
+    if (e instanceof SyntaxError) {
+      throw new Error("Invalid JSON in submitted data");
+    }
+    throw e;
+  }
+
+  // Build a set of valid field names for quick lookup
+  const validFieldNames = new Set(fields.map((f) => f.name));
+  const validatedData: Record<string, unknown> = {};
+
+  // Check for unknown fields (strict mode - reject unknown fields)
+  for (const key of Object.keys(submittedData)) {
+    if (!validFieldNames.has(key)) {
+      errors.push(`Unknown field: ${key}`);
+    }
+  }
+
+  // Validate each field
+  for (const field of fields) {
+    const value = submittedData[field.name];
+    const isEmpty = value === undefined || value === null || value === "";
+
+    // Required field check
+    if (field.required && isEmpty) {
+      errors.push(`Required field missing: ${field.label}`);
+      continue;
+    }
+
+    // Skip validation for empty optional fields
+    if (isEmpty) {
+      continue;
+    }
+
+    // Type-specific validation
+    switch (field.type) {
+      case "text":
+      case "textarea":
+        if (typeof value !== "string") {
+          errors.push(`${field.label} must be text`);
+        } else {
+          validatedData[field.name] = value;
+        }
+        break;
+
+      case "number":
+        // Accept string numbers from form inputs
+        const numValue = typeof value === "string" ? parseFloat(value) : value;
+        if (typeof numValue !== "number" || isNaN(numValue)) {
+          errors.push(`${field.label} must be a number`);
+        } else {
+          validatedData[field.name] = numValue;
+        }
+        break;
+
+      case "date":
+      case "time":
+        if (typeof value !== "string") {
+          errors.push(`${field.label} must be a valid ${field.type}`);
+        } else {
+          validatedData[field.name] = value;
+        }
+        break;
+
+      case "email":
+        if (typeof value !== "string") {
+          errors.push(`${field.label} must be text`);
+        } else {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            errors.push(`${field.label} must be a valid email address`);
+          } else {
+            validatedData[field.name] = value;
+          }
+        }
+        break;
+
+      case "tel":
+        if (typeof value !== "string") {
+          errors.push(`${field.label} must be text`);
+        } else {
+          validatedData[field.name] = value;
+        }
+        break;
+
+      case "select":
+        if (typeof value !== "string") {
+          errors.push(`${field.label} must be a single selection`);
+        } else if (field.options && !field.options.includes(value)) {
+          errors.push(`${field.label} has invalid option: ${value}`);
+        } else {
+          validatedData[field.name] = value;
+        }
+        break;
+
+      case "multiselect":
+        if (!Array.isArray(value)) {
+          errors.push(`${field.label} must be a list of selections`);
+        } else {
+          const invalidOptions = value.filter(
+            (v) => typeof v !== "string" || (field.options && !field.options.includes(v))
+          );
+          if (invalidOptions.length > 0) {
+            errors.push(`${field.label} has invalid options: ${invalidOptions.join(", ")}`);
+          } else {
+            validatedData[field.name] = value;
+          }
+        }
+        break;
+
+      case "checkbox":
+        if (typeof value !== "boolean") {
+          errors.push(`${field.label} must be true or false`);
+        } else {
+          validatedData[field.name] = value;
+        }
+        break;
+
+      case "file":
+        // File fields contain objects with name, type, size, data
+        if (typeof value !== "object" || value === null) {
+          errors.push(`${field.label} must be a file object`);
+        } else {
+          const fileObj = value as Record<string, unknown>;
+          if (typeof fileObj.name !== "string" || typeof fileObj.type !== "string") {
+            errors.push(`${field.label} has invalid file format`);
+          } else {
+            validatedData[field.name] = value;
+          }
+        }
+        break;
+
+      default:
+        // For any unrecognized field type, accept string values
+        if (typeof value === "string") {
+          validatedData[field.name] = value;
+        } else {
+          errors.push(`${field.label} has unsupported field type`);
+        }
+    }
+  }
+
+  return { validatedData, errors };
+}
+
 // Submit response (public mutation - NO auth required for external respondents)
 export const submitResponse = mutation({
   args: {
@@ -493,10 +695,29 @@ export const submitResponse = mutation({
     if (!form) throw new Error("Form not found");
     if (!form.isPublished) throw new Error("Form is not accepting submissions");
 
+    // Validate submitted data against form schema (SECURITY: strict validation)
+    const { validatedData, errors } = validateFormSubmission(form.fields, args.data);
+
+    if (errors.length > 0) {
+      throw new Error(`Validation failed: ${errors.join("; ")}`);
+    }
+
+    // Get the current version ID for linking
+    const currentVersion = form.version || 1;
+    const versionRecord = await ctx.db
+      .query("formSchemaVersions")
+      .withIndex("by_schema_version", (q) =>
+        q.eq("formSchemaId", args.formSchemaId).eq("version", currentVersion)
+      )
+      .first();
+
+    // Store the validated data (re-serialize to ensure clean data)
     const id = await ctx.db.insert("formSubmissions", {
       formSchemaId: args.formSchemaId,
       formId: form.formId,
-      data: args.data,
+      schemaVersionId: versionRecord?._id,
+      schemaVersion: currentVersion,
+      data: JSON.stringify(validatedData),
       respondentName: args.respondentName,
       respondentEmail: args.respondentEmail,
       sentById: args.sentById,
@@ -585,6 +806,71 @@ export const getSends = query({
       .query("formSends")
       .withIndex("by_form", (q) => q.eq("formSchemaId", formSchemaId))
       .collect();
+  },
+});
+
+// ============================================
+// FORM VERSION HISTORY
+// ============================================
+
+// Get version history for a form (owner only)
+export const getVersionHistory = query({
+  args: { formSchemaId: v.id("formSchemas") },
+  handler: async (ctx, { formSchemaId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return [];
+
+    // Verify ownership
+    const form = await ctx.db.get(formSchemaId);
+    if (!form || form.ownerId !== currentUser.user._id) return [];
+
+    const versions = await ctx.db
+      .query("formSchemaVersions")
+      .withIndex("by_schema", (q) => q.eq("formSchemaId", formSchemaId))
+      .collect();
+
+    // Sort by version number descending (newest first)
+    return versions.sort((a, b) => b.version - a.version);
+  },
+});
+
+// Get a specific version's schema (for viewing submissions)
+export const getVersionSchema = query({
+  args: { versionId: v.id("formSchemaVersions") },
+  handler: async (ctx, { versionId }) => {
+    return await ctx.db.get(versionId);
+  },
+});
+
+// Get submission with its schema version for display
+export const getSubmissionWithSchema = query({
+  args: { submissionId: v.id("formSubmissions") },
+  handler: async (ctx, { submissionId }) => {
+    const currentUser = await getCurrentUser(ctx);
+    if (!currentUser) return null;
+
+    const submission = await ctx.db.get(submissionId);
+    if (!submission) return null;
+
+    // Check if user has access (owns the form or is in route list)
+    const form = await ctx.db.get(submission.formSchemaId);
+    if (!form) return null;
+
+    const isOwner = form.ownerId === currentUser.user._id;
+    const isRouted = submission.routeToUserIds?.includes(currentUser.user._id);
+    if (!isOwner && !isRouted) return null;
+
+    // Get the schema version if available
+    let schemaVersion = null;
+    if (submission.schemaVersionId) {
+      schemaVersion = await ctx.db.get(submission.schemaVersionId);
+    }
+
+    return {
+      submission,
+      form,
+      schemaVersion,
+    };
   },
 });
 

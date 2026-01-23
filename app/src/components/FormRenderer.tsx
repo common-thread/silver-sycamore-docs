@@ -44,14 +44,18 @@ interface FormRendererProps {
 
 /**
  * Parse form fields from JSON string.
- * Returns empty array on parse error.
+ * Returns empty array with error logging on parse failure.
  */
 function parseFormFields(fieldsJson: string): FormField[] {
   try {
     const parsed = JSON.parse(fieldsJson);
-    if (!Array.isArray(parsed)) return [];
+    if (!Array.isArray(parsed)) {
+      console.error("FormRenderer: fields is not an array:", typeof parsed);
+      return [];
+    }
     return parsed as FormField[];
-  } catch {
+  } catch (error) {
+    console.error("FormRenderer: Failed to parse form fields JSON:", error);
     return [];
   }
 }

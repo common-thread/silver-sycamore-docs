@@ -167,13 +167,27 @@ export default function FormBuilder({
                                     />
                                 </div>
                                 <div className="flex items-center gap-1 pt-6">
-                                    <button onClick={() => moveField(index, "up")} className="p-1 hover:bg-stone-100 rounded text-stone-500 disabled:opacity-30" disabled={index === 0}>
+                                    <button
+                                        onClick={() => moveField(index, "up")}
+                                        className="p-1 hover:bg-stone-100 rounded text-stone-500 disabled:opacity-30"
+                                        disabled={index === 0}
+                                        aria-label={`Move ${field.label} field up`}
+                                    >
                                         <ChevronUpIcon />
                                     </button>
-                                    <button onClick={() => moveField(index, "down")} className="p-1 hover:bg-stone-100 rounded text-stone-500 disabled:opacity-30" disabled={index === fields.length - 1}>
+                                    <button
+                                        onClick={() => moveField(index, "down")}
+                                        className="p-1 hover:bg-stone-100 rounded text-stone-500 disabled:opacity-30"
+                                        disabled={index === fields.length - 1}
+                                        aria-label={`Move ${field.label} field down`}
+                                    >
                                         <ChevronDownIcon />
                                     </button>
-                                    <button onClick={() => removeField(index)} className="p-1 hover:bg-red-50 text-red-500 rounded ml-2">
+                                    <button
+                                        onClick={() => removeField(index)}
+                                        className="p-1 hover:bg-red-50 text-red-500 rounded ml-2"
+                                        aria-label={`Delete ${field.label} field`}
+                                    >
                                         <TrashIcon />
                                     </button>
                                 </div>

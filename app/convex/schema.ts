@@ -148,6 +148,7 @@ export default defineSchema({
     status: v.string(),
     ownerId: v.id("users"), // Who created/owns the form
     isPublished: v.boolean(), // Whether form is active/accessible
+    version: v.optional(v.number()), // Current version number (starts at 1)
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -155,9 +156,23 @@ export default defineSchema({
     .index("by_category", ["category"])
     .index("by_owner", ["ownerId"]),
 
+  // Form schema version history - snapshots of form fields at each version
+  formSchemaVersions: defineTable({
+    formSchemaId: v.id("formSchemas"),
+    version: v.number(), // Version number (1, 2, 3, ...)
+    title: v.string(), // Title at this version
+    fields: v.string(), // JSON snapshot of fields at this version
+    createdAt: v.number(),
+    createdBy: v.optional(v.id("users")), // Who made this version
+  })
+    .index("by_schema", ["formSchemaId"])
+    .index("by_schema_version", ["formSchemaId", "version"]),
+
   formSubmissions: defineTable({
     formSchemaId: v.id("formSchemas"), // Reference to form schema
     formId: v.string(), // Copy of formId for easier lookup
+    schemaVersionId: v.optional(v.id("formSchemaVersions")), // Version of form at submission time
+    schemaVersion: v.optional(v.number()), // Version number for quick lookup
     data: v.string(), // JSON string of submitted form data
     respondentName: v.optional(v.string()), // Who filled out the form (external)
     respondentEmail: v.optional(v.string()), // Respondent's email (external)
@@ -171,7 +186,8 @@ export default defineSchema({
     .index("by_status", ["status"])
     .index("by_schema", ["formSchemaId"])
     .index("by_sentBy", ["sentById"])
-    .index("by_send", ["sendId"]),
+    .index("by_send", ["sendId"])
+    .index("by_schemaVersion", ["schemaVersionId"]),
 
   // Track form sends (who sent form to whom)
   formSends: defineTable({

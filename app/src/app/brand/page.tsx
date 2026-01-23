@@ -40,6 +40,60 @@ export default function BrandPage() {
             </CardFooter>
           </Card>
 
+          {/* Design System Resources - New Section */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-4)" }}>
+            <Card variant="default">
+              <CardHeader>
+                <CardTitle>Icon Library</CardTitle>
+                <CardDescription>Consistent iconography using Lucide icons</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p style={{ margin: 0 }}>
+                  Browse available icons, usage guidelines, and copy-ready SVG code snippets.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/brand/icons" className="btn btn-secondary btn-sm">
+                  View Icons
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card variant="default">
+              <CardHeader>
+                <CardTitle>Motion Guidelines</CardTitle>
+                <CardDescription>Animation timing and easing curves</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p style={{ margin: 0 }}>
+                  Duration tokens, easing functions, and best practices for UI animations.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/brand/animations" className="btn btn-secondary btn-sm">
+                  View Motion
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card variant="default">
+              <CardHeader>
+                <CardTitle>Accessibility</CardTitle>
+                <CardDescription>WCAG 2.1 AA compliance guidelines</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p style={{ margin: 0 }}>
+                  Color contrast ratios, keyboard navigation, screen reader support, and testing procedures.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link href="/brand/accessibility" className="btn btn-secondary btn-sm">
+                  View A11y
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
+
           {/* Staff Hub Components */}
           <Card variant="default">
             <CardHeader>
