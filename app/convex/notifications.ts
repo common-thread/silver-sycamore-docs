@@ -1,35 +1,19 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, QueryCtx, MutationCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
+import { getCurrentUser } from "./lib/auth";
 
-// Helper to get current user from auth context
-async function getCurrentUser(ctx: { auth: any; db: any }) {
-  const identity = await ctx.auth.getUserIdentity();
-  if (!identity) return null;
-
-  const user = await ctx.db
-    .query("users")
-    .filter((q: any) => q.eq(q.field("email"), identity.email))
-    .first();
-
-  if (!user) return null;
-
-  const profile = await ctx.db
-    .query("userProfiles")
-    .withIndex("by_userId", (q: any) => q.eq("userId", user._id))
-    .first();
-
-  return { user, profile };
-}
+// Re-export auth types for use in this module
+type AuthContext = QueryCtx | MutationCtx;
 
 // Helper to get user display info
-async function getUserDisplayInfo(ctx: { db: any }, userId: Id<"users">) {
+async function getUserDisplayInfo(ctx: AuthContext, userId: Id<"users">) {
   const user = await ctx.db.get(userId);
   if (!user) return { id: userId, displayName: "Unknown", avatarUrl: undefined };
 
   const profile = await ctx.db
     .query("userProfiles")
-    .withIndex("by_userId", (q: any) => q.eq("userId", userId))
+    .withIndex("by_userId", (q) => q.eq("userId", userId))
     .first();
 
   return {
@@ -40,7 +24,7 @@ async function getUserDisplayInfo(ctx: { db: any }, userId: Id<"users">) {
 }
 
 // Helper to get channel display info
-async function getChannelDisplayInfo(ctx: { db: any }, channelId: Id<"channels">) {
+async function getChannelDisplayInfo(ctx: AuthContext, channelId: Id<"channels">) {
   const channel = await ctx.db.get(channelId);
   if (!channel) return { id: channelId, name: "Unknown Channel", type: "public" };
 
@@ -68,7 +52,7 @@ export const listNotifications = query({
     // Get notifications for this user
     let notificationsQuery = ctx.db
       .query("notifications")
-      .withIndex("by_user", (q: any) => q.eq("userId", currentUser.user._id))
+      .withIndex("by_user", (q) => q.eq("userId", currentUser.user._id))
       .order("desc"); // Newest first
 
     // Apply cursor if provided
@@ -77,7 +61,7 @@ export const listNotifications = query({
       if (cursorNotification) {
         notificationsQuery = ctx.db
           .query("notifications")
-          .filter((q: any) =>
+          .filter((q) =>
             q.and(
               q.eq(q.field("userId"), currentUser.user._id),
               q.lt(q.field("createdAt"), cursorNotification.createdAt)
@@ -125,7 +109,7 @@ export const getUnreadCount = query({
     // Count unread notifications
     const unreadNotifications = await ctx.db
       .query("notifications")
-      .withIndex("by_user_read", (q: any) =>
+      .withIndex("by_user_read", (q) =>
         q.eq("userId", currentUser.user._id).eq("isRead", false)
       )
       .collect();
@@ -171,7 +155,7 @@ export const createMentionNotifications = mutation({
       // Check if user already has an unread notification for this message
       const existingNotification = await ctx.db
         .query("notifications")
-        .filter((q: any) =>
+        .filter((q) =>
           q.and(
             q.eq(q.field("userId"), mentionedUserId),
             q.eq(q.field("messageId"), messageId),
@@ -231,7 +215,7 @@ export const markAllAsRead = mutation({
     // Get all unread notifications for this user
     const unreadNotifications = await ctx.db
       .query("notifications")
-      .withIndex("by_user_read", (q: any) =>
+      .withIndex("by_user_read", (q) =>
         q.eq("userId", currentUser.user._id).eq("isRead", false)
       )
       .collect();

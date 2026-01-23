@@ -1,49 +1,35 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, QueryCtx, MutationCtx } from "./_generated/server";
 import { v } from "convex/values";
-import { Id } from "./_generated/dataModel";
+import { Id, Doc } from "./_generated/dataModel";
+import { getCurrentUser } from "./lib/auth";
 
-// Helper: Get current user and profile
-async function getCurrentUserWithProfile(ctx: any) {
-  const identity = await ctx.auth.getUserIdentity();
-  if (!identity) return null;
-
-  const user = await ctx.db
-    .query("users")
-    .filter((q: any) => q.eq(q.field("email"), identity.email))
-    .first();
-  if (!user) return null;
-
-  const profile = await ctx.db
-    .query("userProfiles")
-    .withIndex("by_userId", (q: any) => q.eq("userId", user._id))
-    .first();
-
-  return { user, profile, identity };
-}
+// Re-export auth types for use in this module
+type AuthContext = QueryCtx | MutationCtx;
 
 // Helper: Check if user is manager or admin
-function isManagerOrAdmin(profile: any): boolean {
-  return profile && ["admin", "manager"].includes(profile.role);
+function isManagerOrAdmin(profile: Doc<"userProfiles"> | null): boolean {
+  return profile !== null && ["admin", "manager"].includes(profile.role);
 }
 
 // Helper: Enrich suggestion with author info
-async function enrichWithAuthor(ctx: any, suggestion: any) {
+async function enrichWithAuthor(ctx: AuthContext, suggestion: Doc<"suggestions">) {
   const author = await ctx.db.get(suggestion.authorId);
   const authorProfile = author
     ? await ctx.db
         .query("userProfiles")
-        .withIndex("by_userId", (q: any) => q.eq("userId", author._id))
+        .withIndex("by_userId", (q) => q.eq("userId", author._id))
         .first()
     : null;
 
-  let reviewer: any = null;
-  let reviewerProfile: any = null;
+  let reviewer: Doc<"users"> | null = null;
+  let reviewerProfile: Doc<"userProfiles"> | null = null;
   if (suggestion.reviewedBy) {
-    reviewer = await ctx.db.get(suggestion.reviewedBy);
-    if (reviewer) {
+    const fetchedReviewer = await ctx.db.get(suggestion.reviewedBy);
+    if (fetchedReviewer) {
+      reviewer = fetchedReviewer;
       reviewerProfile = await ctx.db
         .query("userProfiles")
-        .withIndex("by_userId", (q: any) => q.eq("userId", reviewer._id))
+        .withIndex("by_userId", (q) => q.eq("userId", fetchedReviewer._id))
         .first();
     }
   }
@@ -170,7 +156,7 @@ export const create = mutation({
     changeNote: v.string(),
   },
   handler: async (ctx, args): Promise<Id<"suggestions">> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     // Get the document to copy current content as starting point
@@ -201,7 +187,7 @@ export const update = mutation({
     changeNote: v.optional(v.string()),
   },
   handler: async (ctx, args): Promise<void> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     const suggestion = await ctx.db.get(args.id);
@@ -217,7 +203,7 @@ export const update = mutation({
       throw new Error("Cannot update: suggestion is no longer a draft");
     }
 
-    const updates: any = { updatedAt: Date.now() };
+    const updates: Partial<Doc<"suggestions">> = { updatedAt: Date.now() };
     if (args.title !== undefined) updates.title = args.title;
     if (args.content !== undefined) updates.content = args.content;
     if (args.changeNote !== undefined) updates.changeNote = args.changeNote;
@@ -230,7 +216,7 @@ export const update = mutation({
 export const submit = mutation({
   args: { id: v.id("suggestions") },
   handler: async (ctx, args): Promise<void> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     const suggestion = await ctx.db.get(args.id);
@@ -260,7 +246,7 @@ export const approve = mutation({
     reviewNote: v.optional(v.string()),
   },
   handler: async (ctx, args): Promise<void> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     if (!isManagerOrAdmin(userInfo.profile)) {
@@ -290,7 +276,7 @@ export const reject = mutation({
     reviewNote: v.optional(v.string()),
   },
   handler: async (ctx, args): Promise<void> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     if (!isManagerOrAdmin(userInfo.profile)) {
@@ -317,7 +303,7 @@ export const reject = mutation({
 export const deleteSuggestion = mutation({
   args: { id: v.id("suggestions") },
   handler: async (ctx, args): Promise<void> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     const suggestion = await ctx.db.get(args.id);
@@ -341,7 +327,7 @@ export const deleteSuggestion = mutation({
 export const promote = mutation({
   args: { id: v.id("suggestions") },
   handler: async (ctx, args): Promise<{ success: boolean; documentId: Id<"documents"> }> => {
-    const userInfo = await getCurrentUserWithProfile(ctx);
+    const userInfo = await getCurrentUser(ctx);
     if (!userInfo) throw new Error("Not authenticated");
 
     if (!isManagerOrAdmin(userInfo.profile)) {
@@ -364,7 +350,7 @@ export const promote = mutation({
     const authorProfile = author
       ? await ctx.db
           .query("userProfiles")
-          .withIndex("by_userId", (q: any) => q.eq("userId", author._id))
+          .withIndex("by_userId", (q) => q.eq("userId", author._id))
           .first()
       : null;
     const authorName = authorProfile?.displayName || author?.name || "Unknown";
@@ -376,9 +362,9 @@ export const promote = mutation({
     // Create version snapshot of current state before updating
     const versions = await ctx.db
       .query("documentVersions")
-      .withIndex("by_document", (q: any) => q.eq("documentId", suggestion.documentId))
+      .withIndex("by_document", (q) => q.eq("documentId", suggestion.documentId))
       .collect();
-    const nextVersion = versions.length === 0 ? 1 : Math.max(...versions.map((v: any) => v.version)) + 1;
+    const nextVersion = versions.length === 0 ? 1 : Math.max(...versions.map((v) => v.version)) + 1;
 
     await ctx.db.insert("documentVersions", {
       documentId: suggestion.documentId,
@@ -388,7 +374,7 @@ export const promote = mutation({
       category: doc.category,
       subcategory: doc.subcategory,
       editedBy: userInfo.user._id,
-      editedByName: userInfo.user.name || userInfo.identity.email || undefined,
+      editedByName: userInfo.user.name || userInfo.user.email || undefined,
       changeNote: `Applied suggestion from ${authorName}: ${suggestion.changeNote}`,
       createdAt: Date.now(),
     });

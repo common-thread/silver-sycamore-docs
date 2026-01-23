@@ -71,7 +71,21 @@ function getMarkdownComponents(contentType?: ContentType): Components {
           : children;
 
         return (
-          <li className="checklist-item" data-checked={isChecked} {...props}>
+          <li
+            className="checklist-item"
+            data-checked={isChecked}
+            role="checkbox"
+            aria-checked={isChecked}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                // Note: Toggle functionality would require state management
+                // This provides keyboard accessibility for read-only checklists
+              }
+            }}
+            {...props}
+          >
             <span className="checkbox-indicator" aria-hidden="true" />
             <span className="task-text">{content}</span>
           </li>

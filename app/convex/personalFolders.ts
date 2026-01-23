@@ -1,19 +1,10 @@
-import { query, mutation } from "./_generated/server";
+import { query, mutation, QueryCtx, MutationCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Id, Doc } from "./_generated/dataModel";
+import { getCurrentUserId } from "./lib/auth";
 
-// Helper to get current user ID from auth
-async function getCurrentUserId(ctx: { auth: { getUserIdentity: () => Promise<{ email?: string } | null> }; db: any }) {
-  const identity = await ctx.auth.getUserIdentity();
-  if (!identity?.email) return null;
-
-  const user = await ctx.db
-    .query("users")
-    .filter((q: any) => q.eq(q.field("email"), identity.email))
-    .first();
-
-  return user?._id ?? null;
-}
+// Re-export auth types for use in this module
+type AuthContext = QueryCtx | MutationCtx;
 
 // List user's folders (optionally filtered by parent)
 export const list = query({
@@ -27,7 +18,7 @@ export const list = query({
     if (args.parentId) {
       return await ctx.db
         .query("personalFolders")
-        .withIndex("by_owner_parent", (q: any) =>
+        .withIndex("by_owner_parent", (q) =>
           q.eq("ownerId", userId).eq("parentId", args.parentId)
         )
         .collect();
@@ -36,8 +27,8 @@ export const list = query({
     // Root level folders (no parent)
     return await ctx.db
       .query("personalFolders")
-      .withIndex("by_owner", (q: any) => q.eq("ownerId", userId))
-      .filter((q: any) => q.eq(q.field("parentId"), undefined))
+      .withIndex("by_owner", (q) => q.eq("ownerId", userId))
+      .filter((q) => q.eq(q.field("parentId"), undefined))
       .collect();
   },
 });
@@ -51,21 +42,21 @@ export const listAll = query({
 
     return await ctx.db
       .query("personalFolders")
-      .withIndex("by_owner", (q: any) => q.eq("ownerId", userId))
+      .withIndex("by_owner", (q) => q.eq("ownerId", userId))
       .collect();
   },
 });
 
 // Helper to check share access for a folder
 async function hasShareAccess(
-  ctx: any,
+  ctx: AuthContext,
   folderId: Id<"personalFolders">,
   userId: Id<"users">
 ): Promise<{ hasAccess: boolean; permission: string | null }> {
   // Direct share
   const directShare = await ctx.db
     .query("folderShares")
-    .withIndex("by_folder_user", (q: any) =>
+    .withIndex("by_folder_user", (q) =>
       q.eq("folderId", folderId).eq("sharedWithUserId", userId)
     )
     .first();
@@ -77,13 +68,13 @@ async function hasShareAccess(
   // Group shares
   const userGroups = await ctx.db
     .query("groupMembers")
-    .withIndex("by_user", (q: any) => q.eq("userId", userId))
+    .withIndex("by_user", (q) => q.eq("userId", userId))
     .collect();
 
   for (const membership of userGroups) {
     const groupShare = await ctx.db
       .query("folderShares")
-      .withIndex("by_folder_group", (q: any) =>
+      .withIndex("by_folder_group", (q) =>
         q.eq("folderId", folderId).eq("sharedWithGroupId", membership.groupId)
       )
       .first();
@@ -179,7 +170,7 @@ export const remove = mutation({
     // Check for child folders
     const childFolders = await ctx.db
       .query("personalFolders")
-      .withIndex("by_owner_parent", (q: any) =>
+      .withIndex("by_owner_parent", (q) =>
         q.eq("ownerId", userId).eq("parentId", args.id)
       )
       .first();
@@ -191,7 +182,7 @@ export const remove = mutation({
     // Check for documents in folder
     const docsInFolder = await ctx.db
       .query("personalDocuments")
-      .withIndex("by_owner_folder", (q: any) =>
+      .withIndex("by_owner_folder", (q) =>
         q.eq("ownerId", userId).eq("folderId", args.id)
       )
       .first();
